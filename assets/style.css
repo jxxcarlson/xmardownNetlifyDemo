@@ -1,0 +1,93 @@
+:root {
+    --cm-fg: #1a1a1a;
+    --cm-bg: #ffffff;
+    --cm-caret: rgba(255, 80, 0, 0.7);
+    --cm-selection-bg: #d7e6ff;
+    --cm-gutter-bg: #f4f4f4;
+    --cm-gutter-fg: #999999;
+    /* Reserved for Phase 2 RL sync */
+    --cm-sync-highlight-bg: #fff3b0;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #666666;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #e6e6e6;
+    font-weight: 700;
+    padding: 8px 16px;
+}
+
+.app-header .app-title {
+    flex: 1;
+    text-align: center;
+}
+
+.toolbar {
+    display: flex;
+    gap: 8px;
+}
+
+.toolbar-button {
+    font: inherit;
+    font-weight: 600;
+    font-size: 13px;
+    color: #1a1a1a;
+    background: #e6e6e6;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 5px 12px;
+    cursor: pointer;
+}
+
+.toolbar-button:hover {
+    background: #ffffff;
+}
+
+.toolbar-button:active {
+    background: #cfcfcf;
+}
+
+.panels {
+    display: flex;
+    gap: 16px;
+    padding: 0 16px 16px;
+    flex: 1;
+    min-height: 0;
+}
+
+.panel {
+    background: #ffffff;
+    border-radius: 4px;
+    overflow: auto;
+    min-height: 0;
+}
+
+.editor-panel {
+    padding: 0;
+    overflow: hidden; /* CodeMirror manages its own scrolling */
+}
+
+.editor-panel codemirror-editor {
+    display: block;
+    height: 100%;
+}
+
+.rendered-panel,
+.toc-panel {
+    padding: 16px 24px;
+    font-size: 14px;
+}

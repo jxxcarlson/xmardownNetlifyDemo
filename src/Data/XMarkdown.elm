@@ -3,9 +3,29 @@ module Data.XMarkdown exposing (text)
 
 text =
     """
-# Plain Text
+# Sample Document
 
-The Schwarzschild radius is one of the simplest and most important quantities in black-hole physics. It is the radius of the event horizon of a non-rotating, uncharged black hole.
+This sample document illustrates both the standard and new features of XMarkdown as compared to ordinary Markdown. First of these are math support, e.g.
+
+$$
+cos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)
+$$
+
+Second is synchronization of source and rendered text:
+
+- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.
+
+- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.
+
+Third is a real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.
+
+Also note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.
+
+*You can edit whatever you like in this document.  Your edits will not be saved.*
+
+# Text
+
+The *Schwarzschild radius* is one of the simplest and **most important quantities in black-hole physics**. It is the radius of the event horizon of a non-rotating, uncharged black hole.
 
 # Links
 
@@ -13,9 +33,9 @@ I read the [New York Times](https://nytimes.com) every day.
 
 # Images
 
-![Divorce party — click to expand width:400](https://imagedelivery.net/9U-0Y4sEzXlO6BXzTnQnYQ/663d702e-ba37-4227-1019-85fe74261900/public)
+![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)
 
-The element `[...]` hold the caption for the image as well as optional properties such as `width:400`.
+The element `[...]` holds the caption for the image as well as optional properties such as `width:400`.
 
 
 # Quotations
@@ -40,7 +60,7 @@ Use "." as the prefix for numbered lists:
 . c  is the speed of light.
 
 
-# Ordinary (non-compact) lists
+# Ordinary lists
 
 Use "-" as the prefix for itemized lists:
 
@@ -61,21 +81,14 @@ Use "." as the prefix for numbered lists:
 
 # Tables
 
-| Name  | Age | Occupation  |
+**Ages, Occupations, and Favorite Formulas**
+
+| Name  | Age | Occupation  | F.V| 
 |-------|----:|-------------|
-| Alice |  $x^{29}$ | *Engineer*    |
-| Bob   |  34 | Musician    |
-| Carol |  41 | Mathematician |
+| Alice |  28 | *Engineer*    | $n!$ |
+| Bob   |  34 | *Musician*    | $3:2$ |
+| Carol |  41 | *Mathematician* | $sqrt(2)$
 
-
-| Measure| Bass  | Figures | R.N. |  Notes |
-|---|---|---|---|---|
-| m. 1 | C | (root) | I | C - E - G - C |
-| m. 2 | C | $\\begin{smallmatrix} 6 \\\\ 4 \\\\ 2 \\end{smallmatrix}$ | $\\text{ii}^{\\varnothing}{}_{2}^{4}$ (or IV/I) | C - D - F - A |
-| m. 3 | B | $\\begin{smallmatrix} 6 \\\\ 5 \\end{smallmatrix}$ | V₅⁶ | B - D - G - F |
-| m. 4 | C | (root) | I | C - E - G - C |
-| m. 5 | A | 6 | vi₆ | A - C - E - A |
-| m. 6 | D | $\\begin{smallmatrix} 6 \\\\ 5 \\end{smallmatrix}$ | V₅⁶/V | D - F$\\sharp$ - A - C |
 
 # Code
 
@@ -135,12 +148,10 @@ Pythagoras sez: $a^2 + b^2 = c^2$.
 The Schwarzschild radius of an uncharged, non-rotating black hole is
 
 $$
-r_s = \\frac{2GM}{c^2}
+r_s = \u{000C}rac{2GM}{c^2}
 $$
 
 where $G$ is Newton’s gravitational constant, $M$ is the mass, and $c$ is the speed of light.
-
-
 
 
 """

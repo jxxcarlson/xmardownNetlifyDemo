@@ -411,8 +411,6 @@ class CodemirrorEditor extends HTMLElement {
                     extensions: [
                         basicSetup,
                         lightTheme,
-                        markdownSyntax,
-                        xmarkdownSyntax,
                         EditorView.lineWrapping,
                         syncHighlightField,
                         keymap.of([

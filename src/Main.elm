@@ -1,23 +1,21 @@
 module Main exposing (main)
 
---import XMarkdown.Compiler
-
 import Browser
 import Browser.Dom
 import Browser.Events
+import Color
 import Data.XMarkdown
-import Element
 import File exposing (File)
 import File.Download
 import File.Select
-import Html exposing (Html, button, div, text)
-import Html.Attributes exposing (class, id, style)
+import Html exposing (Html, button, div, input, text)
+import Html.Attributes exposing (class, id, placeholder, style, value)
 import Html.Events
-import List.Extra
 import Ports
+import Render.Theme exposing (ThemedStyles, darkTheme, lightTheme)
 import Task
-import XMarkdown.API exposing (defaultCompilerParameters, fromMsg)
-import XMarkdown.Types exposing (Filter(..), MarkupMsg(..), SyncHighlight, Theme(..))
+import XMarkdown.API exposing (defaultCompilerParameters, fromMsgToSyncHighlight)
+import XMarkdown.Types exposing (CompilerParameters, MarkupMsg(..), SyncHighlight, Theme(..))
 
 
 main : Program Flags Model Msg
@@ -45,9 +43,10 @@ type alias Model =
     , windowWidth : Int
     , windowHeight : Int
     , selectId : String
-    , idsOfOpenNodes : List String
     , syncHighlight : Maybe SyncHighlight
     , tick : Int
+    , compilerParameters : CompilerParameters
+    , currentTheme : Theme
     , theme : Theme
     , fileName : String
     , lrSyncMatches : List XMarkdown.API.BlockMatch
@@ -65,7 +64,10 @@ type Msg
     | FileSelected File
     | FileLoaded String
     | SaveFileRequested
+    | NewFileRequested
+    | FileNameChanged String
     | LRSync String
+    | ToggleTheme
 
 
 type alias Flags =
@@ -74,22 +76,27 @@ type alias Flags =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
+    let
+        params =
+            { defaultCompilerParameters | numberToLevel = 0 }
+    in
     ( { initialText = Data.XMarkdown.text
       , sourceText = Data.XMarkdown.text
       , count = 0
       , windowWidth = flags.window.windowWidth
       , windowHeight = flags.window.windowHeight
       , selectId = "@InitID"
-      , idsOfOpenNodes = []
       , syncHighlight = Nothing
       , theme = Light
+      , currentTheme = Light
       , tick = 0
       , fileName = "untitled.md"
       , lrSyncMatches = []
       , lrSyncIndex = 0
       , lrSyncText = ""
+      , compilerParameters = params
       }
-    , Ports.setEditorHighlightColor defaultCompilerParameters.highlightColor
+    , Ports.setEditorHighlightColor params.highlightColor
     )
 
 
@@ -126,6 +133,55 @@ update msg model =
         SaveFileRequested ->
             ( model, File.Download.string model.fileName "text/markdown" model.sourceText )
 
+        NewFileRequested ->
+            ( { model
+                | initialText = ""
+                , sourceText = ""
+                , count = model.count + 1
+                , syncHighlight = Nothing
+                , fileName = "untitled.md"
+              }
+            , Cmd.none
+            )
+
+        FileNameChanged newFileName ->
+            ( { model | fileName = newFileName }, Cmd.none )
+
+        ToggleTheme ->
+            let
+                newTheme =
+                    case model.theme of
+                        Light ->
+                            Dark
+
+                        Dark ->
+                            Light
+
+                params =
+                    model.compilerParameters
+
+                newParams =
+                    { params | theme = newTheme }
+
+                currentTheme =
+                    case newTheme of
+                        Light ->
+                            lightTheme
+
+                        Dark ->
+                            darkTheme
+
+                themeCmd =
+                    Ports.setThemeColors
+                        { fg = currentTheme.text |> Color.toCssString
+                        , bg = currentTheme.background |> Color.toCssString
+                        , indentGuide = currentTheme.indentGuide |> Color.toCssString
+                        }
+            in
+            ( { model | theme = newTheme, compilerParameters = newParams }
+            , themeCmd
+            )
+
         LRSync searchText ->
             let
                 params =
@@ -133,11 +189,10 @@ update msg model =
                         | docWidth = geometry model |> .docWidth
                         , editCount = model.count
                         , selectedId = "selectedId"
-                        , idsOfOpenNodes = model.idsOfOpenNodes
-                        , filter = NoFilter
-                        , interBlockSpacing = 18
+                        , interBlockSpacing = 0
                         , paddingAboveHeadings = 18
-                        , numberToLevel = 2
+
+                        -- JCX -- , numberToLevel = 0
                     }
 
                 matches =
@@ -176,7 +231,7 @@ update msg model =
                     in
                     ( { model | lrSyncMatches = matches, lrSyncIndex = newIndex, lrSyncText = searchText, selectId = lineNumberStr }
                     , Cmd.batch
-                        [ jumpToTopOf match.id
+                        [ jumpToTopOfWithLineNumber match.id match.lineNumber
                         , Ports.injectHighlightCSS css
                         ]
                     )
@@ -185,33 +240,18 @@ update msg model =
                     ( { model | lrSyncMatches = matches, lrSyncIndex = newIndex, lrSyncText = searchText }, Cmd.none )
 
         Render msg_ ->
-            case fromMsg (model.tick + 1) msg_ of
+            case fromMsgToSyncHighlight (model.tick + 1) msg_ of
                 Just h ->
                     ( { model | syncHighlight = Just h, tick = model.tick + 1 }, Cmd.none )
 
                 Nothing ->
                     case msg_ of
-                        ToggleTOCNodeID nodeId ->
-                            let
-                                idsOfOpenNodes =
-                                    if String.left 2 nodeId == "@-" then
-                                        if List.member nodeId model.idsOfOpenNodes then
-                                            List.Extra.remove nodeId model.idsOfOpenNodes
-
-                                        else
-                                            nodeId :: model.idsOfOpenNodes
-
-                                    else
-                                        model.idsOfOpenNodes
-                            in
-                            ( { model | idsOfOpenNodes = idsOfOpenNodes }, Cmd.none )
-
                         SelectId selId ->
-                            if selId == "title" then
-                                ( { model | selectId = selId }, jumpToTopOf XMarkdown.API.renderedTextId )
-
-                            else
-                                ( { model | selectId = selId }, Cmd.none )
+                            let
+                                lineNum =
+                                    String.split "." selId |> List.head |> Maybe.withDefault "0" |> String.dropLeft 2 |> String.toInt |> Maybe.withDefault 0
+                            in
+                            ( { model | selectId = selId }, jumpToTopOfWithLineNumber selId lineNum )
 
                         _ ->
                             ( model, Cmd.none )
@@ -256,29 +296,63 @@ view model =
         g =
             geometry model
 
+        -- Customize compiler parameters here
         params =
             { defaultCompilerParameters
-                | docWidth = g.docWidth
-                , editCount = model.count
-                , selectedId = model.selectId
-                , idsOfOpenNodes = model.idsOfOpenNodes
-                , filter = NoFilter
-                , interBlockSpacing = 18
-                , paddingAboveHeadings = 18
-                , numberToLevel = 2
+                | docWidth = g.docWidth -- width of rendered text in pixels
+                , editCount = model.count -- incremented on each edit; rendered text won't update withoug this
+                , selectedId = model.selectId -- id of rendered text on which user clicked
+                , theme = model.theme -- Dark or Light
+                , numberToLevel = 3 -- automatically number sections to level 3. Omit if you don't want sections numbered
             }
 
         compilerOutput : XMarkdown.Types.CompilerOutput
         compilerOutput =
-            XMarkdown.API.compile params (String.lines model.sourceText)
+            XMarkdown.API.compileOutput params model.sourceText
     in
     div [ class "app" ]
         [ div [ class "app-header" ]
             [ div [ class "toolbar" ]
                 [ button [ class "toolbar-button", Html.Events.onClick OpenFileRequested ] [ text "Open File" ]
                 , button [ class "toolbar-button", Html.Events.onClick SaveFileRequested ] [ text "Save File" ]
+                , button [ class "toolbar-button", Html.Events.onClick NewFileRequested ] [ text "New File" ]
+                , input
+                    [ id "fileName"
+                    , style "margin-left" "8px"
+                    , style "padding" "6px"
+                    , style "border" "1px solid #ccc"
+                    , style "border-radius" "4px"
+                    , style "font-size" "14px"
+                    , value model.fileName
+                    , Html.Events.onInput FileNameChanged
+                    , placeholder "File name..."
+                    ]
+                    []
+                , button
+                    [ class "toolbar-button theme-toggle"
+                    , Html.Events.onClick ToggleTheme
+                    , Html.Attributes.title
+                        (case model.theme of
+                            Light ->
+                                "Switch to Dark Mode"
+
+                            Dark ->
+                                "Switch to Light Mode"
+                        )
+                    , Html.Attributes.style "background-color" "black"
+                    , style "margin-left" "auto"
+                    ]
+                    [ text
+                        (case model.theme of
+                            Light ->
+                                "🌙"
+
+                            Dark ->
+                                "☀️"
+                        )
+                    ]
                 ]
-            , div [ class "app-title" ] [ text "XMarkdown TOC Demo" ]
+            , div [ class "app-title" ] [ text "XMarkdown TOC+Sync Demo" ]
             ]
         , div [ class "panels" ]
             [ div [ class "panel editor-panel", style "width" (px g.editorW) ]
@@ -287,18 +361,32 @@ view model =
                 [ class "panel rendered-panel"
                 , id XMarkdown.API.renderedTextId
                 , style "width" (px g.renderedW)
+                , style "background-color" (Render.Theme.themedColor .background model.theme)
                 ]
-                [ Html.map Render (renderPanel (round compilerOutput.interBlockSpacing) compilerOutput.body)
+                [ -- Html.map Render (renderPanel (round compilerOutput.interBlockSpacing) compilerOutput.body)
+                  Html.map Render (renderPanel model.compilerParameters compilerOutput.body)
                 ]
-            , div [ class "panel toc-panel", style "width" (px g.tocW) ]
-                [ Html.map Render (renderPanel 18 compilerOutput.toc) ]
+            , div
+                [ -- class "panel toc-panel"
+                  style "width" (px g.tocW)
+                , style "overflow" "auto"
+                , style "overscroll-behavior" "contain"
+                , style "min-height" "0"
+                , style "background" (Render.Theme.themedColor .background model.theme)
+                ]
+                [ Html.map Render (renderPanel model.compilerParameters compilerOutput.toc) ]
             ]
         ]
 
 
+
+--renderPanel : Render.Theme.RenderSettings -> List (Html MarkupMsg) -> Html MarkupMsg
+--renderPanel settings elements
+
+
 editorView : Model -> Html Msg
 editorView model =
-    XMarkdown.API.editorView
+    XMarkdown.API.viewEditor
         { source = model.initialText
         , onInput = InputText
         , highlight = model.syncHighlight
@@ -306,15 +394,27 @@ editorView model =
         }
 
 
-{-| Bridge the compiler's still-elm-ui output into the html app.
+{-| Render the compiler's Html output into the panel.
 -}
-renderPanel : Int -> List (Element.Element MarkupMsg) -> Html MarkupMsg
-renderPanel blockSpacing elements =
-    Element.layout [ Element.width Element.fill ]
-        (Element.column
-            [ Element.spacing blockSpacing, Element.width Element.fill ]
-            elements
-        )
+renderPanel : XMarkdown.Types.CompilerParameters -> List (Html MarkupMsg) -> Html MarkupMsg
+renderPanel params elements =
+    let
+        settings =
+            Render.Theme.makeSettings params
+    in
+    Html.div
+        [ Html.Attributes.style "display" "flex"
+        , Html.Attributes.style "flex-direction" "column"
+        , Html.Attributes.style "gap" (String.fromInt (round settings.interBlockSpacing) ++ "px")
+        , Html.Attributes.style "width" "100%"
+        , Html.Attributes.style "background-color" (Render.Theme.themedColor .background settings.theme)
+        , Html.Attributes.style "color" (Render.Theme.themedColor .text settings.theme)
+        ]
+        elements
+
+
+
+-- getThemedColorAsCssString : (ThemedStyles -> Color) -> Theme -> String
 
 
 px : Int -> String
@@ -322,53 +422,57 @@ px n =
     String.fromInt n ++ "px"
 
 
-jumpToTopOf : String -> Cmd Msg
-jumpToTopOf elementId =
-    -- Try to find element by full ID first, then fall back to lineNumber-based ID
-    -- ID format: "e-205.0" -> extract "205"
-    let
-        lineNumberId =
-            elementId
-                |> String.dropLeft 2
-                -- Remove "e-"
-                |> String.split "."
-                |> List.head
-                |> Maybe.withDefault elementId
-    in
-    (Browser.Dom.getElement elementId
-        |> Task.onError (\_ -> Browser.Dom.getElement lineNumberId)
-    )
-        |> Task.andThen
-            (\element ->
-                Browser.Dom.getViewportOf XMarkdown.API.renderedTextId
-                    |> Task.map
-                        (\viewport ->
-                            let
-                                elementY =
-                                    element.element.y
-
-                                elementHeight =
-                                    element.element.height
-
-                                viewportHeight =
-                                    viewport.viewport.height
-
-                                currentScroll =
-                                    viewport.viewport.y
-
-                                -- Element position relative to the container (accounting for current scroll)
-                                elementYInContainer =
-                                    elementY + currentScroll
-
-                                -- Calculate scroll position to center the element in the viewport
-                                newScroll =
-                                    max 0 (elementYInContainer - viewportHeight / 2 + elementHeight / 2)
-                            in
-                            newScroll
-                        )
+jumpToTopOfWithLineNumber : String -> Int -> Cmd Msg
+jumpToTopOfWithLineNumber elementId lineNumber =
+    -- Try to scroll by ID first, fall back to data-line-number
+    Browser.Dom.getElement elementId
+        |> Task.andThen performScroll
+        |> Task.onError
+            (\_ ->
+                -- ID not found, try by data-line-number
+                let
+                    selector =
+                        "[data-line-number=\"" ++ String.fromInt lineNumber ++ "\"]"
+                in
+                Browser.Dom.getElement selector
+                    |> Task.andThen performScroll
             )
-        |> Task.andThen
-            (\scrollY ->
-                Browser.Dom.setViewportOf XMarkdown.API.renderedTextId 0 scrollY
+        |> Task.onError
+            (\err ->
+                Task.fail err
             )
         |> Task.attempt (\_ -> NoOp)
+
+
+performScroll : Browser.Dom.Element -> Task.Task Browser.Dom.Error ()
+performScroll headingElement =
+    Browser.Dom.getElement XMarkdown.API.renderedTextId
+        |> Task.andThen
+            (\containerElement ->
+                Browser.Dom.getViewportOf XMarkdown.API.renderedTextId
+                    |> Task.andThen
+                        (\containerViewport ->
+                            let
+                                -- Position of heading relative to the document viewport
+                                headingAbsY =
+                                    headingElement.element.y
+
+                                -- Position of container relative to the document viewport
+                                containerAbsY =
+                                    containerElement.element.y
+
+                                -- Current scroll position of the container
+                                currentScroll =
+                                    containerViewport.viewport.y
+
+                                -- Position of heading relative to the container's content
+                                headingInContent =
+                                    headingAbsY - containerAbsY + currentScroll
+
+                                -- Scroll to place heading near top of container
+                                targetScroll =
+                                    max 0 (headingInContent - 50)
+                            in
+                            Browser.Dom.setViewportOf XMarkdown.API.renderedTextId 0 targetScroll
+                        )
+            )

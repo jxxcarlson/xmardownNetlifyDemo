@@ -29,30 +29,65 @@ function loadMhchem() {
 }
 
 function initKatex() {
-  console.log("elm-katex: initializing");
+  console.log("elm-katex: initializing katex");
 
   class MathText extends HTMLElement {
+    // Re-render when Elm's virtual DOM patches these attributes in place.
+    // Without this, editing math in the live editor (e.g. $x^{2}$ -> $x^{3}$)
+    // leaves the stale KaTeX rendering: Elm updates data-content on the
+    // existing node, and connectedCallback alone never fires again.
+    static get observedAttributes() {
+      return ['data-content', 'data-display'];
+    }
+
     constructor() {
       super();
+      // attachShadow may only be called once per element, so it lives here
+      // rather than in the render path.
+      this.attachShadow({mode: "open"});
     }
 
     connectedCallback() {
-      this.attachShadow({mode: "open"});
-      this.shadowRoot.innerHTML =
-        katex.renderToString(
-          this.content,
-          {
-            throwOnError: false,
-            displayMode: this.display,
-            trust: true // Allows mhchem to be used
-          }
-        );
-      let link = document.createElement('link');
-      link.setAttribute('rel', 'stylesheet');
-      link.setAttribute('href', 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
-      this.shadowRoot.appendChild(link);
+      this.renderMath();
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      // Attributes are also set just before insertion, when the element is
+      // not yet connected; connectedCallback handles that initial render.
+      if (oldValue !== newValue && this.isConnected) {
+        this.renderMath();
+      }
+    }
+
+    renderMath() {
+      try {
+        const content = this.getAttribute('data-content') || this.textContent || '';
+        const displayMode = this.getAttribute('data-display') === 'true';
+
+        if (!content || !window.katex) {
+          console.warn("elm-katex: missing content or katex not available", {hasContent: !!content, hasKatex: !!window.katex});
+          return;
+        }
+
+        const rendered = window.katex.renderToString(content, {
+          throwOnError: false,
+          displayMode: displayMode,
+          trust: true // Allows mhchem to be used
+        });
+
+        this.shadowRoot.innerHTML = rendered;
+
+        let link = document.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('href', 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
+        this.shadowRoot.appendChild(link);
+      } catch (e) {
+        console.error("elm-katex: error rendering", e);
+      }
     }
   }
 
+  console.log("elm-katex: defining custom element");
   customElements.define('math-text', MathText);
+  console.log("elm-katex: custom element defined");
 }

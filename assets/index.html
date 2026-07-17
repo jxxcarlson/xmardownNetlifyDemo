@@ -68,6 +68,14 @@
         document.documentElement.style.setProperty('--cm-sync-highlight-bg', colorStr);
     });
 
+    // Listen for theme color changes from Elm (light/dark toggle)
+    app.ports.setThemeColors.subscribe((colors) => {
+        console.log("Setting theme colors:", colors);
+        document.documentElement.style.setProperty('--cm-fg', colors.fg);
+        document.documentElement.style.setProperty('--cm-bg', colors.bg);
+        document.documentElement.style.setProperty('--cm-indent-guide', colors.indentGuide);
+    });
+
 </script>
 
 </body>

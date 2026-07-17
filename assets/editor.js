@@ -1,4 +1,4 @@
-// Minimal CodeMirror 6 custom element for DemoTOCMd.
+// Minimal CodeMirror 6 custom element for XMarkdownNetlifyDemo.
 // Imports without ?bundle so esm.sh shares one @codemirror/state instance
 // (duplicate state instances cause "unrecognized extension" errors).
 console.log("editor.js: starting to load dependencies");
@@ -277,6 +277,63 @@ const xmarkdownSyntax = StateField.define({
     provide: (f) => EditorView.decorations.from(f),
 });
 
+// Indentation guides: faint vertical lines at each 2-space indent stop, so
+// nested/indented source is easier to scan. The bar color comes from the theme
+// via the --cm-indent-guide CSS variable (set by app.js on theme change); the
+// fallback matches the light theme so guides are correct before the first toggle.
+const INDENT_UNIT = 2; // spaces per indent level
+const GUIDE_OFFSET_PX = 4; // aligns the first bar with the .cm-line left padding; tuned by eye
+
+function indentGuideStyle(levels) {
+    // Paint `levels` 1px-wide vertical bars at character columns 0, 2, 4, ...
+    // Monospace font => 1ch == one character advance, so bars land on the grid.
+    const images = [];
+    const positions = [];
+    const sizes = [];
+    const bar = "linear-gradient(var(--cm-indent-guide, rgba(0,0,0,0.15)), var(--cm-indent-guide, rgba(0,0,0,0.15)))";
+    for (let i = 0; i < levels; i++) {
+        images.push(bar);
+        positions.push(`calc(${i * INDENT_UNIT}ch + ${GUIDE_OFFSET_PX}px) 0`);
+        sizes.push("1px 100%");
+    }
+    return `background-image: ${images.join(", ")};` +
+        `background-position: ${positions.join(", ")};` +
+        `background-size: ${sizes.join(", ")};` +
+        `background-repeat: no-repeat;`;
+}
+
+function buildIndentGuides(state) {
+    const decorations = [];
+    const doc = state.doc;
+    for (let n = 1; n <= doc.lines; n++) {
+        const line = doc.line(n);
+        const text = line.text;
+        let w = 0;
+        while (w < text.length && text[w] === " ") w++;
+        const levels = Math.floor(w / INDENT_UNIT);
+        if (levels > 0) {
+            decorations.push(
+                Decoration.line({ attributes: { style: indentGuideStyle(levels) } }).range(line.from)
+            );
+        }
+    }
+    return Decoration.set(decorations);
+}
+
+const indentGuideField = StateField.define({
+    create(state) {
+        return buildIndentGuides(state);
+    },
+    update(deco, tr) {
+        // Guides depend only on line indentation, so recompute on doc changes.
+        if (tr.docChanged) {
+            return buildIndentGuides(tr.state);
+        }
+        return deco.map(tr.changes);
+    },
+    provide: (f) => EditorView.decorations.from(f),
+});
+
 const lightTheme = EditorView.theme(
     {
         "&": {
@@ -411,8 +468,11 @@ class CodemirrorEditor extends HTMLElement {
                     extensions: [
                         basicSetup,
                         lightTheme,
+                        // markdownSyntax,
+                        // xmarkdownSyntax,
                         EditorView.lineWrapping,
                         syncHighlightField,
+                        indentGuideField,
                         keymap.of([
                             {
                                 key: "Escape",
@@ -494,10 +554,28 @@ class CodemirrorEditor extends HTMLElement {
                 to = Math.max(from, Math.min(h.end, doc.length));
             }
             editor.dispatch({
-                effects: [
-                    setSyncHighlight.of({ from, to }),
-                    EditorView.scrollIntoView(from, { y: "center" }),
-                ],
+                effects: [setSyncHighlight.of({ from, to })],
+            });
+            // Center the target line by writing the editor scroller's scrollTop
+            // directly, instead of EditorView.scrollIntoView. CM's scrollIntoView
+            // walks ancestor elements too (even overflow:hidden ones are
+            // programmatically scrollable), which dragged the whole app shell up
+            // when the target was near the end of the document. A direct
+            // scrollTop write is clamped by the browser to the scroller's own
+            // valid range: true centering everywhere, graceful clamp at the ends,
+            // and the shell never moves.
+            editor.requestMeasure({
+                read: (view) => {
+                    const block = view.lineBlockAt(from);
+                    const scroller = view.scrollDOM;
+                    return {
+                        scroller,
+                        target: block.top - (scroller.clientHeight - block.height) / 2,
+                    };
+                },
+                write: ({ scroller, target }) => {
+                    scroller.scrollTop = target; // browser clamps to [0, max]
+                },
             });
         }
     }

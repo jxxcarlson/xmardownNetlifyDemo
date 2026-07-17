@@ -77,7 +77,7 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
   return fun.a === 9 ? fun.f(a, b, c, d, e, f, g, h, i) : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
 
-console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.1/optimize for better performance and smaller assets.');
+console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.2/optimize for better performance and smaller assets.');
 
 
 var _JsArray_empty = [];
@@ -4951,8 +4951,8 @@ var $elm$core$String$split = F2(
 var $elm$json$Json$Decode$indent = function (str) {
 	return A2(
 		$elm$core$String$join,
-		'\n    ',
-		A2($elm$core$String$split, '\n', str));
+		'\u000A    ',
+		A2($elm$core$String$split, '\u000A', str));
 };
 var $elm$core$List$foldl = F3(
 	function (func, acc, list) {
@@ -5044,7 +5044,7 @@ var $elm$core$List$reverse = function (list) {
 var $elm$core$String$uncons = _String_uncons;
 var $elm$json$Json$Decode$errorOneOf = F2(
 	function (i, error) {
-		return '\n\n(' + ($elm$core$String$fromInt(i + 1) + (') ' + $elm$json$Json$Decode$indent(
+		return '\u000A\u000A(' + ($elm$core$String$fromInt(i + 1) + (') ' + $elm$json$Json$Decode$indent(
 			$elm$json$Json$Decode$errorToString(error))));
 	});
 var $elm$json$Json$Decode$errorToString = function (error) {
@@ -5069,7 +5069,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 							return $elm$core$Char$isAlpha(_char) && A2($elm$core$String$all, $elm$core$Char$isAlphaNum, rest);
 						}
 					}();
-					var fieldName = isSimple ? ('.' + f) : ('[\'' + (f + '\']'));
+					var fieldName = isSimple ? ('.' + f) : ('[\u0027' + (f + '\u0027]'));
 					var $temp$error = err,
 						$temp$context = A2($elm$core$List$cons, fieldName, context);
 					error = $temp$error;
@@ -5120,7 +5120,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 								$elm$core$List$length(errors)) + ' ways:'));
 							return A2(
 								$elm$core$String$join,
-								'\n\n',
+								'\u000A\u000A',
 								A2(
 									$elm$core$List$cons,
 									introduction,
@@ -5132,16 +5132,16 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 					var json = error.b;
 					var introduction = function () {
 						if (!context.b) {
-							return 'Problem with the given value:\n\n';
+							return 'Problem with the given value:\u000A\u000A';
 						} else {
 							return 'Problem with the value at json' + (A2(
 								$elm$core$String$join,
 								'',
-								$elm$core$List$reverse(context)) + ':\n\n    ');
+								$elm$core$List$reverse(context)) + ':\u000A\u000A    ');
 						}
 					}();
 					return introduction + ($elm$json$Json$Decode$indent(
-						A2($elm$json$Json$Encode$encode, 4, json)) + ('\n\n' + msg));
+						A2($elm$json$Json$Encode$encode, 4, json)) + ('\u000A\u000A' + msg));
 			}
 		}
 	});
@@ -5616,18 +5616,20 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$element = _Browser_element;
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light = {$: 'Light'};
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$NoFilter = {$: 'NoFilter'};
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters = {data: $elm$core$Dict$empty, docWidth: 500, editCount: 0, filter: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$NoFilter, fontSize: 16, highlightColor: 'rgba(200, 200, 255, 0.4)', idsOfOpenNodes: _List_Nil, interBlockSpacing: 0, lineHeight: 1.5, numberToLevel: 0, paddingAboveHeadings: 10, scale: 1, selectedId: '', selectedSlug: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, windowWidth: 500};
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters = {backgroundColor: 'rgba(255, 255, 255, 1.0)', data: $elm$core$Dict$empty, docWidth: 500, editCount: 0, fontSize: 16, highlightColor: 'rgba(200, 200, 255, 0.4)', interBlockSpacing: 0, lineHeight: 1.5, numberToLevel: 0, paddingAboveHeadings: 10, scale: 1, selectedId: '', selectedSlug: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, windowWidth: 500};
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters = $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Ports$setEditorHighlightColor = _Platform_outgoingPort('setEditorHighlightColor', $elm$json$Json$Encode$string);
-var $author$project$Data$XMarkdown$text = '\n# Sample Document\n\nThis sample document illustrates both the standard and new features of XMarkdown as compared to ordinary Markdown. First of these are math support, e.g.\n\n$$\ncos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\n$$\n\nSecond is synchronization of source and rendered text:\n\n- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.\n\n- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.\n\nThird is a real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.\n\nAlso note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.\n\n*You can edit whatever you like in this document.  Your edits will not be saved.*\n\n# Text\n\nThe *Schwarzschild radius* is one of the simplest and **most important quantities in black-hole physics**. It is the radius of the event horizon of a non-rotating, uncharged black hole.\n\n# Links\n\nI read the [New York Times](https://nytimes.com) every day.\n\n# Images\n\n![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)\n\nThe element `[...]` holds the caption for the image as well as optional properties such as `width:400`.\n\n\n# Quotations\n\nQuotations are indented and rendered in italic:\n\n> What we know is not much. What we do not know is immense. — Pierre-Simon Laplace\n\n\n# Compact lists\n\nUse "-" as the prefix for itemized lists:\n\n- G is Newton’s gravitational constant. \n- M is the mass of the object.\n- c is the speed of light.\n\nUse "." as the prefix for numbered lists:\n\n. G is Newton’s gravitational constant,  G is Newton’s gravitational constant, G is Newton’s gravitational constant.\n. M is the mass of the object.\n. c  is the speed of light.\n\n\n# Ordinary lists\n\nUse "-" as the prefix for itemized lists:\n\n- G is Newton’s gravitational constant. G is Newton’s gravitational constant.G is Newton’s gravitational constant.\n\n- G is the mass of the object.\n\n- c is the speed of light.\n\nUse "." as the prefix for numbered lists:\n\n. G is Newton’s gravitational constant. G is Newton’s gravitational constant. G is Newton’s gravitational constant.\n\n. G is the mass of the object.\n\n. c is the speed of light.\n\n\n# Tables\n\n**Ages, Occupations, and Favorite Formulas**\n\n| Name  | Age | Occupation  | F.V| \n|-------|----:|-------------|\n| Alice |  28 | *Engineer*    | $n!$ |\n| Bob   |  34 | *Musician*    | $3:2$ |\n| Carol |  41 | *Mathematician* | $sqrt(2)$\n\n\n# Code\n\nHere is a snippet of inline code: `primes = []`\n\nAnd below is a block of code:\n\n```\ndef factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n - 1)\n```\n\nMultiparagaph blocks as displayed below require a bit more care.  By definition a block in XMarkdown is a sequence of nonempty lines with at least one empty line above and one below.  So put your text between backticks as below, select it, and type `cmd-]` to indent it by two spaces.  Why does this work? It is because a line consisting of two spaces is not empty.  You can see that from the coloring of the text.\n\n```\n  import math\n  \n  def first_n_primes(N):\n      if N <= 0:\n          return []\n  \n      primes = [2]\n      candidate = 3\n  \n      while len(primes) < N:\n          limit = math.isqrt(candidate)\n          isprime = True\n  \n          for p in primes:\n              if p > limit:\n                  break\n              if candidate % p == 0:\n                  isprime = False\n                  break\n  \n          if isprime:\n              primes.append(candidate)\n  \n          candidate += 2\n  \n      return primes\n  \n  \n  if __name__ == "__main__":\n      N = int(input("How many primes? "))\n      for p in first_n_primes(N):\n          print(p)        \n```\n\n# Math\n\nPythagoras sez: $a^2 + b^2 = c^2$.\n\nThe Schwarzschild radius of an uncharged, non-rotating black hole is\n\n$$\nr_s = \u000Crac{2GM}{c^2}\n$$\n\nwhere $G$ is Newton’s gravitational constant, $M$ is the mass, and $c$ is the speed of light.\n\n\n';
+var $author$project$Data$XMarkdown$text = '\u000A\u000A# Sample Document\u000A\u000AXMarkdown is a version of Markdown which handles mathematical text and other features.  These are described below.\u000A\u000AFeel free to edit this text.  Your changes will not be saved.\u000A\u000A# Math\u000A\u000AXMarkdown handles both inline and displayed mathematical text, e.g., $a^2 + b^2 = c^2$\u000Aand\u000A\u000A$$\u000Acos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\u000A$$\u000A\u000AHere is the source text: `$a^2 + b^2 = c^2$` for inline formulas and\u000A\u000A```\u000A$$\u000Acos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\u000A$$\u000A```\u000A\u000Afor displayed formulas. The source text looks like TeX but without most of the backslashes and curly braces that are customary.  This is [ETeX](https://package.elm-lang.org/packages/jxxcarlson/etex/latest/), an Elm package which implements this simplified syntax.  You may also use regular TeX:\u000A\u000A```\u000A$$\u000A\u005Ccos{x} = \u005Csum_{n=0}^\u005Cinfty(-1)^n \u005Cfrac{x^{2n}}{(2n)!}\u000A$$\u000A```\u000A\u000AIn ETeX curly braces are used for grouping.\u000A\u000A# Real-time Rendering\u000A\u000AXMarkdown provides for real-time rendering: the rendered text is updated as you type.\u000A\u000A# Synchronization\u000A\u000AXMarkdown can synchronize source and rendered text:\u000A\u000A- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.\u000A\u000A- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.\u000A\u000A# Table of Contents\u000A\u000AXMarkdown provides for an optional real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.\u000A\u000AAlso note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.\u000A\u000A*You can edit whatever you like in this document.  Your edits will not be saved.*\u000A\u000A\u000A# Images\u000A\u000A![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)\u000A\u000AThe element `[...]` holds the caption for the image as well as optional properties such as `width:400`.\u000A\u000A\u000A# Tables\u000A\u000AXMarkdown provides for Github-style tables.  These tables may contain mathematical text.\u000A\u000A**Ages, Occupations, and Favorite Formulas**\u000A\u000A| Name  | Age | Occupation  | F.F.|\u000A|:-------|----:|:-------------|-----:|\u000A| Alice |  28 | *Engineer*    | $n!$ |\u000A| Bob   |  34 | *Musician*    | $3:2$ |\u000A| Carol |  41 | *Mathematician* | $sqrt(2 + \u005Csqrt5)$\u000A\u000A ';
 var $author$project$Main$init = function (flags) {
+	var params = _Utils_update(
+		$jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters,
+		{numberToLevel: 0});
 	return _Utils_Tuple2(
-		{count: 0, fileName: 'untitled.md', idsOfOpenNodes: _List_Nil, initialText: $author$project$Data$XMarkdown$text, lrSyncIndex: 0, lrSyncMatches: _List_Nil, lrSyncText: '', selectId: '@InitID', sourceText: $author$project$Data$XMarkdown$text, syncHighlight: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, tick: 0, windowHeight: flags.window.windowHeight, windowWidth: flags.window.windowWidth},
-		$author$project$Ports$setEditorHighlightColor($jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters.highlightColor));
+		{compilerParameters: params, count: 0, currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, fileName: 'untitled.md', initialText: $author$project$Data$XMarkdown$text, lrSyncIndex: 0, lrSyncMatches: _List_Nil, lrSyncText: '', selectId: '@InitID', sourceText: $author$project$Data$XMarkdown$text, syncHighlight: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, tick: 0, windowHeight: flags.window.windowHeight, windowWidth: flags.window.windowWidth},
+		$author$project$Ports$setEditorHighlightColor(params.highlightColor));
 };
 var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $author$project$Main$GotNewWindowDimensions = F2(
@@ -5998,8 +6000,8 @@ var $elm$core$List$filterMap = F2(
 	});
 var $elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _v0, state) {
-		var key = _v0.key;
 		var event = _v0.event;
+		var key = _v0.key;
 		var toMessage = function (_v2) {
 			var subKey = _v2.a;
 			var _v3 = _v2.b;
@@ -6060,6 +6062,7 @@ var $author$project$Main$subscriptions = function (_v0) {
 				$author$project$Ports$lrSyncRequest($author$project$Main$LRSync)
 			]));
 };
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark = {$: 'Dark'};
 var $author$project$Main$FileLoaded = function (a) {
 	return {$: 'FileLoaded', a: a};
 };
@@ -6067,6 +6070,34 @@ var $author$project$Main$FileSelected = function (a) {
 	return {$: 'FileSelected', a: a};
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $avh4$elm_color$Color$RgbaSpace = F4(
+	function (a, b, c, d) {
+		return {$: 'RgbaSpace', a: a, b: b, c: c, d: d};
+	});
+var $avh4$elm_color$Color$rgba = F4(
+	function (r, g, b, a) {
+		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, a);
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue300 = A4($avh4$elm_color$Color$rgba, 0.54, 0.71, 0.94, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray200 = A4($avh4$elm_color$Color$rgba, 0.89, 0.89, 0.89, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray400 = A4($avh4$elm_color$Color$rgba, 0.65, 0.65, 0.65, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray700 = A4($avh4$elm_color$Color$rgba, 0.33, 0.35, 0.37, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray800 = A4($avh4$elm_color$Color$rgba, 0.26, 0.28, 0.3, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900 = A4($avh4$elm_color$Color$rgba, 0.19, 0.21, 0.23, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo500 = A4($avh4$elm_color$Color$rgba, 0.35, 0.38, 0.67, 1);
+var $avh4$elm_color$Color$lightBlue = A4($avh4$elm_color$Color$RgbaSpace, 114 / 255, 159 / 255, 207 / 255, 1.0);
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme = {
+	background: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
+	border: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray700,
+	codeBackground: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray800,
+	codeText: $avh4$elm_color$Color$lightBlue,
+	highlight: $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo500,
+	indentGuide: A4($avh4$elm_color$Color$rgba, 1, 1, 1, 0.15),
+	link: $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue300,
+	offsetBackground: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
+	offsetText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray400,
+	text: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray200
+};
 var $elm$core$List$drop = F2(
 	function (n, list) {
 		drop:
@@ -6114,7 +6145,7 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Sync$fromMsg = F2(
 				return $elm$core$Maybe$Nothing;
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsg = $jxxcarlson$xmarkdown_compiler$XMarkdown$Sync$fromMsg;
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight = $jxxcarlson$xmarkdown_compiler$XMarkdown$Sync$fromMsg;
 var $author$project$Main$geometry = function (model) {
 	var tocW = 200;
 	var pad = 24;
@@ -6165,130 +6196,82 @@ var $elm$core$Task$attempt = F2(
 							$elm$core$Result$Ok),
 						task))));
 	});
+var $elm$core$Task$fail = _Scheduler_fail;
 var $elm$browser$Browser$Dom$getElement = _Browser_getElement;
 var $elm$browser$Browser$Dom$getViewportOf = _Browser_getViewportOf;
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Editor$renderedTextId = '__RENDERED_TEXT__';
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$renderedTextId = $jxxcarlson$xmarkdown_compiler$XMarkdown$Editor$renderedTextId;
 var $elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
-var $author$project$Main$jumpToTopOf = function (elementId) {
-	var lineNumberId = A2(
-		$elm$core$Maybe$withDefault,
-		elementId,
-		$elm$core$List$head(
-			A2(
-				$elm$core$String$split,
-				'.',
-				A2($elm$core$String$dropLeft, 2, elementId))));
+var $author$project$Main$performScroll = function (headingElement) {
 	return A2(
-		$elm$core$Task$attempt,
-		function (_v1) {
-			return $author$project$Main$NoOp;
+		$elm$core$Task$andThen,
+		function (containerElement) {
+			return A2(
+				$elm$core$Task$andThen,
+				function (containerViewport) {
+					var headingAbsY = headingElement.element.y;
+					var currentScroll = containerViewport.viewport.y;
+					var containerAbsY = containerElement.element.y;
+					var headingInContent = (headingAbsY - containerAbsY) + currentScroll;
+					var targetScroll = A2($elm$core$Basics$max, 0, headingInContent - 50);
+					return A3($elm$browser$Browser$Dom$setViewportOf, $jxxcarlson$xmarkdown_compiler$XMarkdown$API$renderedTextId, 0, targetScroll);
+				},
+				$elm$browser$Browser$Dom$getViewportOf($jxxcarlson$xmarkdown_compiler$XMarkdown$API$renderedTextId));
 		},
-		A2(
-			$elm$core$Task$andThen,
-			function (scrollY) {
-				return A3($elm$browser$Browser$Dom$setViewportOf, $jxxcarlson$xmarkdown_compiler$XMarkdown$API$renderedTextId, 0, scrollY);
+		$elm$browser$Browser$Dom$getElement($jxxcarlson$xmarkdown_compiler$XMarkdown$API$renderedTextId));
+};
+var $author$project$Main$jumpToTopOfWithLineNumber = F2(
+	function (elementId, lineNumber) {
+		return A2(
+			$elm$core$Task$attempt,
+			function (_v1) {
+				return $author$project$Main$NoOp;
 			},
 			A2(
-				$elm$core$Task$andThen,
-				function (element) {
-					return A2(
-						$elm$core$Task$map,
-						function (viewport) {
-							var viewportHeight = viewport.viewport.height;
-							var elementY = element.element.y;
-							var elementHeight = element.element.height;
-							var currentScroll = viewport.viewport.y;
-							var elementYInContainer = elementY + currentScroll;
-							var newScroll = A2($elm$core$Basics$max, 0, (elementYInContainer - (viewportHeight / 2)) + (elementHeight / 2));
-							return newScroll;
-						},
-						$elm$browser$Browser$Dom$getViewportOf($jxxcarlson$xmarkdown_compiler$XMarkdown$API$renderedTextId));
+				$elm$core$Task$onError,
+				function (err) {
+					return $elm$core$Task$fail(err);
 				},
 				A2(
 					$elm$core$Task$onError,
 					function (_v0) {
-						return $elm$browser$Browser$Dom$getElement(lineNumberId);
+						var selector = '[data-line-number=\u0022' + ($elm$core$String$fromInt(lineNumber) + '\u0022]');
+						return A2(
+							$elm$core$Task$andThen,
+							$author$project$Main$performScroll,
+							$elm$browser$Browser$Dom$getElement(selector));
 					},
-					$elm$browser$Browser$Dom$getElement(elementId)))));
+					A2(
+						$elm$core$Task$andThen,
+						$author$project$Main$performScroll,
+						$elm$browser$Browser$Dom$getElement(elementId)))));
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue700 = A4($avh4$elm_color$Color$rgba, 0.0, 0.2, 1.0, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$blueDark = A4($avh4$elm_color$Color$rgba, 0.0, 0.0, 0.3, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray300 = A4($avh4$elm_color$Color$rgba, 0.82, 0.82, 0.82, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950 = A4($avh4$elm_color$Color$rgba, 0.09, 0.11, 0.13, 1);
+var $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo200 = A4($avh4$elm_color$Color$rgba, 0.82, 0.84, 0.93, 1);
+var $avh4$elm_color$Color$rgb = F3(
+	function (r, g, b) {
+		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, 1.0);
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme = {
+	background: A4($avh4$elm_color$Color$rgba, 0.9, 0.9, 0.9, 1.0),
+	border: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray300,
+	codeBackground: A4($avh4$elm_color$Color$rgba, 0.9, 0.9, 0.94, 1),
+	codeText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$blueDark,
+	highlight: $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo200,
+	indentGuide: A4($avh4$elm_color$Color$rgba, 0, 0, 0, 0.15),
+	link: $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue700,
+	offsetBackground: A3($avh4$elm_color$Color$rgb, 1, 1, 1),
+	offsetText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950,
+	text: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950
 };
 var $elm$core$String$lines = _String_lines;
-var $elm$core$List$any = F2(
-	function (isOkay, list) {
-		any:
-		while (true) {
-			if (!list.b) {
-				return false;
-			} else {
-				var x = list.a;
-				var xs = list.b;
-				if (isOkay(x)) {
-					return true;
-				} else {
-					var $temp$isOkay = isOkay,
-						$temp$list = xs;
-					isOkay = $temp$isOkay;
-					list = $temp$list;
-					continue any;
-				}
-			}
-		}
-	});
-var $elm$core$List$member = F2(
-	function (x, xs) {
-		return A2(
-			$elm$core$List$any,
-			function (a) {
-				return _Utils_eq(a, x);
-			},
-			xs);
-	});
 var $elm$core$Basics$modBy = _Basics_modBy;
 var $elm$file$File$name = _File_name;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Basics$not = _Basics_not;
-var $elmcraft$core_extra$List$Extra$reverseAppend = F2(
-	function (list1, list2) {
-		return A3($elm$core$List$foldl, $elm$core$List$cons, list2, list1);
-	});
-var $elmcraft$core_extra$List$Extra$removeHelp = F4(
-	function (list, x, xs, previousElements) {
-		removeHelp:
-		while (true) {
-			if (!xs.b) {
-				return list;
-			} else {
-				var y = xs.a;
-				var ys = xs.b;
-				if (_Utils_eq(x, y)) {
-					return A2($elmcraft$core_extra$List$Extra$reverseAppend, previousElements, ys);
-				} else {
-					var $temp$list = list,
-						$temp$x = x,
-						$temp$xs = ys,
-						$temp$previousElements = A2($elm$core$List$cons, y, previousElements);
-					list = $temp$list;
-					x = $temp$x;
-					xs = $temp$xs;
-					previousElements = $temp$previousElements;
-					continue removeHelp;
-				}
-			}
-		}
-	});
-var $elmcraft$core_extra$List$Extra$remove = F2(
-	function (x, xs) {
-		return A4($elmcraft$core_extra$List$Extra$removeHelp, xs, x, xs, _List_Nil);
-	});
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
 		return A3(
@@ -6299,62 +6282,6 @@ var $elm$core$List$filter = F2(
 				}),
 			_List_Nil,
 			list);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading = function (heading) {
-	switch (heading.$) {
-		case 'Paragraph':
-			return $elm$core$Maybe$Nothing;
-		case 'Ordinary':
-			var name = heading.a;
-			return $elm$core$Maybe$Just(name);
-		default:
-			var name = heading.a;
-			return $elm$core$Maybe$Just(name);
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Language$getName = function (block) {
-	return $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(block.heading);
-};
-var $maca$elm_rose_tree$RoseTree$Tree$value = function (_v0) {
-	var a = _v0.a;
-	return a;
-};
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$labelName = function (tree) {
-	return $jxxcarlson$xmarkdown_compiler$AST$Language$getName(
-		$maca$elm_rose_tree$RoseTree$Tree$value(tree));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterForestOnLabelNames = F2(
-	function (predicate, forest) {
-		return A2(
-			$elm$core$List$filter,
-			function (tree) {
-				return predicate(
-					$jxxcarlson$xmarkdown_compiler$AST$ASTTools$labelName(tree));
-			},
-			forest);
-	});
-var $elm$core$Basics$neq = _Utils_notEqual;
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$filterForest = F2(
-	function (filter, forest) {
-		if (filter.$ === 'NoFilter') {
-			return forest;
-		} else {
-			return A2(
-				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterForestOnLabelNames,
-				function (name) {
-					return !_Utils_eq(
-						name,
-						$elm$core$Maybe$Just('title'));
-				},
-				A2(
-					$jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterForestOnLabelNames,
-					function (name) {
-						return !_Utils_eq(
-							name,
-							$elm$core$Maybe$Just('document'));
-					},
-					forest));
-		}
 	});
 var $elm$core$List$append = F2(
 	function (xs, ys) {
@@ -6375,6 +6302,10 @@ var $elm$core$List$concatMap = F2(
 var $maca$elm_rose_tree$RoseTree$Tree$children = function (_v0) {
 	var ns = _v0.b;
 	return $elm$core$Array$toList(ns);
+};
+var $maca$elm_rose_tree$RoseTree$Tree$value = function (_v0) {
+	var a = _v0.a;
+	return a;
 };
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$treeToBlockList = function (tree) {
 	var root = $maca$elm_rose_tree$RoseTree$Tree$value(tree);
@@ -7140,12 +7071,12 @@ var $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary = function (a) {
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$addCurrentLine_ = F2(
 	function (line, block) {
-		var prefix = line.prefix;
 		var content = line.content;
+		var prefix = line.prefix;
 		var oldMeta = block.meta;
 		var newMeta = _Utils_update(
 			oldMeta,
-			{sourceText: block.meta.sourceText + ('\n' + (prefix + content))});
+			{sourceText: block.meta.sourceText + ('\u000A' + (prefix + content))});
 		return _Utils_update(
 			block,
 			{
@@ -7305,6 +7236,7 @@ var $elm$parser$Parser$Advanced$keeper = F2(
 		return A3($elm$parser$Parser$Advanced$map2, $elm$core$Basics$apL, parseFunc, parseArg);
 	});
 var $elm$parser$Parser$keeper = $elm$parser$Parser$Advanced$keeper;
+var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$parser$Parser$Advanced$succeed = function (a) {
 	return $elm$parser$Parser$Advanced$Parser(
 		function (s) {
@@ -7462,73 +7394,122 @@ var $elm$core$Dict$get = F2(
 			}
 		}
 	});
+var $elm$core$List$any = F2(
+	function (isOkay, list) {
+		any:
+		while (true) {
+			if (!list.b) {
+				return false;
+			} else {
+				var x = list.a;
+				var xs = list.b;
+				if (isOkay(x)) {
+					return true;
+				} else {
+					var $temp$isOkay = isOkay,
+						$temp$list = xs;
+					isOkay = $temp$isOkay;
+					list = $temp$list;
+					continue any;
+				}
+			}
+		}
+	});
+var $elm$core$List$member = F2(
+	function (x, xs) {
+		return A2(
+			$elm$core$List$any,
+			function (a) {
+				return _Utils_eq(a, x);
+			},
+			xs);
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim = function (a) {
+	return {$: 'Verbatim', a: a};
+};
 var $elm$core$String$trim = _String_trim;
+var $elm$core$String$trimLeft = _String_trimLeft;
+var $elmcraft$core_extra$List$Extra$unconsLast = function (list) {
+	var _v0 = $elm$core$List$reverse(list);
+	if (!_v0.b) {
+		return $elm$core$Maybe$Nothing;
+	} else {
+		var last_ = _v0.a;
+		var rest = _v0.b;
+		return $elm$core$Maybe$Just(
+			_Utils_Tuple2(
+				last_,
+				$elm$core$List$reverse(rest)));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$normalizeMathDelimiters = function (block) {
+	return _Utils_eq(
+		block.heading,
+		$jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math')) ? _Utils_update(
+		block,
+		{
+			body: function () {
+				var _v0 = $elmcraft$core_extra$List$Extra$unconsLast(block.body);
+				if (_v0.$ === 'Just') {
+					var _v1 = _v0.a;
+					var lastLine = _v1.a;
+					var front = _v1.b;
+					return ($elm$core$String$trim(lastLine) === '\u005C]') ? _Utils_ap(
+						front,
+						_List_fromArray(
+							['$$'])) : block.body;
+				} else {
+					return block.body;
+				}
+			}(),
+			firstLine: A2(
+				$elm$core$String$startsWith,
+				'\u005C[',
+				$elm$core$String$trimLeft(block.firstLine)) ? ('$$' + A2(
+				$elm$core$String$dropLeft,
+				2,
+				$elm$core$String$trimLeft(block.firstLine))) : block.firstLine
+		}) : block;
+};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$finalize = function (block) {
 	var properties = function () {
 		var _v1 = block.heading;
-		_v1$2:
-		while (true) {
-			switch (_v1.$) {
-				case 'Ordinary':
-					if (_v1.a === 'document') {
-						var docId = A2(
-							$elm$core$Maybe$withDefault,
-							'noDocId',
-							A2(
-								$elm$core$Maybe$map,
-								function (_v2) {
-									var a = _v2.a;
-									var b = _v2.b;
-									return a + (':' + b);
-								},
-								$elm$core$List$head(
-									$elm$core$Dict$toList(block.properties))));
-						return A3($elm$core$Dict$insert, 'docId', docId, block.properties);
-					} else {
-						break _v1$2;
-					}
-				case 'Verbatim':
-					if (_v1.a === 'settings') {
-						var getPair = function (strings) {
-							if ((strings.b && strings.b.b) && (!strings.b.b.b)) {
-								var a = strings.a;
-								var _v4 = strings.b;
-								var b = _v4.a;
-								return $elm$core$Maybe$Just(
-									_Utils_Tuple2(a, b));
-							} else {
-								return $elm$core$Maybe$Nothing;
-							}
-						};
-						var dict = $elm$core$Dict$fromList(
-							A2(
-								$elm$core$List$filterMap,
-								$elm$core$Basics$identity,
-								A2(
-									$elm$core$List$map,
-									getPair,
-									A2(
-										$elm$core$List$map,
-										function (s) {
-											return A2($elm$core$String$split, ':', s);
-										},
-										A2($elm$core$List$map, $elm$core$String$trim, block.body)))));
-						return A2($elm$core$Dict$union, dict, block.properties);
-					} else {
-						break _v1$2;
-					}
-				default:
-					break _v1$2;
-			}
+		if ((_v1.$ === 'Verbatim') && (_v1.a === 'settings')) {
+			var getPair = function (strings) {
+				if ((strings.b && strings.b.b) && (!strings.b.b.b)) {
+					var a = strings.a;
+					var _v3 = strings.b;
+					var b = _v3.a;
+					return $elm$core$Maybe$Just(
+						_Utils_Tuple2(a, b));
+				} else {
+					return $elm$core$Maybe$Nothing;
+				}
+			};
+			var dict = $elm$core$Dict$fromList(
+				A2(
+					$elm$core$List$filterMap,
+					$elm$core$Basics$identity,
+					A2(
+						$elm$core$List$map,
+						getPair,
+						A2(
+							$elm$core$List$map,
+							function (s) {
+								return A2($elm$core$String$split, ':', s);
+							},
+							A2($elm$core$List$map, $elm$core$String$trim, block.body)))));
+			return A2($elm$core$Dict$union, dict, block.properties);
+		} else {
+			return block.properties;
 		}
-		return block.properties;
 	}();
 	var oldMeta = block.meta;
 	var content = $elm$core$List$reverse(block.body);
 	var sourceText = (!_Utils_eq(block.heading, $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph)) ? A2(
 		$elm$core$String$join,
-		'\n',
-		A2($elm$core$List$cons, block.firstLine, content)) : A2($elm$core$String$join, '\n', content);
+		'\u000A',
+		A2($elm$core$List$cons, block.firstLine, content)) : A2($elm$core$String$join, '\u000A', content);
 	var newMeta = _Utils_update(
 		oldMeta,
 		{sourceText: sourceText});
@@ -7540,9 +7521,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$finalize = functi
 			return block.args;
 		}
 	}();
-	return _Utils_update(
-		block,
-		{args: args, body: content, meta: newMeta, properties: properties});
+	return $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$normalizeMathDelimiters(
+		_Utils_update(
+			block,
+			{args: args, body: content, meta: newMeta, properties: properties}));
 };
 var $elm$regex$Regex$Match = F4(
 	function (match, index, number, submatches) {
@@ -7557,10 +7539,19 @@ var $elm$regex$Regex$fromString = function (string) {
 		string);
 };
 var $elm$regex$Regex$never = _Regex_never;
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$sectionRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^(#+\\s*|!!\\s*)'));
+	$elm$regex$Regex$fromString('^(#+\u005Cs*|!!\u005Cs*)'));
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -7627,7 +7618,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$fixMarkdownTitleB
 	}
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isVerbatimLine = function (str) {
-	return (A2($elm$core$String$left, 3, str) === '```') || (A2($elm$core$String$left, 2, str) === '$$');
+	return (A2($elm$core$String$left, 3, str) === '```') || ((A2($elm$core$String$left, 2, str) === '$$') || (A2($elm$core$String$left, 2, str) === '\u005C['));
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$acceptBlock = F2(
 	function (tag, block) {
@@ -7638,7 +7629,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$acceptBlock = F2(
 var $jxxcarlson$xmarkdown_compiler$Tools$Utility$ordinaryTagAtEndRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('.*\n| .*$'));
+	$elm$regex$Regex$fromString('.*\u000A| .*$'));
 var $jxxcarlson$xmarkdown_compiler$Tools$Utility$findOrdinaryTagAtEnd = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -7793,7 +7784,7 @@ var $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDotSpace = functi
 	var regex = A2(
 		$elm$core$Maybe$withDefault,
 		$elm$regex$Regex$never,
-		$elm$regex$Regex$fromString('^\\. '));
+		$elm$regex$Regex$fromString('^\u005C. '));
 	return A3(
 		$elm$regex$Regex$replace,
 		regex,
@@ -7809,37 +7800,31 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$transformBlock = 
 		if (_v0.$ === 'Just') {
 			switch (_v0.a) {
 				case 'section':
-					var _v1 = $elm$core$List$head(block.args);
-					if (_v1.$ === 'Nothing') {
-						return _Utils_update(
-							block,
-							{
-								properties: A3($elm$core$Dict$insert, 'level', '1', block.properties)
-							});
-					} else {
-						var level = _v1.a;
-						return _Utils_update(
-							block,
-							{
-								properties: A3($elm$core$Dict$insert, 'level', level, block.properties)
-							});
-					}
+					return _Utils_update(
+						block,
+						{
+							properties: A3(
+								$elm$core$Dict$insert,
+								'level',
+								A2(
+									$elm$core$Maybe$withDefault,
+									'1',
+									$elm$core$List$head(block.args)),
+								block.properties)
+						});
 				case 'section*':
-					var _v2 = $elm$core$List$head(block.args);
-					if (_v2.$ === 'Nothing') {
-						return _Utils_update(
-							block,
-							{
-								properties: A3($elm$core$Dict$insert, 'level', '1', block.properties)
-							});
-					} else {
-						var level = _v2.a;
-						return _Utils_update(
-							block,
-							{
-								properties: A3($elm$core$Dict$insert, 'level', level, block.properties)
-							});
-					}
+					return _Utils_update(
+						block,
+						{
+							properties: A3(
+								$elm$core$Dict$insert,
+								'level',
+								A2(
+									$elm$core$Maybe$withDefault,
+									'1',
+									$elm$core$List$head(block.args)),
+								block.properties)
+						});
 				case 'subsection':
 					return _Utils_update(
 						block,
@@ -8004,10 +7989,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$commitBlock = F2(
 var $jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta = {error: $elm$core$Maybe$Nothing, id: '', lineNumber: 0, messages: _List_Nil, numberOfLines: 0, position: 0, sourceText: ''};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$bogusBlockFromLine = F2(
 	function (message_, _v0) {
-		var indent = _v0.indent;
-		var lineNumber = _v0.lineNumber;
-		var position = _v0.position;
 		var content = _v0.content;
+		var position = _v0.position;
+		var lineNumber = _v0.lineNumber;
+		var indent = _v0.indent;
 		var message = '[b [red ' + (content + (']] [blue [i ' + (message_ + ']]')));
 		var meta = _Utils_update(
 			$jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta,
@@ -8025,9 +8010,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$bogusBlockFromLin
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HEMissingName = {$: 'HEMissingName'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent = {$: 'HENoContent'};
-var $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim = function (a) {
-	return {$: 'Verbatim', a: a};
-};
 var $elmcraft$core_extra$List$Extra$findIndexHelp = F3(
 	function (index, predicate, list) {
 		findIndexHelp:
@@ -8243,7 +8225,7 @@ var $jxxcarlson$xmarkdown_compiler$Tools$KV$argsAndProperties = function (words)
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$titleRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^!!\\s'));
+	$elm$regex$Regex$fromString('^!!\u005Cs'));
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findTitlePrefix = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -8376,6 +8358,13 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = 
 								heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
 								properties: $elm$core$Dict$empty
 							});
+					case '\u005C[':
+						return $elm$core$Result$Ok(
+							{
+								args: _List_Nil,
+								heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
+								properties: $elm$core$Dict$empty
+							});
 					case '```':
 						return $elm$core$Result$Ok(
 							{
@@ -8392,19 +8381,19 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = 
 	}
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$blockFromLine = function (line) {
-	var indent = line.indent;
-	var lineNumber = line.lineNumber;
-	var position = line.position;
-	var prefix = line.prefix;
 	var content = line.content;
+	var prefix = line.prefix;
+	var position = line.position;
+	var lineNumber = line.lineNumber;
+	var indent = line.indent;
 	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData(content);
 	if (_v0.$ === 'Err') {
 		return $elm$core$Result$Ok(
 			A2($jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$bogusBlockFromLine, '<= something missing', line));
 	} else {
-		var heading = _v0.a.heading;
-		var args = _v0.a.args;
 		var properties = _v0.a.properties;
+		var args = _v0.a.args;
+		var heading = _v0.a.heading;
 		var meta = _Utils_update(
 			$jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta,
 			{lineNumber: lineNumber, numberOfLines: 1, position: position, sourceText: ''});
@@ -8635,15 +8624,16 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$parse = F3(
 	function (initialId, outerCount, lines) {
 		return A2(
 			$jxxcarlson$xmarkdown_compiler$Tools$Loop$loop,
-			A3($jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$init, initialId, outerCount, lines),
+			A3(
+				$jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$init,
+				initialId,
+				outerCount,
+				_Utils_ap(
+					lines,
+					_List_fromArray(
+						['']))),
 			$jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$nextStep);
 	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklog_ = function (a) {
-	return a;
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogCyan = function (a) {
-	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklog_(a);
-};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$initWithTokens = F2(
 	function (lineNumber, tokens) {
 		return {
@@ -8674,7 +8664,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$advanceTokenIndex = 
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$C = {$: 'C'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$M = {$: 'M'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SAT = {$: 'SAT'};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$ML = {$: 'ML'};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$MR = {$: 'MR'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SImage = {$: 'SImage'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$toSymbol = function (token) {
 	switch (token.$) {
@@ -8690,12 +8681,14 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$toSymbol = function (tok
 			return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SItalic);
 		case 'Image':
 			return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SImage);
-		case 'AT':
-			return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SAT);
 		case 'RP':
 			return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RParen);
 		case 'MathToken':
 			return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$M);
+		case 'MathTokenLeft':
+			return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$ML);
+		case 'MathTokenRight':
+			return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$MR);
 		case 'CodeToken':
 			return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$C);
 		default:
@@ -8716,2228 +8709,15 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$convertTokens = function
 	return $elmcraft$core_extra$Maybe$Extra$values(
 		A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$toSymbol, tokens));
 };
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogBlue = function (a) {
-	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklog_(a);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogRed = function (a) {
-	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklog_(a);
-};
 var $elmcraft$core_extra$List$Extra$getAt = F2(
 	function (idx, xs) {
 		return (idx < 0) ? $elm$core$Maybe$Nothing : $elm$core$List$head(
 			A2($elm$core$List$drop, idx, xs));
 	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$initWithTokens = F2(
-	function (lineNumber, tokens) {
-		return {
-			committed: _List_Nil,
-			lineNumber: lineNumber,
-			messages: _List_Nil,
-			numberOfTokens: $elm$core$List$length(tokens),
-			stack: _List_Nil,
-			step: 0,
-			tokenIndex: 0,
-			tokens: $elm$core$List$reverse(tokens)
-		};
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$advanceTokenIndex = function (state) {
-	return _Utils_update(
-		state,
-		{tokenIndex: state.tokenIndex + 1});
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$getToken = function (state) {
-	return A2($elmcraft$core_extra$List$Extra$getAt, state.tokenIndex, state.tokens);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOnStack_ = F2(
-	function (token, state) {
-		return _Utils_update(
-			state,
-			{
-				stack: A2($elm$core$List$cons, token, state.stack)
-			});
-	});
 var $jxxcarlson$xmarkdown_compiler$AST$Language$Text = F2(
 	function (a, b) {
 		return {$: 'Text', a: a, b: b};
 	});
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$expressionIdPrefix = 'e-';
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$makeId = F2(
-	function (lineNumber, tokenIndex) {
-		return $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$expressionIdPrefix + ($elm$core$String$fromInt(lineNumber) + ('.' + $elm$core$String$fromInt(tokenIndex)));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta = F3(
-	function (lineNumber, tokenIndex, _v0) {
-		var begin = _v0.begin;
-		var end = _v0.end;
-		var index = _v0.index;
-		return {
-			begin: begin,
-			end: end,
-			id: A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$makeId, lineNumber, tokenIndex),
-			index: index
-		};
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$indexOf = function (token) {
-	switch (token.$) {
-		case 'LB':
-			var meta = token.a;
-			return meta.index;
-		case 'RB':
-			var meta = token.a;
-			return meta.index;
-		case 'LMB':
-			var meta = token.a;
-			return meta.index;
-		case 'RMB':
-			var meta = token.a;
-			return meta.index;
-		case 'S':
-			var meta = token.b;
-			return meta.index;
-		case 'W':
-			var meta = token.b;
-			return meta.index;
-		case 'MathToken':
-			var meta = token.a;
-			return meta.index;
-		case 'CodeToken':
-			var meta = token.a;
-			return meta.index;
-		default:
-			var meta = token.b;
-			return meta.index;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$stringTokenToExpr = F2(
-	function (lineNumber, token) {
-		switch (token.$) {
-			case 'S':
-				var str = token.a;
-				var loc = token.b;
-				return $elm$core$Maybe$Just(
-					A2(
-						$jxxcarlson$xmarkdown_compiler$AST$Language$Text,
-						str,
-						A3(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta,
-							lineNumber,
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$indexOf(token),
-							loc)));
-			case 'W':
-				var str = token.a;
-				var loc = token.b;
-				return $elm$core$Maybe$Just(
-					A2(
-						$jxxcarlson$xmarkdown_compiler$AST$Language$Text,
-						str,
-						A3(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta,
-							lineNumber,
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$indexOf(token),
-							loc)));
-			default:
-				return $elm$core$Maybe$Nothing;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$commit = F2(
-	function (token, state) {
-		var _v0 = A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$stringTokenToExpr, state.lineNumber, token);
-		if (_v0.$ === 'Nothing') {
-			return state;
-		} else {
-			var expr = _v0.a;
-			return _Utils_update(
-				state,
-				{
-					committed: A2($elm$core$List$cons, expr, state.committed)
-				});
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$push = F2(
-	function (token, state) {
-		return _Utils_update(
-			state,
-			{
-				stack: A2($elm$core$List$cons, token, state.stack)
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOrCommit_ = F2(
-	function (token, state) {
-		return $elm$core$List$isEmpty(state.stack) ? A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$commit, token, state) : A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$push, token, state);
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOrCommit = F2(
-	function (token, state) {
-		switch (token.$) {
-			case 'S':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOrCommit_, token, state);
-			case 'W':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOrCommit_, token, state);
-			case 'MathToken':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOnStack_, token, state);
-			case 'CodeToken':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOnStack_, token, state);
-			case 'LB':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOnStack_, token, state);
-			case 'RB':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOnStack_, token, state);
-			case 'LMB':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOnStack_, token, state);
-			case 'RMB':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOnStack_, token, state);
-			default:
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOnStack_, token, state);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$LB = function (a) {
-	return {$: 'LB', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RB = function (a) {
-	return {$: 'RB', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S = F2(
-	function (a, b) {
-		return {$: 'S', a: a, b: b};
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$CodeToken = function (a) {
-	return {$: 'CodeToken', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$LMB = function (a) {
-	return {$: 'LMB', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$MathToken = function (a) {
-	return {$: 'MathToken', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RMB = function (a) {
-	return {$: 'RMB', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TokenError = F2(
-	function (a, b) {
-		return {$: 'TokenError', a: a, b: b};
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$W = F2(
-	function (a, b) {
-		return {$: 'W', a: a, b: b};
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex = F2(
-	function (k, token) {
-		switch (token.$) {
-			case 'LB':
-				var meta = token.a;
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$LB(
-					_Utils_update(
-						meta,
-						{index: k}));
-			case 'RB':
-				var meta = token.a;
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RB(
-					_Utils_update(
-						meta,
-						{index: k}));
-			case 'LMB':
-				var meta = token.a;
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$LMB(
-					_Utils_update(
-						meta,
-						{index: k}));
-			case 'RMB':
-				var meta = token.a;
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RMB(
-					_Utils_update(
-						meta,
-						{index: k}));
-			case 'S':
-				var str = token.a;
-				var meta = token.b;
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-					str,
-					_Utils_update(
-						meta,
-						{index: k}));
-			case 'W':
-				var str = token.a;
-				var meta = token.b;
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$W,
-					str,
-					_Utils_update(
-						meta,
-						{index: k}));
-			case 'MathToken':
-				var meta = token.a;
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$MathToken(
-					_Utils_update(
-						meta,
-						{index: k}));
-			case 'CodeToken':
-				var meta = token.a;
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$CodeToken(
-					_Utils_update(
-						meta,
-						{index: k}));
-			default:
-				var list = token.a;
-				var meta = token.b;
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TokenError,
-					list,
-					_Utils_update(
-						meta,
-						{index: k}));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$changeTokenIndicesFrom = F3(
-	function (from, delta, tokens) {
-		var f = function (token) {
-			var k = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$indexOf(token);
-			return (_Utils_cmp(k, from) > -1) ? A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex, k + delta, token) : token;
-		};
-		return A2(
-			$elm$core$List$map,
-			function (token) {
-				return f(token);
-			},
-			tokens);
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyTokenIndex = 0;
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLoc = {begin: 0, end: 0, index: $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyTokenIndex};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLocWithId = {begin: 0, end: 0, id: 'dummy (2)', index: $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyTokenIndex};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage = function (message) {
-	return A3(
-		$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
-		'errorHighlight',
-		_List_fromArray(
-			[
-				A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, message, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLocWithId)
-			]),
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLocWithId);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorSuffix = function (rest) {
-	if (!rest.b) {
-		return ']?';
-	} else {
-		if ((rest.a.$ === 'W') && (!rest.b.b)) {
-			var _v1 = rest.a;
-			return ']?';
-		} else {
-			return '';
-		}
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage = F3(
-	function (lineNumber, message, messages) {
-		return A2(
-			$elm$core$List$cons,
-			message + (' (line ' + ($elm$core$String$fromInt(lineNumber) + ')')),
-			A2($elm$core$List$take, 2, messages));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$addErrorMessage = F2(
-	function (message, state) {
-		var committed = A2(
-			$elm$core$List$cons,
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(message),
-			state.committed);
-		return _Utils_update(
-			state,
-			{committed: committed});
-	});
-var $elm$core$List$sum = function (numbers) {
-	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$value = function (symbol) {
-	switch (symbol.$) {
-		case 'L':
-			return 1;
-		case 'R':
-			return -1;
-		case 'LM':
-			return 1;
-		case 'RM':
-			return -1;
-		case 'ST':
-			return 0;
-		case 'WS':
-			return 0;
-		case 'M':
-			return 0;
-		case 'C':
-			return 0;
-		default:
-			return 0;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$balance = function (symbols) {
-	return $elm$core$List$sum(
-		A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$value, symbols));
-};
-var $elm$core$List$repeatHelp = F3(
-	function (result, n, value) {
-		repeatHelp:
-		while (true) {
-			if (n <= 0) {
-				return result;
-			} else {
-				var $temp$result = A2($elm$core$List$cons, value, result),
-					$temp$n = n - 1,
-					$temp$value = value;
-				result = $temp$result;
-				n = $temp$n;
-				value = $temp$value;
-				continue repeatHelp;
-			}
-		}
-	});
-var $elm$core$List$repeat = F2(
-	function (n, value) {
-		return A3($elm$core$List$repeatHelp, _List_Nil, n, value);
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$bracketError = function (k) {
-	if (k < 0) {
-		var brackets = A2(
-			$elm$core$String$join,
-			'',
-			A2($elm$core$List$repeat, -k, ']'));
-		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(
-			' ' + (brackets + (' << Too many right brackets (' + ($elm$core$String$fromInt(-k) + ')'))));
-	} else {
-		var brackets = A2(
-			$elm$core$String$join,
-			'',
-			A2($elm$core$List$repeat, k, '['));
-		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(
-			' ' + (brackets + (' << Too many left brackets (' + ($elm$core$String$fromInt(k) + ')'))));
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$bracketErrorAsString = function (k) {
-	return (k < 0) ? ('Too many right brackets (' + ($elm$core$String$fromInt(-k) + ')')) : ('Too many left brackets (' + ($elm$core$String$fromInt(k) + ')'));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$C = {$: 'C'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$M = {$: 'M'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$WS = {$: 'WS'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$dropLast = function (list) {
-	var n = $elm$core$List$length(list);
-	return A2($elm$core$List$take, n - 1, list);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$getSegment = F2(
-	function (sym, symbols) {
-		var seg_ = A2(
-			$elmcraft$core_extra$List$Extra$takeWhile,
-			function (sym_) {
-				return !_Utils_eq(sym_, sym);
-			},
-			A2($elm$core$List$drop, 1, symbols));
-		var n = $elm$core$List$length(seg_);
-		var _v0 = A2($elmcraft$core_extra$List$Extra$getAt, n + 1, symbols);
-		if (_v0.$ === 'Nothing') {
-			return A2($elm$core$List$cons, sym, seg_);
-		} else {
-			var last = _v0.a;
-			return A2(
-				$elm$core$List$cons,
-				sym,
-				_Utils_ap(
-					seg_,
-					_List_fromArray(
-						[last])));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$loop = F2(
-	function (s, f) {
-		loop:
-		while (true) {
-			var _v0 = f(s);
-			if (_v0.$ === 'Loop') {
-				var s_ = _v0.a;
-				var $temp$s = s_,
-					$temp$f = f;
-				s = $temp$s;
-				f = $temp$f;
-				continue loop;
-			} else {
-				var b = _v0.a;
-				return b;
-			}
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Done = function (a) {
-	return {$: 'Done', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Loop = function (a) {
-	return {$: 'Loop', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$nextStep = function (state) {
-	var _v0 = $elm$core$List$head(state.symbols);
-	if (_v0.$ === 'Nothing') {
-		return $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Done($elm$core$Maybe$Nothing);
-	} else {
-		var sym = _v0.a;
-		var brackets = state.brackets + $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$value(sym);
-		return (brackets < 0) ? $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Done($elm$core$Maybe$Nothing) : ((!brackets) ? $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Done(
-			$elm$core$Maybe$Just(state.index)) : $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Loop(
-			{
-				brackets: brackets,
-				index: state.index + 1,
-				symbols: A2($elm$core$List$drop, 1, state.symbols)
-			}));
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$match = function (symbols) {
-	var _v0 = $elm$core$List$head(symbols);
-	if (_v0.$ === 'Nothing') {
-		return $elm$core$Maybe$Nothing;
-	} else {
-		var symbol = _v0.a;
-		return A2(
-			$elm$core$List$member,
-			symbol,
-			_List_fromArray(
-				[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$C, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$M])) ? $elm$core$Maybe$Just(
-			$elm$core$List$length(
-				A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$getSegment, symbol, symbols)) - 1) : (($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$value(symbol) < 0) ? $elm$core$Maybe$Nothing : A2(
-			$jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$loop,
-			{
-				brackets: $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$value(symbol),
-				index: 1,
-				symbols: A2($elm$core$List$drop, 1, symbols)
-			},
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$nextStep));
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$splitAt = F2(
-	function (k, list) {
-		return _Utils_Tuple2(
-			A2($elm$core$List$take, k, list),
-			A2($elm$core$List$drop, k, list));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$split = function (symbols) {
-	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$match(symbols);
-	if (_v0.$ === 'Nothing') {
-		return $elm$core$Maybe$Nothing;
-	} else {
-		var k = _v0.a;
-		return $elm$core$Maybe$Just(
-			A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$splitAt, k + 1, symbols));
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$hasReducibleArgs = function (symbols) {
-	hasReducibleArgs:
-	while (true) {
-		if (!symbols.b) {
-			return true;
-		} else {
-			switch (symbols.a.$) {
-				case 'L':
-					var _v14 = symbols.a;
-					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$reducibleAux(symbols);
-				case 'LM':
-					var _v15 = symbols.a;
-					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$reducibleAux(symbols);
-				case 'C':
-					var _v16 = symbols.a;
-					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$reducibleAux(symbols);
-				case 'M':
-					var _v17 = symbols.a;
-					var seg = A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$getSegment, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$M, symbols);
-					if ($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$isReducible(seg)) {
-						var $temp$symbols = A2(
-							$elm$core$List$drop,
-							$elm$core$List$length(seg),
-							symbols);
-						symbols = $temp$symbols;
-						continue hasReducibleArgs;
-					} else {
-						return false;
-					}
-				case 'ST':
-					var _v18 = symbols.a;
-					var rest = symbols.b;
-					var $temp$symbols = rest;
-					symbols = $temp$symbols;
-					continue hasReducibleArgs;
-				default:
-					return false;
-			}
-		}
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$isReducible = function (symbols_) {
-	var symbols = A2(
-		$elm$core$List$filter,
-		function (sym) {
-			return !_Utils_eq(sym, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$WS);
-		},
-		symbols_);
-	_v2$4:
-	while (true) {
-		if (symbols.b) {
-			switch (symbols.a.$) {
-				case 'M':
-					var _v3 = symbols.a;
-					var rest = symbols.b;
-					return _Utils_eq(
-						$elm$core$List$head(
-							$elm$core$List$reverse(rest)),
-						$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$M));
-				case 'C':
-					var _v4 = symbols.a;
-					var rest = symbols.b;
-					return _Utils_eq(
-						$elm$core$List$head(
-							$elm$core$List$reverse(rest)),
-						$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$C));
-				case 'L':
-					if (symbols.b.b && (symbols.b.a.$ === 'ST')) {
-						var _v5 = symbols.a;
-						var _v6 = symbols.b;
-						var _v7 = _v6.a;
-						var rest = _v6.b;
-						var _v8 = $elm$core$List$head(
-							$elm$core$List$reverse(rest));
-						if ((_v8.$ === 'Just') && (_v8.a.$ === 'R')) {
-							var _v9 = _v8.a;
-							return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$hasReducibleArgs(
-								$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$dropLast(rest));
-						} else {
-							return false;
-						}
-					} else {
-						break _v2$4;
-					}
-				case 'LM':
-					var _v10 = symbols.a;
-					var rest = symbols.b;
-					var _v11 = $elm$core$List$head(
-						$elm$core$List$reverse(rest));
-					if ((_v11.$ === 'Just') && (_v11.a.$ === 'RM')) {
-						var _v12 = _v11.a;
-						return true;
-					} else {
-						return false;
-					}
-				default:
-					break _v2$4;
-			}
-		} else {
-			break _v2$4;
-		}
-	}
-	return false;
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$reducibleAux = function (symbols) {
-	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$split(symbols);
-	if (_v0.$ === 'Nothing') {
-		return false;
-	} else {
-		var _v1 = _v0.a;
-		var a = _v1.a;
-		var b = _v1.b;
-		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$isReducible(a) && $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$hasReducibleArgs(b);
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Language$VFun = F3(
-	function (a, b, c) {
-		return {$: 'VFun', a: a, b: b, c: c};
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessageInvisible = A3(
-	$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
-	'invisible',
-	_List_fromArray(
-		[
-			A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, 'foo', $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLocWithId)
-		]),
-	$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLocWithId);
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TLB = {$: 'TLB'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TRB = {$: 'TRB'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TCode = {$: 'TCode'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TLMB = {$: 'TLMB'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TMath = {$: 'TMath'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TRMB = {$: 'TRMB'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TS = {$: 'TS'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TTokenError = {$: 'TTokenError'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TW = {$: 'TW'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$type_ = function (token) {
-	switch (token.$) {
-		case 'LB':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TLB;
-		case 'RB':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TRB;
-		case 'LMB':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TLMB;
-		case 'RMB':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TRMB;
-		case 'S':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TS;
-		case 'W':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TW;
-		case 'MathToken':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TMath;
-		case 'CodeToken':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TCode;
-		default:
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TTokenError;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$isExpr = function (tokens) {
-	return _Utils_eq(
-		A2(
-			$elm$core$List$map,
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$type_,
-			A2($elm$core$List$take, 1, tokens)),
-		_List_fromArray(
-			[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TLB])) && _Utils_eq(
-		A2(
-			$elm$core$List$map,
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$type_,
-			A2(
-				$elm$core$List$take,
-				1,
-				$elm$core$List$reverse(tokens))),
-		_List_fromArray(
-			[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TRB]));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$E = {$: 'E'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$L = {$: 'L'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$LM = {$: 'LM'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$R = {$: 'R'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$RM = {$: 'RM'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$ST = {$: 'ST'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$toSymbol = function (token) {
-	switch (token.$) {
-		case 'LB':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$L;
-		case 'RB':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$R;
-		case 'LMB':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$LM;
-		case 'RMB':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$RM;
-		case 'S':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$ST;
-		case 'W':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$WS;
-		case 'MathToken':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$M;
-		case 'CodeToken':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$C;
-		default:
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$E;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$toSymbols = function (tokens) {
-	return A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$toSymbol, tokens);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$splitTokens = function (tokens) {
-	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$match(
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$toSymbols(tokens));
-	if (_v0.$ === 'Nothing') {
-		return $elm$core$Maybe$Nothing;
-	} else {
-		var k = _v0.a;
-		return $elm$core$Maybe$Just(
-			A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$splitAt, k + 1, tokens));
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$segLength = function (tokens) {
-	return $elm$core$List$length(
-		A2(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$getSegment,
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$M,
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$toSymbols(tokens)));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$splitTokensWithSegment = function (tokens) {
-	return A2(
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$splitAt,
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$segLength(tokens) + 1,
-		tokens);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$unbracket = function (list) {
-	return A2(
-		$elm$core$List$drop,
-		1,
-		A2(
-			$elm$core$List$take,
-			$elm$core$List$length(list) - 1,
-			list));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens = F2(
-	function (lineNumber, tokens) {
-		if (tokens.b) {
-			switch (tokens.a.$) {
-				case 'LB':
-					var _v15 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$splitTokens(tokens);
-					if (_v15.$ === 'Nothing') {
-						return _List_fromArray(
-							[
-								$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessageInvisible,
-								A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, 'error on match', $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLocWithId)
-							]);
-					} else {
-						var _v16 = _v15.a;
-						var a = _v16.a;
-						var b = _v16.b;
-						return _Utils_ap(
-							A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceTokens, lineNumber, a),
-							A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens, lineNumber, b));
-					}
-				case 'LMB':
-					var _v17 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$splitTokens(tokens);
-					if (_v17.$ === 'Nothing') {
-						return _List_fromArray(
-							[
-								$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessageInvisible,
-								A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, 'error on match', $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLocWithId)
-							]);
-					} else {
-						var _v18 = _v17.a;
-						var a = _v18.a;
-						var b = _v18.b;
-						return _Utils_ap(
-							A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceTokens, lineNumber, a),
-							A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens, lineNumber, b));
-					}
-				case 'MathToken':
-					var _v19 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$splitTokensWithSegment(tokens);
-					var a = _v19.a;
-					var b = _v19.b;
-					return _Utils_ap(
-						A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceTokens, lineNumber, a),
-						A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens, lineNumber, b));
-				case 'CodeToken':
-					var _v20 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$splitTokensWithSegment(tokens);
-					var a = _v20.a;
-					var b = _v20.b;
-					return _Utils_ap(
-						A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceTokens, lineNumber, a),
-						A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens, lineNumber, b));
-				case 'S':
-					var _v21 = tokens.a;
-					var str = _v21.a;
-					var meta = _v21.b;
-					return A2(
-						$elm$core$List$cons,
-						A2(
-							$jxxcarlson$xmarkdown_compiler$AST$Language$Text,
-							str,
-							A3(
-								$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta,
-								0,
-								$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$indexOf(
-									A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S, str, meta)),
-								meta)),
-						A2(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens,
-							lineNumber,
-							A2($elm$core$List$drop, 1, tokens)));
-				default:
-					var token = tokens.a;
-					var _v22 = A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$stringTokenToExpr, lineNumber, token);
-					if (_v22.$ === 'Just') {
-						var expr = _v22.a;
-						return A2(
-							$elm$core$List$cons,
-							expr,
-							A2(
-								$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens,
-								lineNumber,
-								A2($elm$core$List$drop, 1, tokens)));
-					} else {
-						return _List_fromArray(
-							[
-								$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(
-								'Line ' + ($elm$core$String$fromInt(lineNumber) + ', error converting token')),
-								A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, 'error converting Token', $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLocWithId)
-							]);
-					}
-			}
-		} else {
-			return _List_Nil;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceTokens = F2(
-	function (lineNumber, tokens) {
-		if ($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$isExpr(tokens)) {
-			var args = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$unbracket(tokens);
-			if (args.b && (args.a.$ === 'S')) {
-				var _v1 = args.a;
-				var name = _v1.a;
-				var meta = _v1.b;
-				return _List_fromArray(
-					[
-						A3(
-						$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
-						name,
-						A2(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens,
-							lineNumber,
-							A2($elm$core$List$drop, 1, args)),
-						A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta, lineNumber, meta.index, meta))
-					]);
-			} else {
-				return _List_fromArray(
-					[
-						$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage('[????]')
-					]);
-			}
-		} else {
-			_v2$4:
-			while (true) {
-				if (tokens.b) {
-					switch (tokens.a.$) {
-						case 'MathToken':
-							if (((tokens.b.b && (tokens.b.a.$ === 'S')) && tokens.b.b.b) && (tokens.b.b.a.$ === 'MathToken')) {
-								var meta = tokens.a.a;
-								var _v3 = tokens.b;
-								var _v4 = _v3.a;
-								var str = _v4.a;
-								var _v5 = _v3.b;
-								var rest = _v5.b;
-								return A2(
-									$elm$core$List$cons,
-									A3(
-										$jxxcarlson$xmarkdown_compiler$AST$Language$VFun,
-										'math',
-										str,
-										A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta, lineNumber, meta.index, meta)),
-									A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens, lineNumber, rest));
-							} else {
-								break _v2$4;
-							}
-						case 'CodeToken':
-							if (((tokens.b.b && (tokens.b.a.$ === 'S')) && tokens.b.b.b) && (tokens.b.b.a.$ === 'CodeToken')) {
-								var meta = tokens.a.a;
-								var _v6 = tokens.b;
-								var _v7 = _v6.a;
-								var str = _v7.a;
-								var _v8 = _v6.b;
-								var rest = _v8.b;
-								return A2(
-									$elm$core$List$cons,
-									A3(
-										$jxxcarlson$xmarkdown_compiler$AST$Language$VFun,
-										'code',
-										str,
-										A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta, lineNumber, meta.index, meta)),
-									A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens, lineNumber, rest));
-							} else {
-								break _v2$4;
-							}
-						case 'LMB':
-							if (((tokens.b.b && (tokens.b.a.$ === 'S')) && tokens.b.b.b) && (tokens.b.b.a.$ === 'RMB')) {
-								var meta = tokens.a.a;
-								var _v9 = tokens.b;
-								var _v10 = _v9.a;
-								var str = _v10.a;
-								var _v11 = _v9.b;
-								var rest = _v11.b;
-								return A2(
-									$elm$core$List$cons,
-									A3(
-										$jxxcarlson$xmarkdown_compiler$AST$Language$VFun,
-										'math',
-										str,
-										A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta, lineNumber, meta.index, meta)),
-									A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceRestOfTokens, lineNumber, rest));
-							} else {
-								var meta = tokens.a.a;
-								var rest = tokens.b;
-								var reversedRest = $elm$core$List$reverse(rest);
-								var _v12 = $elm$core$List$head(reversedRest);
-								if ((_v12.$ === 'Just') && (_v12.a.$ === 'RMB')) {
-									var content = A2(
-										$elm$core$String$join,
-										' ',
-										A2(
-											$elm$core$List$map,
-											function (t) {
-												switch (t.$) {
-													case 'S':
-														var str = t.a;
-														return str;
-													case 'LB':
-														return '[';
-													case 'RB':
-														return ']';
-													default:
-														return '';
-												}
-											},
-											rest));
-									return _List_fromArray(
-										[
-											A3(
-											$jxxcarlson$xmarkdown_compiler$AST$Language$VFun,
-											'math',
-											content,
-											A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$boostMeta, lineNumber, meta.index, meta))
-										]);
-								} else {
-									return _List_fromArray(
-										[
-											$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage('[????]')
-										]);
-								}
-							}
-						default:
-							break _v2$4;
-					}
-				} else {
-					break _v2$4;
-				}
-			}
-			return _List_fromArray(
-				[
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage('[????]')
-				]);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceStack = function (state) {
-	return A2(
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceTokens,
-		state.lineNumber,
-		$elm$core$List$reverse(state.stack));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$tokensAreReducible = function (state) {
-	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$isReducible(
-		$elm$core$List$reverse(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$toSymbols(state.stack)));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceState = function (state) {
-	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$tokensAreReducible(state) ? _Utils_update(
-		state,
-		{
-			committed: _Utils_ap(
-				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceStack(state),
-				state.committed),
-			stack: _List_Nil
-		}) : state;
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$recoverFromUnknownError = function (state) {
-	var k = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$balance(
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$toSymbols(
-			$elm$core$List$reverse(state.stack)));
-	var newStack = _Utils_ap(
-		A2(
-			$elm$core$List$repeat,
-			k,
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RB($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLoc)),
-		state.stack);
-	var newSymbols = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Symbol$toSymbols(
-		$elm$core$List$reverse(newStack));
-	var reducible = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Match$isReducible(newSymbols);
-	return reducible ? $jxxcarlson$xmarkdown_compiler$Tools$Loop$Done(
-		A2(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$addErrorMessage,
-			' ?!?(1) ',
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceState(
-				_Utils_update(
-					state,
-					{
-						committed: A2(
-							$elm$core$List$cons,
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(' ?!?(2) '),
-							state.committed),
-						messages: A3(
-							$jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage,
-							state.lineNumber,
-							' ?!?(3) ' + ($elm$core$String$fromInt(k) + ' right brackets'),
-							state.messages),
-						numberOfTokens: $elm$core$List$length(newStack),
-						stack: newStack,
-						tokenIndex: 0
-					})))) : $jxxcarlson$xmarkdown_compiler$Tools$Loop$Done(
-		_Utils_update(
-			state,
-			{
-				committed: A2(
-					$elm$core$List$cons,
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$bracketError(k),
-					state.committed),
-				messages: A3(
-					$jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage,
-					state.lineNumber,
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$bracketErrorAsString(k),
-					state.messages)
-			}));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$stringValue = function (token) {
-	switch (token.$) {
-		case 'LB':
-			return '[';
-		case 'RB':
-			return ']';
-		case 'LMB':
-			return '\\(';
-		case 'RMB':
-			return '\\)';
-		case 'S':
-			var str = token.a;
-			return str;
-		case 'W':
-			var str = token.a;
-			return str;
-		case 'MathToken':
-			return '$';
-		case 'CodeToken':
-			return '`';
-		default:
-			return 'tokenError';
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$toString = function (tokens) {
-	return A2(
-		$elm$core$String$join,
-		'',
-		A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$stringValue, tokens));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$recoverFromError = function (state) {
-	var _v0 = $elm$core$List$reverse(state.stack);
-	_v0$11:
-	while (true) {
-		if (_v0.b) {
-			switch (_v0.a.$) {
-				case 'LMB':
-					var meta1 = _v0.a.a;
-					var k = meta1.index;
-					var shiftedTokens = A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$changeTokenIndicesFrom, k + 1, 4, state.tokens);
-					var errorTokens = _List_fromArray(
-						[
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$LB(
-							{begin: 0, end: 0, index: k + 1}),
-							A2(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-							'red',
-							{begin: 1, end: 3, index: k + 2}),
-							A2(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-							' unmatched \\(',
-							{begin: 4, end: 9, index: k + 3}),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RB(
-							{begin: 10, end: 10, index: k + 4})
-						]);
-					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-						_Utils_update(
-							state,
-							{
-								messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'No terminating right math bracket', state.messages),
-								stack: _List_Nil,
-								tokenIndex: meta1.index + 1,
-								tokens: _Utils_ap(
-									A2($elm$core$List$take, k + 1, state.tokens),
-									_Utils_ap(
-										errorTokens,
-										A2($elm$core$List$drop, k + 1, shiftedTokens)))
-							}));
-				case 'RMB':
-					var meta1 = _v0.a.a;
-					var k = meta1.index;
-					var shiftedTokens = A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$changeTokenIndicesFrom, k + 1, 4, state.tokens);
-					var errorTokens = _List_fromArray(
-						[
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$LB(
-							{begin: 0, end: 0, index: k + 1}),
-							A2(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-							'red',
-							{begin: 1, end: 3, index: k + 2}),
-							A2(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-							'unmatched \\)',
-							{begin: 4, end: 9, index: k + 3}),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RB(
-							{begin: 10, end: 10, index: k + 4})
-						]);
-					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-						_Utils_update(
-							state,
-							{
-								messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'No terminating right math bracket', state.messages),
-								stack: _List_Nil,
-								tokenIndex: meta1.index + 1,
-								tokens: _Utils_ap(
-									A2($elm$core$List$take, k + 1, state.tokens),
-									_Utils_ap(
-										errorTokens,
-										A2($elm$core$List$drop, k + 1, shiftedTokens)))
-							}));
-				case 'LB':
-					if (_v0.b.b) {
-						switch (_v0.b.a.$) {
-							case 'RB':
-								var _v1 = _v0.b;
-								var meta = _v1.a.a;
-								return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-									_Utils_update(
-										state,
-										{
-											committed: A2(
-												$elm$core$List$cons,
-												$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage('[?]'),
-												state.committed),
-											messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'Brackets must enclose something', state.messages),
-											stack: _List_Nil,
-											tokenIndex: meta.index + 1
-										}));
-							case 'LB':
-								var meta1 = _v0.a.a;
-								var _v2 = _v0.b;
-								var k = meta1.index;
-								var shiftedTokens = A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$changeTokenIndicesFrom, k + 1, 1, state.tokens);
-								return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-									_Utils_update(
-										state,
-										{
-											messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'Consecutive left brackets', state.messages),
-											stack: _List_Nil,
-											tokenIndex: meta1.index,
-											tokens: _Utils_ap(
-												A2($elm$core$List$take, k + 1, state.tokens),
-												A2(
-													$elm$core$List$cons,
-													A2(
-														$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-														'1[??',
-														_Utils_update(
-															$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$dummyLoc,
-															{index: k + 1})),
-													A2($elm$core$List$drop, k + 1, shiftedTokens)))
-										}));
-							case 'S':
-								var _v3 = _v0.b;
-								var _v4 = _v3.a;
-								var fName = _v4.a;
-								var meta = _v4.b;
-								var rest = _v3.b;
-								return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-									_Utils_update(
-										state,
-										{
-											committed: A2(
-												$elm$core$List$cons,
-												$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(
-													$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorSuffix(rest)),
-												A2(
-													$elm$core$List$cons,
-													$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage('[' + fName),
-													state.committed)),
-											messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'Missing right bracket', state.messages),
-											stack: _List_Nil,
-											tokenIndex: meta.index + 1
-										}));
-							case 'W':
-								if (_v0.b.a.a === ' ') {
-									var _v5 = _v0.b;
-									var _v6 = _v5.a;
-									var meta = _v6.b;
-									return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-										_Utils_update(
-											state,
-											{
-												committed: A2(
-													$elm$core$List$cons,
-													$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage('[ - can\'t have space after the bracket '),
-													state.committed),
-												messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'Can\'t have space after left bracket - try [something ...', state.messages),
-												stack: _List_Nil,
-												tokenIndex: meta.index + 1
-											}));
-								} else {
-									break _v0$11;
-								}
-							default:
-								break _v0$11;
-						}
-					} else {
-						return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Done(
-							_Utils_update(
-								state,
-								{
-									committed: A2(
-										$elm$core$List$cons,
-										$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage('[...?'),
-										state.committed),
-									messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'That left bracket needs something after it', state.messages),
-									numberOfTokens: 0,
-									stack: _List_Nil,
-									tokenIndex: 0
-								}));
-					}
-				case 'RB':
-					var meta = _v0.a.a;
-					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-						_Utils_update(
-							state,
-							{
-								committed: A2(
-									$elm$core$List$cons,
-									$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(' extra ]?'),
-									state.committed),
-								messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'Extra right bracket(s)', state.messages),
-								stack: _List_Nil,
-								tokenIndex: meta.index + 1
-							}));
-				case 'MathToken':
-					var meta = _v0.a.a;
-					var rest = _v0.b;
-					var content = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$toString(rest);
-					var message = (content === '') ? '$?$' : '$ ';
-					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-						_Utils_update(
-							state,
-							{
-								committed: A2(
-									$elm$core$List$cons,
-									$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(message),
-									state.committed),
-								messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'opening dollar sign needs to be matched with a closing one', state.messages),
-								numberOfTokens: 0,
-								stack: _List_Nil,
-								tokenIndex: meta.index + 1
-							}));
-				case 'CodeToken':
-					var meta = _v0.a.a;
-					var rest = _v0.b;
-					var content = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$toString(rest);
-					var message = (content === '') ? '`?`' : '` ';
-					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-						_Utils_update(
-							state,
-							{
-								committed: A2(
-									$elm$core$List$cons,
-									$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage(message),
-									state.committed),
-								messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'opening backtick needs to be matched with a closing one', state.messages),
-								numberOfTokens: 0,
-								stack: _List_Nil,
-								tokenIndex: meta.index + 1
-							}));
-				case 'TokenError':
-					var _v7 = _v0.a;
-					var meta = _v7.b;
-					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-						_Utils_update(
-							state,
-							{
-								committed: A2(
-									$elm$core$List$cons,
-									$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$errorMessage('\\[..??'),
-									state.committed),
-								messages: A3($jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$prependMessage, state.lineNumber, 'No mathching \\]??', state.messages),
-								stack: _List_Nil,
-								tokenIndex: meta.index + 1
-							}));
-				default:
-					break _v0$11;
-			}
-		} else {
-			break _v0$11;
-		}
-	}
-	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$recoverFromUnknownError(state);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$stackIsEmpty = function (state) {
-	return $elm$core$List$isEmpty(state.stack);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$nextStep = function (state) {
-	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$getToken(state);
-	if (_v0.$ === 'Nothing') {
-		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$stackIsEmpty(state) ? $jxxcarlson$xmarkdown_compiler$Tools$Loop$Done(state) : $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$recoverFromError(state);
-	} else {
-		var token = _v0.a;
-		return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
-			function (st) {
-				return _Utils_update(
-					st,
-					{step: st.step + 1});
-			}(
-				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$reduceState(
-					A2(
-						$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$pushOrCommit,
-						token,
-						$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$advanceTokenIndex(state)))));
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$run = function (state) {
-	return function (state_) {
-		return _Utils_update(
-			state_,
-			{
-				committed: $elm$core$List$reverse(state_.committed)
-			});
-	}(
-		A2($jxxcarlson$xmarkdown_compiler$Tools$Loop$loop, state, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$nextStep));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parseTokenListToState = F2(
-	function (lineNumber, tokens) {
-		var state = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$run(
-			A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$initWithTokens, lineNumber, tokens));
-		return state;
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$Normal = {$: 'Normal'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$init = function (str) {
-	return {
-		currentToken: $elm$core$Maybe$Nothing,
-		mode: $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$Normal,
-		scanpointer: 0,
-		source: str,
-		sourceLength: $elm$core$String$length(str),
-		tokenIndex: 0,
-		tokens: _List_Nil
-	};
-};
-var $elm$parser$Parser$Advanced$map = F2(
-	function (func, _v0) {
-		var parse = _v0.a;
-		return $elm$parser$Parser$Advanced$Parser(
-			function (s0) {
-				var _v1 = parse(s0);
-				if (_v1.$ === 'Good') {
-					var p = _v1.a;
-					var a = _v1.b;
-					var s1 = _v1.c;
-					return A3(
-						$elm$parser$Parser$Advanced$Good,
-						p,
-						func(a),
-						s1);
-				} else {
-					var p = _v1.a;
-					var x = _v1.b;
-					return A2($elm$parser$Parser$Advanced$Bad, p, x);
-				}
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$ParserTools$ExpectingPrefix = {$: 'ExpectingPrefix'};
-var $elm$parser$Parser$Advanced$AddRight = F2(
-	function (a, b) {
-		return {$: 'AddRight', a: a, b: b};
-	});
-var $elm$parser$Parser$Advanced$DeadEnd = F4(
-	function (row, col, problem, contextStack) {
-		return {col: col, contextStack: contextStack, problem: problem, row: row};
-	});
-var $elm$parser$Parser$Advanced$Empty = {$: 'Empty'};
-var $elm$parser$Parser$Advanced$fromState = F2(
-	function (s, x) {
-		return A2(
-			$elm$parser$Parser$Advanced$AddRight,
-			$elm$parser$Parser$Advanced$Empty,
-			A4($elm$parser$Parser$Advanced$DeadEnd, s.row, s.col, x, s.context));
-	});
-var $elm$parser$Parser$Advanced$chompIf = F2(
-	function (isGood, expecting) {
-		return $elm$parser$Parser$Advanced$Parser(
-			function (s) {
-				var newOffset = A3($elm$parser$Parser$Advanced$isSubChar, isGood, s.offset, s.src);
-				return _Utils_eq(newOffset, -1) ? A2(
-					$elm$parser$Parser$Advanced$Bad,
-					false,
-					A2($elm$parser$Parser$Advanced$fromState, s, expecting)) : (_Utils_eq(newOffset, -2) ? A3(
-					$elm$parser$Parser$Advanced$Good,
-					true,
-					_Utils_Tuple0,
-					{col: 1, context: s.context, indent: s.indent, offset: s.offset + 1, row: s.row + 1, src: s.src}) : A3(
-					$elm$parser$Parser$Advanced$Good,
-					true,
-					_Utils_Tuple0,
-					{col: s.col + 1, context: s.context, indent: s.indent, offset: newOffset, row: s.row, src: s.src}));
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text = F2(
-	function (prefix, _continue) {
-		return A2(
-			$elm$parser$Parser$Advanced$keeper,
-			A2(
-				$elm$parser$Parser$Advanced$keeper,
-				A2(
-					$elm$parser$Parser$Advanced$keeper,
-					$elm$parser$Parser$Advanced$succeed(
-						F3(
-							function (start, finish, content) {
-								return {
-									begin: start,
-									content: A3($elm$core$String$slice, start, finish, content),
-									end: finish
-								};
-							})),
-					A2(
-						$elm$parser$Parser$Advanced$ignorer,
-						A2(
-							$elm$parser$Parser$Advanced$ignorer,
-							$elm$parser$Parser$Advanced$getOffset,
-							A2(
-								$elm$parser$Parser$Advanced$chompIf,
-								function (c) {
-									return prefix(c);
-								},
-								$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$ExpectingPrefix)),
-						$elm$parser$Parser$Advanced$chompWhile(
-							function (c) {
-								return _continue(c);
-							}))),
-				$elm$parser$Parser$Advanced$getOffset),
-			$elm$parser$Parser$Advanced$getSource);
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (_v1) {
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$CodeToken(
-					{begin: start, end: start, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr('`'));
-				},
-				function (_v0) {
-					return false;
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeChars = _List_fromArray(
-	[
-		_Utils_chr('`')
-	]);
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$languageChars = _List_fromArray(
-	[
-		_Utils_chr('['),
-		_Utils_chr(']'),
-		_Utils_chr('`'),
-		_Utils_chr('$'),
-		_Utils_chr('\\')
-	]);
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeTextParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (data) {
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-					data.content,
-					{begin: start, end: ((start + data.end) - data.begin) - 1, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return !A2(
-						$elm$core$List$member,
-						c,
-						A2(
-							$elm$core$List$cons,
-							_Utils_chr(' '),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeChars));
-				},
-				function (c) {
-					return !A2(
-						$elm$core$List$member,
-						c,
-						A2(
-							$elm$core$List$cons,
-							_Utils_chr(' '),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$languageChars));
-				}));
-	});
-var $elm$parser$Parser$Advanced$Append = F2(
-	function (a, b) {
-		return {$: 'Append', a: a, b: b};
-	});
-var $elm$parser$Parser$Advanced$oneOfHelp = F3(
-	function (s0, bag, parsers) {
-		oneOfHelp:
-		while (true) {
-			if (!parsers.b) {
-				return A2($elm$parser$Parser$Advanced$Bad, false, bag);
-			} else {
-				var parse = parsers.a.a;
-				var remainingParsers = parsers.b;
-				var _v1 = parse(s0);
-				if (_v1.$ === 'Good') {
-					var step = _v1;
-					return step;
-				} else {
-					var step = _v1;
-					var p = step.a;
-					var x = step.b;
-					if (p) {
-						return step;
-					} else {
-						var $temp$s0 = s0,
-							$temp$bag = A2($elm$parser$Parser$Advanced$Append, bag, x),
-							$temp$parsers = remainingParsers;
-						s0 = $temp$s0;
-						bag = $temp$bag;
-						parsers = $temp$parsers;
-						continue oneOfHelp;
-					}
-				}
-			}
-		}
-	});
-var $elm$parser$Parser$Advanced$oneOf = function (parsers) {
-	return $elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			return A3($elm$parser$Parser$Advanced$oneOfHelp, s, $elm$parser$Parser$Advanced$Empty, parsers);
-		});
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$whiteSpaceParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (data) {
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$W,
-					data.content,
-					{begin: start, end: start, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr(' '));
-				},
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr(' '));
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeParser_ = F2(
-	function (start, index) {
-		return $elm$parser$Parser$Advanced$oneOf(
-			_List_fromArray(
-				[
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeTextParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$whiteSpaceParser, start, index)
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (_v1) {
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$MathToken(
-					{begin: start, end: start, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr('$'));
-				},
-				function (_v0) {
-					return false;
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathChars = _List_fromArray(
-	[
-		_Utils_chr('$')
-	]);
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathTextParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (data) {
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-					data.content,
-					{begin: start, end: ((start + data.end) - data.begin) - 1, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return !A2(
-						$elm$core$List$member,
-						c,
-						A2(
-							$elm$core$List$cons,
-							_Utils_chr(' '),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathChars));
-				},
-				function (c) {
-					return !A2(
-						$elm$core$List$member,
-						c,
-						A2(
-							$elm$core$List$cons,
-							_Utils_chr(' '),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$languageChars));
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathParser_ = F2(
-	function (start, index) {
-		return $elm$parser$Parser$Advanced$oneOf(
-			_List_fromArray(
-				[
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathTextParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$whiteSpaceParser, start, index)
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$backSlashedPrefixParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (data) {
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-					data.content,
-					{begin: start, end: ((start + data.end) - data.begin) - 1, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr('\\'));
-				},
-				function (c) {
-					return !A2(
-						$elm$core$List$member,
-						c,
-						A2(
-							$elm$core$List$cons,
-							_Utils_chr(' '),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$languageChars));
-				}));
-	});
-var $elm$parser$Parser$Advanced$backtrackable = function (_v0) {
-	var parse = _v0.a;
-	return $elm$parser$Parser$Advanced$Parser(
-		function (s0) {
-			var _v1 = parse(s0);
-			if (_v1.$ === 'Bad') {
-				var x = _v1.b;
-				return A2($elm$parser$Parser$Advanced$Bad, false, x);
-			} else {
-				var a = _v1.b;
-				var s1 = _v1.c;
-				return A3($elm$parser$Parser$Advanced$Good, false, a, s1);
-			}
-		});
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$leftBracketParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (_v1) {
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$LB(
-					{begin: start, end: start, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr('['));
-				},
-				function (_v0) {
-					return false;
-				}));
-	});
-var $elm$parser$Parser$Advanced$andThen = F2(
-	function (callback, _v0) {
-		var parseA = _v0.a;
-		return $elm$parser$Parser$Advanced$Parser(
-			function (s0) {
-				var _v1 = parseA(s0);
-				if (_v1.$ === 'Bad') {
-					var p = _v1.a;
-					var x = _v1.b;
-					return A2($elm$parser$Parser$Advanced$Bad, p, x);
-				} else {
-					var p1 = _v1.a;
-					var a = _v1.b;
-					var s1 = _v1.c;
-					var _v2 = callback(a);
-					var parseB = _v2.a;
-					var _v3 = parseB(s1);
-					if (_v3.$ === 'Bad') {
-						var p2 = _v3.a;
-						var x = _v3.b;
-						return A2($elm$parser$Parser$Advanced$Bad, p1 || p2, x);
-					} else {
-						var p2 = _v3.a;
-						var b = _v3.b;
-						var s2 = _v3.c;
-						return A3($elm$parser$Parser$Advanced$Good, p1 || p2, b, s2);
-					}
-				}
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$leftMathBracketParser_ = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (_v1) {
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$LMB(
-					{begin: start, end: start + 1, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr('('));
-				},
-				function (_v0) {
-					return false;
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$leftMathBracketParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$andThen,
-			function (_v1) {
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$leftMathBracketParser_, start, index);
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr('\\'));
-				},
-				function (_v0) {
-					return false;
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$rightBracketParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (_v1) {
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RB(
-					{begin: start, end: start, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr(']'));
-				},
-				function (_v0) {
-					return false;
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$rightMathBracketParser_ = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (_v1) {
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$RMB(
-					{begin: start, end: start + 1, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return _Utils_eq(
-						c,
-						_Utils_chr(')'));
-				},
-				function (_v0) {
-					return false;
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$rightMathBracketParser = F2(
-	function (start, index) {
-		return $elm$parser$Parser$Advanced$backtrackable(
-			A2(
-				$elm$parser$Parser$Advanced$andThen,
-				function (_v1) {
-					return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$rightMathBracketParser_, start, index);
-				},
-				A2(
-					$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-					function (c) {
-						return _Utils_eq(
-							c,
-							_Utils_chr('\\'));
-					},
-					function (_v0) {
-						return false;
-					})));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$textParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (data) {
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-					data.content,
-					{begin: start, end: ((start + data.end) - data.begin) - 1, index: index});
-			},
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Tools$ParserTools$text,
-				function (c) {
-					return !A2(
-						$elm$core$List$member,
-						c,
-						A2(
-							$elm$core$List$cons,
-							_Utils_chr(' '),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$languageChars));
-				},
-				function (c) {
-					return !A2(
-						$elm$core$List$member,
-						c,
-						A2(
-							$elm$core$List$cons,
-							_Utils_chr(' '),
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$languageChars));
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$tokenParser_ = F2(
-	function (start, index) {
-		return $elm$parser$Parser$Advanced$oneOf(
-			_List_fromArray(
-				[
-					$elm$parser$Parser$Advanced$oneOf(
-					_List_fromArray(
-						[
-							$elm$parser$Parser$Advanced$backtrackable(
-							A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$leftMathBracketParser, start, index)),
-							$elm$parser$Parser$Advanced$backtrackable(
-							A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$rightMathBracketParser, start, index)),
-							A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$backSlashedPrefixParser, start, index)
-						])),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$whiteSpaceParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$textParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$leftBracketParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$rightBracketParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeParser, start, index)
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$tokenParser = F3(
-	function (mode, start, index) {
-		switch (mode.$) {
-			case 'Normal':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$tokenParser_, start, index);
-			case 'InMath':
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mathParser_, start, index);
-			default:
-				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$codeParser_, start, index);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$get = F3(
-	function (state, start, input) {
-		var _v0 = A2(
-			$elm$parser$Parser$Advanced$run,
-			A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$tokenParser, state.mode, start, state.tokenIndex),
-			input);
-		if (_v0.$ === 'Ok') {
-			var token = _v0.a;
-			return token;
-		} else {
-			var errorList = _v0.a;
-			return A2(
-				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TokenError,
-				errorList,
-				{begin: start, end: start + 1, index: state.tokenIndex});
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$isTextToken = function (token) {
-	return A2(
-		$elm$core$List$member,
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$type_(token),
-		_List_fromArray(
-			[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TW, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TS]));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$length = function (token) {
-	switch (token.$) {
-		case 'LB':
-			var meta = token.a;
-			return meta.end - meta.begin;
-		case 'RB':
-			var meta = token.a;
-			return meta.end - meta.begin;
-		case 'LMB':
-			var meta = token.a;
-			return meta.end - meta.begin;
-		case 'RMB':
-			var meta = token.a;
-			return meta.end - meta.begin;
-		case 'S':
-			var meta = token.b;
-			return meta.end - meta.begin;
-		case 'MathToken':
-			var meta = token.a;
-			return meta.end - meta.begin;
-		case 'CodeToken':
-			var meta = token.a;
-			return meta.end - meta.begin;
-		case 'W':
-			var meta = token.b;
-			return meta.end - meta.begin;
-		default:
-			var meta = token.b;
-			return meta.end - meta.begin;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$InCode = {$: 'InCode'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$InMath = {$: 'InMath'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$newMode = F2(
-	function (token, currentMode) {
-		switch (currentMode.$) {
-			case 'Normal':
-				switch (token.$) {
-					case 'MathToken':
-						return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$InMath;
-					case 'CodeToken':
-						return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$InCode;
-					default:
-						return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$Normal;
-				}
-			case 'InMath':
-				if (token.$ === 'MathToken') {
-					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$Normal;
-				} else {
-					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$InMath;
-				}
-			default:
-				if (token.$ === 'CodeToken') {
-					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$Normal;
-				} else {
-					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$InCode;
-				}
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$getMeta = function (token) {
-	switch (token.$) {
-		case 'LB':
-			var m = token.a;
-			return m;
-		case 'RB':
-			var m = token.a;
-			return m;
-		case 'LMB':
-			var m = token.a;
-			return m;
-		case 'RMB':
-			var m = token.a;
-			return m;
-		case 'S':
-			var m = token.b;
-			return m;
-		case 'W':
-			var m = token.b;
-			return m;
-		case 'MathToken':
-			var m = token.a;
-			return m;
-		case 'CodeToken':
-			var m = token.a;
-			return m;
-		default:
-			var m = token.b;
-			return m;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mergeToken = F2(
-	function (lastToken, currentToken) {
-		var lastTokenMeta = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$getMeta(lastToken);
-		var currentTokenMeta = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$getMeta(currentToken);
-		var meta = {begin: lastTokenMeta.begin, end: currentTokenMeta.end, index: -1};
-		return A2(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$S,
-			_Utils_ap(
-				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$stringValue(lastToken),
-				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$stringValue(currentToken)),
-			meta);
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$updateCurrentToken = F3(
-	function (index, token, currentToken) {
-		if (currentToken.$ === 'Nothing') {
-			return $elm$core$Maybe$Just(
-				A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex, index, token));
-		} else {
-			var token_ = currentToken.a;
-			return $elm$core$Maybe$Just(
-				A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex,
-					index,
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$mergeToken, token_, token)));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$nextStep = function (state) {
-	if (_Utils_cmp(state.scanpointer, state.sourceLength) > -1) {
-		var _v0 = state.currentToken;
-		if (_v0.$ === 'Just') {
-			var token = _v0.a;
-			return $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Done(
-				A2($elm$core$List$cons, token, state.tokens));
-		} else {
-			return $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Done(state.tokens);
-		}
-	} else {
-		var token = A3(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$get,
-			state,
-			state.scanpointer,
-			A2($elm$core$String$dropLeft, state.scanpointer, state.source));
-		var newScanPointer = (state.scanpointer + $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$length(token)) + 1;
-		var _v1 = function () {
-			if ($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$isTextToken(token)) {
-				return _Utils_eq(
-					A2(
-						$elm$core$Maybe$map,
-						$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$type_,
-						$elm$core$List$head(state.tokens)),
-					$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TLB)) ? _Utils_Tuple3(
-					A2(
-						$elm$core$List$cons,
-						A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex, state.tokenIndex, token),
-						state.tokens),
-					state.tokenIndex + 1,
-					$elm$core$Maybe$Nothing) : _Utils_Tuple3(
-					state.tokens,
-					state.tokenIndex,
-					A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$updateCurrentToken, state.tokenIndex, token, state.currentToken));
-			} else {
-				if (_Utils_eq(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$type_(token),
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$TLB)) {
-					var _v2 = state.currentToken;
-					if (_v2.$ === 'Nothing') {
-						return _Utils_Tuple3(
-							A2(
-								$elm$core$List$cons,
-								A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex, state.tokenIndex, token),
-								state.tokens),
-							state.tokenIndex + 1,
-							$elm$core$Maybe$Nothing);
-					} else {
-						var textToken = _v2.a;
-						return _Utils_Tuple3(
-							A2(
-								$elm$core$List$cons,
-								A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex, state.tokenIndex + 1, token),
-								A2(
-									$elm$core$List$cons,
-									A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex, state.tokenIndex, textToken),
-									state.tokens)),
-							state.tokenIndex + 2,
-							$elm$core$Maybe$Nothing);
-					}
-				} else {
-					var _v3 = state.currentToken;
-					if (_v3.$ === 'Nothing') {
-						return _Utils_Tuple3(
-							A2(
-								$elm$core$List$cons,
-								A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex, state.tokenIndex, token),
-								state.tokens),
-							state.tokenIndex + 1,
-							$elm$core$Maybe$Nothing);
-					} else {
-						var textToken = _v3.a;
-						return _Utils_Tuple3(
-							A2(
-								$elm$core$List$cons,
-								A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$setIndex, state.tokenIndex + 1, token),
-								A2($elm$core$List$cons, textToken, state.tokens)),
-							state.tokenIndex + 2,
-							$elm$core$Maybe$Nothing);
-					}
-				}
-			}
-		}();
-		var tokens = _v1.a;
-		var tokenIndex = _v1.b;
-		var currentToken_ = _v1.c;
-		var currentToken = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$isTextToken(token) ? currentToken_ : $elm$core$Maybe$Nothing;
-		return $jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$Loop(
-			_Utils_update(
-				state,
-				{
-					currentToken: currentToken,
-					mode: A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$newMode, token, state.mode),
-					scanpointer: newScanPointer,
-					tokenIndex: tokenIndex,
-					tokens: tokens
-				}));
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$run = function (source) {
-	return A2(
-		$jxxcarlson$xmarkdown_compiler$Tools$ParserHelpers$loop,
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$init(source),
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$nextStep);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parseToState = F2(
-	function (lineNumber, str) {
-		return A2(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parseTokenListToState,
-			lineNumber,
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Tokenizer$run(str));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parseWithMessages = F2(
-	function (lineNumber, str) {
-		var state = A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parseToState, lineNumber, str);
-		return _Utils_Tuple2(state.committed, state.messages);
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$stringValue = function (token) {
-	switch (token.$) {
-		case 'LB':
-			return '[';
-		case 'RB':
-			return ']';
-		case 'LP':
-			return '(';
-		case 'RP':
-			return ')';
-		case 'Bold':
-			return '**';
-		case 'Italic':
-			return '*';
-		case 'Image':
-			return 'image';
-		case 'AT':
-			return '@';
-		case 'S':
-			var str = token.a;
-			return str;
-		case 'W':
-			var str = token.a;
-			return str;
-		case 'MathToken':
-			return '$';
-		case 'CodeToken':
-			return '`';
-		default:
-			return 'tokenError';
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$toString = function (tokens) {
-	return A2(
-		$elm$core$String$join,
-		'',
-		A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$stringValue, tokens));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleAt = function (state) {
-	var content = $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogRed(
-		A2(
-			$elm$core$String$dropLeft,
-			1,
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$toString(
-				$elm$core$List$reverse(state.stack))));
-	var expr = A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parseWithMessages, 0, content).a;
-	return _Utils_update(
-		state,
-		{
-			committed: _Utils_ap(expr, state.committed),
-			stack: _List_Nil
-		});
-};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$getMeta = function (token) {
 	switch (token.$) {
 		case 'LB':
@@ -10961,9 +8741,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$getMeta = function (token
 		case 'Image':
 			var m = token.a;
 			return m;
-		case 'AT':
-			var m = token.a;
-			return m;
 		case 'S':
 			var m = token.b;
 			return m;
@@ -10971,6 +8748,12 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$getMeta = function (token
 			var m = token.b;
 			return m;
 		case 'MathToken':
+			var m = token.a;
+			return m;
+		case 'MathTokenLeft':
+			var m = token.a;
+			return m;
+		case 'MathTokenRight':
 			var m = token.a;
 			return m;
 		case 'CodeToken':
@@ -10981,6 +8764,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$getMeta = function (token
 			return m;
 	}
 };
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$expressionIdPrefix = 'e-';
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$makeId = F2(
 	function (lineNumber, tokenIndex) {
 		return $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$expressionIdPrefix + ($elm$core$String$fromInt(lineNumber) + ('.' + $elm$core$String$fromInt(tokenIndex)));
@@ -11036,6 +8820,46 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$stackSpan = function
 		index: state.tokenIndex
 	};
 };
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$stringValue = function (token) {
+	switch (token.$) {
+		case 'LB':
+			return '[';
+		case 'RB':
+			return ']';
+		case 'LP':
+			return '(';
+		case 'RP':
+			return ')';
+		case 'Bold':
+			return '**';
+		case 'Italic':
+			return '*';
+		case 'Image':
+			return 'image';
+		case 'S':
+			var str = token.a;
+			return str;
+		case 'W':
+			var str = token.a;
+			return str;
+		case 'MathToken':
+			return '$';
+		case 'MathTokenLeft':
+			return '\u005C(';
+		case 'MathTokenRight':
+			return '\u005C)';
+		case 'CodeToken':
+			return '`';
+		default:
+			return 'tokenError';
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$toString = function (tokens) {
+	return A2(
+		$elm$core$String$join,
+		'',
+		A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$stringValue, tokens));
+};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleBracketedText = function (state) {
 	var str = function () {
 		var _v0 = state.stack;
@@ -11059,6 +8883,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleBracketedText 
 			stack: _List_Nil
 		});
 };
+var $jxxcarlson$xmarkdown_compiler$AST$Language$VFun = F3(
+	function (a, b, c) {
+		return {$: 'VFun', a: a, b: b, c: c};
+	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$takeMiddleReversed = function (list) {
 	return A2(
 		$elm$core$List$drop,
@@ -11082,8 +8910,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$stringValue2 = function (
 			return 'ITALIC';
 		case 'Image':
 			return 'IMAGE';
-		case 'AT':
-			return '@';
 		case 'S':
 			var str = token.a;
 			return str;
@@ -11092,6 +8918,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$stringValue2 = function (
 			return str;
 		case 'MathToken':
 			return 'M';
+		case 'MathTokenLeft':
+			return 'ML';
+		case 'MathTokenRight':
+			return 'MR';
 		case 'CodeToken':
 			return 'C';
 		default:
@@ -11147,15 +8977,14 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleImage = functi
 			return {label: 'no image label', url: 'no image url'};
 		}
 	}();
-	var expr = $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogRed(
-		A3(
-			$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
-			'image',
-			_List_fromArray(
-				[
-					A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, data.url + (' ' + data.label), meta)
-				]),
-			meta));
+	var expr = A3(
+		$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
+		'image',
+		_List_fromArray(
+			[
+				A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, data.url + (' ' + data.label), meta)
+			]),
+		meta);
 	return _Utils_update(
 		state,
 		{
@@ -11283,6 +9112,29 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleMathSymbol = F
 			return state;
 		}
 	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleMathTokenLeftSymbol = F2(
+	function (symbols, state) {
+		if (_Utils_eq(
+			symbols,
+			_List_fromArray(
+				[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$ML, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$MR]))) {
+			var content = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$toString2(
+				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$takeMiddleReversed(state.stack));
+			var expr = A3(
+				$jxxcarlson$xmarkdown_compiler$AST$Language$VFun,
+				'math',
+				content,
+				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$stackSpan(state));
+			return _Utils_update(
+				state,
+				{
+					committed: A2($elm$core$List$cons, expr, state.committed),
+					stack: _List_Nil
+				});
+		} else {
+			return state;
+		}
+	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleParens = function (state) {
 	var str = function () {
 		var _v0 = state.stack;
@@ -11306,37 +9158,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleParens = funct
 			stack: _List_Nil
 		});
 };
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogYellow = function (a) {
-	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklog_(a);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$dropLast = function (list) {
-	var n = $elm$core$List$length(list);
-	return A2($elm$core$List$take, n - 1, list);
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$middle = function (list) {
-	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$dropLast(
-		A2($elm$core$List$drop, 1, list));
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$reducibleAux = function (symbols) {
-	reducibleAux:
-	while (true) {
-		if ($elm$core$List$isEmpty(symbols)) {
-			return true;
-		} else {
-			if (_Utils_eq(
-				$elm$core$List$head(symbols),
-				$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LBracket)) && _Utils_eq(
-				$elmcraft$core_extra$List$Extra$last(symbols),
-				$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RBracket))) {
-				var $temp$symbols = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$middle(symbols);
-				symbols = $temp$symbols;
-				continue reducibleAux;
-			} else {
-				return false;
-			}
-		}
-	}
-};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$reducibleF = function (symbols) {
 	return _Utils_eq(
 		symbols,
@@ -11359,43 +9180,46 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$reducible = function (sym
 							$elm$core$List$reverse(
 								A2($elm$core$List$drop, 1, symbols))),
 						$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$M));
-				case 'C':
+				case 'ML':
 					var _v2 = _v0.a;
+					return _Utils_eq(
+						$elm$core$List$head(
+							$elm$core$List$reverse(
+								A2($elm$core$List$drop, 1, symbols))),
+						$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$MR));
+				case 'C':
+					var _v3 = _v0.a;
 					return _Utils_eq(
 						$elm$core$List$head(
 							$elm$core$List$reverse(
 								A2($elm$core$List$drop, 1, symbols))),
 						$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$C));
 				case 'SBold':
-					var _v3 = _v0.a;
+					var _v4 = _v0.a;
 					return _Utils_eq(
 						$elm$core$List$head(
 							$elm$core$List$reverse(
 								A2($elm$core$List$drop, 1, symbols))),
 						$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SBold));
 				case 'SItalic':
-					var _v4 = _v0.a;
+					var _v5 = _v0.a;
 					return _Utils_eq(
 						$elm$core$List$head(
 							$elm$core$List$reverse(
 								A2($elm$core$List$drop, 1, symbols))),
 						$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SItalic));
 				case 'SImage':
-					var _v5 = _v0.a;
+					var _v6 = _v0.a;
 					return _Utils_eq(
 						symbols,
 						_List_fromArray(
 							[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SImage, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LBracket, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RBracket, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LParen, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RParen]));
 				case 'LBracket':
-					var _v6 = _v0.a;
+					var _v7 = _v0.a;
 					return _Utils_eq(
 						symbols,
 						_List_fromArray(
 							[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LBracket, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RBracket, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LParen, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RParen])) ? true : false;
-				case 'SAT':
-					var _v7 = _v0.a;
-					return ($elm$core$List$length(symbols) > 1) ? $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$reducibleAux(
-						A2($elm$core$List$drop, 1, symbols)) : false;
 				default:
 					break _v0$7;
 			}
@@ -11406,16 +9230,14 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$reducible = function (sym
 	return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$reducibleF(symbols);
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$isReducible = function (tokens) {
-	var preliminary = $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogYellow(
-		A2(
-			$elm$core$List$filter,
-			function (_v0) {
-				return true;
-			},
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$convertTokens(
-				$elm$core$List$reverse(tokens))));
-	return _Utils_eq(preliminary, _List_Nil) ? false : $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogYellow(
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$reducible(preliminary));
+	var preliminary = A2(
+		$elm$core$List$filter,
+		function (_v0) {
+			return true;
+		},
+		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$convertTokens(
+			$elm$core$List$reverse(tokens)));
+	return _Utils_eq(preliminary, _List_Nil) ? false : $jxxcarlson$xmarkdown_compiler$Parser$Inline$Match$reducible(preliminary);
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$Bold = function (a) {
 	return {$: 'Bold', a: a};
@@ -11651,6 +9473,12 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$indexOf = function (token
 		case 'MathToken':
 			var meta = token.a;
 			return meta.index;
+		case 'MathTokenLeft':
+			var meta = token.a;
+			return meta.index;
+		case 'MathTokenRight':
+			var meta = token.a;
+			return meta.index;
 		case 'CodeToken':
 			var meta = token.a;
 			return meta.index;
@@ -11666,9 +9494,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$indexOf = function (token
 		case 'Image':
 			var meta = token.a;
 			return meta.index;
-		case 'AT':
-			var meta = token.a;
-			return meta.index;
 		case 'Bold':
 			var meta = token.a;
 			return meta.index;
@@ -11676,9 +9501,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$indexOf = function (token
 			var meta = token.a;
 			return meta.index;
 	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$AT = function (a) {
-	return {$: 'AT', a: a};
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$CodeToken = function (a) {
 	return {$: 'CodeToken', a: a};
@@ -11694,6 +9516,12 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$LP = function (a) {
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$MathToken = function (a) {
 	return {$: 'MathToken', a: a};
+};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$MathTokenLeft = function (a) {
+	return {$: 'MathTokenLeft', a: a};
+};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$MathTokenRight = function (a) {
+	return {$: 'MathTokenRight', a: a};
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$RB = function (a) {
 	return {$: 'RB', a: a};
@@ -11754,12 +9582,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$setIndex = F2(
 					_Utils_update(
 						meta,
 						{index: k}));
-			case 'AT':
-				var meta = token.a;
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$AT(
-					_Utils_update(
-						meta,
-						{index: k}));
 			case 'S':
 				var str = token.a;
 				var meta = token.b;
@@ -11781,6 +9603,18 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$setIndex = F2(
 			case 'MathToken':
 				var meta = token.a;
 				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$MathToken(
+					_Utils_update(
+						meta,
+						{index: k}));
+			case 'MathTokenLeft':
+				var meta = token.a;
+				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$MathTokenLeft(
+					_Utils_update(
+						meta,
+						{index: k}));
+			case 'MathTokenRight':
+				var meta = token.a;
+				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$MathTokenRight(
 					_Utils_update(
 						meta,
 						{index: k}));
@@ -11868,7 +9702,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$prependMessage = F3(
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = function (state) {
 	var _v0 = $elm$core$List$reverse(state.stack);
-	_v0$14:
+	_v0$15:
 	while (true) {
 		if (_v0.b) {
 			switch (_v0.a.$) {
@@ -11948,10 +9782,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 														state.tokens)))
 										}));
 							default:
-								break _v0$14;
+								break _v0$15;
 						}
 					} else {
-						break _v0$14;
+						break _v0$15;
 					}
 				case 'LB':
 					if ((((_v0.b.b && (_v0.b.a.$ === 'S')) && _v0.b.b.b) && (_v0.b.b.a.$ === 'RB')) && (!_v0.b.b.b.b)) {
@@ -11971,7 +9805,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 									stack: _List_Nil
 								}));
 					} else {
-						break _v0$14;
+						break _v0$15;
 					}
 				case 'Italic':
 					if (!_v0.b.b) {
@@ -12384,11 +10218,11 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 												tokenIndex: meta3.index + 1
 											}));
 								} else {
-									break _v0$14;
+									break _v0$15;
 								}
 							}
 						} else {
-							break _v0$14;
+							break _v0$15;
 						}
 					}
 				case 'MathToken':
@@ -12405,6 +10239,24 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 									$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$errorMessage(message),
 									state.committed),
 								messages: A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$prependMessage, state.lineNumber, 'opening dollar sign needs to be matched with a closing one', state.messages),
+								numberOfTokens: 0,
+								stack: _List_Nil,
+								tokenIndex: meta.index + 1
+							}));
+				case 'MathTokenLeft':
+					var meta = _v0.a.a;
+					var rest = _v0.b;
+					var content = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$toString2(rest);
+					var message = (content === '') ? '\u005C(?\u005C)' : '\u005C( ';
+					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
+						_Utils_update(
+							state,
+							{
+								committed: A2(
+									$elm$core$List$cons,
+									$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$errorMessage(message),
+									state.committed),
+								messages: A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$prependMessage, state.lineNumber, 'opening \u005C( needs to be matched with a closing \u005C)', state.messages),
 								numberOfTokens: 0,
 								stack: _List_Nil,
 								tokenIndex: meta.index + 1
@@ -12428,10 +10280,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 								tokenIndex: meta.index + 1
 							}));
 				default:
-					break _v0$14;
+					break _v0$15;
 			}
 		} else {
-			break _v0$14;
+			break _v0$15;
 		}
 	}
 	return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Done(
@@ -12537,8 +10389,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleItalicSymbol =
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$nextStep = function (state) {
 	var _v17 = A2($elmcraft$core_extra$List$Extra$getAt, state.tokenIndex, state.tokens);
 	if (_v17.$ === 'Nothing') {
-		return $elm$core$List$isEmpty(state.stack) ? $jxxcarlson$xmarkdown_compiler$Tools$Loop$Done(state) : $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogBlue(state));
+		return $elm$core$List$isEmpty(state.stack) ? $jxxcarlson$xmarkdown_compiler$Tools$Loop$Done(state) : $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError(state);
 	} else {
 		var token = _v17.a;
 		return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
@@ -12548,40 +10399,33 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$nextStep = function 
 					{step: st.step + 1});
 			}(
 				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$reduceState(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogBlue(
-						A2(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$pushToken,
-							token,
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$advanceTokenIndex(state))))));
+					A2(
+						$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$pushToken,
+						token,
+						$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$advanceTokenIndex(state)))));
 	}
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$parseTokens = F2(
 	function (lineNumber, tokens) {
-		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogCyan(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$run(
-				A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$initWithTokens,
-					lineNumber,
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogCyan(tokens))).committed);
+		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$run(
+			A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$initWithTokens, lineNumber, tokens)).committed;
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$reduceState = function (state) {
-	var reducible1 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogRed(
-		$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$isReducible(state.stack));
+	var reducible1 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$isReducible(state.stack);
 	if ((_Utils_cmp(state.tokenIndex, state.numberOfTokens) > -1) || reducible1) {
-		var symbols = $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogRed(
-			$elm$core$List$reverse(
-				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$convertTokens(state.stack)));
+		var symbols = $elm$core$List$reverse(
+			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$convertTokens(state.stack));
 		var _v0 = $elm$core$List$head(symbols);
 		_v0$8:
 		while (true) {
 			if (_v0.$ === 'Just') {
 				switch (_v0.a.$) {
-					case 'SAT':
-						var _v1 = _v0.a;
-						return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleAt(state);
 					case 'M':
-						var _v2 = _v0.a;
+						var _v1 = _v0.a;
 						return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleMathSymbol, symbols, state);
+					case 'ML':
+						var _v2 = _v0.a;
+						return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleMathTokenLeftSymbol, symbols, state);
 					case 'C':
 						var _v3 = _v0.a;
 						return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleCodeSymbol, symbols, state);
@@ -12611,8 +10455,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$reduceState = functi
 						return _Utils_eq(
 							symbols,
 							_List_fromArray(
-								[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LBracket, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RBracket, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LParen, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RParen])) ? $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleLink(state) : $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogRed(
-							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleBracketedText(state));
+								[$jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LBracket, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RBracket, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$LParen, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$RParen])) ? $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleLink(state) : $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleBracketedText(state);
 					case 'SImage':
 						var _v15 = _v0.a;
 						return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleImage(state);
@@ -12654,9 +10497,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$init = function (str) {
 	};
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TLB = {$: 'TLB'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$fakeDebugLog = function (_v0) {
-	return $elm$core$Basics$identity;
-};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$finish = function (state) {
 	var _v0 = state.currentToken;
 	if (_v0.$ === 'Just') {
@@ -12671,7 +10511,64 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$makeId = F2(
 	function (a, b) {
 		return $elm$core$String$fromInt(a) + ('.' + $elm$core$String$fromInt(b));
 	});
+var $elm$parser$Parser$Advanced$map = F2(
+	function (func, _v0) {
+		var parse = _v0.a;
+		return $elm$parser$Parser$Advanced$Parser(
+			function (s0) {
+				var _v1 = parse(s0);
+				if (_v1.$ === 'Good') {
+					var p = _v1.a;
+					var a = _v1.b;
+					var s1 = _v1.c;
+					return A3(
+						$elm$parser$Parser$Advanced$Good,
+						p,
+						func(a),
+						s1);
+				} else {
+					var p = _v1.a;
+					var x = _v1.b;
+					return A2($elm$parser$Parser$Advanced$Bad, p, x);
+				}
+			});
+	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingPrefix = {$: 'ExpectingPrefix'};
+var $elm$parser$Parser$Advanced$AddRight = F2(
+	function (a, b) {
+		return {$: 'AddRight', a: a, b: b};
+	});
+var $elm$parser$Parser$Advanced$DeadEnd = F4(
+	function (row, col, problem, contextStack) {
+		return {col: col, contextStack: contextStack, problem: problem, row: row};
+	});
+var $elm$parser$Parser$Advanced$Empty = {$: 'Empty'};
+var $elm$parser$Parser$Advanced$fromState = F2(
+	function (s, x) {
+		return A2(
+			$elm$parser$Parser$Advanced$AddRight,
+			$elm$parser$Parser$Advanced$Empty,
+			A4($elm$parser$Parser$Advanced$DeadEnd, s.row, s.col, x, s.context));
+	});
+var $elm$parser$Parser$Advanced$chompIf = F2(
+	function (isGood, expecting) {
+		return $elm$parser$Parser$Advanced$Parser(
+			function (s) {
+				var newOffset = A3($elm$parser$Parser$Advanced$isSubChar, isGood, s.offset, s.src);
+				return _Utils_eq(newOffset, -1) ? A2(
+					$elm$parser$Parser$Advanced$Bad,
+					false,
+					A2($elm$parser$Parser$Advanced$fromState, s, expecting)) : (_Utils_eq(newOffset, -2) ? A3(
+					$elm$parser$Parser$Advanced$Good,
+					true,
+					_Utils_Tuple0,
+					{col: 1, context: s.context, indent: s.indent, offset: s.offset + 1, row: s.row + 1, src: s.src}) : A3(
+					$elm$parser$Parser$Advanced$Good,
+					true,
+					_Utils_Tuple0,
+					{col: s.col + 1, context: s.context, indent: s.indent, offset: newOffset, row: s.row, src: s.src}));
+			});
+	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$text = F2(
 	function (prefix, _continue) {
 		return A2(
@@ -12782,6 +10679,48 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$codeTextParser = F2(
 							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$languageChars));
 				}));
 	});
+var $elm$parser$Parser$Advanced$Append = F2(
+	function (a, b) {
+		return {$: 'Append', a: a, b: b};
+	});
+var $elm$parser$Parser$Advanced$oneOfHelp = F3(
+	function (s0, bag, parsers) {
+		oneOfHelp:
+		while (true) {
+			if (!parsers.b) {
+				return A2($elm$parser$Parser$Advanced$Bad, false, bag);
+			} else {
+				var parse = parsers.a.a;
+				var remainingParsers = parsers.b;
+				var _v1 = parse(s0);
+				if (_v1.$ === 'Good') {
+					var step = _v1;
+					return step;
+				} else {
+					var step = _v1;
+					var p = step.a;
+					var x = step.b;
+					if (p) {
+						return step;
+					} else {
+						var $temp$s0 = s0,
+							$temp$bag = A2($elm$parser$Parser$Advanced$Append, bag, x),
+							$temp$parsers = remainingParsers;
+						s0 = $temp$s0;
+						bag = $temp$bag;
+						parsers = $temp$parsers;
+						continue oneOfHelp;
+					}
+				}
+			}
+		}
+	});
+var $elm$parser$Parser$Advanced$oneOf = function (parsers) {
+	return $elm$parser$Parser$Advanced$Parser(
+		function (s) {
+			return A3($elm$parser$Parser$Advanced$oneOfHelp, s, $elm$parser$Parser$Advanced$Empty, parsers);
+		});
+};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$whiteSpaceParser = F2(
 	function (start, index) {
 		return A2(
@@ -12817,6 +10756,94 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$codeParser_ = F2(
 				[
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$codeTextParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$codeParser, start, index),
+					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$whiteSpaceParser, start, index)
+				]));
+	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathParenTextParser = F2(
+	function (start, index) {
+		return A2(
+			$elm$parser$Parser$Advanced$map,
+			function (data) {
+				return A2(
+					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$S,
+					data.content,
+					{
+						begin: start,
+						end: ((start + data.end) - data.begin) - 1,
+						id: A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$makeId, start, index),
+						index: index
+					});
+			},
+			A2(
+				$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$text,
+				function (c) {
+					return !_Utils_eq(
+						c,
+						_Utils_chr(' '));
+				},
+				function (c) {
+					return (!_Utils_eq(
+						c,
+						_Utils_chr(' '))) && (!_Utils_eq(
+						c,
+						_Utils_chr('\\')));
+				}));
+	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol = function (a) {
+	return {$: 'ExpectingSymbol', a: a};
+};
+var $elm$parser$Parser$Advanced$Token = F2(
+	function (a, b) {
+		return {$: 'Token', a: a, b: b};
+	});
+var $elm$parser$Parser$Advanced$isSubString = _Parser_isSubString;
+var $elm$parser$Parser$Advanced$token = function (_v0) {
+	var str = _v0.a;
+	var expecting = _v0.b;
+	var progress = !$elm$core$String$isEmpty(str);
+	return $elm$parser$Parser$Advanced$Parser(
+		function (s) {
+			var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.offset, s.row, s.col, s.src);
+			var newOffset = _v1.a;
+			var newRow = _v1.b;
+			var newCol = _v1.c;
+			return _Utils_eq(newOffset, -1) ? A2(
+				$elm$parser$Parser$Advanced$Bad,
+				false,
+				A2($elm$parser$Parser$Advanced$fromState, s, expecting)) : A3(
+				$elm$parser$Parser$Advanced$Good,
+				progress,
+				_Utils_Tuple0,
+				{col: newCol, context: s.context, indent: s.indent, offset: newOffset, row: newRow, src: s.src});
+		});
+};
+var $elm$parser$Parser$Advanced$symbol = $elm$parser$Parser$Advanced$token;
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenRightParser = F2(
+	function (start, index) {
+		return A2(
+			$elm$parser$Parser$Advanced$map,
+			function (_v0) {
+				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$MathTokenRight(
+					{
+						begin: start,
+						end: start + 1,
+						id: A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$makeId, start, index),
+						index: index
+					});
+			},
+			$elm$parser$Parser$Advanced$symbol(
+				A2(
+					$elm$parser$Parser$Advanced$Token,
+					'\u005C)',
+					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\u005C)'))));
+	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathParenParser_ = F2(
+	function (start, index) {
+		return $elm$parser$Parser$Advanced$oneOf(
+			_List_fromArray(
+				[
+					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenRightParser, start, index),
+					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathParenTextParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$whiteSpaceParser, start, index)
 				]));
 	});
@@ -12894,52 +10921,6 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathParser_ = F2(
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$whiteSpaceParser, start, index)
 				]));
 	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingATStart = {$: 'ExpectingATStart'};
-var $elm$parser$Parser$Advanced$Token = F2(
-	function (a, b) {
-		return {$: 'Token', a: a, b: b};
-	});
-var $elm$parser$Parser$Advanced$isSubString = _Parser_isSubString;
-var $elm$parser$Parser$Advanced$token = function (_v0) {
-	var str = _v0.a;
-	var expecting = _v0.b;
-	var progress = !$elm$core$String$isEmpty(str);
-	return $elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			var _v1 = A5($elm$parser$Parser$Advanced$isSubString, str, s.offset, s.row, s.col, s.src);
-			var newOffset = _v1.a;
-			var newRow = _v1.b;
-			var newCol = _v1.c;
-			return _Utils_eq(newOffset, -1) ? A2(
-				$elm$parser$Parser$Advanced$Bad,
-				false,
-				A2($elm$parser$Parser$Advanced$fromState, s, expecting)) : A3(
-				$elm$parser$Parser$Advanced$Good,
-				progress,
-				_Utils_Tuple0,
-				{col: newCol, context: s.context, indent: s.indent, offset: newOffset, row: newRow, src: s.src});
-		});
-};
-var $elm$parser$Parser$Advanced$symbol = $elm$parser$Parser$Advanced$token;
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$atParser = F2(
-	function (start, index) {
-		return A2(
-			$elm$parser$Parser$Advanced$map,
-			function (_v0) {
-				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$AT(
-					{
-						begin: start,
-						end: start,
-						id: A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$makeId, start, index),
-						index: index
-					});
-			},
-			$elm$parser$Parser$Advanced$symbol(
-				A2($elm$parser$Parser$Advanced$Token, '@[', $jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingATStart)));
-	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol = function (a) {
-	return {$: 'ExpectingSymbol', a: a};
-};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$boldParser = F2(
 	function (start, index) {
 		return A2(
@@ -13048,6 +11029,25 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$leftParenParser = F2(
 					return false;
 				}));
 	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenLeftParser = F2(
+	function (start, index) {
+		return A2(
+			$elm$parser$Parser$Advanced$map,
+			function (_v0) {
+				return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$MathTokenLeft(
+					{
+						begin: start,
+						end: start + 1,
+						id: A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$makeId, start, index),
+						index: index
+					});
+			},
+			$elm$parser$Parser$Advanced$symbol(
+				A2(
+					$elm$parser$Parser$Advanced$Token,
+					'\u005C(',
+					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\u005C('))));
+	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$rightBracketParser = F2(
 	function (start, index) {
 		return A2(
@@ -13138,7 +11138,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$tokenParser_ = F2(
 			_List_fromArray(
 				[
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$imageParser, start, index),
-					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$atParser, start, index),
+					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenLeftParser, start, index),
+					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenRightParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$textParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$leftBracketParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$rightBracketParser, start, index),
@@ -13158,6 +11159,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$tokenParser = F3(
 				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$tokenParser_, start, index);
 			case 'InMath':
 				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathParser_, start, index);
+			case 'InMathParen':
+				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathParenParser_, start, index);
 			default:
 				return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$codeParser_, start, index);
 		}
@@ -13233,9 +11236,9 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleLB = F2(
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$boostMeta = F3(
 	function (lineNumber, tokenIndex, _v0) {
-		var begin = _v0.begin;
-		var end = _v0.end;
 		var index = _v0.index;
+		var end = _v0.end;
+		var begin = _v0.begin;
 		return {
 			begin: begin,
 			end: end,
@@ -13278,13 +11281,14 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleMerge = F2(
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TS = {$: 'TS'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TW = {$: 'TW'};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TAT = {$: 'TAT'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TBold = {$: 'TBold'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TCode = {$: 'TCode'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TImage = {$: 'TImage'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TItalic = {$: 'TItalic'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TLP = {$: 'TLP'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TMath = {$: 'TMath'};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TMathLeft = {$: 'TMathLeft'};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TMathRight = {$: 'TMathRight'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TRB = {$: 'TRB'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TRP = {$: 'TRP'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TTokenError = {$: 'TTokenError'};
@@ -13304,14 +11308,16 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$type_ = function (token) 
 			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TItalic;
 		case 'Image':
 			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TImage;
-		case 'AT':
-			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TAT;
 		case 'S':
 			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TS;
 		case 'W':
 			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TW;
 		case 'MathToken':
 			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TMath;
+		case 'MathTokenLeft':
+			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TMathLeft;
+		case 'MathTokenRight':
+			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TMathRight;
 		case 'CodeToken':
 			return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TCode;
 		default:
@@ -13348,13 +11354,16 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$length = function (token)
 		case 'Image':
 			var meta = token.a;
 			return meta.end - meta.begin;
-		case 'AT':
-			var meta = token.a;
-			return meta.end - meta.begin;
 		case 'S':
 			var meta = token.b;
 			return meta.end - meta.begin;
 		case 'MathToken':
+			var meta = token.a;
+			return meta.end - meta.begin;
+		case 'MathTokenLeft':
+			var meta = token.a;
+			return meta.end - meta.begin;
+		case 'MathTokenRight':
 			var meta = token.a;
 			return meta.end - meta.begin;
 		case 'CodeToken':
@@ -13370,6 +11379,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$length = function (token)
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$InCode = {$: 'InCode'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$InMath = {$: 'InMath'};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$InMathParen = {$: 'InMathParen'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$newMode = F2(
 	function (token, currentMode) {
 		switch (currentMode.$) {
@@ -13377,6 +11387,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$newMode = F2(
 				switch (token.$) {
 					case 'MathToken':
 						return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$InMath;
+					case 'MathTokenLeft':
+						return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$InMathParen;
 					case 'CodeToken':
 						return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$InCode;
 					default:
@@ -13387,6 +11399,12 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$newMode = F2(
 					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$Normal;
 				} else {
 					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$InMath;
+				}
+			case 'InMathParen':
+				if (token.$ === 'MathTokenRight') {
+					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$Normal;
+				} else {
+					return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$InMathParen;
 				}
 			default:
 				if (token.$ === 'CodeToken') {
@@ -13406,18 +11424,9 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$nextStep = function (stat
 			state.scanpointer,
 			A2($elm$core$String$dropLeft, state.scanpointer, state.source));
 		var newScanPointer = (state.scanpointer + $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$length(token)) + 1;
-		var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$isTextToken(token) ? A2(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$fakeDebugLog,
-			'(1)',
-			A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleMerge, state, token)) : (_Utils_eq(
+		var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$isTextToken(token) ? A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleMerge, state, token) : (_Utils_eq(
 			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$type_(token),
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TLB) ? A2(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$fakeDebugLog,
-			'(2)',
-			A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleLB, state, token)) : A2(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$fakeDebugLog,
-			'(3)',
-			A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleDefault, state, token)));
+			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$TLB) ? A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleLB, state, token) : A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleDefault, state, token));
 		var tokens = _v0.a;
 		var tokenIndex = _v0.b;
 		var currentToken_ = _v0.c;
@@ -13442,13 +11451,11 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$run = function (source) {
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$parse = F2(
 	function (lineNumber, str) {
-		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogCyan(
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$run(
-				A2(
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$initWithTokens,
-					lineNumber,
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ForkLog$forklogCyan(
-						$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$run(str)))).committed);
+		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$run(
+			A2(
+				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$initWithTokens,
+				lineNumber,
+				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$run(str))).committed;
 	});
 var $toastal$either$Either$Left = function (a) {
 	return {$: 'Left', a: a};
@@ -13523,7 +11530,6 @@ var $jxxcarlson$xmarkdown_compiler$AST$Language$boostBlock = function (block) {
 	}
 };
 var $jxxcarlson$xmarkdown_compiler$AST$Language$emptyExprMeta = {begin: 0, end: 0, id: 'id', index: 0};
-var $elm$core$String$trimLeft = _String_trimLeft;
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$fixItemsAux = F2(
 	function (acc, input) {
 		var folder = F2(
@@ -13661,7 +11667,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseListItems = F3(
 				$elm$core$List$foldl,
 				folder,
 				_Utils_Tuple2(0, _List_Nil),
-				A2($elm$core$String$split, '\n', sourceText)).b);
+				A2($elm$core$String$split, '\u000A', sourceText)).b);
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$alignmentCode = function (a) {
 	switch (a.$) {
@@ -13679,6 +11685,27 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$encodeAlignments = func
 		',',
 		A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$alignmentCode, aligns));
 };
+var $elm$core$List$repeatHelp = F3(
+	function (result, n, value) {
+		repeatHelp:
+		while (true) {
+			if (n <= 0) {
+				return result;
+			} else {
+				var $temp$result = A2($elm$core$List$cons, value, result),
+					$temp$n = n - 1,
+					$temp$value = value;
+				result = $temp$result;
+				n = $temp$n;
+				value = $temp$value;
+				continue repeatHelp;
+			}
+		}
+	});
+var $elm$core$List$repeat = F2(
+	function (n, value) {
+		return A3($elm$core$List$repeatHelp, _List_Nil, n, value);
+	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$padRow = F2(
 	function (n, cells) {
 		return (_Utils_cmp(
@@ -13775,7 +11802,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$toExpressionBlock_ = F2
 					case 'Paragraph':
 						return $toastal$either$Either$Right(
 							parse(
-								A2($elm$core$String$join, '\n', primitiveBlock.body)));
+								A2($elm$core$String$join, '\u000A', primitiveBlock.body)));
 					case 'Ordinary':
 						switch (_v0.a) {
 							case 'itemList_':
@@ -13809,7 +11836,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$toExpressionBlock_ = F2
 								var items = A2(
 									$elm$core$List$map,
 									extractIndentAndContent,
-									A2($elm$core$String$split, '\n', primitiveBlock.meta.sourceText));
+									A2($elm$core$String$split, '\u000A', primitiveBlock.meta.sourceText));
 								var content_ = A2(
 									$elm$core$List$map,
 									function (_v2) {
@@ -13832,11 +11859,11 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$toExpressionBlock_ = F2
 							default:
 								return $toastal$either$Either$Right(
 									parse(
-										A2($elm$core$String$join, '\n', primitiveBlock.body)));
+										A2($elm$core$String$join, '\u000A', primitiveBlock.body)));
 						}
 					default:
 						return $toastal$either$Either$Left(
-							A2($elm$core$String$join, '\n', primitiveBlock.body));
+							A2($elm$core$String$join, '\u000A', primitiveBlock.body));
 				}
 			}(),
 			firstLine: primitiveBlock.firstLine,
@@ -13870,16 +11897,13 @@ var $elm$core$String$toLower = _String_toLower;
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$searchBlocksContainingText = F3(
 	function (params, lines, searchQuery) {
 		var searchLower = $elm$core$String$toLower(searchQuery);
-		var forest = A2(
-			$jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$filterForest,
-			params.filter,
+		var allBlocks = $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$forestToBlockList(
 			A3($jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parse, $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$idPrefix, params.editCount, lines));
-		var allBlocks = $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$forestToBlockList(forest);
 		return A2(
 			$elm$core$List$map,
 			function (block) {
 				return {
-					id: 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + '.0'),
+					id: 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(params.editCount))),
 					lineNumber: block.meta.lineNumber,
 					numberOfLines: block.meta.numberOfLines,
 					sourceText: block.meta.sourceText
@@ -13896,6 +11920,36 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$searchBlocksContainingText
 				allBlocks));
 	});
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$searchBlocksContainingText = $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$searchBlocksContainingText;
+var $elm$json$Json$Encode$object = function (pairs) {
+	return _Json_wrap(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v0, obj) {
+					var k = _v0.a;
+					var v = _v0.b;
+					return A3(_Json_addField, k, v, obj);
+				}),
+			_Json_emptyObject(_Utils_Tuple0),
+			pairs));
+};
+var $author$project$Ports$setThemeColors = _Platform_outgoingPort(
+	'setThemeColors',
+	function ($) {
+		return $elm$json$Json$Encode$object(
+			_List_fromArray(
+				[
+					_Utils_Tuple2(
+					'bg',
+					$elm$json$Json$Encode$string($.bg)),
+					_Utils_Tuple2(
+					'fg',
+					$elm$json$Json$Encode$string($.fg)),
+					_Utils_Tuple2(
+					'indentGuide',
+					$elm$json$Json$Encode$string($.indentGuide))
+				]));
+	});
 var $elm$file$File$Download$string = F3(
 	function (name, mime, content) {
 		return A2(
@@ -13903,6 +11957,40 @@ var $elm$file$File$Download$string = F3(
 			$elm$core$Basics$never,
 			A3(_File_download, name, mime, content));
 	});
+var $elm$core$String$concat = function (strings) {
+	return A2($elm$core$String$join, '', strings);
+};
+var $elm$core$String$fromFloat = _String_fromNumber;
+var $elm$core$Basics$round = _Basics_round;
+var $avh4$elm_color$Color$toCssString = function (_v0) {
+	var r = _v0.a;
+	var g = _v0.b;
+	var b = _v0.c;
+	var a = _v0.d;
+	var roundTo = function (x) {
+		return $elm$core$Basics$round(x * 1000) / 1000;
+	};
+	var pct = function (x) {
+		return $elm$core$Basics$round(x * 10000) / 100;
+	};
+	return $elm$core$String$concat(
+		_List_fromArray(
+			[
+				'rgba(',
+				$elm$core$String$fromFloat(
+				pct(r)),
+				'%,',
+				$elm$core$String$fromFloat(
+				pct(g)),
+				'%,',
+				$elm$core$String$fromFloat(
+				pct(b)),
+				'%,',
+				$elm$core$String$fromFloat(
+				roundTo(a)),
+				')'
+			]));
+};
 var $elm$file$File$toString = _File_toString;
 var $author$project$Main$update = F2(
 	function (msg, model) {
@@ -13955,6 +12043,50 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					model,
 					A3($elm$file$File$Download$string, model.fileName, 'text/markdown', model.sourceText));
+			case 'NewFileRequested':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{count: model.count + 1, fileName: 'untitled.md', initialText: '', sourceText: '', syncHighlight: $elm$core$Maybe$Nothing}),
+					$elm$core$Platform$Cmd$none);
+			case 'FileNameChanged':
+				var newFileName = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{fileName: newFileName}),
+					$elm$core$Platform$Cmd$none);
+			case 'ToggleTheme':
+				var params = model.compilerParameters;
+				var newTheme = function () {
+					var _v2 = model.theme;
+					if (_v2.$ === 'Light') {
+						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
+					} else {
+						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
+					}
+				}();
+				var newParams = _Utils_update(
+					params,
+					{theme: newTheme});
+				var currentTheme = function () {
+					if (newTheme.$ === 'Light') {
+						return $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme;
+					} else {
+						return $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme;
+					}
+				}();
+				var themeCmd = $author$project$Ports$setThemeColors(
+					{
+						bg: $avh4$elm_color$Color$toCssString(currentTheme.background),
+						fg: $avh4$elm_color$Color$toCssString(currentTheme.text),
+						indentGuide: $avh4$elm_color$Color$toCssString(currentTheme.indentGuide)
+					});
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{compilerParameters: newParams, theme: newTheme}),
+					themeCmd);
 			case 'LRSync':
 				var searchText = msg.a;
 				var params = _Utils_update(
@@ -13962,10 +12094,7 @@ var $author$project$Main$update = F2(
 					{
 						docWidth: $author$project$Main$geometry(model).docWidth,
 						editCount: model.count,
-						filter: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$NoFilter,
-						idsOfOpenNodes: model.idsOfOpenNodes,
-						interBlockSpacing: 18,
-						numberToLevel: 2,
+						interBlockSpacing: 0,
 						paddingAboveHeadings: 18,
 						selectedId: 'selectedId'
 					});
@@ -13983,7 +12112,7 @@ var $author$project$Main$update = F2(
 				if (currentMatch.$ === 'Just') {
 					var match = currentMatch.a;
 					var lineNumberStr = $elm$core$String$fromInt(match.lineNumber);
-					var css = '[data-line-number=\"' + (lineNumberStr + ('\"] { background-color: ' + (params.highlightColor + (' !important; }\n' + ('[data-line-number=\"' + (lineNumberStr + ('\"] * { background-color: ' + (params.highlightColor + ' !important; }'))))))));
+					var css = '[data-line-number=\u0022' + (lineNumberStr + ('\u0022] { background-color: ' + (params.highlightColor + (' !important; }\u000A' + ('[data-line-number=\u0022' + (lineNumberStr + ('\u0022] * { background-color: ' + (params.highlightColor + ' !important; }'))))))));
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -13991,7 +12120,7 @@ var $author$project$Main$update = F2(
 						$elm$core$Platform$Cmd$batch(
 							_List_fromArray(
 								[
-									$author$project$Main$jumpToTopOf(match.id),
+									A2($author$project$Main$jumpToTopOfWithLineNumber, match.id, match.lineNumber),
 									$author$project$Ports$injectHighlightCSS(css)
 								])));
 				} else {
@@ -14003,9 +12132,9 @@ var $author$project$Main$update = F2(
 				}
 			default:
 				var msg_ = msg.a;
-				var _v2 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsg, model.tick + 1, msg_);
-				if (_v2.$ === 'Just') {
-					var h = _v2.a;
+				var _v4 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+				if (_v4.$ === 'Just') {
+					var h = _v4.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -14015,37 +12144,41 @@ var $author$project$Main$update = F2(
 							}),
 						$elm$core$Platform$Cmd$none);
 				} else {
-					switch (msg_.$) {
-						case 'ToggleTOCNodeID':
-							var nodeId = msg_.a;
-							var idsOfOpenNodes = (A2($elm$core$String$left, 2, nodeId) === '@-') ? (A2($elm$core$List$member, nodeId, model.idsOfOpenNodes) ? A2($elmcraft$core_extra$List$Extra$remove, nodeId, model.idsOfOpenNodes) : A2($elm$core$List$cons, nodeId, model.idsOfOpenNodes)) : model.idsOfOpenNodes;
-							return _Utils_Tuple2(
-								_Utils_update(
-									model,
-									{idsOfOpenNodes: idsOfOpenNodes}),
-								$elm$core$Platform$Cmd$none);
-						case 'SelectId':
-							var selId = msg_.a;
-							return (selId === 'title') ? _Utils_Tuple2(
-								_Utils_update(
-									model,
-									{selectId: selId}),
-								$author$project$Main$jumpToTopOf($jxxcarlson$xmarkdown_compiler$XMarkdown$API$renderedTextId)) : _Utils_Tuple2(
-								_Utils_update(
-									model,
-									{selectId: selId}),
-								$elm$core$Platform$Cmd$none);
-						default:
-							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					if (msg_.$ === 'SelectId') {
+						var selId = msg_.a;
+						var lineNum = A2(
+							$elm$core$Maybe$withDefault,
+							0,
+							$elm$core$String$toInt(
+								A2(
+									$elm$core$String$dropLeft,
+									2,
+									A2(
+										$elm$core$Maybe$withDefault,
+										'0',
+										$elm$core$List$head(
+											A2($elm$core$String$split, '.', selId))))));
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{selectId: selId}),
+							A2($author$project$Main$jumpToTopOfWithLineNumber, selId, lineNum));
+					} else {
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 					}
 				}
 		}
 	});
+var $author$project$Main$FileNameChanged = function (a) {
+	return {$: 'FileNameChanged', a: a};
+};
+var $author$project$Main$NewFileRequested = {$: 'NewFileRequested'};
 var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
 var $author$project$Main$Render = function (a) {
 	return {$: 'Render', a: a};
 };
 var $author$project$Main$SaveFileRequested = {$: 'SaveFileRequested'};
+var $author$project$Main$ToggleTheme = {$: 'ToggleTheme'};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -14055,7 +12188,6 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$initialData = {mathMacros: '', shiftAndSetCounter: $elm$core$Maybe$Nothing, textMacros: '', vectorSize: 4};
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList = {$: 'SNotInList'};
 var $jxxcarlson$xmarkdown_compiler$AST$Vector$init = function (k) {
 	return {
@@ -14065,274 +12197,993 @@ var $jxxcarlson$xmarkdown_compiler$AST$Vector$init = function (k) {
 };
 var $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames = _List_fromArray(
 	['q', 'axiom', 'box', 'theorem', 'definition', 'lemma', 'construction', 'principle', 'proposition', 'corollary', 'note', 'remark', 'exercise', 'question', 'problem', 'example', 'equation', 'aligned', 'quiver', 'image', 'iframe']);
-var $jxxcarlson$etex$ETeX$MathMacros$MacroBody = F2(
-	function (a, b) {
-		return {$: 'MacroBody', a: a, b: b};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$init = {
+	blockCounter: 0,
+	counter: $elm$core$Dict$empty,
+	deltaLevel: 0,
+	headingIndex: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4),
+	inListState: $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList,
+	itemVector: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4),
+	keyValueDict: $elm$core$Dict$empty,
+	numberedBlockNames: $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames,
+	numberedItemDict: $elm$core$Dict$empty
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$mapper = F2(
+	function (ast_, _v0) {
+		var acc_ = _v0.a;
+		var tree_ = _v0.b;
+		return _Utils_Tuple2(
+			acc_,
+			A2($elm$core$List$cons, tree_, ast_));
 	});
-var $jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros = function (exprs) {
-	findMaxParamInMathMacros:
-	while (true) {
-		_v0$7:
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$reverse = function (list) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (x, xs) {
+				return A2($elm$core$List$cons, x, xs);
+			}),
+		_List_Nil,
+		list);
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate = F3(
+	function (f, s, tree) {
+		var _v0 = A2(
+			f,
+			s,
+			$maca$elm_rose_tree$RoseTree$Tree$value(tree));
+		var s_ = _v0.a;
+		var value_ = _v0.b;
+		var _v1 = A3(
+			$elm$core$List$foldl,
+			F2(
+				function (child, _v2) {
+					var accState = _v2.a;
+					var accChildren = _v2.b;
+					var _v3 = A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, f, accState, child);
+					var newState = _v3.a;
+					var newChild = _v3.b;
+					return _Utils_Tuple2(
+						newState,
+						A2($elm$core$List$cons, newChild, accChildren));
+				}),
+			_Utils_Tuple2(s_, _List_Nil),
+			$maca$elm_rose_tree$RoseTree$Tree$children(tree));
+		var s__ = _v1.a;
+		var children_ = _v1.b;
+		return _Utils_Tuple2(
+			s__,
+			A2(
+				$maca$elm_rose_tree$RoseTree$Tree$branch,
+				value_,
+				$jxxcarlson$xmarkdown_compiler$AST$Acc$reverse(children_)));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString = F2(
+	function (name, dict) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			'',
+			A2(
+				$elm$core$Maybe$map,
+				$elm$core$String$fromInt,
+				A2($elm$core$Dict$get, name, dict)));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$toString = function (v) {
+	return A2(
+		$elm$core$String$join,
+		'.',
+		A2(
+			$elm$core$List$map,
+			$elm$core$String$fromInt,
+			A2(
+				$elm$core$List$filter,
+				function (x) {
+					return x > 0;
+				},
+				v.content)));
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber = function (acc) {
+	return ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) === '') ? A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter) : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) + ('.' + A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter)));
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading = function (heading) {
+	switch (heading.$) {
+		case 'Paragraph':
+			return $elm$core$Maybe$Nothing;
+		case 'Ordinary':
+			var name = heading.a;
+			return $elm$core$Maybe$Just(name);
+		default:
+			var name = heading.a;
+			return $elm$core$Maybe$Just(name);
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$Tools$String$userReplace = F3(
+	function (userRegex, replacer, string) {
+		var _v0 = $elm$regex$Regex$fromString(userRegex);
+		if (_v0.$ === 'Nothing') {
+			return string;
+		} else {
+			var regex = _v0.a;
+			return A3($elm$regex$Regex$replace, regex, replacer, string);
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$Tools$String$alphanumOnly = function (string) {
+	return A3(
+		$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
+		'[^a-z0-9 ]+',
+		function (_v0) {
+			return ' ';
+		},
+		string);
+};
+var $jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace = function (string) {
+	return $elm$core$String$trim(
+		A3(
+			$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
+			'\u005Cs\u005Cs+',
+			function (_v0) {
+				return ' ';
+			},
+			string));
+};
+var $jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug = function (str) {
+	return A3(
+		$elm$core$String$replace,
+		' ',
+		'-',
+		$jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace(
+			$jxxcarlson$xmarkdown_compiler$Tools$String$alphanumOnly(
+				$elm$core$String$toLower(str))));
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$vectorPrefix = function (headingIndex) {
+	var prefix = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex);
+	return (prefix === '') ? '' : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex) + '.');
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock = F2(
+	function (acc, block) {
+		var _v0 = _Utils_Tuple2(block.heading, block.args);
+		_v0$4:
 		while (true) {
-			if (!exprs.b) {
+			switch (_v0.a.$) {
+				case 'Ordinary':
+					switch (_v0.a.a) {
+						case 'section':
+							return _Utils_update(
+								block,
+								{
+									properties: A3(
+										$elm$core$Dict$insert,
+										'tag',
+										$jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug(block.firstLine),
+										A3(
+											$elm$core$Dict$insert,
+											'label',
+											$jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex),
+											block.properties))
+								});
+						case 'image':
+							return _Utils_update(
+								block,
+								{
+									properties: A3(
+										$elm$core$Dict$insert,
+										'figure',
+										A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'figure', acc.counter),
+										block.properties)
+								});
+						default:
+							break _v0$4;
+					}
+				case 'Verbatim':
+					switch (_v0.a.a) {
+						case 'equation':
+							return _Utils_update(
+								block,
+								{
+									properties: A3(
+										$elm$core$Dict$insert,
+										'equation-number',
+										$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
+										block.properties)
+								});
+						case 'aligned':
+							return _Utils_update(
+								block,
+								{
+									properties: A3(
+										$elm$core$Dict$insert,
+										'equation-number',
+										$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
+										block.properties)
+								});
+						default:
+							break _v0$4;
+					}
+				default:
+					break _v0$4;
+			}
+		}
+		var heading = _v0.a;
+		var _v1 = $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(heading);
+		if (_v1.$ === 'Nothing') {
+			return block;
+		} else {
+			var name = _v1.a;
+			return A2(
+				$elm$core$List$member,
+				name,
+				_List_fromArray(
+					['section'])) ? _Utils_update(
+				block,
+				{
+					properties: A3(
+						$elm$core$Dict$insert,
+						'label',
+						$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
+						block.properties)
+				}) : (A2($elm$core$List$member, name, $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames) ? _Utils_update(
+				block,
+				{
+					properties: A3(
+						$elm$core$Dict$insert,
+						'label',
+						_Utils_ap(
+							$jxxcarlson$xmarkdown_compiler$AST$Acc$vectorPrefix(acc.headingIndex),
+							$elm$core$String$fromInt(acc.blockCounter)),
+						block.properties)
+				}) : block);
+		}
+	});
+var $elm$core$Maybe$andThen = F2(
+	function (callback, maybeValue) {
+		if (maybeValue.$ === 'Just') {
+			var value = maybeValue.a;
+			return callback(value);
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList = {$: 'SInList'};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState = F2(
+	function (heading, state) {
+		var _v0 = _Utils_Tuple2(state, heading);
+		if (_v0.a.$ === 'SNotInList') {
+			if ((_v0.b.$ === 'Ordinary') && (_v0.b.a === 'numbered')) {
+				var _v1 = _v0.a;
+				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList;
+			} else {
+				var _v2 = _v0.a;
+				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList;
+			}
+		} else {
+			if ((_v0.b.$ === 'Ordinary') && (_v0.b.a === 'numbered')) {
+				var _v3 = _v0.a;
+				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList;
+			} else {
+				var _v4 = _v0.a;
+				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList;
+			}
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$get = F2(
+	function (k, v) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			0,
+			A2($elmcraft$core_extra$List$Extra$getAt, k, v.content));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName = function (block) {
+	var _v0 = block.heading;
+	switch (_v0.$) {
+		case 'Paragraph':
+			return $elm$core$Maybe$Nothing;
+		case 'Ordinary':
+			var name = _v0.a;
+			return $elm$core$Maybe$Just(name);
+		default:
+			var name = _v0.a;
+			return $elm$core$Maybe$Just(name);
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$resetFrom = F2(
+	function (k, v) {
+		var suffix = A2($elm$core$List$repeat, v.size - k, 0);
+		var prefix = A2($elm$core$List$take, k, v.content);
+		return {
+			content: _Utils_ap(prefix, suffix),
+			size: v.size
+		};
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$set = F3(
+	function (k, a, v) {
+		return _Utils_update(
+			v,
+			{
+				content: A3($elmcraft$core_extra$List$Extra$setAt, k, a, v.content)
+			});
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$increment = F2(
+	function (k, v) {
+		return ((k < 0) || (_Utils_cmp(k, v.size) > -1)) ? v : A2(
+			$jxxcarlson$xmarkdown_compiler$AST$Vector$resetFrom,
+			k + 1,
+			A3(
+				$jxxcarlson$xmarkdown_compiler$AST$Vector$set,
+				k,
+				A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, k, v) + 1,
+				v));
+	});
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum = 2;
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryBlock = F2(
+	function (block, accumulator) {
+		var _v0 = $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block);
+		if (_v0.$ === 'Just') {
+			switch (_v0.a) {
+				case 'setcounter':
+					var _v1 = block.body;
+					if (_v1.$ === 'Left') {
+						return accumulator;
+					} else {
+						var exprs = _v1.a;
+						var ctr = function () {
+							if ((exprs.b && (exprs.a.$ === 'Text')) && (!exprs.b.b)) {
+								var _v3 = exprs.a;
+								var val = _v3.a;
+								return A2(
+									$elm$core$Maybe$withDefault,
+									1,
+									$elm$core$String$toInt(val));
+							} else {
+								return 1;
+							}
+						}();
+						var headingIndex = A3(
+							$jxxcarlson$xmarkdown_compiler$AST$Vector$set,
+							0,
+							ctr - 1,
+							$jxxcarlson$xmarkdown_compiler$AST$Vector$init(accumulator.headingIndex.size));
+						return _Utils_update(
+							accumulator,
+							{headingIndex: headingIndex});
+					}
+				case 'numbered':
+					var level = (block.indent / $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum) | 0;
+					var itemVector = function () {
+						var _v4 = accumulator.inListState;
+						if (_v4.$ === 'SInList') {
+							return A2($jxxcarlson$xmarkdown_compiler$AST$Vector$increment, level, accumulator.itemVector);
+						} else {
+							return A2(
+								$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
+								0,
+								$jxxcarlson$xmarkdown_compiler$AST$Vector$init(4));
+						}
+					}();
+					var index = A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector);
+					var numberedItemDict = A3(
+						$elm$core$Dict$insert,
+						block.meta.id,
+						{index: index, level: level},
+						accumulator.numberedItemDict);
+					return _Utils_update(
+						accumulator,
+						{
+							inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState),
+							itemVector: itemVector,
+							numberedItemDict: numberedItemDict
+						});
+				case 'item':
+					return _Utils_update(
+						accumulator,
+						{
+							inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
+						});
+				default:
+					var name_ = _v0.a;
+					if (A2(
+						$elm$core$List$member,
+						name_,
+						_List_fromArray(
+							['title', 'contents', 'banner', 'a']))) {
+						return accumulator;
+					} else {
+						if (A2($elm$core$List$member, name_, $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames)) {
+							var level = (block.indent / $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum) | 0;
+							var itemVector = A2($jxxcarlson$xmarkdown_compiler$AST$Vector$increment, level, accumulator.itemVector);
+							var numberedItemDict = A3(
+								$elm$core$Dict$insert,
+								block.meta.id,
+								{
+									index: A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector),
+									level: level
+								},
+								accumulator.numberedItemDict);
+							return _Utils_update(
+								accumulator,
+								{
+									blockCounter: accumulator.blockCounter + 1,
+									inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState),
+									itemVector: itemVector,
+									numberedItemDict: numberedItemDict
+								});
+						} else {
+							return _Utils_update(
+								accumulator,
+								{
+									inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
+								});
+						}
+					}
+			}
+		} else {
+			return accumulator;
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock = F2(
+	function (accumulator, level) {
+		var delta = function () {
+			var _v0 = A2($elm$core$Dict$get, 'has-chapters', accumulator.keyValueDict);
+			if (_v0.$ === 'Nothing') {
 				return 0;
 			} else {
-				switch (exprs.a.$) {
-					case 'Param':
-						var n = exprs.a.a;
-						var rest = exprs.b;
-						return A2(
-							$elm$core$Basics$max,
-							n,
-							$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(rest));
-					case 'Arg':
-						var innerExprs = exprs.a.a;
-						var rest = exprs.b;
-						return A2(
-							$elm$core$Basics$max,
-							$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(innerExprs),
-							$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(rest));
-					case 'Macro':
-						var _v1 = exprs.a;
-						var args = _v1.b;
-						var rest = exprs.b;
-						return A2(
-							$elm$core$Basics$max,
-							$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(args),
-							$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(rest));
-					case 'Expr':
-						var innerExprs = exprs.a.a;
-						var rest = exprs.b;
-						return A2(
-							$elm$core$Basics$max,
-							$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(innerExprs),
-							$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(rest));
-					case 'Sub':
-						if (exprs.a.a.$ === 'DecoM') {
-							var expr = exprs.a.a.a;
-							var rest = exprs.b;
-							return A2(
-								$elm$core$Basics$max,
-								$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(
-									_List_fromArray(
-										[expr])),
-								$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(rest));
+				if (_v0.a === 'yes') {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		}();
+		var headingIndex = A2(
+			$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
+			function (x) {
+				return ((x - 1) + delta) + accumulator.deltaLevel;
+			}(
+				A2(
+					$elm$core$Maybe$withDefault,
+					1,
+					$elm$core$String$toInt(level))),
+			accumulator.headingIndex);
+		return _Utils_update(
+			accumulator,
+			{
+				blockCounter: 0,
+				counter: A3($elm$core$Dict$insert, 'equation', 0, accumulator.counter),
+				headingIndex: headingIndex
+			});
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter = F2(
+	function (name, dict) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			0,
+			A2($elm$core$Dict$get, name, dict));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$incrementCounter = F2(
+	function (name, dict) {
+		return A3(
+			$elm$core$Dict$insert,
+			name,
+			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter, name, dict) + 1,
+			dict);
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName = function (str) {
+	return A2(
+		$elm$core$List$member,
+		str,
+		_List_fromArray(
+			['equation', 'aligned'])) ? 'equation' : ((str === 'code') ? 'listing' : (A2(
+		$elm$core$List$member,
+		str,
+		_List_fromArray(
+			['quiver', 'image', 'table', 'svg', 'tikz'])) ? 'figure' : str));
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock = F2(
+	function (block, accumulator) {
+		var _v0 = block.body;
+		if (_v0.$ === 'Right') {
+			return accumulator;
+		} else {
+			var name = A2(
+				$elm$core$Maybe$withDefault,
+				'',
+				$jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block));
+			var newCounter = (A2($elm$core$List$member, name, accumulator.numberedBlockNames) && A2($elm$core$List$member, 'numbered', block.args)) ? A2(
+				$jxxcarlson$xmarkdown_compiler$AST$Acc$incrementCounter,
+				$jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName(name),
+				accumulator.counter) : accumulator.counter;
+			return _Utils_update(
+				accumulator,
+				{
+					counter: newCounter,
+					inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
+				});
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator = F2(
+	function (block, accumulator) {
+		var properties = block.properties;
+		var args = block.args;
+		var heading = block.heading;
+		switch (heading.$) {
+			case 'Ordinary':
+				switch (heading.a) {
+					case 'set-key':
+						if (args.b && args.b.b) {
+							var key = args.a;
+							var _v2 = args.b;
+							var value = _v2.a;
+							return _Utils_update(
+								accumulator,
+								{
+									keyValueDict: A3($elm$core$Dict$insert, key, value, accumulator.keyValueDict)
+								});
 						} else {
-							break _v0$7;
+							return accumulator;
 						}
-					case 'Super':
-						if (exprs.a.a.$ === 'DecoM') {
-							var expr = exprs.a.a.a;
-							var rest = exprs.b;
-							return A2(
-								$elm$core$Basics$max,
-								$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(
-									_List_fromArray(
-										[expr])),
-								$jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(rest));
+					case 'list':
+						return _Utils_update(
+							accumulator,
+							{
+								itemVector: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4)
+							});
+					case 'section':
+						var level = A2(
+							$elm$core$Maybe$withDefault,
+							'1',
+							A2($elm$core$Dict$get, 'level', properties));
+						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock, accumulator, level);
+					case 'title':
+						if (accumulator.deltaLevel === 1) {
+							return accumulator;
 						} else {
-							break _v0$7;
+							var headingIndex = function () {
+								var _v3 = A2($elm$core$Dict$get, 'first-section', block.properties);
+								if (_v3.$ === 'Nothing') {
+									return {
+										content: _List_fromArray(
+											[0, 0, 0, 0]),
+										size: 4
+									};
+								} else {
+									var firstSection_ = _v3.a;
+									var _v4 = $elm$core$String$toInt(firstSection_);
+									if (_v4.$ === 'Just') {
+										var n = _v4.a;
+										return {
+											content: _List_fromArray(
+												[
+													A2($elm$core$Basics$max, n - 1, 0),
+													0,
+													0,
+													0
+												]),
+											size: 4
+										};
+									} else {
+										return {
+											content: _List_fromArray(
+												[0, 0, 0, 0]),
+											size: 4
+										};
+									}
+								}
+							}();
+							return _Utils_update(
+								accumulator,
+								{headingIndex: headingIndex});
 						}
+					case 'setcounter':
+						var n = A2(
+							$elm$core$Maybe$withDefault,
+							1,
+							A2(
+								$elm$core$Maybe$andThen,
+								$elm$core$String$toInt,
+								$elm$core$List$head(args)));
+						return _Utils_update(
+							accumulator,
+							{
+								headingIndex: {
+									content: _List_fromArray(
+										[n, 0, 0, 0]),
+									size: 4
+								}
+							});
+					case 'shiftandsetcounter':
+						var n = A2(
+							$elm$core$Maybe$withDefault,
+							1,
+							A2(
+								$elm$core$Maybe$andThen,
+								$elm$core$String$toInt,
+								$elm$core$List$head(args)));
+						return _Utils_update(
+							accumulator,
+							{
+								deltaLevel: 1,
+								headingIndex: {
+									content: _List_fromArray(
+										[n, 0, 0, 0]),
+									size: 4
+								}
+							});
 					default:
-						break _v0$7;
+						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryBlock, block, accumulator);
+				}
+			case 'Verbatim':
+				if (heading.a === 'settings') {
+					return _Utils_update(
+						accumulator,
+						{
+							keyValueDict: A2($elm$core$Dict$union, properties, accumulator.keyValueDict)
+						});
+				} else {
+					var _v5 = block.body;
+					if (_v5.$ === 'Left') {
+						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock, block, accumulator);
+					} else {
+						return accumulator;
+					}
+				}
+			default:
+				return _Utils_update(
+					accumulator,
+					{
+						inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
+					});
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock = F2(
+	function (acc_, block_) {
+		var newAcc = A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator, block_, acc_);
+		return _Utils_Tuple2(
+			newAcc,
+			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock, newAcc, block_));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree = F2(
+	function (tree, acc) {
+		return A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock, acc, tree);
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate = function (forest) {
+	return function (_v1) {
+		var acc_ = _v1.a;
+		var ast_ = _v1.b;
+		return _Utils_Tuple2(
+			acc_,
+			$elm$core$List$reverse(ast_));
+	}(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (tree, _v0) {
+					var acc_ = _v0.a;
+					var ast_ = _v0.b;
+					return A2(
+						$jxxcarlson$xmarkdown_compiler$AST$Acc$mapper,
+						ast_,
+						A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree, tree, acc_));
+				}),
+			_Utils_Tuple2($jxxcarlson$xmarkdown_compiler$AST$Acc$init, _List_Nil),
+			forest));
+};
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parseToForestWithAccumulator = F2(
+	function (params, lines) {
+		return $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate(
+			A3($jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parse, $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$idPrefix, params.editCount, lines));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$changeName = F3(
+	function (oldName, newName, block) {
+		return _Utils_eq(
+			block.heading,
+			$jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary(oldName)) ? _Utils_update(
+			block,
+			{
+				heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary(newName)
+			}) : block;
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Language$getName = function (block) {
+	return $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(block.heading);
+};
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName = F2(
+	function (key, block) {
+		return _Utils_eq(
+			$elm$core$Maybe$Just(key),
+			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName = F2(
+	function (name, blocks) {
+		return A2(
+			$elm$core$List$filter,
+			$jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName(name),
+			blocks);
+	});
+var $maca$elm_rose_tree$RoseTree$Tree$foldr = F3(
+	function (f, acc, _v0) {
+		var a = _v0.a;
+		var ns = _v0.b;
+		return A3(
+			$elm$core$Array$foldr,
+			F2(
+				function (n, acc_) {
+					return A3($maca$elm_rose_tree$RoseTree$Tree$foldr, f, acc_, n);
+				}),
+			A2(
+				f,
+				A2($maca$elm_rose_tree$RoseTree$Tree$Tree, a, ns),
+				acc),
+			ns);
+	});
+var $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten = A2(
+	$maca$elm_rose_tree$RoseTree$Tree$foldr,
+	F2(
+		function (n, acc) {
+			return A2(
+				$elm$core$List$cons,
+				$maca$elm_rose_tree$RoseTree$Tree$value(n),
+				acc);
+		}),
+	_List_Nil);
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getBlockByName = F2(
+	function (name, ast) {
+		return $elm$core$List$head(
+			A2(
+				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName,
+				name,
+				$elm$core$List$concat(
+					A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten, ast))));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$banner = function (ast) {
+	return A2(
+		$elm$core$Maybe$map,
+		A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$changeName, 'banner', 'visibleBanner'),
+		A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$getBlockByName, 'banner', ast));
+};
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$DefaultDisplay = {$: 'DefaultDisplay'};
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$getThemedColor = F2(
+	function (keyAccess, theme) {
+		return keyAccess(
+			function () {
+				if (theme.$ === 'Dark') {
+					return $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme;
+				} else {
+					return $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme;
+				}
+			}());
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$referenceFontSize = 20;
+var $elm$core$Maybe$map3 = F4(
+	function (func, ma, mb, mc) {
+		if (ma.$ === 'Nothing') {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			var a = ma.a;
+			if (mb.$ === 'Nothing') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var b = mb.a;
+				if (mc.$ === 'Nothing') {
+					return $elm$core$Maybe$Nothing;
+				} else {
+					var c = mc.a;
+					return $elm$core$Maybe$Just(
+						A3(func, a, b, c));
 				}
 			}
 		}
-		var rest = exprs.b;
-		var $temp$exprs = rest;
-		exprs = $temp$exprs;
-		continue findMaxParamInMathMacros;
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$makeEntry = function (newCommand_) {
-	if (((((newCommand_.$ === 'Ok') && (newCommand_.a.a.$ === 'MacroName')) && newCommand_.a.c.b) && (newCommand_.a.c.a.$ === 'Arg')) && (!newCommand_.a.c.b.b)) {
-		var _v1 = newCommand_.a;
-		var name = _v1.a.a;
-		var arity = _v1.b;
-		var _v2 = _v1.c;
-		var body = _v2.a.a;
-		var deducedArity = (arity > 0) ? arity : $jxxcarlson$etex$ETeX$Transform$findMaxParamInMathMacros(body);
-		return $elm$core$Maybe$Just(
-			_Utils_Tuple2(
-				name,
-				A2($jxxcarlson$etex$ETeX$MathMacros$MacroBody, deducedArity, body)));
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$ExpectingLeftBrace = {$: 'ExpectingLeftBrace'};
-var $jxxcarlson$etex$ETeX$Transform$ExpectingNewCommand = {$: 'ExpectingNewCommand'};
-var $jxxcarlson$etex$ETeX$Transform$ExpectingRightBrace = {$: 'ExpectingRightBrace'};
-var $jxxcarlson$etex$ETeX$MathMacros$NewCommand = F3(
-	function (a, b, c) {
-		return {$: 'NewCommand', a: a, b: b, c: c};
 	});
-var $jxxcarlson$etex$ETeX$MathMacros$AlphaNum = function (a) {
-	return {$: 'AlphaNum', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$Arg = function (a) {
-	return {$: 'Arg', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$Comma = {$: 'Comma'};
-var $jxxcarlson$etex$ETeX$MathMacros$DecoI = function (a) {
-	return {$: 'DecoI', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$DecoM = function (a) {
-	return {$: 'DecoM', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$Expr = function (a) {
-	return {$: 'Expr', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$LeftMathBrace = {$: 'LeftMathBrace'};
-var $jxxcarlson$etex$ETeX$MathMacros$LeftParen = {$: 'LeftParen'};
-var $jxxcarlson$etex$ETeX$MathMacros$Macro = F2(
-	function (a, b) {
-		return {$: 'Macro', a: a, b: b};
+var $elm$core$Maybe$map4 = F5(
+	function (func, ma, mb, mc, md) {
+		if (ma.$ === 'Nothing') {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			var a = ma.a;
+			if (mb.$ === 'Nothing') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var b = mb.a;
+				if (mc.$ === 'Nothing') {
+					return $elm$core$Maybe$Nothing;
+				} else {
+					var c = mc.a;
+					if (md.$ === 'Nothing') {
+						return $elm$core$Maybe$Nothing;
+					} else {
+						var d = md.a;
+						return $elm$core$Maybe$Just(
+							A4(func, a, b, c, d));
+					}
+				}
+			}
+		}
 	});
-var $jxxcarlson$etex$ETeX$MathMacros$MacroName = function (a) {
-	return {$: 'MacroName', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$MathMediumSpace = {$: 'MathMediumSpace'};
-var $jxxcarlson$etex$ETeX$MathMacros$MathSmallSpace = {$: 'MathSmallSpace'};
-var $jxxcarlson$etex$ETeX$MathMacros$MathSpace = {$: 'MathSpace'};
-var $jxxcarlson$etex$ETeX$MathMacros$MathSymbols = function (a) {
-	return {$: 'MathSymbols', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$Param = function (a) {
-	return {$: 'Param', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$RightMathBrace = {$: 'RightMathBrace'};
-var $jxxcarlson$etex$ETeX$MathMacros$RightParen = {$: 'RightParen'};
-var $jxxcarlson$etex$ETeX$MathMacros$Sub = function (a) {
-	return {$: 'Sub', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$Super = function (a) {
-	return {$: 'Super', a: a};
-};
-var $jxxcarlson$etex$ETeX$MathMacros$WS = {$: 'WS'};
-var $jxxcarlson$etex$ETeX$Transform$convertToETeXDeco = function (deco) {
-	if (deco.$ === 'DecoM') {
-		var mathExpr = deco.a;
-		return $jxxcarlson$etex$ETeX$MathMacros$DecoM(
-			$jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr(mathExpr));
-	} else {
-		var n = deco.a;
-		return $jxxcarlson$etex$ETeX$MathMacros$DecoI(n);
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr = function (expr) {
-	switch (expr.$) {
-		case 'AlphaNum':
-			var str = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$AlphaNum(str);
-		case 'F0':
-			var str = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$MacroName(str);
-		case 'Param':
-			var n = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$Param(n);
-		case 'WS':
-			return $jxxcarlson$etex$ETeX$MathMacros$WS;
-		case 'MathSpace':
-			return $jxxcarlson$etex$ETeX$MathMacros$MathSpace;
-		case 'MathSmallSpace':
-			return $jxxcarlson$etex$ETeX$MathMacros$MathSmallSpace;
-		case 'MathMediumSpace':
-			return $jxxcarlson$etex$ETeX$MathMacros$MathMediumSpace;
-		case 'LeftMathBrace':
-			return $jxxcarlson$etex$ETeX$MathMacros$LeftMathBrace;
-		case 'RightMathBrace':
-			return $jxxcarlson$etex$ETeX$MathMacros$RightMathBrace;
-		case 'MathSymbols':
-			var str = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$MathSymbols(str);
-		case 'Arg':
-			var exprs = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$Arg(
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr, exprs));
-		case 'PArg':
-			var exprs = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$Arg(
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr, exprs));
-		case 'ParenthExpr':
-			var exprs = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$Expr(
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr, exprs));
-		case 'Sub':
-			var decoExpr = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$Sub(
-				$jxxcarlson$etex$ETeX$Transform$convertToETeXDeco(decoExpr));
-		case 'Super':
-			var decoExpr = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$Super(
-				$jxxcarlson$etex$ETeX$Transform$convertToETeXDeco(decoExpr));
-		case 'Macro':
-			var name = expr.a;
-			var args = expr.b;
-			return A2(
-				$jxxcarlson$etex$ETeX$MathMacros$Macro,
-				name,
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr, args));
-		case 'FCall':
-			var name = expr.a;
-			var args = expr.b;
-			return A2(
-				$jxxcarlson$etex$ETeX$MathMacros$Macro,
-				name,
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr, args));
-		case 'Expr':
-			var exprs = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$Expr(
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr, exprs));
-		case 'LeftParen':
-			return $jxxcarlson$etex$ETeX$MathMacros$LeftParen;
-		case 'RightParen':
-			return $jxxcarlson$etex$ETeX$MathMacros$RightParen;
-		case 'Comma':
-			return $jxxcarlson$etex$ETeX$MathMacros$Comma;
-		default:
-			var str = expr.a;
-			return $jxxcarlson$etex$ETeX$MathMacros$MathSymbols(str);
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash = {$: 'ExpectingBackslash'};
-var $jxxcarlson$etex$ETeX$Transform$F0 = function (a) {
-	return {$: 'F0', a: a};
-};
-var $jxxcarlson$etex$ETeX$Transform$ExpectingAlpha = {$: 'ExpectingAlpha'};
-var $jxxcarlson$etex$ETeX$Transform$alphaNumParser_ = A2(
-	$elm$parser$Parser$Advanced$keeper,
-	A2(
-		$elm$parser$Parser$Advanced$keeper,
-		A2(
-			$elm$parser$Parser$Advanced$keeper,
-			$elm$parser$Parser$Advanced$succeed($elm$core$String$slice),
-			A2(
-				$elm$parser$Parser$Advanced$ignorer,
+var $elm$core$String$toFloat = _String_toFloat;
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$stringToColor = function (colorStr) {
+	return A2($elm$core$String$startsWith, 'rgba(', colorStr) ? function (parts) {
+		if ((((parts.b && parts.b.b) && parts.b.b.b) && parts.b.b.b.b) && (!parts.b.b.b.b.b)) {
+			var r = parts.a;
+			var _v1 = parts.b;
+			var g = _v1.a;
+			var _v2 = _v1.b;
+			var b = _v2.a;
+			var _v3 = _v2.b;
+			var a = _v3.a;
+			return A5(
+				$elm$core$Maybe$map4,
+				$avh4$elm_color$Color$rgba,
 				A2(
-					$elm$parser$Parser$Advanced$ignorer,
-					$elm$parser$Parser$Advanced$getOffset,
-					A2($elm$parser$Parser$Advanced$chompIf, $elm$core$Char$isAlpha, $jxxcarlson$etex$ETeX$Transform$ExpectingAlpha)),
-				$elm$parser$Parser$Advanced$chompWhile($elm$core$Char$isAlphaNum))),
-		$elm$parser$Parser$Advanced$getOffset),
-	$elm$parser$Parser$Advanced$getSource);
-var $jxxcarlson$etex$ETeX$Transform$second = F2(
-	function (p, q) {
-		return A2(
-			$elm$parser$Parser$Advanced$andThen,
-			function (_v0) {
-				return q;
+					$elm$core$Maybe$map,
+					function (x) {
+						return x / 255;
+					},
+					$elm$core$String$toFloat(r)),
+				A2(
+					$elm$core$Maybe$map,
+					function (x) {
+						return x / 255;
+					},
+					$elm$core$String$toFloat(g)),
+				A2(
+					$elm$core$Maybe$map,
+					function (x) {
+						return x / 255;
+					},
+					$elm$core$String$toFloat(b)),
+				$elm$core$String$toFloat(a));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	}(
+		A2(
+			$elm$core$List$map,
+			$elm$core$String$trim,
+			A2(
+				$elm$core$String$split,
+				',',
+				A2(
+					$elm$core$String$dropRight,
+					1,
+					A2($elm$core$String$dropLeft, 5, colorStr))))) : (A2($elm$core$String$startsWith, 'rgb(', colorStr) ? function (parts) {
+		if (((parts.b && parts.b.b) && parts.b.b.b) && (!parts.b.b.b.b)) {
+			var r = parts.a;
+			var _v5 = parts.b;
+			var g = _v5.a;
+			var _v6 = _v5.b;
+			var b = _v6.a;
+			return A4(
+				$elm$core$Maybe$map3,
+				$avh4$elm_color$Color$rgb,
+				A2(
+					$elm$core$Maybe$map,
+					function (x) {
+						return x / 255;
+					},
+					$elm$core$String$toFloat(r)),
+				A2(
+					$elm$core$Maybe$map,
+					function (x) {
+						return x / 255;
+					},
+					$elm$core$String$toFloat(g)),
+				A2(
+					$elm$core$Maybe$map,
+					function (x) {
+						return x / 255;
+					},
+					$elm$core$String$toFloat(b)));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	}(
+		A2(
+			$elm$core$List$map,
+			$elm$core$String$trim,
+			A2(
+				$elm$core$String$split,
+				',',
+				A2(
+					$elm$core$String$dropRight,
+					1,
+					A2($elm$core$String$dropLeft, 4, colorStr))))) : $elm$core$Maybe$Nothing);
+};
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$makeSettings = function (params) {
+	var titleSize = $elm$core$Basics$round((params.fontSize * 32) / $jxxcarlson$xmarkdown_compiler$Render$Theme$referenceFontSize);
+	var highlightColor = A2(
+		$elm$core$Maybe$withDefault,
+		A2(
+			$jxxcarlson$xmarkdown_compiler$Render$Theme$getThemedColor,
+			function ($) {
+				return $.highlight;
 			},
-			p);
+			params.theme),
+		$jxxcarlson$xmarkdown_compiler$Render$Theme$stringToColor(params.highlightColor));
+	return {
+		backgroundColor: A2(
+			$jxxcarlson$xmarkdown_compiler$Render$Theme$getThemedColor,
+			function ($) {
+				return $.background;
+			},
+			params.theme),
+		codeBackground: A2(
+			$jxxcarlson$xmarkdown_compiler$Render$Theme$getThemedColor,
+			function ($) {
+				return $.codeBackground;
+			},
+			params.theme),
+		codeColor: A2(
+			$jxxcarlson$xmarkdown_compiler$Render$Theme$getThemedColor,
+			function ($) {
+				return $.codeText;
+			},
+			params.theme),
+		display: $jxxcarlson$xmarkdown_compiler$Render$Theme$DefaultDisplay,
+		fontSize: params.fontSize,
+		highlight: highlightColor,
+		interBlockSpacing: params.interBlockSpacing,
+		leftIndentation: 18,
+		linkColor: A2(
+			$jxxcarlson$xmarkdown_compiler$Render$Theme$getThemedColor,
+			function ($) {
+				return $.link;
+			},
+			params.theme),
+		listSpacing: 14,
+		margins: 24,
+		numberToLevel: params.numberToLevel,
+		redColor: A3($avh4$elm_color$Color$rgb, 0.7, 0, 0),
+		selectedId: params.selectedId,
+		selectedSlug: params.selectedSlug,
+		showErrorMessages: false,
+		showTOC: true,
+		textColor: A2(
+			$jxxcarlson$xmarkdown_compiler$Render$Theme$getThemedColor,
+			function ($) {
+				return $.text;
+			},
+			params.theme),
+		theme: params.theme,
+		titleSize: titleSize,
+		width: $elm$core$Basics$round(params.scale * params.windowWidth)
+	};
+};
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
 	});
-var $jxxcarlson$etex$ETeX$Transform$f0Parser = A2(
-	$elm$parser$Parser$Advanced$map,
-	$jxxcarlson$etex$ETeX$Transform$F0,
-	A2(
-		$jxxcarlson$etex$ETeX$Transform$second,
-		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\\', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash)),
-		$jxxcarlson$etex$ETeX$Transform$alphaNumParser_));
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
+var $jxxcarlson$xmarkdown_compiler$Render$Math$extractExprText = function (expr) {
+	switch (expr.$) {
+		case 'Text':
+			var str = expr.a;
+			return str;
+		case 'VFun':
+			var content = expr.b;
+			return content;
+		case 'Fun':
+			var exprList = expr.b;
+			return $elm$core$String$concat(
+				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Render$Math$extractExprText, exprList));
+		default:
+			var exprList = expr.b;
+			return $elm$core$String$concat(
+				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Render$Math$extractExprText, exprList));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$Render$Math$stripMathDelimiters = function (content) {
+	return $elm$core$String$trim(
+		function (s) {
+			return A2($elm$core$String$endsWith, '$$', s) ? A2($elm$core$String$dropRight, 2, s) : s;
+		}(
+			$elm$core$String$trim(
+				function (s) {
+					return A2($elm$core$String$startsWith, '$$', s) ? A2($elm$core$String$dropLeft, 2, s) : s;
+				}(
+					$elm$core$String$trim(content)))));
+};
 var $elm$parser$Parser$Advanced$loopHelp = F4(
 	function (p, state, callback, s0) {
 		loopHelp:
@@ -14416,8 +13267,11 @@ var $jxxcarlson$etex$ETeX$Transform$Arg = function (a) {
 var $jxxcarlson$etex$ETeX$Transform$DecoM = function (a) {
 	return {$: 'DecoM', a: a};
 };
+var $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash = {$: 'ExpectingBackslash'};
 var $jxxcarlson$etex$ETeX$Transform$ExpectingCaret = {$: 'ExpectingCaret'};
+var $jxxcarlson$etex$ETeX$Transform$ExpectingLeftBrace = {$: 'ExpectingLeftBrace'};
 var $jxxcarlson$etex$ETeX$Transform$ExpectingLeftParen = {$: 'ExpectingLeftParen'};
+var $jxxcarlson$etex$ETeX$Transform$ExpectingRightBrace = {$: 'ExpectingRightBrace'};
 var $jxxcarlson$etex$ETeX$Transform$ExpectingRightParen = {$: 'ExpectingRightParen'};
 var $jxxcarlson$etex$ETeX$Transform$ExpectingUnderscore = {$: 'ExpectingUnderscore'};
 var $jxxcarlson$etex$ETeX$Transform$FCall = F2(
@@ -14440,6 +13294,23 @@ var $jxxcarlson$etex$ETeX$Transform$Sub = function (a) {
 var $jxxcarlson$etex$ETeX$Transform$Super = function (a) {
 	return {$: 'Super', a: a};
 };
+var $jxxcarlson$etex$ETeX$Transform$ExpectingAlpha = {$: 'ExpectingAlpha'};
+var $jxxcarlson$etex$ETeX$Transform$alphaNumParser_ = A2(
+	$elm$parser$Parser$Advanced$keeper,
+	A2(
+		$elm$parser$Parser$Advanced$keeper,
+		A2(
+			$elm$parser$Parser$Advanced$keeper,
+			$elm$parser$Parser$Advanced$succeed($elm$core$String$slice),
+			A2(
+				$elm$parser$Parser$Advanced$ignorer,
+				A2(
+					$elm$parser$Parser$Advanced$ignorer,
+					$elm$parser$Parser$Advanced$getOffset,
+					A2($elm$parser$Parser$Advanced$chompIf, $elm$core$Char$isAlpha, $jxxcarlson$etex$ETeX$Transform$ExpectingAlpha)),
+				$elm$parser$Parser$Advanced$chompWhile($elm$core$Char$isAlphaNum))),
+		$elm$parser$Parser$Advanced$getOffset),
+	$elm$parser$Parser$Advanced$getSource);
 var $jxxcarlson$etex$ETeX$KaTeX$accents = _List_fromArray(
 	['hat', 'widehat', 'check', 'widecheck', 'tilde', 'widetilde', 'acute', 'grave', 'dot', 'ddot', 'breve', 'bar', 'vec', 'mathring', 'overline', 'underline', 'overleftarrow', 'overrightarrow', 'overleftrightarrow', 'underleftarrow', 'underrightarrow', 'underleftrightarrow', 'overgroup', 'undergroup', 'overbrace', 'underbrace', 'overparen', 'underparen', 'overrightleftharpoons', 'boxed', 'underlinesegment', 'overlinesegment']);
 var $jxxcarlson$etex$ETeX$KaTeX$arrows = _List_fromArray(
@@ -14518,6 +13389,51 @@ var $jxxcarlson$etex$ETeX$Transform$alphaNumOrMacroParser = function (userMacroD
 		},
 		$jxxcarlson$etex$ETeX$Transform$alphaNumParser_);
 };
+var $elm$parser$Parser$Advanced$andThen = F2(
+	function (callback, _v0) {
+		var parseA = _v0.a;
+		return $elm$parser$Parser$Advanced$Parser(
+			function (s0) {
+				var _v1 = parseA(s0);
+				if (_v1.$ === 'Bad') {
+					var p = _v1.a;
+					var x = _v1.b;
+					return A2($elm$parser$Parser$Advanced$Bad, p, x);
+				} else {
+					var p1 = _v1.a;
+					var a = _v1.b;
+					var s1 = _v1.c;
+					var _v2 = callback(a);
+					var parseB = _v2.a;
+					var _v3 = parseB(s1);
+					if (_v3.$ === 'Bad') {
+						var p2 = _v3.a;
+						var x = _v3.b;
+						return A2($elm$parser$Parser$Advanced$Bad, p1 || p2, x);
+					} else {
+						var p2 = _v3.a;
+						var b = _v3.b;
+						var s2 = _v3.c;
+						return A3($elm$parser$Parser$Advanced$Good, p1 || p2, b, s2);
+					}
+				}
+			});
+	});
+var $elm$parser$Parser$Advanced$backtrackable = function (_v0) {
+	var parse = _v0.a;
+	return $elm$parser$Parser$Advanced$Parser(
+		function (s0) {
+			var _v1 = parse(s0);
+			if (_v1.$ === 'Bad') {
+				var x = _v1.b;
+				return A2($elm$parser$Parser$Advanced$Bad, false, x);
+			} else {
+				var a = _v1.b;
+				var s1 = _v1.c;
+				return A3($elm$parser$Parser$Advanced$Good, false, a, s1);
+			}
+		});
+};
 var $jxxcarlson$etex$ETeX$Transform$Comma = {$: 'Comma'};
 var $jxxcarlson$etex$ETeX$Transform$ExpectingComma = {$: 'ExpectingComma'};
 var $jxxcarlson$etex$ETeX$Transform$commaParser = A2(
@@ -14525,6 +13441,26 @@ var $jxxcarlson$etex$ETeX$Transform$commaParser = A2(
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$Comma),
 	$elm$parser$Parser$Advanced$symbol(
 		A2($elm$parser$Parser$Advanced$Token, ',', $jxxcarlson$etex$ETeX$Transform$ExpectingComma)));
+var $jxxcarlson$etex$ETeX$Transform$F0 = function (a) {
+	return {$: 'F0', a: a};
+};
+var $jxxcarlson$etex$ETeX$Transform$second = F2(
+	function (p, q) {
+		return A2(
+			$elm$parser$Parser$Advanced$andThen,
+			function (_v0) {
+				return q;
+			},
+			p);
+	});
+var $jxxcarlson$etex$ETeX$Transform$f0Parser = A2(
+	$elm$parser$Parser$Advanced$map,
+	$jxxcarlson$etex$ETeX$Transform$F0,
+	A2(
+		$jxxcarlson$etex$ETeX$Transform$second,
+		$elm$parser$Parser$Advanced$symbol(
+			A2($elm$parser$Parser$Advanced$Token, '\u005C', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash)),
+		$jxxcarlson$etex$ETeX$Transform$alphaNumParser_));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter = {$: 'ExpectingGreekLetter'};
 var $elm$parser$Parser$Advanced$problem = function (x) {
 	return $elm$parser$Parser$Advanced$Parser(
@@ -14539,7 +13475,7 @@ var $jxxcarlson$etex$ETeX$Transform$greekSymbolParser = A2(
 	$elm$parser$Parser$Advanced$andThen,
 	function (str) {
 		return A2($elm$core$List$member, str, $jxxcarlson$etex$ETeX$KaTeX$greekLetters) ? $elm$parser$Parser$Advanced$succeed(
-			$jxxcarlson$etex$ETeX$Transform$AlphaNum('\\' + str)) : $elm$parser$Parser$Advanced$problem($jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter);
+			$jxxcarlson$etex$ETeX$Transform$AlphaNum('\u005C' + str)) : $elm$parser$Parser$Advanced$problem($jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter);
 	},
 	A2(
 		$elm$parser$Parser$Advanced$keeper,
@@ -14559,7 +13495,7 @@ var $jxxcarlson$etex$ETeX$Transform$leftBraceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$LeftMathBrace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftMathBrace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftMathBrace)));
 var $jxxcarlson$etex$ETeX$Transform$many1 = function (p) {
 	return A2(
 		$elm$parser$Parser$Advanced$keeper,
@@ -14575,21 +13511,21 @@ var $jxxcarlson$etex$ETeX$Transform$mathMediumSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathMediumSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\;', $jxxcarlson$etex$ETeX$Transform$ExpectingMathMediumSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C;', $jxxcarlson$etex$ETeX$Transform$ExpectingMathMediumSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace = {$: 'ExpectingMathSmallSpace'};
 var $jxxcarlson$etex$ETeX$Transform$MathSmallSpace = {$: 'MathSmallSpace'};
 var $jxxcarlson$etex$ETeX$Transform$mathSmallSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathSmallSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\,', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C,', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace = {$: 'ExpectingMathSpace'};
 var $jxxcarlson$etex$ETeX$Transform$MathSpace = {$: 'MathSpace'};
 var $jxxcarlson$etex$ETeX$Transform$mathSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\ ', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C ', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingNotAlpha = {$: 'ExpectingNotAlpha'};
 var $jxxcarlson$etex$ETeX$Transform$MathSymbols = function (a) {
 	return {$: 'MathSymbols', a: a};
@@ -14626,7 +13562,7 @@ var $jxxcarlson$etex$ETeX$Transform$mathSymbolsParser = A2(
 											_Utils_chr('('),
 											_Utils_chr(')'),
 											_Utils_chr(','),
-											_Utils_chr('\"')
+											_Utils_chr('"')
 										])));
 							},
 							$jxxcarlson$etex$ETeX$Transform$ExpectingNotAlpha)),
@@ -14646,7 +13582,7 @@ var $jxxcarlson$etex$ETeX$Transform$mathSymbolsParser = A2(
 										_Utils_chr('('),
 										_Utils_chr(')'),
 										_Utils_chr(','),
-										_Utils_chr('\"')
+										_Utils_chr('"')
 									])));
 						}))),
 			$elm$parser$Parser$Advanced$getOffset),
@@ -14711,7 +13647,6 @@ var $elm$parser$Parser$Advanced$fromInfo = F4(
 			$elm$parser$Parser$Advanced$Empty,
 			A4($elm$parser$Parser$Advanced$DeadEnd, row, col, x, context));
 	});
-var $elm$core$String$toFloat = _String_toFloat;
 var $elm$parser$Parser$Advanced$finalizeFloat = F6(
 	function (invalid, expecting, intSettings, floatSettings, intPair, s) {
 		var intOffset = intPair.a;
@@ -14841,7 +13776,7 @@ var $jxxcarlson$etex$ETeX$Transform$rightBraceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$RightMathBrace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\}', $jxxcarlson$etex$ETeX$Transform$ExpectingRightMathBrace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C}', $jxxcarlson$etex$ETeX$Transform$ExpectingRightMathBrace)));
 var $jxxcarlson$etex$ETeX$Transform$sepByCommaHelp = F2(
 	function (itemParser, revItems) {
 		return $elm$parser$Parser$Advanced$oneOf(
@@ -14922,7 +13857,7 @@ var $jxxcarlson$etex$ETeX$Transform$textParser = A2(
 		$elm$parser$Parser$Advanced$ignorer,
 		$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$Text),
 		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\"', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))),
+			A2($elm$parser$Parser$Advanced$Token, '\u0022', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))),
 	A2(
 		$elm$parser$Parser$Advanced$ignorer,
 		$elm$parser$Parser$Advanced$getChompedString(
@@ -14930,10 +13865,10 @@ var $jxxcarlson$etex$ETeX$Transform$textParser = A2(
 				function (c) {
 					return !_Utils_eq(
 						c,
-						_Utils_chr('\"'));
+						_Utils_chr('"'));
 				})),
 		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\"', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))));
+			A2($elm$parser$Parser$Advanced$Token, '\u0022', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingSpace = {$: 'ExpectingSpace'};
 var $jxxcarlson$etex$ETeX$Transform$WS = {$: 'WS'};
 var $jxxcarlson$etex$ETeX$Transform$whitespaceParser = A2(
@@ -15059,7 +13994,7 @@ var $jxxcarlson$etex$ETeX$Transform$macroParser = function (userMacroDict) {
 				$elm$parser$Parser$Advanced$ignorer,
 				$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$Macro),
 				$elm$parser$Parser$Advanced$symbol(
-					A2($elm$parser$Parser$Advanced$Token, '\\', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash))),
+					A2($elm$parser$Parser$Advanced$Token, '\u005C', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash))),
 			$jxxcarlson$etex$ETeX$Transform$alphaNumParser_),
 		$jxxcarlson$etex$ETeX$Transform$many(
 			$jxxcarlson$etex$ETeX$Transform$argParser(userMacroDict)));
@@ -15141,9741 +14076,6 @@ var $jxxcarlson$etex$ETeX$Transform$superscriptParser = function (userMacroDict)
 					A2($elm$parser$Parser$Advanced$Token, '^', $jxxcarlson$etex$ETeX$Transform$ExpectingCaret))),
 			$jxxcarlson$etex$ETeX$Transform$decoParser(userMacroDict)));
 };
-var $jxxcarlson$etex$ETeX$Transform$ExpectingLeftBracket = {$: 'ExpectingLeftBracket'};
-var $jxxcarlson$etex$ETeX$Transform$ExpectingRightBracket = {$: 'ExpectingRightBracket'};
-var $jxxcarlson$etex$ETeX$Transform$optionalParamParser = A2(
-	$elm$parser$Parser$Advanced$keeper,
-	A2(
-		$elm$parser$Parser$Advanced$ignorer,
-		$elm$parser$Parser$Advanced$succeed($elm$core$Basics$identity),
-		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '[', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftBracket))),
-	A2(
-		$elm$parser$Parser$Advanced$ignorer,
-		A2($elm$parser$Parser$Advanced$int, $jxxcarlson$etex$ETeX$Transform$ExpectingInt, $jxxcarlson$etex$ETeX$Transform$InvalidNumber),
-		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, ']', $jxxcarlson$etex$ETeX$Transform$ExpectingRightBracket))));
-var $jxxcarlson$etex$ETeX$Transform$newCommandParser1 = function (userMacroDict) {
-	return A2(
-		$elm$parser$Parser$Advanced$keeper,
-		A2(
-			$elm$parser$Parser$Advanced$keeper,
-			A2(
-				$elm$parser$Parser$Advanced$keeper,
-				A2(
-					$elm$parser$Parser$Advanced$ignorer,
-					A2(
-						$elm$parser$Parser$Advanced$ignorer,
-						$elm$parser$Parser$Advanced$succeed(
-							F3(
-								function (name, arity, body) {
-									return A3(
-										$jxxcarlson$etex$ETeX$MathMacros$NewCommand,
-										$jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr(name),
-										arity,
-										A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr, body));
-								})),
-						$elm$parser$Parser$Advanced$symbol(
-							A2($elm$parser$Parser$Advanced$Token, '\\newcommand', $jxxcarlson$etex$ETeX$Transform$ExpectingNewCommand))),
-					$elm$parser$Parser$Advanced$symbol(
-						A2($elm$parser$Parser$Advanced$Token, '{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftBrace))),
-				A2(
-					$elm$parser$Parser$Advanced$ignorer,
-					$jxxcarlson$etex$ETeX$Transform$f0Parser,
-					$elm$parser$Parser$Advanced$symbol(
-						A2($elm$parser$Parser$Advanced$Token, '}', $jxxcarlson$etex$ETeX$Transform$ExpectingRightBrace)))),
-			$jxxcarlson$etex$ETeX$Transform$optionalParamParser),
-		$jxxcarlson$etex$ETeX$Transform$many(
-			$jxxcarlson$etex$ETeX$Transform$mathExprParser(userMacroDict)));
-};
-var $jxxcarlson$etex$ETeX$Transform$newCommandParser2 = function (userMacroDict) {
-	return A2(
-		$elm$parser$Parser$Advanced$keeper,
-		A2(
-			$elm$parser$Parser$Advanced$keeper,
-			A2(
-				$elm$parser$Parser$Advanced$ignorer,
-				A2(
-					$elm$parser$Parser$Advanced$ignorer,
-					$elm$parser$Parser$Advanced$succeed(
-						F2(
-							function (name, body) {
-								return A3(
-									$jxxcarlson$etex$ETeX$MathMacros$NewCommand,
-									$jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr(name),
-									0,
-									A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertToETeXMathExpr, body));
-							})),
-					$elm$parser$Parser$Advanced$symbol(
-						A2($elm$parser$Parser$Advanced$Token, '\\newcommand', $jxxcarlson$etex$ETeX$Transform$ExpectingNewCommand))),
-				$elm$parser$Parser$Advanced$symbol(
-					A2($elm$parser$Parser$Advanced$Token, '{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftBrace))),
-			A2(
-				$elm$parser$Parser$Advanced$ignorer,
-				$jxxcarlson$etex$ETeX$Transform$f0Parser,
-				$elm$parser$Parser$Advanced$symbol(
-					A2($elm$parser$Parser$Advanced$Token, '}', $jxxcarlson$etex$ETeX$Transform$ExpectingRightBrace)))),
-		$jxxcarlson$etex$ETeX$Transform$many(
-			$jxxcarlson$etex$ETeX$Transform$mathExprParser(userMacroDict)));
-};
-var $jxxcarlson$etex$ETeX$Transform$newCommandParser = function (userMacroDict) {
-	return $elm$parser$Parser$Advanced$oneOf(
-		_List_fromArray(
-			[
-				$elm$parser$Parser$Advanced$backtrackable(
-				$jxxcarlson$etex$ETeX$Transform$newCommandParser1(userMacroDict)),
-				$jxxcarlson$etex$ETeX$Transform$newCommandParser2(userMacroDict)
-			]));
-};
-var $jxxcarlson$etex$ETeX$Transform$parseNewCommand = F2(
-	function (userMacroDict, str) {
-		return A2(
-			$elm$parser$Parser$Advanced$run,
-			$jxxcarlson$etex$ETeX$Transform$newCommandParser(userMacroDict),
-			str);
-	});
-var $elm$core$String$concat = function (strings) {
-	return A2($elm$core$String$join, '', strings);
-};
-var $jxxcarlson$etex$ETeX$Transform$SimpleBrace = F2(
-	function (a, b) {
-		return {$: 'SimpleBrace', a: a, b: b};
-	});
-var $jxxcarlson$etex$ETeX$Transform$SimpleSpace = function (a) {
-	return {$: 'SimpleSpace', a: a};
-};
-var $jxxcarlson$etex$ETeX$Transform$SimpleSymbol = function (a) {
-	return {$: 'SimpleSymbol', a: a};
-};
-var $jxxcarlson$etex$ETeX$Transform$SimpleWord = function (a) {
-	return {$: 'SimpleWord', a: a};
-};
-var $jxxcarlson$etex$ETeX$Transform$tokenToString = function (token) {
-	switch (token.$) {
-		case 'SimpleWord':
-			var word = token.a;
-			return word;
-		case 'SimpleBackslash':
-			return '\\';
-		case 'SimpleSpace':
-			var s = token.a;
-			return s;
-		case 'SimpleSymbol':
-			var s = token.a;
-			return s;
-		case 'SimpleBrace':
-			var open = token.a;
-			var content = token.b;
-			return open + (content + '}');
-		default:
-			var n = token.a;
-			return '#' + $elm$core$String$fromInt(n);
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$convertArgsToBraces = function (args) {
-	return A2(
-		$elm$core$List$map,
-		function (arg) {
-			return A2(
-				$jxxcarlson$etex$ETeX$Transform$SimpleBrace,
-				'{',
-				$elm$core$String$concat(
-					A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$tokenToString, arg)));
-		},
-		args);
-};
-var $jxxcarlson$etex$ETeX$Transform$extractParenArgs = F2(
-	function (tokens, currentArg) {
-		extractParenArgs:
-		while (true) {
-			_v0$3:
-			while (true) {
-				if (!tokens.b) {
-					return $elm$core$List$isEmpty(currentArg) ? _Utils_Tuple2(_List_Nil, _List_Nil) : _Utils_Tuple2(
-						_List_fromArray(
-							[
-								$elm$core$List$reverse(currentArg)
-							]),
-						_List_Nil);
-				} else {
-					if (tokens.a.$ === 'SimpleSymbol') {
-						switch (tokens.a.a) {
-							case ')':
-								var rest = tokens.b;
-								return $elm$core$List$isEmpty(currentArg) ? _Utils_Tuple2(_List_Nil, rest) : _Utils_Tuple2(
-									_List_fromArray(
-										[
-											$elm$core$List$reverse(currentArg)
-										]),
-									rest);
-							case ',':
-								var rest = tokens.b;
-								var _v1 = A2($jxxcarlson$etex$ETeX$Transform$extractParenArgs, rest, _List_Nil);
-								var args = _v1.a;
-								var remaining = _v1.b;
-								return _Utils_Tuple2(
-									A2(
-										$elm$core$List$cons,
-										$elm$core$List$reverse(currentArg),
-										args),
-									remaining);
-							default:
-								break _v0$3;
-						}
-					} else {
-						break _v0$3;
-					}
-				}
-			}
-			var token = tokens.a;
-			var rest = tokens.b;
-			var $temp$tokens = rest,
-				$temp$currentArg = A2($elm$core$List$cons, token, currentArg);
-			tokens = $temp$tokens;
-			currentArg = $temp$currentArg;
-			continue extractParenArgs;
-		}
-	});
-var $jxxcarlson$etex$ETeX$Transform$needsBraceConversion = function (cmd) {
-	return A2(
-		$elm$core$List$member,
-		cmd,
-		_List_fromArray(
-			['frac', 'binom', 'overset', 'underset', 'stackrel', 'tfrac', 'dfrac', 'cfrac', 'dbinom', 'tbinom']));
-};
-var $jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead = F2(
-	function (knownMacros, tokens) {
-		_v0$4:
-		while (true) {
-			if (!tokens.b) {
-				return _List_Nil;
-			} else {
-				if (tokens.a.$ === 'SimpleWord') {
-					if (tokens.b.b) {
-						switch (tokens.b.a.$) {
-							case 'SimpleSpace':
-								if (tokens.b.b.b && (tokens.b.b.a.$ === 'SimpleWord')) {
-									var word1 = tokens.a.a;
-									var _v1 = tokens.b;
-									var space = _v1.a.a;
-									var _v2 = _v1.b;
-									var word2 = _v2.a.a;
-									var rest = _v2.b;
-									return ((word1 === 'mathbb') && ($elm$core$String$length(word2) === 1)) ? A2(
-										$elm$core$List$cons,
-										$jxxcarlson$etex$ETeX$Transform$SimpleWord('\\mathbb'),
-										A2(
-											$elm$core$List$cons,
-											A2($jxxcarlson$etex$ETeX$Transform$SimpleBrace, '{', word2),
-											A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest))) : A2(
-										$elm$core$List$cons,
-										$jxxcarlson$etex$ETeX$Transform$SimpleWord(word1),
-										A2(
-											$elm$core$List$cons,
-											$jxxcarlson$etex$ETeX$Transform$SimpleSpace(space),
-											A2(
-												$jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead,
-												knownMacros,
-												A2(
-													$elm$core$List$cons,
-													$jxxcarlson$etex$ETeX$Transform$SimpleWord(word2),
-													rest))));
-								} else {
-									break _v0$4;
-								}
-							case 'SimpleSymbol':
-								switch (tokens.b.a.a) {
-									case '^':
-										var word = tokens.a.a;
-										var _v3 = tokens.b;
-										var rest = _v3.b;
-										return ($jxxcarlson$etex$ETeX$KaTeX$isKaTeX(word) || A2($elm$core$List$member, word, knownMacros)) ? A2(
-											$elm$core$List$cons,
-											$jxxcarlson$etex$ETeX$Transform$SimpleWord('\\' + word),
-											A2(
-												$elm$core$List$cons,
-												$jxxcarlson$etex$ETeX$Transform$SimpleSymbol('^'),
-												A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest))) : A2(
-											$elm$core$List$cons,
-											$jxxcarlson$etex$ETeX$Transform$SimpleWord(word),
-											A2(
-												$elm$core$List$cons,
-												$jxxcarlson$etex$ETeX$Transform$SimpleSymbol('^'),
-												A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest)));
-									case '(':
-										var word = tokens.a.a;
-										var _v4 = tokens.b;
-										var rest = _v4.b;
-										if ($jxxcarlson$etex$ETeX$KaTeX$isKaTeX(word) && $jxxcarlson$etex$ETeX$Transform$needsBraceConversion(word)) {
-											var _v5 = A2($jxxcarlson$etex$ETeX$Transform$extractParenArgs, rest, _List_Nil);
-											var args = _v5.a;
-											var remaining = _v5.b;
-											var processedArgs = A2(
-												$elm$core$List$map,
-												$jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead(knownMacros),
-												args);
-											return A2(
-												$elm$core$List$cons,
-												$jxxcarlson$etex$ETeX$Transform$SimpleWord('\\' + word),
-												_Utils_ap(
-													$jxxcarlson$etex$ETeX$Transform$convertArgsToBraces(processedArgs),
-													A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, remaining)));
-										} else {
-											if ($jxxcarlson$etex$ETeX$KaTeX$isKaTeX(word)) {
-												return A2(
-													$elm$core$List$cons,
-													$jxxcarlson$etex$ETeX$Transform$SimpleWord('\\' + word),
-													A2(
-														$elm$core$List$cons,
-														$jxxcarlson$etex$ETeX$Transform$SimpleSymbol('('),
-														A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest)));
-											} else {
-												if (A2($elm$core$List$member, word, knownMacros)) {
-													return A2(
-														$elm$core$List$cons,
-														$jxxcarlson$etex$ETeX$Transform$SimpleWord('\\' + word),
-														A2(
-															$elm$core$List$cons,
-															$jxxcarlson$etex$ETeX$Transform$SimpleSymbol('('),
-															A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest)));
-												} else {
-													return A2(
-														$elm$core$List$cons,
-														$jxxcarlson$etex$ETeX$Transform$SimpleWord(word),
-														A2(
-															$elm$core$List$cons,
-															$jxxcarlson$etex$ETeX$Transform$SimpleSymbol('('),
-															A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest)));
-												}
-											}
-										}
-									default:
-										break _v0$4;
-								}
-							default:
-								break _v0$4;
-						}
-					} else {
-						break _v0$4;
-					}
-				} else {
-					var token = tokens.a;
-					var rest = tokens.b;
-					return A2(
-						$elm$core$List$cons,
-						token,
-						A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest));
-				}
-			}
-		}
-		var word = tokens.a.a;
-		var rest = tokens.b;
-		return ($jxxcarlson$etex$ETeX$KaTeX$isKaTeX(word) || A2($elm$core$List$member, word, knownMacros)) ? A2(
-			$elm$core$List$cons,
-			$jxxcarlson$etex$ETeX$Transform$SimpleWord('\\' + word),
-			A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest)) : A2(
-			$elm$core$List$cons,
-			$jxxcarlson$etex$ETeX$Transform$SimpleWord(word),
-			A2($jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead, knownMacros, rest));
-	});
-var $elm$core$String$foldr = _String_foldr;
-var $elm$core$String$toList = function (string) {
-	return A3($elm$core$String$foldr, $elm$core$List$cons, _List_Nil, string);
-};
-var $jxxcarlson$etex$ETeX$Transform$SimpleBackslash = {$: 'SimpleBackslash'};
-var $jxxcarlson$etex$ETeX$Transform$SimpleParam = function (a) {
-	return {$: 'SimpleParam', a: a};
-};
-var $jxxcarlson$etex$ETeX$Transform$collectUntilCloseBrace = F3(
-	function (chars, depth, acc) {
-		collectUntilCloseBrace:
-		while (true) {
-			if (!chars.b) {
-				return _Utils_Tuple2(
-					$elm$core$List$reverse(acc),
-					_List_Nil);
-			} else {
-				switch (chars.a.valueOf()) {
-					case '{':
-						var rest = chars.b;
-						var $temp$chars = rest,
-							$temp$depth = depth + 1,
-							$temp$acc = A2(
-							$elm$core$List$cons,
-							_Utils_chr('{'),
-							acc);
-						chars = $temp$chars;
-						depth = $temp$depth;
-						acc = $temp$acc;
-						continue collectUntilCloseBrace;
-					case '}':
-						var rest = chars.b;
-						if (depth === 1) {
-							return _Utils_Tuple2(
-								$elm$core$List$reverse(acc),
-								rest);
-						} else {
-							var $temp$chars = rest,
-								$temp$depth = depth - 1,
-								$temp$acc = A2(
-								$elm$core$List$cons,
-								_Utils_chr('}'),
-								acc);
-							chars = $temp$chars;
-							depth = $temp$depth;
-							acc = $temp$acc;
-							continue collectUntilCloseBrace;
-						}
-					default:
-						var c = chars.a;
-						var rest = chars.b;
-						var $temp$chars = rest,
-							$temp$depth = depth,
-							$temp$acc = A2($elm$core$List$cons, c, acc);
-						chars = $temp$chars;
-						depth = $temp$depth;
-						acc = $temp$acc;
-						continue collectUntilCloseBrace;
-				}
-			}
-		}
-	});
-var $elm$core$String$cons = _String_cons;
-var $elm$core$String$fromChar = function (_char) {
-	return A2($elm$core$String$cons, _char, '');
-};
-var $elm$core$String$fromList = _String_fromList;
-var $jxxcarlson$etex$ETeX$Transform$takeAlphas = function (chars) {
-	if (!chars.b) {
-		return _Utils_Tuple2(_List_Nil, _List_Nil);
-	} else {
-		var c = chars.a;
-		var rest = chars.b;
-		if ($elm$core$Char$isAlpha(c)) {
-			var _v1 = $jxxcarlson$etex$ETeX$Transform$takeAlphas(rest);
-			var alphas = _v1.a;
-			var remaining = _v1.b;
-			return _Utils_Tuple2(
-				A2($elm$core$List$cons, c, alphas),
-				remaining);
-		} else {
-			return _Utils_Tuple2(_List_Nil, chars);
-		}
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$takeDigits = function (chars) {
-	if (!chars.b) {
-		return _Utils_Tuple2(_List_Nil, _List_Nil);
-	} else {
-		var c = chars.a;
-		var rest = chars.b;
-		if ($elm$core$Char$isDigit(c)) {
-			var _v1 = $jxxcarlson$etex$ETeX$Transform$takeDigits(rest);
-			var digits = _v1.a;
-			var remaining = _v1.b;
-			return _Utils_Tuple2(
-				A2($elm$core$List$cons, c, digits),
-				remaining);
-		} else {
-			return _Utils_Tuple2(_List_Nil, chars);
-		}
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$takeSpaces = function (chars) {
-	if (!chars.b) {
-		return _Utils_Tuple2(_List_Nil, _List_Nil);
-	} else {
-		var c = chars.a;
-		var rest = chars.b;
-		if (_Utils_eq(
-			c,
-			_Utils_chr(' ')) || (_Utils_eq(
-			c,
-			_Utils_chr('\t')) || _Utils_eq(
-			c,
-			_Utils_chr('\n')))) {
-			var _v1 = $jxxcarlson$etex$ETeX$Transform$takeSpaces(rest);
-			var spaces = _v1.a;
-			var remaining = _v1.b;
-			return _Utils_Tuple2(
-				A2($elm$core$List$cons, c, spaces),
-				remaining);
-		} else {
-			return _Utils_Tuple2(_List_Nil, chars);
-		}
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$tokenizeHelper = F2(
-	function (chars, acc) {
-		tokenizeHelper:
-		while (true) {
-			if (!chars.b) {
-				return acc;
-			} else {
-				switch (chars.a.valueOf()) {
-					case '\\':
-						var rest = chars.b;
-						var $temp$chars = rest,
-							$temp$acc = A2($elm$core$List$cons, $jxxcarlson$etex$ETeX$Transform$SimpleBackslash, acc);
-						chars = $temp$chars;
-						acc = $temp$acc;
-						continue tokenizeHelper;
-					case '#':
-						var rest = chars.b;
-						var _v1 = $jxxcarlson$etex$ETeX$Transform$takeDigits(rest);
-						var digits = _v1.a;
-						var remaining = _v1.b;
-						var _v2 = $elm$core$String$toInt(
-							$elm$core$String$fromList(digits));
-						if (_v2.$ === 'Just') {
-							var n = _v2.a;
-							var $temp$chars = remaining,
-								$temp$acc = A2(
-								$elm$core$List$cons,
-								$jxxcarlson$etex$ETeX$Transform$SimpleParam(n),
-								acc);
-							chars = $temp$chars;
-							acc = $temp$acc;
-							continue tokenizeHelper;
-						} else {
-							var $temp$chars = rest,
-								$temp$acc = A2(
-								$elm$core$List$cons,
-								$jxxcarlson$etex$ETeX$Transform$SimpleSymbol('#'),
-								acc);
-							chars = $temp$chars;
-							acc = $temp$acc;
-							continue tokenizeHelper;
-						}
-					case '{':
-						var rest = chars.b;
-						var _v3 = A3($jxxcarlson$etex$ETeX$Transform$collectUntilCloseBrace, rest, 1, _List_Nil);
-						var content = _v3.a;
-						var remaining = _v3.b;
-						var $temp$chars = remaining,
-							$temp$acc = A2(
-							$elm$core$List$cons,
-							A2(
-								$jxxcarlson$etex$ETeX$Transform$SimpleBrace,
-								'{',
-								$elm$core$String$fromList(content)),
-							acc);
-						chars = $temp$chars;
-						acc = $temp$acc;
-						continue tokenizeHelper;
-					default:
-						var c = chars.a;
-						var rest = chars.b;
-						if ($elm$core$Char$isAlpha(c)) {
-							var _v4 = $jxxcarlson$etex$ETeX$Transform$takeAlphas(
-								A2($elm$core$List$cons, c, rest));
-							var word = _v4.a;
-							var remaining = _v4.b;
-							var $temp$chars = remaining,
-								$temp$acc = A2(
-								$elm$core$List$cons,
-								$jxxcarlson$etex$ETeX$Transform$SimpleWord(
-									$elm$core$String$fromList(word)),
-								acc);
-							chars = $temp$chars;
-							acc = $temp$acc;
-							continue tokenizeHelper;
-						} else {
-							if (_Utils_eq(
-								c,
-								_Utils_chr(' ')) || (_Utils_eq(
-								c,
-								_Utils_chr('\t')) || _Utils_eq(
-								c,
-								_Utils_chr('\n')))) {
-								var _v5 = $jxxcarlson$etex$ETeX$Transform$takeSpaces(
-									A2($elm$core$List$cons, c, rest));
-								var spaces = _v5.a;
-								var remaining = _v5.b;
-								var $temp$chars = remaining,
-									$temp$acc = A2(
-									$elm$core$List$cons,
-									$jxxcarlson$etex$ETeX$Transform$SimpleSpace(
-										$elm$core$String$fromList(spaces)),
-									acc);
-								chars = $temp$chars;
-								acc = $temp$acc;
-								continue tokenizeHelper;
-							} else {
-								var $temp$chars = rest,
-									$temp$acc = A2(
-									$elm$core$List$cons,
-									$jxxcarlson$etex$ETeX$Transform$SimpleSymbol(
-										$elm$core$String$fromChar(c)),
-									acc);
-								chars = $temp$chars;
-								acc = $temp$acc;
-								continue tokenizeHelper;
-							}
-						}
-				}
-			}
-		}
-	});
-var $jxxcarlson$etex$ETeX$Transform$tokenizeSimpleMacroBody = function (body) {
-	return $elm$core$List$reverse(
-		A2(
-			$jxxcarlson$etex$ETeX$Transform$tokenizeHelper,
-			$elm$core$String$toList(body),
-			_List_Nil));
-};
-var $jxxcarlson$etex$ETeX$Transform$processSimpleMacroBodyWithContext = F2(
-	function (knownMacros, body) {
-		return $elm$core$String$concat(
-			A2(
-				$elm$core$List$map,
-				$jxxcarlson$etex$ETeX$Transform$tokenToString,
-				A2(
-					$jxxcarlson$etex$ETeX$Transform$processTokensWithLookahead,
-					knownMacros,
-					$jxxcarlson$etex$ETeX$Transform$tokenizeSimpleMacroBody(body))));
-	});
-var $jxxcarlson$etex$ETeX$Transform$parseSimpleMacroWithContext = F2(
-	function (knownMacros, line) {
-		var _v0 = A2($elm$core$String$split, ':', line);
-		if ((_v0.b && _v0.b.b) && (!_v0.b.b.b)) {
-			var name = _v0.a;
-			var _v1 = _v0.b;
-			var body = _v1.a;
-			var trimmedName = $elm$core$String$trim(name);
-			var trimmedBody = $elm$core$String$trim(body);
-			var processedBody = A2($jxxcarlson$etex$ETeX$Transform$processSimpleMacroBodyWithContext, knownMacros, trimmedBody);
-			var newCommandStr = '\\newcommand{\\' + (trimmedName + ('}{' + (processedBody + '}')));
-			return $jxxcarlson$etex$ETeX$Transform$makeEntry(
-				A2($jxxcarlson$etex$ETeX$Transform$parseNewCommand, $elm$core$Dict$empty, newCommandStr));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $jxxcarlson$etex$ETeX$Transform$addMixedFormatMacro = F2(
-	function (line, dict) {
-		var knownMacros = $elm$core$Dict$keys(dict);
-		if (A2($elm$core$String$startsWith, '\\newcommand', line)) {
-			var _v0 = $jxxcarlson$etex$ETeX$Transform$makeEntry(
-				A2($jxxcarlson$etex$ETeX$Transform$parseNewCommand, $elm$core$Dict$empty, line));
-			if (_v0.$ === 'Just') {
-				var _v1 = _v0.a;
-				var name = _v1.a;
-				var body = _v1.b;
-				return A3($elm$core$Dict$insert, name, body, dict);
-			} else {
-				return dict;
-			}
-		} else {
-			if (A2($elm$core$String$contains, ':', line)) {
-				var _v2 = A2($jxxcarlson$etex$ETeX$Transform$parseSimpleMacroWithContext, knownMacros, line);
-				if (_v2.$ === 'Just') {
-					var _v3 = _v2.a;
-					var name = _v3.a;
-					var body = _v3.b;
-					return A3($elm$core$Dict$insert, name, body, dict);
-				} else {
-					return dict;
-				}
-			} else {
-				return dict;
-			}
-		}
-	});
-var $jxxcarlson$etex$ETeX$Transform$makeMacroDictFromMixedLines = function (lines) {
-	return A3($elm$core$List$foldl, $jxxcarlson$etex$ETeX$Transform$addMixedFormatMacro, $elm$core$Dict$empty, lines);
-};
-var $jxxcarlson$etex$ETeX$Transform$makeMacroDict = function (str) {
-	return $jxxcarlson$etex$ETeX$Transform$makeMacroDictFromMixedLines(
-		A2(
-			$elm$core$List$filter,
-			A2($elm$core$Basics$composeL, $elm$core$Basics$not, $elm$core$String$isEmpty),
-			A2(
-				$elm$core$List$map,
-				$elm$core$String$trim,
-				$elm$core$String$lines(
-					$elm$core$String$trim(str)))));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithMathMacros = F2(
-	function (content, accumulator) {
-		var definitions = $elm$core$String$trim(
-			function (str) {
-				return str + '\nbracket: {[ #1 ]}';
-			}(
-				A3(
-					$elm$core$String$replace,
-					'end',
-					'',
-					A3(
-						$elm$core$String$replace,
-						'\\end{mathmacros}',
-						'',
-						A3($elm$core$String$replace, '\\begin{mathmacros}', '', content)))));
-		var mathMacroDict = $jxxcarlson$etex$ETeX$Transform$makeMacroDict(
-			$elm$core$String$trim(definitions));
-		return _Utils_update(
-			accumulator,
-			{mathMacroDict: mathMacroDict});
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$init = function (data) {
-	return A2(
-		$jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithMathMacros,
-		data.mathMacros,
-		{
-			blockCounter: 0,
-			counter: $elm$core$Dict$empty,
-			deltaLevel: function () {
-				var _v0 = data.shiftAndSetCounter;
-				if (_v0.$ === 'Nothing') {
-					return 0;
-				} else {
-					return 1;
-				}
-			}(),
-			documentIndex: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(data.vectorSize),
-			footnoteNumbers: $elm$core$Dict$empty,
-			footnotes: $elm$core$Dict$empty,
-			headingIndex: function () {
-				var _v1 = data.shiftAndSetCounter;
-				if (_v1.$ === 'Nothing') {
-					return $jxxcarlson$xmarkdown_compiler$AST$Vector$init(data.vectorSize);
-				} else {
-					var n = _v1.a;
-					return {
-						content: _List_fromArray(
-							[n + 1, 0, 0, 0]),
-						size: 4
-					};
-				}
-			}(),
-			inListState: $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList,
-			itemVector: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(data.vectorSize),
-			keyValueDict: $elm$core$Dict$empty,
-			mathMacroDict: $elm$core$Dict$empty,
-			numberedBlockNames: $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames,
-			numberedItemDict: $elm$core$Dict$empty,
-			reference: $elm$core$Dict$empty,
-			textMacroDict: $elm$core$Dict$empty
-		});
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$mapper = F2(
-	function (ast_, _v0) {
-		var acc_ = _v0.a;
-		var tree_ = _v0.b;
-		return _Utils_Tuple2(
-			acc_,
-			A2($elm$core$List$cons, tree_, ast_));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$reverse = function (list) {
-	return A3(
-		$elm$core$List$foldl,
-		F2(
-			function (x, xs) {
-				return A2($elm$core$List$cons, x, xs);
-			}),
-		_List_Nil,
-		list);
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate = F3(
-	function (f, s, tree) {
-		var _v0 = A2(
-			f,
-			s,
-			$maca$elm_rose_tree$RoseTree$Tree$value(tree));
-		var s_ = _v0.a;
-		var value_ = _v0.b;
-		var _v1 = A3(
-			$elm$core$List$foldl,
-			F2(
-				function (child, _v2) {
-					var accState = _v2.a;
-					var accChildren = _v2.b;
-					var _v3 = A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, f, accState, child);
-					var newState = _v3.a;
-					var newChild = _v3.b;
-					return _Utils_Tuple2(
-						newState,
-						A2($elm$core$List$cons, newChild, accChildren));
-				}),
-			_Utils_Tuple2(s_, _List_Nil),
-			$maca$elm_rose_tree$RoseTree$Tree$children(tree));
-		var s__ = _v1.a;
-		var children_ = _v1.b;
-		return _Utils_Tuple2(
-			s__,
-			A2(
-				$maca$elm_rose_tree$RoseTree$Tree$branch,
-				value_,
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$reverse(children_)));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterExprs = F2(
-	function (predicate, list) {
-		return A2(
-			$elm$core$List$filter,
-			function (item) {
-				return predicate(item);
-			},
-			list);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$isBlank = function (expr) {
-	if (expr.$ === 'Text') {
-		var content = expr.a;
-		return ($elm$core$String$trim(content) === '') ? true : false;
-	} else {
-		return false;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$filterOutBlanks = $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterExprs(
-	function (e) {
-		return !$jxxcarlson$xmarkdown_compiler$AST$ASTTools$isBlank(e);
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$dummy = {begin: 0, end: 0, id: 'dummyId', index: 0};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$group = function (exprs) {
-	return A3($jxxcarlson$xmarkdown_compiler$AST$Language$Fun, 'group', exprs, $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$dummy);
-};
-var $elm$core$List$intersperse = F2(
-	function (sep, xs) {
-		if (!xs.b) {
-			return _List_Nil;
-		} else {
-			var hd = xs.a;
-			var tl = xs.b;
-			var step = F2(
-				function (x, rest) {
-					return A2(
-						$elm$core$List$cons,
-						sep,
-						A2($elm$core$List$cons, x, rest));
-				});
-			var spersed = A3($elm$core$List$foldr, step, _List_Nil, tl);
-			return A2($elm$core$List$cons, hd, spersed);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$subst = F3(
-	function (a, _var, body) {
-		switch (body.$) {
-			case 'Text':
-				var str = body.a;
-				if (_Utils_eq(
-					$elm$core$String$trim(str),
-					$elm$core$String$trim(_var))) {
-					return a;
-				} else {
-					if (A2($elm$core$String$contains, _var, str)) {
-						var parts = A2(
-							$elm$core$List$map,
-							function (s) {
-								return A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, s, $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$dummy);
-							},
-							A2($elm$core$String$split, _var, str));
-						return $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$group(
-							A2($elm$core$List$intersperse, a, parts));
-					} else {
-						return body;
-					}
-				}
-			case 'Fun':
-				var name = body.a;
-				var exprs = body.b;
-				var meta = body.c;
-				return A3(
-					$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
-					name,
-					A2(
-						$elm$core$List$map,
-						A2($jxxcarlson$xmarkdown_compiler$Macro$TextMacro$subst, a, _var),
-						exprs),
-					meta);
-			default:
-				return body;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$makeF = F2(
-	function (a, _var) {
-		return $elm$core$List$map(
-			A2($jxxcarlson$xmarkdown_compiler$Macro$TextMacro$subst, a, _var));
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$listSubst = F3(
-	function (as_, vars, exprs) {
-		if (!_Utils_eq(
-			$elm$core$List$length(as_),
-			$elm$core$List$length(vars))) {
-			return exprs;
-		} else {
-			var funcs = A3($elm$core$List$map2, $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$makeF, as_, vars);
-			return A3(
-				$elm$core$List$foldl,
-				F2(
-					function (func, acc) {
-						return func(acc);
-					}),
-				exprs,
-				funcs);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$expandWithMacro = F2(
-	function (macro, expr) {
-		if (expr.$ === 'Fun') {
-			var name = expr.a;
-			var fArgs = expr.b;
-			return _Utils_eq(name, macro.name) ? $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$group(
-				A3(
-					$jxxcarlson$xmarkdown_compiler$Macro$TextMacro$listSubst,
-					$jxxcarlson$xmarkdown_compiler$Macro$TextMacro$filterOutBlanks(fArgs),
-					macro.vars,
-					macro.body)) : expr;
-		} else {
-			return expr;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$expand = F2(
-	function (dict, expr) {
-		if (expr.$ === 'Fun') {
-			var name = expr.a;
-			var _v1 = A2($elm$core$Dict$get, name, dict);
-			if (_v1.$ === 'Nothing') {
-				return expr;
-			} else {
-				var macro = _v1.a;
-				return A2($jxxcarlson$xmarkdown_compiler$Macro$TextMacro$expandWithMacro, macro, expr);
-			}
-		} else {
-			return expr;
-		}
-	});
-var $toastal$either$Either$map = F2(
-	function (f, e) {
-		if (e.$ === 'Right') {
-			var b = e.a;
-			return $toastal$either$Either$Right(
-				f(b));
-		} else {
-			var a = e.a;
-			return $toastal$either$Either$Left(a);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$expand = F2(
-	function (dict, block) {
-		return _Utils_update(
-			block,
-			{
-				body: A2(
-					$toastal$either$Either$map,
-					$elm$core$List$map(
-						$jxxcarlson$xmarkdown_compiler$Macro$TextMacro$expand(dict)),
-					block.body)
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString = F2(
-	function (name, dict) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			'',
-			A2(
-				$elm$core$Maybe$map,
-				$elm$core$String$fromInt,
-				A2($elm$core$Dict$get, name, dict)));
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$String$userReplace = F3(
-	function (userRegex, replacer, string) {
-		var _v0 = $elm$regex$Regex$fromString(userRegex);
-		if (_v0.$ === 'Nothing') {
-			return string;
-		} else {
-			var regex = _v0.a;
-			return A3($elm$regex$Regex$replace, regex, replacer, string);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$String$alphanumOnly = function (string) {
-	return A3(
-		$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
-		'[^a-z0-9 ]+',
-		function (_v0) {
-			return ' ';
-		},
-		string);
-};
-var $jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace = function (string) {
-	return $elm$core$String$trim(
-		A3(
-			$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
-			'\\s\\s+',
-			function (_v0) {
-				return ' ';
-			},
-			string));
-};
-var $jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug = function (str) {
-	return A3(
-		$elm$core$String$replace,
-		' ',
-		'-',
-		$jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace(
-			$jxxcarlson$xmarkdown_compiler$Tools$String$alphanumOnly(
-				$elm$core$String$toLower(str))));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$toString = function (v) {
-	return A2(
-		$elm$core$String$join,
-		'.',
-		A2(
-			$elm$core$List$map,
-			$elm$core$String$fromInt,
-			A2(
-				$elm$core$List$filter,
-				function (x) {
-					return x > 0;
-				},
-				v.content)));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$vectorPrefix = function (headingIndex) {
-	var prefix = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex);
-	return (prefix === '') ? '' : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex) + '.');
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock = F2(
-	function (acc, block) {
-		var _v0 = _Utils_Tuple2(block.heading, block.args);
-		_v0$4:
-		while (true) {
-			switch (_v0.a.$) {
-				case 'Ordinary':
-					switch (_v0.a.a) {
-						case 'section':
-							return _Utils_update(
-								block,
-								{
-									properties: A3(
-										$elm$core$Dict$insert,
-										'tag',
-										$jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug(block.firstLine),
-										A3(
-											$elm$core$Dict$insert,
-											'label',
-											$jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex),
-											block.properties))
-								});
-						case 'image':
-							return _Utils_update(
-								block,
-								{
-									properties: A3(
-										$elm$core$Dict$insert,
-										'figure',
-										A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'figure', acc.counter),
-										block.properties)
-								});
-						default:
-							break _v0$4;
-					}
-				case 'Verbatim':
-					switch (_v0.a.a) {
-						case 'equation':
-							var prefix = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex);
-							var equationProp = (prefix === '') ? A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter) : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) + ('.' + A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter)));
-							return _Utils_update(
-								block,
-								{
-									properties: A3($elm$core$Dict$insert, 'equation-number', equationProp, block.properties)
-								});
-						case 'aligned':
-							var prefix = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex);
-							var equationProp = (prefix === '') ? A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter) : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) + ('.' + A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter)));
-							return _Utils_update(
-								block,
-								{
-									properties: A3($elm$core$Dict$insert, 'equation-number', equationProp, block.properties)
-								});
-						default:
-							break _v0$4;
-					}
-				default:
-					break _v0$4;
-			}
-		}
-		var heading = _v0.a;
-		var _v1 = $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(heading);
-		if (_v1.$ === 'Nothing') {
-			return block;
-		} else {
-			var name = _v1.a;
-			if (A2(
-				$elm$core$List$member,
-				name,
-				_List_fromArray(
-					['section']))) {
-				var prefix = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex);
-				var equationProp = (prefix === '') ? A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter) : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) + ('.' + A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter)));
-				return _Utils_update(
-					block,
-					{
-						properties: A3($elm$core$Dict$insert, 'label', equationProp, block.properties)
-					});
-			} else {
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$AST$Acc$expand,
-					acc.textMacroDict,
-					A2($elm$core$List$member, name, $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames) ? _Utils_update(
-						block,
-						{
-							properties: A3(
-								$elm$core$Dict$insert,
-								'label',
-								_Utils_ap(
-									$jxxcarlson$xmarkdown_compiler$AST$Acc$vectorPrefix(acc.headingIndex),
-									$elm$core$String$fromInt(acc.blockCounter)),
-								block.properties)
-						}) : block);
-			}
-		}
-	});
-var $elm$core$Maybe$andThen = F2(
-	function (callback, maybeValue) {
-		if (maybeValue.$ === 'Just') {
-			var value = maybeValue.a;
-			return callback(value);
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getNameContentId = function (block) {
-	var name = $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(block.heading);
-	var id = $elm$core$Maybe$Just(block.meta.id);
-	var content = $elm$core$Maybe$Just(block.body);
-	var _v0 = _Utils_Tuple3(name, content, id);
-	if (((_v0.a.$ === 'Just') && (_v0.b.$ === 'Just')) && (_v0.c.$ === 'Just')) {
-		var name_ = _v0.a.a;
-		var content_ = _v0.b.a;
-		var id_ = _v0.c.a;
-		return $elm$core$Maybe$Just(
-			{content: content_, id: id_, name: name_});
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getNameContentIdTag = function (block) {
-	var name = A2($elm$core$Dict$get, 'name', block.properties);
-	var id = block.meta.id;
-	var tag = A2(
-		$elm$core$Maybe$withDefault,
-		id,
-		A2($elm$core$Dict$get, 'tag', block.properties));
-	if (name.$ === 'Nothing') {
-		return $elm$core$Maybe$Nothing;
-	} else {
-		var name_ = name.a;
-		return $elm$core$Maybe$Just(
-			{content: block.body, id: id, name: name_, tag: tag});
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Language$getVerbatimContent = function (block) {
-	var _v0 = block.body;
-	if (_v0.$ === 'Left') {
-		var str = _v0.a;
-		return $elm$core$Maybe$Just(str);
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList = {$: 'SInList'};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState = F2(
-	function (heading, state) {
-		var _v0 = _Utils_Tuple2(state, heading);
-		if (_v0.a.$ === 'SNotInList') {
-			if ((_v0.b.$ === 'Ordinary') && (_v0.b.a === 'numbered')) {
-				var _v1 = _v0.a;
-				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList;
-			} else {
-				var _v2 = _v0.a;
-				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList;
-			}
-		} else {
-			if ((_v0.b.$ === 'Ordinary') && (_v0.b.a === 'numbered')) {
-				var _v3 = _v0.a;
-				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList;
-			} else {
-				var _v4 = _v0.a;
-				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList;
-			}
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateBibItemBlock = F3(
-	function (accumulator, args, id) {
-		var _v0 = $elm$core$List$head(args);
-		if (_v0.$ === 'Nothing') {
-			return accumulator;
-		} else {
-			var label = _v0.a;
-			return _Utils_update(
-				accumulator,
-				{
-					reference: A3(
-						$elm$core$Dict$insert,
-						label,
-						{id: id, numRef: '_irrelevant_'},
-						accumulator.reference)
-				});
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getReferenceDatum = F2(
-	function (acc, block) {
-		var tag = A2(
-			$elm$core$Maybe$withDefault,
-			'no-tag',
-			A2($elm$core$Dict$get, 'tag', block.properties));
-		var numRef = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) + ('.' + $elm$core$String$fromInt(acc.blockCounter));
-		var id = block.meta.id;
-		return $elm$core$Maybe$Just(
-			{id: id, numRef: numRef, tag: tag});
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateReference = F2(
-	function (referenceDatum, acc) {
-		return (referenceDatum.tag !== '') ? _Utils_update(
-			acc,
-			{
-				reference: A3(
-					$elm$core$Dict$insert,
-					referenceDatum.tag,
-					{id: referenceDatum.id, numRef: referenceDatum.numRef},
-					acc.reference)
-			}) : acc;
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateReferenceWithBlock = F2(
-	function (block, acc) {
-		var _v0 = A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getReferenceDatum, acc, block);
-		if (_v0.$ === 'Just') {
-			var referenceDatum = _v0.a;
-			return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateReference, referenceDatum, acc);
-		} else {
-			return acc;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$get = F2(
-	function (k, v) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			0,
-			A2($elmcraft$core_extra$List$Extra$getAt, k, v.content));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName = function (block) {
-	var _v0 = block.heading;
-	switch (_v0.$) {
-		case 'Paragraph':
-			return $elm$core$Maybe$Nothing;
-		case 'Ordinary':
-			var name = _v0.a;
-			return $elm$core$Maybe$Just(name);
-		default:
-			var name = _v0.a;
-			return $elm$core$Maybe$Just(name);
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getTag = function (block) {
-	var _v0 = A2($elm$core$Dict$get, 'tag', block.properties);
-	if (_v0.$ === 'Just') {
-		var tag = _v0.a;
-		return tag;
-	} else {
-		return block.meta.id;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$resetFrom = F2(
-	function (k, v) {
-		var suffix = A2($elm$core$List$repeat, v.size - k, 0);
-		var prefix = A2($elm$core$List$take, k, v.content);
-		return {
-			content: _Utils_ap(prefix, suffix),
-			size: v.size
-		};
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$set = F3(
-	function (k, a, v) {
-		return _Utils_update(
-			v,
-			{
-				content: A3($elmcraft$core_extra$List$Extra$setAt, k, a, v.content)
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$increment = F2(
-	function (k, v) {
-		return ((k < 0) || (_Utils_cmp(k, v.size) > -1)) ? v : A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Vector$resetFrom,
-			k + 1,
-			A3(
-				$jxxcarlson$xmarkdown_compiler$AST$Vector$set,
-				k,
-				A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, k, v) + 1,
-				v));
-	});
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum = 2;
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$makeReferenceDatum = F3(
-	function (id, tag, numRef) {
-		return {id: id, numRef: numRef, tag: tag};
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryBlock = F2(
-	function (block, accumulator) {
-		var _v0 = $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block);
-		if (_v0.$ === 'Just') {
-			switch (_v0.a) {
-				case 'setcounter':
-					var _v1 = block.body;
-					if (_v1.$ === 'Left') {
-						return accumulator;
-					} else {
-						var exprs = _v1.a;
-						var ctr = function () {
-							if ((exprs.b && (exprs.a.$ === 'Text')) && (!exprs.b.b)) {
-								var _v3 = exprs.a;
-								var val = _v3.a;
-								return A2(
-									$elm$core$Maybe$withDefault,
-									1,
-									$elm$core$String$toInt(val));
-							} else {
-								return 1;
-							}
-						}();
-						var headingIndex = A3(
-							$jxxcarlson$xmarkdown_compiler$AST$Vector$set,
-							0,
-							ctr - 1,
-							$jxxcarlson$xmarkdown_compiler$AST$Vector$init(accumulator.headingIndex.size));
-						return _Utils_update(
-							accumulator,
-							{headingIndex: headingIndex});
-					}
-				case 'numbered':
-					var level = (block.indent / $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum) | 0;
-					var itemVector = function () {
-						var _v4 = accumulator.inListState;
-						if (_v4.$ === 'SInList') {
-							return A2($jxxcarlson$xmarkdown_compiler$AST$Vector$increment, level, accumulator.itemVector);
-						} else {
-							return A2(
-								$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
-								0,
-								$jxxcarlson$xmarkdown_compiler$AST$Vector$init(4));
-						}
-					}();
-					var referenceDatum = A3(
-						$jxxcarlson$xmarkdown_compiler$AST$Acc$makeReferenceDatum,
-						block.meta.id,
-						$jxxcarlson$xmarkdown_compiler$AST$Acc$getTag(block),
-						$elm$core$String$fromInt(
-							A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector)));
-					var index = A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector);
-					var numberedItemDict = A3(
-						$elm$core$Dict$insert,
-						block.meta.id,
-						{index: index, level: level},
-						accumulator.numberedItemDict);
-					return A2(
-						$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReference,
-						referenceDatum,
-						_Utils_update(
-							accumulator,
-							{
-								inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState),
-								itemVector: itemVector,
-								numberedItemDict: numberedItemDict
-							}));
-				case 'item':
-					return _Utils_update(
-						accumulator,
-						{
-							inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-						});
-				default:
-					var name_ = _v0.a;
-					if (A2(
-						$elm$core$List$member,
-						name_,
-						_List_fromArray(
-							['title', 'contents', 'banner', 'a']))) {
-						return accumulator;
-					} else {
-						if (A2($elm$core$List$member, name_, $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames)) {
-							var level = (block.indent / $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum) | 0;
-							var itemVector = A2($jxxcarlson$xmarkdown_compiler$AST$Vector$increment, level, accumulator.itemVector);
-							var numberedItemDict = A3(
-								$elm$core$Dict$insert,
-								block.meta.id,
-								{
-									index: A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector),
-									level: level
-								},
-								accumulator.numberedItemDict);
-							var referenceDatum = A3(
-								$jxxcarlson$xmarkdown_compiler$AST$Acc$makeReferenceDatum,
-								block.meta.id,
-								$jxxcarlson$xmarkdown_compiler$AST$Acc$getTag(block),
-								$elm$core$String$fromInt(
-									A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector)));
-							return A2(
-								$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReference,
-								referenceDatum,
-								_Utils_update(
-									accumulator,
-									{
-										blockCounter: accumulator.blockCounter + 1,
-										inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState),
-										itemVector: itemVector,
-										numberedItemDict: numberedItemDict
-									}));
-						} else {
-							return _Utils_update(
-								accumulator,
-								{
-									inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-								});
-						}
-					}
-			}
-		} else {
-			return accumulator;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText = function (expression) {
-	switch (expression.$) {
-		case 'Text':
-			var str = expression.a;
-			return $elm$core$Maybe$Just(str);
-		case 'VFun':
-			var str = expression.b;
-			return $elm$core$Maybe$Just(
-				A3($elm$core$String$replace, '`', '', str));
-		case 'Fun':
-			var expressions = expression.b;
-			return $elm$core$Maybe$Just(
-				A2(
-					$elm$core$String$join,
-					' ',
-					$elmcraft$core_extra$Maybe$Extra$values(
-						A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText, expressions))));
-		default:
-			return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$itemsNotNumbered = _List_fromArray(
-	['preface', 'introduction', 'appendix', 'references', 'index', 'scratch']);
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryDocumentBlock = F4(
-	function (accumulator, content, level, id) {
-		var title = function () {
-			if (content.$ === 'Left') {
-				var str = content.a;
-				return str;
-			} else {
-				var expr = content.a;
-				return A2(
-					$elm$core$String$join,
-					' ',
-					$elmcraft$core_extra$Maybe$Extra$values(
-						A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText, expr)));
-			}
-		}();
-		var sectionTag = A3(
-			$elm$core$String$replace,
-			' ',
-			'-',
-			$elm$core$String$toLower(title));
-		var documentIndex = A2(
-			$elm$core$List$member,
-			$elm$core$String$toLower(title),
-			$jxxcarlson$xmarkdown_compiler$AST$Acc$itemsNotNumbered) ? accumulator.documentIndex : A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
-			A2(
-				$elm$core$Maybe$withDefault,
-				0,
-				$elm$core$String$toInt(level)),
-			accumulator.documentIndex);
-		var referenceDatum = A2(
-			$elm$core$List$member,
-			$elm$core$String$toLower(title),
-			$jxxcarlson$xmarkdown_compiler$AST$Acc$itemsNotNumbered) ? A3(
-			$jxxcarlson$xmarkdown_compiler$AST$Acc$makeReferenceDatum,
-			id,
-			sectionTag,
-			$jxxcarlson$xmarkdown_compiler$AST$Vector$toString(documentIndex)) : A3($jxxcarlson$xmarkdown_compiler$AST$Acc$makeReferenceDatum, id, sectionTag, '');
-		return A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReference,
-			referenceDatum,
-			_Utils_update(
-				accumulator,
-				{documentIndex: documentIndex}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$Utility$userReplace = F3(
-	function (regexString, replacer, string) {
-		var _v0 = $elm$regex$Regex$fromString(regexString);
-		if (_v0.$ === 'Nothing') {
-			return string;
-		} else {
-			var regex = _v0.a;
-			return A3($elm$regex$Regex$replace, regex, replacer, string);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$Utility$compressWhitespace = function (string) {
-	return A3(
-		$jxxcarlson$xmarkdown_compiler$Tools$Utility$userReplace,
-		'\\s\\s+',
-		function (_v0) {
-			return ' ';
-		},
-		string);
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock = F4(
-	function (accumulator, content, level, id) {
-		var titleWords = function () {
-			if (content.$ === 'Left') {
-				var str = content.a;
-				return _List_fromArray(
-					[
-						$jxxcarlson$xmarkdown_compiler$Tools$Utility$compressWhitespace(str)
-					]);
-			} else {
-				var expr = content.a;
-				return A2(
-					$elm$core$List$map,
-					$jxxcarlson$xmarkdown_compiler$Tools$Utility$compressWhitespace,
-					$elmcraft$core_extra$Maybe$Extra$values(
-						A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText, expr)));
-			}
-		}();
-		var sectionTag = A2(
-			$elm$core$String$join,
-			'',
-			A2(
-				$elm$core$List$map,
-				A2(
-					$elm$core$Basics$composeR,
-					$elm$core$String$toLower,
-					A2(
-						$elm$core$Basics$composeR,
-						$elm$core$String$trim,
-						A2($elm$core$String$replace, ' ', '-'))),
-				titleWords));
-		var delta = function () {
-			var _v0 = A2($elm$core$Dict$get, 'has-chapters', accumulator.keyValueDict);
-			if (_v0.$ === 'Nothing') {
-				return 0;
-			} else {
-				if (_v0.a === 'yes') {
-					return 1;
-				} else {
-					return 0;
-				}
-			}
-		}();
-		var headingIndex = A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
-			function (x) {
-				return ((x - 1) + delta) + accumulator.deltaLevel;
-			}(
-				A2(
-					$elm$core$Maybe$withDefault,
-					1,
-					$elm$core$String$toInt(level))),
-			accumulator.headingIndex);
-		var referenceDatum = A3(
-			$jxxcarlson$xmarkdown_compiler$AST$Acc$makeReferenceDatum,
-			id,
-			sectionTag,
-			$jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex));
-		var blockCounter = 0;
-		return A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReference,
-			referenceDatum,
-			_Utils_update(
-				accumulator,
-				{
-					blockCounter: blockCounter,
-					counter: A3($elm$core$Dict$insert, 'equation', 0, accumulator.counter),
-					headingIndex: headingIndex
-				}));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$addFootnote = F2(
-	function (footnoteData, dict) {
-		return A3($elm$core$Dict$insert, footnoteData.term, footnoteData.loc, dict);
-	});
-var $elm$core$Dict$sizeHelp = F2(
-	function (n, dict) {
-		sizeHelp:
-		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return n;
-			} else {
-				var left = dict.d;
-				var right = dict.e;
-				var $temp$n = A2($elm$core$Dict$sizeHelp, n + 1, right),
-					$temp$dict = left;
-				n = $temp$n;
-				dict = $temp$dict;
-				continue sizeHelp;
-			}
-		}
-	});
-var $elm$core$Dict$size = function (dict) {
-	return A2($elm$core$Dict$sizeHelp, 0, dict);
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$addFootnoteLabel = F2(
-	function (footnoteData, dict) {
-		return A3(
-			$elm$core$Dict$insert,
-			footnoteData.loc.id,
-			$elm$core$Dict$size(dict) + 1,
-			dict);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$addFootnotes = F2(
-	function (termDataList, _v0) {
-		var dict1 = _v0.a;
-		var dict2 = _v0.b;
-		return A3(
-			$elm$core$List$foldl,
-			F2(
-				function (data, _v1) {
-					var d1 = _v1.a;
-					var d2 = _v1.b;
-					return _Utils_Tuple2(
-						A2($jxxcarlson$xmarkdown_compiler$AST$Acc$addFootnote, data, d1),
-						A2($jxxcarlson$xmarkdown_compiler$AST$Acc$addFootnoteLabel, data, d2));
-				}),
-			_Utils_Tuple2(dict1, dict2),
-			termDataList);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$extractFootnote = F2(
-	function (mSourceId, expr) {
-		if (((((expr.$ === 'Fun') && (expr.a === 'footnote')) && expr.b.b) && (expr.b.a.$ === 'Text')) && (!expr.b.b.b)) {
-			var _v1 = expr.b;
-			var _v2 = _v1.a;
-			var content = _v2.a;
-			var begin = _v2.b.begin;
-			var end = _v2.b.end;
-			var id = _v2.b.id;
-			return $elm$core$Maybe$Just(
-				{
-					loc: {begin: begin, end: end, id: id, mSourceId: mSourceId},
-					term: content
-				});
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Language$getFunctionName = function (expression) {
-	switch (expression.$) {
-		case 'Fun':
-			var name = expression.a;
-			return $elm$core$Maybe$Just(name);
-		case 'VFun':
-			return $elm$core$Maybe$Nothing;
-		case 'Text':
-			return $elm$core$Maybe$Nothing;
-		default:
-			return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchExprOnName_ = F2(
-	function (name, expr) {
-		var _v0 = $jxxcarlson$xmarkdown_compiler$AST$Language$getFunctionName(expr);
-		if (_v0.$ === 'Nothing') {
-			return false;
-		} else {
-			var name2 = _v0.a;
-			return _Utils_eq(name, name2);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterExpressionsOnName_ = F2(
-	function (name, exprs) {
-		return A2(
-			$elm$core$List$filter,
-			$jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchExprOnName_(name),
-			exprs);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getFootnotes = F2(
-	function (mBlockId, content_) {
-		if (content_.$ === 'Right') {
-			var expressionList = content_.a;
-			return $elmcraft$core_extra$Maybe$Extra$values(
-				A2(
-					$elm$core$List$map,
-					$jxxcarlson$xmarkdown_compiler$AST$Acc$extractFootnote(mBlockId),
-					A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterExpressionsOnName_, 'footnote', expressionList)));
-		} else {
-			return _List_Nil;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$addFootnotesFromContent = F2(
-	function (block, _v0) {
-		var dict1 = _v0.a;
-		var dict2 = _v0.b;
-		var blockId = function () {
-			var _v1 = block.body;
-			if (_v1.$ === 'Left') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var expr = _v1.a;
-				return A2(
-					$elm$core$Maybe$map,
-					function ($) {
-						return $.id;
-					},
-					$elm$core$List$head(
-						A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$AST$Language$getMeta, expr)));
-			}
-		}();
-		return A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Acc$addFootnotes,
-			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getFootnotes, blockId, block.body),
-			_Utils_Tuple2(dict1, dict2));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithParagraph = F2(
-	function (block, accumulator) {
-		var _v0 = A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Acc$addFootnotesFromContent,
-			block,
-			_Utils_Tuple2(accumulator.footnotes, accumulator.footnoteNumbers));
-		var footnotes = _v0.a;
-		var footnoteNumbers = _v0.b;
-		return _Utils_update(
-			accumulator,
-			{
-				footnoteNumbers: footnoteNumbers,
-				footnotes: footnotes,
-				inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$insert = F2(
-	function (data, dict) {
-		if (data.$ === 'Nothing') {
-			return dict;
-		} else {
-			var macro = data.a;
-			return A3($elm$core$Dict$insert, macro.name, macro, dict);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$extract = function (expr_) {
-	if ((((expr_.$ === 'Fun') && (expr_.a === 'macro')) && expr_.b.b) && (expr_.b.a.$ === 'Text')) {
-		var _v1 = expr_.b;
-		var _v2 = _v1.a;
-		var argString = _v2.a;
-		var exprs = _v1.b;
-		var _v3 = $elm$core$String$words(
-			$elm$core$String$trim(argString));
-		if (_v3.b) {
-			var name = _v3.a;
-			var rest = _v3.b;
-			return $elm$core$Maybe$Just(
-				{body: exprs, name: name, vars: rest});
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$fixup = function (input) {
-	if (input.b && (input.a.$ === 'Fun')) {
-		var _v1 = input.a;
-		var name = _v1.a;
-		var exprList = _v1.b;
-		var meta = _v1.c;
-		var rest = input.b;
-		var newExprlist = function () {
-			if (exprList.b) {
-				var head = exprList.a;
-				var tail = exprList.b;
-				if (head.$ === 'Text') {
-					var str = head.a;
-					var meta_ = head.b;
-					return _Utils_ap(
-						_List_fromArray(
-							[
-								A2(
-								$jxxcarlson$xmarkdown_compiler$AST$Language$Text,
-								$elm$core$String$trim(str),
-								meta_)
-							]),
-						tail);
-				} else {
-					return exprList;
-				}
-			} else {
-				return _List_Nil;
-			}
-		}();
-		return A2(
-			$elm$core$List$cons,
-			A3($jxxcarlson$xmarkdown_compiler$AST$Language$Fun, name, newExprlist, meta),
-			$jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$fixup(rest));
-	} else {
-		return input;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parse = F2(
-	function (lineNumber, str) {
-		var state = A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parseToState, lineNumber, str);
-		return $jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$fixup(state.committed);
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$macroFromL0String = function (str) {
-	return A2(
-		$elm$core$Maybe$andThen,
-		$jxxcarlson$xmarkdown_compiler$Macro$TextMacro$extract,
-		$elm$core$List$head(
-			A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parse, 0, str)));
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$ExpectingHash = {$: 'ExpectingHash'};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$ExpectingInt = {$: 'ExpectingInt'};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$InvalidNumber = {$: 'InvalidNumber'};
-var $elm$parser$Parser$Advanced$findSubString = _Parser_findSubString;
-var $elm$parser$Parser$Advanced$chompUntil = function (_v0) {
-	var str = _v0.a;
-	var expecting = _v0.b;
-	return $elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			var _v1 = A5($elm$parser$Parser$Advanced$findSubString, str, s.offset, s.row, s.col, s.src);
-			var newOffset = _v1.a;
-			var newRow = _v1.b;
-			var newCol = _v1.c;
-			return _Utils_eq(newOffset, -1) ? A2(
-				$elm$parser$Parser$Advanced$Bad,
-				false,
-				A4($elm$parser$Parser$Advanced$fromInfo, newRow, newCol, expecting, s.context)) : A3(
-				$elm$parser$Parser$Advanced$Good,
-				_Utils_cmp(s.offset, newOffset) < 0,
-				_Utils_Tuple0,
-				{col: newCol, context: s.context, indent: s.indent, offset: newOffset, row: newRow, src: s.src});
-		});
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$paramParser2 = A2(
-	$elm$parser$Parser$Advanced$keeper,
-	A2(
-		$elm$parser$Parser$Advanced$ignorer,
-		A2(
-			$elm$parser$Parser$Advanced$ignorer,
-			$elm$parser$Parser$Advanced$succeed($elm$core$Basics$identity),
-			$elm$parser$Parser$Advanced$chompUntil(
-				A2($elm$parser$Parser$Advanced$Token, '#', $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$ExpectingHash))),
-		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '#', $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$ExpectingHash))),
-	A2($elm$parser$Parser$Advanced$int, $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$ExpectingInt, $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$InvalidNumber));
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$getParam = function (str) {
-	var _v0 = A2($elm$parser$Parser$Advanced$run, $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$paramParser2, str);
-	if (_v0.$ === 'Ok') {
-		var n = _v0.a;
-		return $elm$core$Maybe$Just(
-			'#' + $elm$core$String$fromInt(n));
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$getParam = function (str) {
-	var _v0 = $jxxcarlson$xmarkdown_compiler$Macro$TextMacroParser$getParam(str);
-	if (_v0.$ === 'Just') {
-		var result = _v0.a;
-		return _List_fromArray(
-			[result]);
-	} else {
-		return _List_Nil;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$getVars_ = function (expr) {
-	switch (expr.$) {
-		case 'Text':
-			var str = expr.a;
-			return $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$getParam(str);
-		case 'Fun':
-			var exprs = expr.b;
-			return $elm$core$List$concat(
-				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$getVars_, exprs));
-		default:
-			return _List_Nil;
-	}
-};
-var $elm$core$List$sortBy = _List_sortBy;
-var $elm$core$List$sort = function (xs) {
-	return A2($elm$core$List$sortBy, $elm$core$Basics$identity, xs);
-};
-var $elmcraft$core_extra$List$Extra$uniqueHelp = F4(
-	function (f, existing, remaining, accumulator) {
-		uniqueHelp:
-		while (true) {
-			if (!remaining.b) {
-				return $elm$core$List$reverse(accumulator);
-			} else {
-				var first = remaining.a;
-				var rest = remaining.b;
-				var computedFirst = f(first);
-				if (A2($elm$core$List$member, computedFirst, existing)) {
-					var $temp$f = f,
-						$temp$existing = existing,
-						$temp$remaining = rest,
-						$temp$accumulator = accumulator;
-					f = $temp$f;
-					existing = $temp$existing;
-					remaining = $temp$remaining;
-					accumulator = $temp$accumulator;
-					continue uniqueHelp;
-				} else {
-					var $temp$f = f,
-						$temp$existing = A2($elm$core$List$cons, computedFirst, existing),
-						$temp$remaining = rest,
-						$temp$accumulator = A2($elm$core$List$cons, first, accumulator);
-					f = $temp$f;
-					existing = $temp$existing;
-					remaining = $temp$remaining;
-					accumulator = $temp$accumulator;
-					continue uniqueHelp;
-				}
-			}
-		}
-	});
-var $elmcraft$core_extra$List$Extra$unique = function (list) {
-	return A4($elmcraft$core_extra$List$Extra$uniqueHelp, $elm$core$Basics$identity, _List_Nil, list, _List_Nil);
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$getVars = function (exprs) {
-	return $elm$core$List$sort(
-		$elmcraft$core_extra$List$Extra$unique(
-			$elm$core$List$concat(
-				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$getVars_, exprs))));
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$extract3Aux = F2(
-	function (name, rest) {
-		return {
-			body: rest,
-			name: name,
-			vars: $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$getVars(rest)
-		};
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$extract2Aux = function (body) {
-	if (body.b && (body.a.$ === 'Fun')) {
-		var _v1 = body.a;
-		var name = _v1.a;
-		var rest = body.b;
-		return $elm$core$Maybe$Just(
-			A2($jxxcarlson$xmarkdown_compiler$Macro$TextMacro$extract3Aux, name, rest));
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$extract2 = function (expr) {
-	if (expr.$ === 'Fun') {
-		var name = expr.a;
-		var body = expr.b;
-		return (name === 'newcommand') ? $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$extract2Aux(body) : $elm$core$Maybe$Nothing;
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$parseMicroLaTeX = function (str) {
-	return A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Core$Expression$parse, 0, str);
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$macroFromMicroLaTeXString = function (macroS) {
-	return A2(
-		$elm$core$Maybe$andThen,
-		$jxxcarlson$xmarkdown_compiler$Macro$TextMacro$extract2,
-		$elm$core$List$head(
-			$jxxcarlson$xmarkdown_compiler$Macro$TextMacro$parseMicroLaTeX(macroS)));
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$macroFromString = function (str) {
-	var _v0 = A2($elm$core$String$left, 1, str);
-	switch (_v0) {
-		case '\\':
-			return $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$macroFromMicroLaTeXString(str);
-		case '[':
-			return $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$macroFromL0String(str);
-		default:
-			return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$buildDictionary = function (lines) {
-	return A3(
-		$elm$core$List$foldl,
-		F2(
-			function (line, acc) {
-				return A2(
-					$jxxcarlson$xmarkdown_compiler$Macro$TextMacro$insert,
-					$jxxcarlson$xmarkdown_compiler$Macro$TextMacro$macroFromString(line),
-					acc);
-			}),
-		$elm$core$Dict$empty,
-		lines);
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$normalizeLines = function (lines) {
-	return A2(
-		$elm$core$List$filter,
-		function (line) {
-			return line !== '';
-		},
-		A2(
-			$elm$core$List$map,
-			function (line) {
-				return $elm$core$String$trim(line);
-			},
-			lines));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithTextMacros = F2(
-	function (content, accumulator) {
-		return _Utils_update(
-			accumulator,
-			{
-				textMacroDict: $jxxcarlson$xmarkdown_compiler$Macro$TextMacro$buildDictionary(
-					$jxxcarlson$xmarkdown_compiler$AST$Acc$normalizeLines(
-						$elm$core$String$lines(content)))
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter = F2(
-	function (name, dict) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			0,
-			A2($elm$core$Dict$get, name, dict));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$incrementCounter = F2(
-	function (name, dict) {
-		return A3(
-			$elm$core$Dict$insert,
-			name,
-			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter, name, dict) + 1,
-			dict);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName = function (str) {
-	return A2(
-		$elm$core$List$member,
-		str,
-		_List_fromArray(
-			['equation', 'aligned'])) ? 'equation' : ((str === 'code') ? 'listing' : (A2(
-		$elm$core$List$member,
-		str,
-		_List_fromArray(
-			['quiver', 'image', 'table', 'svg', 'tikz'])) ? 'figure' : str));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$verbatimBlockReference = F4(
-	function (isSimple, headingIndex, name, newCounter) {
-		var a = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex);
-		return ((a === '') || isSimple) ? $elm$core$String$fromInt(
-			A2(
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter,
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName(name),
-				newCounter)) : (a + ('.' + $elm$core$String$fromInt(
-			A2(
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter,
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName(name),
-				newCounter))));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock = F2(
-	function (block, accumulator) {
-		var _v0 = block.body;
-		if (_v0.$ === 'Right') {
-			return accumulator;
-		} else {
-			var name = A2(
-				$elm$core$Maybe$withDefault,
-				'',
-				$jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block));
-			var newCounter = (A2($elm$core$List$member, name, accumulator.numberedBlockNames) && A2($elm$core$List$member, 'numbered', block.args)) ? A2(
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$incrementCounter,
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName(name),
-				accumulator.counter) : accumulator.counter;
-			var isSimple = A2(
-				$elm$core$List$member,
-				name,
-				_List_fromArray(
-					['quiver', 'image']));
-			var updateAccumulatorWithLabel = function () {
-				var _v1 = A2($elm$core$Dict$get, 'label', block.properties);
-				if (_v1.$ === 'Just') {
-					var tag = _v1.a;
-					var referenceDatum = A3(
-						$jxxcarlson$xmarkdown_compiler$AST$Acc$makeReferenceDatum,
-						block.meta.id,
-						tag,
-						A4($jxxcarlson$xmarkdown_compiler$AST$Acc$verbatimBlockReference, isSimple, accumulator.headingIndex, name, newCounter));
-					return function (acc) {
-						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateReference, referenceDatum, acc);
-					};
-				} else {
-					return $elm$core$Basics$identity;
-				}
-			}();
-			return updateAccumulatorWithLabel(
-				_Utils_update(
-					accumulator,
-					{
-						counter: newCounter,
-						inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-					}));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator = F2(
-	function (block, accumulator) {
-		var heading = block.heading;
-		var args = block.args;
-		var properties = block.properties;
-		switch (heading.$) {
-			case 'Ordinary':
-				switch (heading.a) {
-					case 'set-key':
-						if (args.b && args.b.b) {
-							var key = args.a;
-							var _v2 = args.b;
-							var value = _v2.a;
-							return _Utils_update(
-								accumulator,
-								{
-									keyValueDict: A3($elm$core$Dict$insert, key, value, accumulator.keyValueDict)
-								});
-						} else {
-							return accumulator;
-						}
-					case 'list':
-						return _Utils_update(
-							accumulator,
-							{
-								itemVector: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4)
-							});
-					case 'chapter':
-						var level = '0';
-						var _v3 = $jxxcarlson$xmarkdown_compiler$AST$Acc$getNameContentId(block);
-						if (_v3.$ === 'Just') {
-							var content = _v3.a.content;
-							var id = _v3.a.id;
-							return A2(
-								$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReferenceWithBlock,
-								block,
-								A4($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock, accumulator, content, level, id));
-						} else {
-							return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateReferenceWithBlock, block, accumulator);
-						}
-					case 'section':
-						var level = function () {
-							var _v5 = A2($elm$core$Dict$get, 'has-chapters', accumulator.keyValueDict);
-							if (_v5.$ === 'Nothing') {
-								return A2(
-									$elm$core$Maybe$withDefault,
-									'1',
-									A2($elm$core$Dict$get, 'level', properties));
-							} else {
-								if (_v5.a === 'yes') {
-									return A2(
-										$elm$core$Maybe$withDefault,
-										'1',
-										A2($elm$core$Dict$get, 'level', properties));
-								} else {
-									return A2(
-										$elm$core$Maybe$withDefault,
-										'1',
-										A2($elm$core$Dict$get, 'level', properties));
-								}
-							}
-						}();
-						var _v4 = $jxxcarlson$xmarkdown_compiler$AST$Acc$getNameContentId(block);
-						if (_v4.$ === 'Just') {
-							var content = _v4.a.content;
-							var id = _v4.a.id;
-							return A2(
-								$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReferenceWithBlock,
-								block,
-								A4($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock, accumulator, content, level, id));
-						} else {
-							return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateReferenceWithBlock, block, accumulator);
-						}
-					case 'document':
-						var level = A2(
-							$elm$core$Maybe$withDefault,
-							'1',
-							$elm$core$List$head(args));
-						var _v6 = $jxxcarlson$xmarkdown_compiler$AST$Acc$getNameContentId(block);
-						if (_v6.$ === 'Just') {
-							var content = _v6.a.content;
-							var id = _v6.a.id;
-							return A4($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryDocumentBlock, accumulator, content, level, id);
-						} else {
-							return accumulator;
-						}
-					case 'title':
-						if (accumulator.deltaLevel === 1) {
-							return accumulator;
-						} else {
-							var headingIndex = function () {
-								var _v7 = A2($elm$core$Dict$get, 'first-section', block.properties);
-								if (_v7.$ === 'Nothing') {
-									return {
-										content: _List_fromArray(
-											[0, 0, 0, 0]),
-										size: 4
-									};
-								} else {
-									var firstSection_ = _v7.a;
-									var _v8 = $elm$core$String$toInt(firstSection_);
-									if (_v8.$ === 'Just') {
-										var n = _v8.a;
-										return {
-											content: _List_fromArray(
-												[
-													A2($elm$core$Basics$max, n - 1, 0),
-													0,
-													0,
-													0
-												]),
-											size: 4
-										};
-									} else {
-										return {
-											content: _List_fromArray(
-												[0, 0, 0, 0]),
-											size: 4
-										};
-									}
-								}
-							}();
-							return _Utils_update(
-								accumulator,
-								{headingIndex: headingIndex});
-						}
-					case 'setcounter':
-						var n = A2(
-							$elm$core$Maybe$withDefault,
-							1,
-							A2(
-								$elm$core$Maybe$andThen,
-								$elm$core$String$toInt,
-								$elm$core$List$head(args)));
-						return _Utils_update(
-							accumulator,
-							{
-								headingIndex: {
-									content: _List_fromArray(
-										[n, 0, 0, 0]),
-									size: 4
-								}
-							});
-					case 'shiftandsetcounter':
-						var n = A2(
-							$elm$core$Maybe$withDefault,
-							1,
-							A2(
-								$elm$core$Maybe$andThen,
-								$elm$core$String$toInt,
-								$elm$core$List$head(args)));
-						return _Utils_update(
-							accumulator,
-							{
-								deltaLevel: 1,
-								headingIndex: {
-									content: _List_fromArray(
-										[n, 0, 0, 0]),
-									size: 4
-								}
-							});
-					case 'bibitem':
-						return A3($jxxcarlson$xmarkdown_compiler$AST$Acc$updateBibItemBlock, accumulator, args, block.meta.id);
-					default:
-						return A2(
-							$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReferenceWithBlock,
-							block,
-							A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryBlock, block, accumulator));
-				}
-			case 'Verbatim':
-				switch (heading.a) {
-					case 'settings':
-						return _Utils_update(
-							accumulator,
-							{
-								keyValueDict: A2($elm$core$Dict$union, properties, accumulator.keyValueDict)
-							});
-					case 'mathmacros':
-						var _v9 = $jxxcarlson$xmarkdown_compiler$AST$Language$getVerbatimContent(block);
-						if (_v9.$ === 'Nothing') {
-							return accumulator;
-						} else {
-							var str = _v9.a;
-							return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithMathMacros, str, accumulator);
-						}
-					case 'textmacros':
-						var _v10 = $jxxcarlson$xmarkdown_compiler$AST$Language$getVerbatimContent(block);
-						if (_v10.$ === 'Nothing') {
-							return accumulator;
-						} else {
-							var str = _v10.a;
-							return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithTextMacros, str, accumulator);
-						}
-					default:
-						var _v11 = block.body;
-						if (_v11.$ === 'Left') {
-							return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock, block, accumulator);
-						} else {
-							return accumulator;
-						}
-				}
-			default:
-				var _v12 = $jxxcarlson$xmarkdown_compiler$AST$Acc$getNameContentIdTag(block);
-				if (_v12.$ === 'Nothing') {
-					return A2(
-						$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReferenceWithBlock,
-						block,
-						A2(
-							$jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithParagraph,
-							block,
-							_Utils_update(
-								accumulator,
-								{
-									inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-								})));
-				} else {
-					return A2(
-						$jxxcarlson$xmarkdown_compiler$AST$Acc$updateReferenceWithBlock,
-						block,
-						A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithParagraph, block, accumulator));
-				}
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock = F2(
-	function (acc_, block_) {
-		var newAcc = A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator, block_, acc_);
-		return _Utils_Tuple2(
-			newAcc,
-			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock, newAcc, block_));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree = F2(
-	function (tree, acc) {
-		return A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock, acc, tree);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate = F2(
-	function (data, forest) {
-		return function (_v1) {
-			var acc_ = _v1.a;
-			var ast_ = _v1.b;
-			return _Utils_Tuple2(
-				acc_,
-				$elm$core$List$reverse(ast_));
-		}(
-			A3(
-				$elm$core$List$foldl,
-				F2(
-					function (tree, _v0) {
-						var acc_ = _v0.a;
-						var ast_ = _v0.b;
-						return A2(
-							$jxxcarlson$xmarkdown_compiler$AST$Acc$mapper,
-							ast_,
-							A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree, tree, acc_));
-					}),
-				_Utils_Tuple2(
-					$jxxcarlson$xmarkdown_compiler$AST$Acc$init(data),
-					_List_Nil),
-				forest));
-	});
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parseToForestWithAccumulator = F2(
-	function (params, lines) {
-		var forest = A2(
-			$jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$filterForest,
-			params.filter,
-			A3($jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parse, $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$idPrefix, params.editCount, lines));
-		return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate, $jxxcarlson$xmarkdown_compiler$AST$Acc$initialData, forest);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$changeName = F3(
-	function (oldName, newName, block) {
-		return _Utils_eq(
-			block.heading,
-			$jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary(oldName)) ? _Utils_update(
-			block,
-			{
-				heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary(newName)
-			}) : block;
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName = F2(
-	function (key, block) {
-		return _Utils_eq(
-			$elm$core$Maybe$Just(key),
-			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName = F2(
-	function (name, blocks) {
-		return A2(
-			$elm$core$List$filter,
-			$jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName(name),
-			blocks);
-	});
-var $maca$elm_rose_tree$RoseTree$Tree$foldr = F3(
-	function (f, acc, _v0) {
-		var a = _v0.a;
-		var ns = _v0.b;
-		return A3(
-			$elm$core$Array$foldr,
-			F2(
-				function (n, acc_) {
-					return A3($maca$elm_rose_tree$RoseTree$Tree$foldr, f, acc_, n);
-				}),
-			A2(
-				f,
-				A2($maca$elm_rose_tree$RoseTree$Tree$Tree, a, ns),
-				acc),
-			ns);
-	});
-var $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten = A2(
-	$maca$elm_rose_tree$RoseTree$Tree$foldr,
-	F2(
-		function (n, acc) {
-			return A2(
-				$elm$core$List$cons,
-				$maca$elm_rose_tree$RoseTree$Tree$value(n),
-				acc);
-		}),
-	_List_Nil);
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getBlockByName = F2(
-	function (name, ast) {
-		return $elm$core$List$head(
-			A2(
-				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName,
-				name,
-				$elm$core$List$concat(
-					A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten, ast))));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$banner = function (ast) {
-	return A2(
-		$elm$core$Maybe$map,
-		A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$changeName, 'banner', 'visibleBanner'),
-		A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$getBlockByName, 'banner', ast));
-};
-var $mdgriffith$elm_ui$Internal$Model$Colored = F3(
-	function (a, b, c) {
-		return {$: 'Colored', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Internal$Model$StyleClass = F2(
-	function (a, b) {
-		return {$: 'StyleClass', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$Flag = function (a) {
-	return {$: 'Flag', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Flag$Second = function (a) {
-	return {$: 'Second', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Flag$flag = function (i) {
-	return (i > 31) ? $mdgriffith$elm_ui$Internal$Flag$Second(1 << (i - 32)) : $mdgriffith$elm_ui$Internal$Flag$Flag(1 << i);
-};
-var $mdgriffith$elm_ui$Internal$Flag$fontColor = $mdgriffith$elm_ui$Internal$Flag$flag(14);
-var $elm$core$Basics$round = _Basics_round;
-var $mdgriffith$elm_ui$Internal$Model$floatClass = function (x) {
-	return $elm$core$String$fromInt(
-		$elm$core$Basics$round(x * 255));
-};
-var $mdgriffith$elm_ui$Internal$Model$formatColorClass = function (_v0) {
-	var red = _v0.a;
-	var green = _v0.b;
-	var blue = _v0.c;
-	var alpha = _v0.d;
-	return $mdgriffith$elm_ui$Internal$Model$floatClass(red) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(green) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(blue) + ('-' + $mdgriffith$elm_ui$Internal$Model$floatClass(alpha))))));
-};
-var $mdgriffith$elm_ui$Element$Font$color = function (fontColor) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$fontColor,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Colored,
-			'fc-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(fontColor),
-			'color',
-			fontColor));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$DefaultDisplay = {$: 'DefaultDisplay'};
-var $avh4$elm_color$Color$RgbaSpace = F4(
-	function (a, b, c, d) {
-		return {$: 'RgbaSpace', a: a, b: b, c: c, d: d};
-	});
-var $avh4$elm_color$Color$rgba = F4(
-	function (r, g, b, a) {
-		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, a);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue300 = A4($avh4$elm_color$Color$rgba, 0.54, 0.71, 0.94, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray100 = A4($avh4$elm_color$Color$rgba, 0.96, 0.96, 0.96, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray700 = A4($avh4$elm_color$Color$rgba, 0.33, 0.35, 0.37, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900 = A4($avh4$elm_color$Color$rgba, 0.19, 0.21, 0.23, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo500 = A4($avh4$elm_color$Color$rgba, 0.35, 0.38, 0.67, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$darkTheme = {
-	background: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
-	border: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray700,
-	codeBackground: A4($avh4$elm_color$Color$rgba, 0.35, 0.37, 0.42, 1),
-	codeText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray100,
-	highlight: $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo500,
-	link: $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue300,
-	offsetBackground: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
-	offsetText: A4($avh4$elm_color$Color$rgba, 0.835, 0.847, 0.882, 1),
-	text: A4($avh4$elm_color$Color$rgba, 0.835, 0.847, 0.882, 1)
-};
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue500 = A4($avh4$elm_color$Color$rgba, 0.0, 0.48, 1.0, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray300 = A4($avh4$elm_color$Color$rgba, 0.82, 0.82, 0.82, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950 = A4($avh4$elm_color$Color$rgba, 0.09, 0.11, 0.13, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo200 = A4($avh4$elm_color$Color$rgba, 0.82, 0.84, 0.93, 1);
-var $avh4$elm_color$Color$rgb = F3(
-	function (r, g, b) {
-		return A4($avh4$elm_color$Color$RgbaSpace, r, g, b, 1.0);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$lightTheme = {
-	background: A4($avh4$elm_color$Color$rgba, 1, 1, 1, 1),
-	border: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray300,
-	codeBackground: A4($avh4$elm_color$Color$rgba, 0.90, 0.90, 0.94, 1),
-	codeText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
-	highlight: $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo200,
-	link: $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue500,
-	offsetBackground: A3($avh4$elm_color$Color$rgb, 1, 1, 1),
-	offsetText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950,
-	text: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedColor = F2(
-	function (keyAccess, theme) {
-		return keyAccess(
-			function () {
-				if (theme.$ === 'Dark') {
-					return $jxxcarlson$xmarkdown_compiler$Render$Settings$darkTheme;
-				} else {
-					return $jxxcarlson$xmarkdown_compiler$Render$Settings$lightTheme;
-				}
-			}());
-	});
-var $mdgriffith$elm_ui$Internal$Model$Rgba = F4(
-	function (a, b, c, d) {
-		return {$: 'Rgba', a: a, b: b, c: c, d: d};
-	});
-var $mdgriffith$elm_ui$Element$rgba = $mdgriffith$elm_ui$Internal$Model$Rgba;
-var $avh4$elm_color$Color$toRgba = function (_v0) {
-	var r = _v0.a;
-	var g = _v0.b;
-	var b = _v0.c;
-	var a = _v0.d;
-	return {alpha: a, blue: b, green: g, red: r};
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$toElementColor = function (color) {
-	var c = $avh4$elm_color$Color$toRgba(color);
-	return A4($mdgriffith$elm_ui$Element$rgba, c.red, c.green, c.blue, c.alpha);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor = F2(
-	function (keyAccess, theme) {
-		return $jxxcarlson$xmarkdown_compiler$Render$Settings$toElementColor(
-			A2($jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedColor, keyAccess, theme));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$referenceFontSize = 20;
-var $mdgriffith$elm_ui$Element$rgb = F3(
-	function (r, g, b) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, r, g, b, 1);
-	});
-var $elm$core$Maybe$map3 = F4(
-	function (func, ma, mb, mc) {
-		if (ma.$ === 'Nothing') {
-			return $elm$core$Maybe$Nothing;
-		} else {
-			var a = ma.a;
-			if (mb.$ === 'Nothing') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var b = mb.a;
-				if (mc.$ === 'Nothing') {
-					return $elm$core$Maybe$Nothing;
-				} else {
-					var c = mc.a;
-					return $elm$core$Maybe$Just(
-						A3(func, a, b, c));
-				}
-			}
-		}
-	});
-var $elm$core$Maybe$map4 = F5(
-	function (func, ma, mb, mc, md) {
-		if (ma.$ === 'Nothing') {
-			return $elm$core$Maybe$Nothing;
-		} else {
-			var a = ma.a;
-			if (mb.$ === 'Nothing') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var b = mb.a;
-				if (mc.$ === 'Nothing') {
-					return $elm$core$Maybe$Nothing;
-				} else {
-					var c = mc.a;
-					if (md.$ === 'Nothing') {
-						return $elm$core$Maybe$Nothing;
-					} else {
-						var d = md.a;
-						return $elm$core$Maybe$Just(
-							A4(func, a, b, c, d));
-					}
-				}
-			}
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$stringToColor = function (colorStr) {
-	return A2($elm$core$String$startsWith, 'rgba(', colorStr) ? function (parts) {
-		if ((((parts.b && parts.b.b) && parts.b.b.b) && parts.b.b.b.b) && (!parts.b.b.b.b.b)) {
-			var r = parts.a;
-			var _v1 = parts.b;
-			var g = _v1.a;
-			var _v2 = _v1.b;
-			var b = _v2.a;
-			var _v3 = _v2.b;
-			var a = _v3.a;
-			return A5(
-				$elm$core$Maybe$map4,
-				$mdgriffith$elm_ui$Element$rgba,
-				A2(
-					$elm$core$Maybe$map,
-					function (x) {
-						return x / 255;
-					},
-					$elm$core$String$toFloat(r)),
-				A2(
-					$elm$core$Maybe$map,
-					function (x) {
-						return x / 255;
-					},
-					$elm$core$String$toFloat(g)),
-				A2(
-					$elm$core$Maybe$map,
-					function (x) {
-						return x / 255;
-					},
-					$elm$core$String$toFloat(b)),
-				$elm$core$String$toFloat(a));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	}(
-		A2(
-			$elm$core$List$map,
-			$elm$core$String$trim,
-			A2(
-				$elm$core$String$split,
-				',',
-				A2(
-					$elm$core$String$dropRight,
-					1,
-					A2($elm$core$String$dropLeft, 5, colorStr))))) : (A2($elm$core$String$startsWith, 'rgb(', colorStr) ? function (parts) {
-		if (((parts.b && parts.b.b) && parts.b.b.b) && (!parts.b.b.b.b)) {
-			var r = parts.a;
-			var _v5 = parts.b;
-			var g = _v5.a;
-			var _v6 = _v5.b;
-			var b = _v6.a;
-			return A4(
-				$elm$core$Maybe$map3,
-				$mdgriffith$elm_ui$Element$rgb,
-				A2(
-					$elm$core$Maybe$map,
-					function (x) {
-						return x / 255;
-					},
-					$elm$core$String$toFloat(r)),
-				A2(
-					$elm$core$Maybe$map,
-					function (x) {
-						return x / 255;
-					},
-					$elm$core$String$toFloat(g)),
-				A2(
-					$elm$core$Maybe$map,
-					function (x) {
-						return x / 255;
-					},
-					$elm$core$String$toFloat(b)));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	}(
-		A2(
-			$elm$core$List$map,
-			$elm$core$String$trim,
-			A2(
-				$elm$core$String$split,
-				',',
-				A2(
-					$elm$core$String$dropRight,
-					1,
-					A2($elm$core$String$dropLeft, 4, colorStr))))) : $elm$core$Maybe$Nothing);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$makeSettings = function (params) {
-	var titleSize = $elm$core$Basics$round((params.fontSize * 32) / $jxxcarlson$xmarkdown_compiler$Render$Settings$referenceFontSize);
-	var highlightColor = A2(
-		$elm$core$Maybe$withDefault,
-		A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-			function ($) {
-				return $.highlight;
-			},
-			params.theme),
-		$jxxcarlson$xmarkdown_compiler$Render$Settings$stringToColor(params.highlightColor));
-	return {
-		backgroundColor: A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-			function ($) {
-				return $.background;
-			},
-			params.theme),
-		codeBackground: A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-			function ($) {
-				return $.codeBackground;
-			},
-			params.theme),
-		codeColor: A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-			function ($) {
-				return $.codeText;
-			},
-			params.theme),
-		data: params.data,
-		display: $jxxcarlson$xmarkdown_compiler$Render$Settings$DefaultDisplay,
-		fontSize: params.fontSize,
-		highlight: highlightColor,
-		interBlockSpacing: params.interBlockSpacing,
-		isStandaloneDocument: false,
-		leftIndent: 0,
-		leftIndentation: 18,
-		leftRightIndentation: 18,
-		linkColor: A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-			function ($) {
-				return $.link;
-			},
-			params.theme),
-		longEquationLimit: 1 * params.windowWidth,
-		maxHeadingFontSize: titleSize * 0.72,
-		paddingBottom: 0,
-		paddingTop: 0,
-		properties: A2(
-			$elm$core$Dict$singleton,
-			'number-to-level',
-			$elm$core$String$fromInt(params.numberToLevel)),
-		redColor: A3($mdgriffith$elm_ui$Element$rgb, 0.7, 0, 0),
-		selectedId: params.selectedId,
-		selectedSlug: params.selectedSlug,
-		showErrorMessages: false,
-		showTOC: true,
-		textColor: A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-			function ($) {
-				return $.text;
-			},
-			params.theme),
-		theme: params.theme,
-		titlePrefix: '',
-		titleSize: titleSize,
-		topMarginForChildren: 6,
-		wideLeftIndentation: 54,
-		width: $elm$core$Basics$round(params.scale * params.windowWidth),
-		windowWidthScale: 0.3
-	};
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$defaultRenderSettings = function (params) {
-	return $jxxcarlson$xmarkdown_compiler$Render$Settings$makeSettings(params);
-};
-var $mdgriffith$elm_ui$Internal$Model$Height = function (a) {
-	return {$: 'Height', a: a};
-};
-var $mdgriffith$elm_ui$Element$height = $mdgriffith$elm_ui$Internal$Model$Height;
-var $mdgriffith$elm_ui$Internal$Model$Describe = function (a) {
-	return {$: 'Describe', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$Paragraph = {$: 'Paragraph'};
-var $mdgriffith$elm_ui$Internal$Model$Unkeyed = function (a) {
-	return {$: 'Unkeyed', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$AsParagraph = {$: 'AsParagraph'};
-var $mdgriffith$elm_ui$Internal$Model$asParagraph = $mdgriffith$elm_ui$Internal$Model$AsParagraph;
-var $mdgriffith$elm_ui$Internal$Model$Generic = {$: 'Generic'};
-var $mdgriffith$elm_ui$Internal$Model$div = $mdgriffith$elm_ui$Internal$Model$Generic;
-var $mdgriffith$elm_ui$Internal$Model$NoNearbyChildren = {$: 'NoNearbyChildren'};
-var $mdgriffith$elm_ui$Internal$Style$classes = {above: 'a', active: 'atv', alignBottom: 'ab', alignCenterX: 'cx', alignCenterY: 'cy', alignContainerBottom: 'acb', alignContainerCenterX: 'accx', alignContainerCenterY: 'accy', alignContainerRight: 'acr', alignLeft: 'al', alignRight: 'ar', alignTop: 'at', alignedHorizontally: 'ah', alignedVertically: 'av', any: 's', behind: 'bh', below: 'b', bold: 'w7', borderDashed: 'bd', borderDotted: 'bdt', borderNone: 'bn', borderSolid: 'bs', capturePointerEvents: 'cpe', clip: 'cp', clipX: 'cpx', clipY: 'cpy', column: 'c', container: 'ctr', contentBottom: 'cb', contentCenterX: 'ccx', contentCenterY: 'ccy', contentLeft: 'cl', contentRight: 'cr', contentTop: 'ct', cursorPointer: 'cptr', cursorText: 'ctxt', focus: 'fcs', focusedWithin: 'focus-within', fullSize: 'fs', grid: 'g', hasBehind: 'hbh', heightContent: 'hc', heightExact: 'he', heightFill: 'hf', heightFillPortion: 'hfp', hover: 'hv', imageContainer: 'ic', inFront: 'fr', inputLabel: 'lbl', inputMultiline: 'iml', inputMultilineFiller: 'imlf', inputMultilineParent: 'imlp', inputMultilineWrapper: 'implw', inputText: 'it', italic: 'i', link: 'lnk', nearby: 'nb', noTextSelection: 'notxt', onLeft: 'ol', onRight: 'or', opaque: 'oq', overflowHidden: 'oh', page: 'pg', paragraph: 'p', passPointerEvents: 'ppe', root: 'ui', row: 'r', scrollbars: 'sb', scrollbarsX: 'sbx', scrollbarsY: 'sby', seButton: 'sbt', single: 'e', sizeByCapital: 'cap', spaceEvenly: 'sev', strike: 'sk', text: 't', textCenter: 'tc', textExtraBold: 'w8', textExtraLight: 'w2', textHeavy: 'w9', textJustify: 'tj', textJustifyAll: 'tja', textLeft: 'tl', textLight: 'w3', textMedium: 'w5', textNormalWeight: 'w4', textRight: 'tr', textSemiBold: 'w6', textThin: 'w1', textUnitalicized: 'tun', transition: 'ts', transparent: 'clr', underline: 'u', widthContent: 'wc', widthExact: 'we', widthFill: 'wf', widthFillPortion: 'wfp', wrapped: 'wrp'};
-var $mdgriffith$elm_ui$Internal$Model$columnClass = $mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.column);
-var $mdgriffith$elm_ui$Internal$Model$gridClass = $mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.grid);
-var $mdgriffith$elm_ui$Internal$Model$pageClass = $mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.page);
-var $mdgriffith$elm_ui$Internal$Model$paragraphClass = $mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.paragraph);
-var $mdgriffith$elm_ui$Internal$Model$rowClass = $mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.row);
-var $mdgriffith$elm_ui$Internal$Model$singleClass = $mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.single);
-var $mdgriffith$elm_ui$Internal$Model$contextClasses = function (context) {
-	switch (context.$) {
-		case 'AsRow':
-			return $mdgriffith$elm_ui$Internal$Model$rowClass;
-		case 'AsColumn':
-			return $mdgriffith$elm_ui$Internal$Model$columnClass;
-		case 'AsEl':
-			return $mdgriffith$elm_ui$Internal$Model$singleClass;
-		case 'AsGrid':
-			return $mdgriffith$elm_ui$Internal$Model$gridClass;
-		case 'AsParagraph':
-			return $mdgriffith$elm_ui$Internal$Model$paragraphClass;
-		default:
-			return $mdgriffith$elm_ui$Internal$Model$pageClass;
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$Keyed = function (a) {
-	return {$: 'Keyed', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$NoStyleSheet = {$: 'NoStyleSheet'};
-var $mdgriffith$elm_ui$Internal$Model$Styled = function (a) {
-	return {$: 'Styled', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$Unstyled = function (a) {
-	return {$: 'Unstyled', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$addChildren = F2(
-	function (existing, nearbyChildren) {
-		switch (nearbyChildren.$) {
-			case 'NoNearbyChildren':
-				return existing;
-			case 'ChildrenBehind':
-				var behind = nearbyChildren.a;
-				return _Utils_ap(behind, existing);
-			case 'ChildrenInFront':
-				var inFront = nearbyChildren.a;
-				return _Utils_ap(existing, inFront);
-			default:
-				var behind = nearbyChildren.a;
-				var inFront = nearbyChildren.b;
-				return _Utils_ap(
-					behind,
-					_Utils_ap(existing, inFront));
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$addKeyedChildren = F3(
-	function (key, existing, nearbyChildren) {
-		switch (nearbyChildren.$) {
-			case 'NoNearbyChildren':
-				return existing;
-			case 'ChildrenBehind':
-				var behind = nearbyChildren.a;
-				return _Utils_ap(
-					A2(
-						$elm$core$List$map,
-						function (x) {
-							return _Utils_Tuple2(key, x);
-						},
-						behind),
-					existing);
-			case 'ChildrenInFront':
-				var inFront = nearbyChildren.a;
-				return _Utils_ap(
-					existing,
-					A2(
-						$elm$core$List$map,
-						function (x) {
-							return _Utils_Tuple2(key, x);
-						},
-						inFront));
-			default:
-				var behind = nearbyChildren.a;
-				var inFront = nearbyChildren.b;
-				return _Utils_ap(
-					A2(
-						$elm$core$List$map,
-						function (x) {
-							return _Utils_Tuple2(key, x);
-						},
-						behind),
-					_Utils_ap(
-						existing,
-						A2(
-							$elm$core$List$map,
-							function (x) {
-								return _Utils_Tuple2(key, x);
-							},
-							inFront)));
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$AsEl = {$: 'AsEl'};
-var $mdgriffith$elm_ui$Internal$Model$asEl = $mdgriffith$elm_ui$Internal$Model$AsEl;
-var $mdgriffith$elm_ui$Internal$Flag$alignBottom = $mdgriffith$elm_ui$Internal$Flag$flag(41);
-var $mdgriffith$elm_ui$Internal$Flag$alignRight = $mdgriffith$elm_ui$Internal$Flag$flag(40);
-var $mdgriffith$elm_ui$Internal$Flag$centerX = $mdgriffith$elm_ui$Internal$Flag$flag(42);
-var $mdgriffith$elm_ui$Internal$Flag$centerY = $mdgriffith$elm_ui$Internal$Flag$flag(43);
-var $elm$html$Html$div = _VirtualDom_node('div');
-var $mdgriffith$elm_ui$Internal$Model$lengthClassName = function (x) {
-	switch (x.$) {
-		case 'Px':
-			var px = x.a;
-			return $elm$core$String$fromInt(px) + 'px';
-		case 'Content':
-			return 'auto';
-		case 'Fill':
-			var i = x.a;
-			return $elm$core$String$fromInt(i) + 'fr';
-		case 'Min':
-			var min = x.a;
-			var len = x.b;
-			return 'min' + ($elm$core$String$fromInt(min) + $mdgriffith$elm_ui$Internal$Model$lengthClassName(len));
-		default:
-			var max = x.a;
-			var len = x.b;
-			return 'max' + ($elm$core$String$fromInt(max) + $mdgriffith$elm_ui$Internal$Model$lengthClassName(len));
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$transformClass = function (transform) {
-	switch (transform.$) {
-		case 'Untransformed':
-			return $elm$core$Maybe$Nothing;
-		case 'Moved':
-			var _v1 = transform.a;
-			var x = _v1.a;
-			var y = _v1.b;
-			var z = _v1.c;
-			return $elm$core$Maybe$Just(
-				'mv-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(x) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(y) + ('-' + $mdgriffith$elm_ui$Internal$Model$floatClass(z))))));
-		default:
-			var _v2 = transform.a;
-			var tx = _v2.a;
-			var ty = _v2.b;
-			var tz = _v2.c;
-			var _v3 = transform.b;
-			var sx = _v3.a;
-			var sy = _v3.b;
-			var sz = _v3.c;
-			var _v4 = transform.c;
-			var ox = _v4.a;
-			var oy = _v4.b;
-			var oz = _v4.c;
-			var angle = transform.d;
-			return $elm$core$Maybe$Just(
-				'tfrm-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(tx) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(ty) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(tz) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(sx) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(sy) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(sz) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(ox) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(oy) + ('-' + ($mdgriffith$elm_ui$Internal$Model$floatClass(oz) + ('-' + $mdgriffith$elm_ui$Internal$Model$floatClass(angle))))))))))))))))))));
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$getStyleName = function (style) {
-	switch (style.$) {
-		case 'Shadows':
-			var name = style.a;
-			return name;
-		case 'Transparency':
-			var name = style.a;
-			var o = style.b;
-			return name;
-		case 'Style':
-			var _class = style.a;
-			return _class;
-		case 'FontFamily':
-			var name = style.a;
-			return name;
-		case 'FontSize':
-			var i = style.a;
-			return 'font-size-' + $elm$core$String$fromInt(i);
-		case 'Single':
-			var _class = style.a;
-			return _class;
-		case 'Colored':
-			var _class = style.a;
-			return _class;
-		case 'SpacingStyle':
-			var cls = style.a;
-			var x = style.b;
-			var y = style.c;
-			return cls;
-		case 'PaddingStyle':
-			var cls = style.a;
-			var top = style.b;
-			var right = style.c;
-			var bottom = style.d;
-			var left = style.e;
-			return cls;
-		case 'BorderWidth':
-			var cls = style.a;
-			var top = style.b;
-			var right = style.c;
-			var bottom = style.d;
-			var left = style.e;
-			return cls;
-		case 'GridTemplateStyle':
-			var template = style.a;
-			return 'grid-rows-' + (A2(
-				$elm$core$String$join,
-				'-',
-				A2($elm$core$List$map, $mdgriffith$elm_ui$Internal$Model$lengthClassName, template.rows)) + ('-cols-' + (A2(
-				$elm$core$String$join,
-				'-',
-				A2($elm$core$List$map, $mdgriffith$elm_ui$Internal$Model$lengthClassName, template.columns)) + ('-space-x-' + ($mdgriffith$elm_ui$Internal$Model$lengthClassName(template.spacing.a) + ('-space-y-' + $mdgriffith$elm_ui$Internal$Model$lengthClassName(template.spacing.b)))))));
-		case 'GridPosition':
-			var pos = style.a;
-			return 'gp grid-pos-' + ($elm$core$String$fromInt(pos.row) + ('-' + ($elm$core$String$fromInt(pos.col) + ('-' + ($elm$core$String$fromInt(pos.width) + ('-' + $elm$core$String$fromInt(pos.height)))))));
-		case 'PseudoSelector':
-			var selector = style.a;
-			var subStyle = style.b;
-			var name = function () {
-				switch (selector.$) {
-					case 'Focus':
-						return 'fs';
-					case 'Hover':
-						return 'hv';
-					default:
-						return 'act';
-				}
-			}();
-			return A2(
-				$elm$core$String$join,
-				' ',
-				A2(
-					$elm$core$List$map,
-					function (sty) {
-						var _v1 = $mdgriffith$elm_ui$Internal$Model$getStyleName(sty);
-						if (_v1 === '') {
-							return '';
-						} else {
-							var styleName = _v1;
-							return styleName + ('-' + name);
-						}
-					},
-					subStyle));
-		default:
-			var x = style.a;
-			return A2(
-				$elm$core$Maybe$withDefault,
-				'',
-				$mdgriffith$elm_ui$Internal$Model$transformClass(x));
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$reduceStyles = F2(
-	function (style, nevermind) {
-		var cache = nevermind.a;
-		var existing = nevermind.b;
-		var styleName = $mdgriffith$elm_ui$Internal$Model$getStyleName(style);
-		return A2($elm$core$Set$member, styleName, cache) ? nevermind : _Utils_Tuple2(
-			A2($elm$core$Set$insert, styleName, cache),
-			A2($elm$core$List$cons, style, existing));
-	});
-var $mdgriffith$elm_ui$Internal$Model$Property = F2(
-	function (a, b) {
-		return {$: 'Property', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Model$Style = F2(
-	function (a, b) {
-		return {$: 'Style', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Style$dot = function (c) {
-	return '.' + c;
-};
-var $elm$core$String$fromFloat = _String_fromNumber;
-var $mdgriffith$elm_ui$Internal$Model$formatColor = function (_v0) {
-	var red = _v0.a;
-	var green = _v0.b;
-	var blue = _v0.c;
-	var alpha = _v0.d;
-	return 'rgba(' + ($elm$core$String$fromInt(
-		$elm$core$Basics$round(red * 255)) + ((',' + $elm$core$String$fromInt(
-		$elm$core$Basics$round(green * 255))) + ((',' + $elm$core$String$fromInt(
-		$elm$core$Basics$round(blue * 255))) + (',' + ($elm$core$String$fromFloat(alpha) + ')')))));
-};
-var $mdgriffith$elm_ui$Internal$Model$formatBoxShadow = function (shadow) {
-	return A2(
-		$elm$core$String$join,
-		' ',
-		A2(
-			$elm$core$List$filterMap,
-			$elm$core$Basics$identity,
-			_List_fromArray(
-				[
-					shadow.inset ? $elm$core$Maybe$Just('inset') : $elm$core$Maybe$Nothing,
-					$elm$core$Maybe$Just(
-					$elm$core$String$fromFloat(shadow.offset.a) + 'px'),
-					$elm$core$Maybe$Just(
-					$elm$core$String$fromFloat(shadow.offset.b) + 'px'),
-					$elm$core$Maybe$Just(
-					$elm$core$String$fromFloat(shadow.blur) + 'px'),
-					$elm$core$Maybe$Just(
-					$elm$core$String$fromFloat(shadow.size) + 'px'),
-					$elm$core$Maybe$Just(
-					$mdgriffith$elm_ui$Internal$Model$formatColor(shadow.color))
-				])));
-};
-var $elm$core$Tuple$mapFirst = F2(
-	function (func, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			func(x),
-			y);
-	});
-var $elm$core$Tuple$mapSecond = F2(
-	function (func, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			x,
-			func(y));
-	});
-var $mdgriffith$elm_ui$Internal$Model$renderFocusStyle = function (focus) {
-	return _List_fromArray(
-		[
-			A2(
-			$mdgriffith$elm_ui$Internal$Model$Style,
-			$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.focusedWithin) + ':focus-within',
-			A2(
-				$elm$core$List$filterMap,
-				$elm$core$Basics$identity,
-				_List_fromArray(
-					[
-						A2(
-						$elm$core$Maybe$map,
-						function (color) {
-							return A2(
-								$mdgriffith$elm_ui$Internal$Model$Property,
-								'border-color',
-								$mdgriffith$elm_ui$Internal$Model$formatColor(color));
-						},
-						focus.borderColor),
-						A2(
-						$elm$core$Maybe$map,
-						function (color) {
-							return A2(
-								$mdgriffith$elm_ui$Internal$Model$Property,
-								'background-color',
-								$mdgriffith$elm_ui$Internal$Model$formatColor(color));
-						},
-						focus.backgroundColor),
-						A2(
-						$elm$core$Maybe$map,
-						function (shadow) {
-							return A2(
-								$mdgriffith$elm_ui$Internal$Model$Property,
-								'box-shadow',
-								$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(
-									{
-										blur: shadow.blur,
-										color: shadow.color,
-										inset: false,
-										offset: A2(
-											$elm$core$Tuple$mapSecond,
-											$elm$core$Basics$toFloat,
-											A2($elm$core$Tuple$mapFirst, $elm$core$Basics$toFloat, shadow.offset)),
-										size: shadow.size
-									}));
-						},
-						focus.shadow),
-						$elm$core$Maybe$Just(
-						A2($mdgriffith$elm_ui$Internal$Model$Property, 'outline', 'none'))
-					]))),
-			A2(
-			$mdgriffith$elm_ui$Internal$Model$Style,
-			($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + ':focus .focusable, ') + (($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + '.focusable:focus, ') + ('.ui-slide-bar:focus + ' + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + ' .focusable-thumb'))),
-			A2(
-				$elm$core$List$filterMap,
-				$elm$core$Basics$identity,
-				_List_fromArray(
-					[
-						A2(
-						$elm$core$Maybe$map,
-						function (color) {
-							return A2(
-								$mdgriffith$elm_ui$Internal$Model$Property,
-								'border-color',
-								$mdgriffith$elm_ui$Internal$Model$formatColor(color));
-						},
-						focus.borderColor),
-						A2(
-						$elm$core$Maybe$map,
-						function (color) {
-							return A2(
-								$mdgriffith$elm_ui$Internal$Model$Property,
-								'background-color',
-								$mdgriffith$elm_ui$Internal$Model$formatColor(color));
-						},
-						focus.backgroundColor),
-						A2(
-						$elm$core$Maybe$map,
-						function (shadow) {
-							return A2(
-								$mdgriffith$elm_ui$Internal$Model$Property,
-								'box-shadow',
-								$mdgriffith$elm_ui$Internal$Model$formatBoxShadow(
-									{
-										blur: shadow.blur,
-										color: shadow.color,
-										inset: false,
-										offset: A2(
-											$elm$core$Tuple$mapSecond,
-											$elm$core$Basics$toFloat,
-											A2($elm$core$Tuple$mapFirst, $elm$core$Basics$toFloat, shadow.offset)),
-										size: shadow.size
-									}));
-						},
-						focus.shadow),
-						$elm$core$Maybe$Just(
-						A2($mdgriffith$elm_ui$Internal$Model$Property, 'outline', 'none'))
-					])))
-		]);
-};
-var $elm$virtual_dom$VirtualDom$node = function (tag) {
-	return _VirtualDom_node(
-		_VirtualDom_noScript(tag));
-};
-var $elm$virtual_dom$VirtualDom$property = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_property,
-			_VirtualDom_noInnerHtmlOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlJson(value));
-	});
-var $mdgriffith$elm_ui$Internal$Style$AllChildren = F2(
-	function (a, b) {
-		return {$: 'AllChildren', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Style$Batch = function (a) {
-	return {$: 'Batch', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Style$Child = F2(
-	function (a, b) {
-		return {$: 'Child', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Style$Class = F2(
-	function (a, b) {
-		return {$: 'Class', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Style$Descriptor = F2(
-	function (a, b) {
-		return {$: 'Descriptor', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Style$Left = {$: 'Left'};
-var $mdgriffith$elm_ui$Internal$Style$Prop = F2(
-	function (a, b) {
-		return {$: 'Prop', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Style$Right = {$: 'Right'};
-var $mdgriffith$elm_ui$Internal$Style$Self = function (a) {
-	return {$: 'Self', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Style$Supports = F2(
-	function (a, b) {
-		return {$: 'Supports', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Style$Content = function (a) {
-	return {$: 'Content', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Style$Bottom = {$: 'Bottom'};
-var $mdgriffith$elm_ui$Internal$Style$CenterX = {$: 'CenterX'};
-var $mdgriffith$elm_ui$Internal$Style$CenterY = {$: 'CenterY'};
-var $mdgriffith$elm_ui$Internal$Style$Top = {$: 'Top'};
-var $mdgriffith$elm_ui$Internal$Style$alignments = _List_fromArray(
-	[$mdgriffith$elm_ui$Internal$Style$Top, $mdgriffith$elm_ui$Internal$Style$Bottom, $mdgriffith$elm_ui$Internal$Style$Right, $mdgriffith$elm_ui$Internal$Style$Left, $mdgriffith$elm_ui$Internal$Style$CenterX, $mdgriffith$elm_ui$Internal$Style$CenterY]);
-var $mdgriffith$elm_ui$Internal$Style$contentName = function (desc) {
-	switch (desc.a.$) {
-		case 'Top':
-			var _v1 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.contentTop);
-		case 'Bottom':
-			var _v2 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.contentBottom);
-		case 'Right':
-			var _v3 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.contentRight);
-		case 'Left':
-			var _v4 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.contentLeft);
-		case 'CenterX':
-			var _v5 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX);
-		default:
-			var _v6 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY);
-	}
-};
-var $mdgriffith$elm_ui$Internal$Style$selfName = function (desc) {
-	switch (desc.a.$) {
-		case 'Top':
-			var _v1 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignTop);
-		case 'Bottom':
-			var _v2 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignBottom);
-		case 'Right':
-			var _v3 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignRight);
-		case 'Left':
-			var _v4 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignLeft);
-		case 'CenterX':
-			var _v5 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignCenterX);
-		default:
-			var _v6 = desc.a;
-			return $mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignCenterY);
-	}
-};
-var $mdgriffith$elm_ui$Internal$Style$describeAlignment = function (values) {
-	var createDescription = function (alignment) {
-		var _v0 = values(alignment);
-		var content = _v0.a;
-		var indiv = _v0.b;
-		return _List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$contentName(
-					$mdgriffith$elm_ui$Internal$Style$Content(alignment)),
-				content),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Child,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$selfName(
-							$mdgriffith$elm_ui$Internal$Style$Self(alignment)),
-						indiv)
-					]))
-			]);
-	};
-	return $mdgriffith$elm_ui$Internal$Style$Batch(
-		A2($elm$core$List$concatMap, createDescription, $mdgriffith$elm_ui$Internal$Style$alignments));
-};
-var $mdgriffith$elm_ui$Internal$Style$elDescription = _List_fromArray(
-	[
-		A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex'),
-		A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-direction', 'column'),
-		A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'pre'),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Descriptor,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.hasBehind),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '0'),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Child,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.behind),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '-1')
-					]))
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Descriptor,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.seButton),
-		_List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Child,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.text),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '0')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthFill),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'auto !important')
-							]))
-					]))
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Child,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightContent),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', 'auto')
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Child,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '100000')
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Child,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthFill),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%')
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Child,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthFillPortion),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%')
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Child,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthContent),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'flex-start')
-			])),
-		$mdgriffith$elm_ui$Internal$Style$describeAlignment(
-		function (alignment) {
-			switch (alignment.$) {
-				case 'Top':
-					return _Utils_Tuple2(
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'flex-start')
-							]),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', 'auto !important'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', '0 !important')
-							]));
-				case 'Bottom':
-					return _Utils_Tuple2(
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'flex-end')
-							]),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', 'auto !important'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', '0 !important')
-							]));
-				case 'Right':
-					return _Utils_Tuple2(
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'flex-end')
-							]),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'flex-end')
-							]));
-				case 'Left':
-					return _Utils_Tuple2(
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'flex-start')
-							]),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'flex-start')
-							]));
-				case 'CenterX':
-					return _Utils_Tuple2(
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'center')
-							]),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'center')
-							]));
-				default:
-					return _Utils_Tuple2(
-						_List_fromArray(
-							[
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', 'auto'),
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', 'auto')
-									]))
-							]),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', 'auto !important'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', 'auto !important')
-							]));
-			}
-		})
-	]);
-var $mdgriffith$elm_ui$Internal$Style$gridAlignments = function (values) {
-	var createDescription = function (alignment) {
-		return _List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Child,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$selfName(
-							$mdgriffith$elm_ui$Internal$Style$Self(alignment)),
-						values(alignment))
-					]))
-			]);
-	};
-	return $mdgriffith$elm_ui$Internal$Style$Batch(
-		A2($elm$core$List$concatMap, createDescription, $mdgriffith$elm_ui$Internal$Style$alignments));
-};
-var $mdgriffith$elm_ui$Internal$Style$Above = {$: 'Above'};
-var $mdgriffith$elm_ui$Internal$Style$Behind = {$: 'Behind'};
-var $mdgriffith$elm_ui$Internal$Style$Below = {$: 'Below'};
-var $mdgriffith$elm_ui$Internal$Style$OnLeft = {$: 'OnLeft'};
-var $mdgriffith$elm_ui$Internal$Style$OnRight = {$: 'OnRight'};
-var $mdgriffith$elm_ui$Internal$Style$Within = {$: 'Within'};
-var $mdgriffith$elm_ui$Internal$Style$locations = function () {
-	var loc = $mdgriffith$elm_ui$Internal$Style$Above;
-	var _v0 = function () {
-		switch (loc.$) {
-			case 'Above':
-				return _Utils_Tuple0;
-			case 'Below':
-				return _Utils_Tuple0;
-			case 'OnRight':
-				return _Utils_Tuple0;
-			case 'OnLeft':
-				return _Utils_Tuple0;
-			case 'Within':
-				return _Utils_Tuple0;
-			default:
-				return _Utils_Tuple0;
-		}
-	}();
-	return _List_fromArray(
-		[$mdgriffith$elm_ui$Internal$Style$Above, $mdgriffith$elm_ui$Internal$Style$Below, $mdgriffith$elm_ui$Internal$Style$OnRight, $mdgriffith$elm_ui$Internal$Style$OnLeft, $mdgriffith$elm_ui$Internal$Style$Within, $mdgriffith$elm_ui$Internal$Style$Behind]);
-}();
-var $mdgriffith$elm_ui$Internal$Style$baseSheet = _List_fromArray(
-	[
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Class,
-		'html,body',
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'padding', '0'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0')
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Class,
-		_Utils_ap(
-			$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-			_Utils_ap(
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.single),
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.imageContainer))),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'block'),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						'img',
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'max-height', '100%'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'object-fit', 'cover')
-							]))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthFill),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						'img',
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'max-width', '100%'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'object-fit', 'cover')
-							]))
-					]))
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Class,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + ':focus',
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'outline', 'none')
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Class,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.root),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', 'auto'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'min-height', '100%'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '0'),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				_Utils_ap(
-					$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-					$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill)),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%')
-							]))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Child,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inFront),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.nearby),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'fixed'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '20')
-							]))
-					]))
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Class,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.nearby),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'relative'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'border', 'none'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-direction', 'row'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', 'auto'),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.single),
-				$mdgriffith$elm_ui$Internal$Style$elDescription),
-				$mdgriffith$elm_ui$Internal$Style$Batch(
-				function (fn) {
-					return A2($elm$core$List$map, fn, $mdgriffith$elm_ui$Internal$Style$locations);
-				}(
-					function (loc) {
-						switch (loc.$) {
-							case 'Above':
-								return A2(
-									$mdgriffith$elm_ui$Internal$Style$Descriptor,
-									$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.above),
-									_List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'absolute'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'bottom', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'left', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '20'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important'),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill),
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', 'auto')
-												])),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthFill),
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%')
-												])),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'none'),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											'*',
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'auto')
-												]))
-										]));
-							case 'Below':
-								return A2(
-									$mdgriffith$elm_ui$Internal$Style$Descriptor,
-									$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.below),
-									_List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'absolute'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'bottom', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'left', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '20'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'none'),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											'*',
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'auto')
-												])),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill),
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', 'auto')
-												]))
-										]));
-							case 'OnRight':
-								return A2(
-									$mdgriffith$elm_ui$Internal$Style$Descriptor,
-									$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.onRight),
-									_List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'absolute'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'left', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'top', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '20'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'none'),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											'*',
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'auto')
-												]))
-										]));
-							case 'OnLeft':
-								return A2(
-									$mdgriffith$elm_ui$Internal$Style$Descriptor,
-									$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.onLeft),
-									_List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'absolute'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'right', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'top', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '20'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'none'),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											'*',
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'auto')
-												]))
-										]));
-							case 'Within':
-								return A2(
-									$mdgriffith$elm_ui$Internal$Style$Descriptor,
-									$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inFront),
-									_List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'absolute'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'left', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'top', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'none'),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											'*',
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'auto')
-												]))
-										]));
-							default:
-								return A2(
-									$mdgriffith$elm_ui$Internal$Style$Descriptor,
-									$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.behind),
-									_List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'absolute'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'left', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'top', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '0'),
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'none'),
-											A2(
-											$mdgriffith$elm_ui$Internal$Style$Child,
-											'*',
-											_List_fromArray(
-												[
-													A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'auto')
-												]))
-										]));
-						}
-					}))
-			])),
-		A2(
-		$mdgriffith$elm_ui$Internal$Style$Class,
-		$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-		_List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'relative'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'border', 'none'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-shrink', '0'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-direction', 'row'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', 'auto'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'resize', 'none'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-feature-settings', 'inherit'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'box-sizing', 'border-box'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'padding', '0'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'border-width', '0'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'border-style', 'solid'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-size', 'inherit'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'color', 'inherit'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-family', 'inherit'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'line-height', '1'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', 'inherit'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-decoration', 'none'),
-				A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-style', 'inherit'),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.wrapped),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-wrap', 'wrap')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.noTextSelection),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, '-moz-user-select', 'none'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, '-webkit-user-select', 'none'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, '-ms-user-select', 'none'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'user-select', 'none')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.cursorPointer),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'cursor', 'pointer')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.cursorText),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'cursor', 'text')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.passPointerEvents),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'none !important')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.capturePointerEvents),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'auto !important')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.transparent),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'opacity', '0')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.opaque),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'opacity', '1')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot(
-					_Utils_ap($mdgriffith$elm_ui$Internal$Style$classes.hover, $mdgriffith$elm_ui$Internal$Style$classes.transparent)) + ':hover',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'opacity', '0')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot(
-					_Utils_ap($mdgriffith$elm_ui$Internal$Style$classes.hover, $mdgriffith$elm_ui$Internal$Style$classes.opaque)) + ':hover',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'opacity', '1')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot(
-					_Utils_ap($mdgriffith$elm_ui$Internal$Style$classes.focus, $mdgriffith$elm_ui$Internal$Style$classes.transparent)) + ':focus',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'opacity', '0')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot(
-					_Utils_ap($mdgriffith$elm_ui$Internal$Style$classes.focus, $mdgriffith$elm_ui$Internal$Style$classes.opaque)) + ':focus',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'opacity', '1')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot(
-					_Utils_ap($mdgriffith$elm_ui$Internal$Style$classes.active, $mdgriffith$elm_ui$Internal$Style$classes.transparent)) + ':active',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'opacity', '0')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot(
-					_Utils_ap($mdgriffith$elm_ui$Internal$Style$classes.active, $mdgriffith$elm_ui$Internal$Style$classes.opaque)) + ':active',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'opacity', '1')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.transition),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Prop,
-						'transition',
-						A2(
-							$elm$core$String$join,
-							', ',
-							A2(
-								$elm$core$List$map,
-								function (x) {
-									return x + ' 160ms';
-								},
-								_List_fromArray(
-									['transform', 'opacity', 'filter', 'background-color', 'color', 'font-size']))))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.scrollbars),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'overflow', 'auto'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-shrink', '1')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.scrollbarsX),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'overflow-x', 'auto'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.row),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-shrink', '1')
-							]))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.scrollbarsY),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'overflow-y', 'auto'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.column),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-shrink', '1')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.single),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-shrink', '1')
-							]))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.clip),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'overflow', 'hidden')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.clipX),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'overflow-x', 'hidden')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.clipY),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'overflow-y', 'hidden')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthContent),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', 'auto')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.borderNone),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'border-width', '0')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.borderDashed),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'border-style', 'dashed')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.borderDotted),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'border-style', 'dotted')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.borderSolid),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'border-style', 'solid')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.text),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'pre'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline-block')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inputText),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'line-height', '1.05'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'background', 'transparent'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-align', 'inherit')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.single),
-				$mdgriffith$elm_ui$Internal$Style$elDescription),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.row),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-direction', 'row'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', '0%'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthExact),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', 'auto')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.link),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', 'auto')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'stretch !important')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFillPortion),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'stretch !important')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthFill),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '100000')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.container),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '0'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', 'auto'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'stretch')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						'u:first-of-type.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerRight,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '1')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						's:first-of-type.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterX,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '1'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignCenterX),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-left', 'auto !important')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						's:last-of-type.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterX,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '1'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignCenterX),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-right', 'auto !important')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						's:only-of-type.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterX,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '1'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignCenterY),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', 'auto !important'),
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', 'auto !important')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						's:last-of-type.' + ($mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterX + ' ~ u'),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '0')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						'u:first-of-type.' + ($mdgriffith$elm_ui$Internal$Style$classes.alignContainerRight + (' ~ s.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterX)),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '0')
-							])),
-						$mdgriffith$elm_ui$Internal$Style$describeAlignment(
-						function (alignment) {
-							switch (alignment.$) {
-								case 'Top':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'flex-start')
-											]),
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'flex-start')
-											]));
-								case 'Bottom':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'flex-end')
-											]),
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'flex-end')
-											]));
-								case 'Right':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'flex-end')
-											]),
-										_List_Nil);
-								case 'Left':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'flex-start')
-											]),
-										_List_Nil);
-								case 'CenterX':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'center')
-											]),
-										_List_Nil);
-								default:
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'center')
-											]),
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'center')
-											]));
-							}
-						}),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.spaceEvenly),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'space-between')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inputLabel),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'baseline')
-							]))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.column),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-direction', 'column'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', '0px'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'min-height', 'min-content'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightExact),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', 'auto')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.heightFill),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '100000')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthFill),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthFillPortion),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthContent),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'flex-start')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						'u:first-of-type.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerBottom,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '1')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						's:first-of-type.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterY,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '1'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignCenterY),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', 'auto !important'),
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', '0 !important')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						's:last-of-type.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterY,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '1'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignCenterY),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', 'auto !important'),
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', '0 !important')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						's:only-of-type.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterY,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '1'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.alignCenterY),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', 'auto !important'),
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', 'auto !important')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						's:last-of-type.' + ($mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterY + ' ~ u'),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '0')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						'u:first-of-type.' + ($mdgriffith$elm_ui$Internal$Style$classes.alignContainerBottom + (' ~ s.' + $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterY)),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '0')
-							])),
-						$mdgriffith$elm_ui$Internal$Style$describeAlignment(
-						function (alignment) {
-							switch (alignment.$) {
-								case 'Top':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'flex-start')
-											]),
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-bottom', 'auto')
-											]));
-								case 'Bottom':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'flex-end')
-											]),
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin-top', 'auto')
-											]));
-								case 'Right':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'flex-end')
-											]),
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'flex-end')
-											]));
-								case 'Left':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'flex-start')
-											]),
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'flex-start')
-											]));
-								case 'CenterX':
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'center')
-											]),
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'center')
-											]));
-								default:
-									return _Utils_Tuple2(
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'center')
-											]),
-										_List_Nil);
-							}
-						}),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.container),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-grow', '0'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', 'auto'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-self', 'stretch !important')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.spaceEvenly),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'space-between')
-							]))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.grid),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', '-ms-grid'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						'.gp',
-						_List_fromArray(
-							[
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Supports,
-						_Utils_Tuple2('display', 'grid'),
-						_List_fromArray(
-							[
-								_Utils_Tuple2('display', 'grid')
-							])),
-						$mdgriffith$elm_ui$Internal$Style$gridAlignments(
-						function (alignment) {
-							switch (alignment.$) {
-								case 'Top':
-									return _List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'flex-start')
-										]);
-								case 'Bottom':
-									return _List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'flex-end')
-										]);
-								case 'Right':
-									return _List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'flex-end')
-										]);
-								case 'Left':
-									return _List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'flex-start')
-										]);
-								case 'CenterX':
-									return _List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'align-items', 'center')
-										]);
-								default:
-									return _List_fromArray(
-										[
-											A2($mdgriffith$elm_ui$Internal$Style$Prop, 'justify-content', 'center')
-										]);
-							}
-						})
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.page),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'block'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any + ':first-child'),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot(
-							$mdgriffith$elm_ui$Internal$Style$classes.any + ($mdgriffith$elm_ui$Internal$Style$selfName(
-								$mdgriffith$elm_ui$Internal$Style$Self($mdgriffith$elm_ui$Internal$Style$Left)) + (':first-child + .' + $mdgriffith$elm_ui$Internal$Style$classes.any))),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot(
-							$mdgriffith$elm_ui$Internal$Style$classes.any + ($mdgriffith$elm_ui$Internal$Style$selfName(
-								$mdgriffith$elm_ui$Internal$Style$Self($mdgriffith$elm_ui$Internal$Style$Right)) + (':first-child + .' + $mdgriffith$elm_ui$Internal$Style$classes.any))),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'margin', '0 !important')
-							])),
-						$mdgriffith$elm_ui$Internal$Style$describeAlignment(
-						function (alignment) {
-							switch (alignment.$) {
-								case 'Top':
-									return _Utils_Tuple2(_List_Nil, _List_Nil);
-								case 'Bottom':
-									return _Utils_Tuple2(_List_Nil, _List_Nil);
-								case 'Right':
-									return _Utils_Tuple2(
-										_List_Nil,
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'float', 'right'),
-												A2(
-												$mdgriffith$elm_ui$Internal$Style$Descriptor,
-												'::after',
-												_List_fromArray(
-													[
-														A2($mdgriffith$elm_ui$Internal$Style$Prop, 'content', '\"\"'),
-														A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'table'),
-														A2($mdgriffith$elm_ui$Internal$Style$Prop, 'clear', 'both')
-													]))
-											]));
-								case 'Left':
-									return _Utils_Tuple2(
-										_List_Nil,
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'float', 'left'),
-												A2(
-												$mdgriffith$elm_ui$Internal$Style$Descriptor,
-												'::after',
-												_List_fromArray(
-													[
-														A2($mdgriffith$elm_ui$Internal$Style$Prop, 'content', '\"\"'),
-														A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'table'),
-														A2($mdgriffith$elm_ui$Internal$Style$Prop, 'clear', 'both')
-													]))
-											]));
-								case 'CenterX':
-									return _Utils_Tuple2(_List_Nil, _List_Nil);
-								default:
-									return _Utils_Tuple2(_List_Nil, _List_Nil);
-							}
-						})
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inputMultiline),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'pre-wrap !important'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'background-color', 'transparent')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inputMultilineWrapper),
-				_List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.single),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'flex-basis', 'auto')
-							]))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inputMultilineParent),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'pre-wrap !important'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'cursor', 'text'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inputMultilineFiller),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'pre-wrap !important'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'color', 'transparent')
-							]))
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.paragraph),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'block'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'normal'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'overflow-wrap', 'break-word'),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Descriptor,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.hasBehind),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '0'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.behind),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'z-index', '-1')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$AllChildren,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.text),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'normal')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$AllChildren,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.paragraph),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								'::after',
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'content', 'none')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								'::before',
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'content', 'none')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$AllChildren,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.single),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline'),
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'normal'),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.widthExact),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline-block')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.inFront),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.behind),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.above),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.below),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.onRight),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Descriptor,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.onLeft),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'flex')
-									])),
-								A2(
-								$mdgriffith$elm_ui$Internal$Style$Child,
-								$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.text),
-								_List_fromArray(
-									[
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline'),
-										A2($mdgriffith$elm_ui$Internal$Style$Prop, 'white-space', 'normal')
-									]))
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.row),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.column),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline-flex')
-							])),
-						A2(
-						$mdgriffith$elm_ui$Internal$Style$Child,
-						$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.grid),
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'inline-grid')
-							])),
-						$mdgriffith$elm_ui$Internal$Style$describeAlignment(
-						function (alignment) {
-							switch (alignment.$) {
-								case 'Top':
-									return _Utils_Tuple2(_List_Nil, _List_Nil);
-								case 'Bottom':
-									return _Utils_Tuple2(_List_Nil, _List_Nil);
-								case 'Right':
-									return _Utils_Tuple2(
-										_List_Nil,
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'float', 'right')
-											]));
-								case 'Left':
-									return _Utils_Tuple2(
-										_List_Nil,
-										_List_fromArray(
-											[
-												A2($mdgriffith$elm_ui$Internal$Style$Prop, 'float', 'left')
-											]));
-								case 'CenterX':
-									return _Utils_Tuple2(_List_Nil, _List_Nil);
-								default:
-									return _Utils_Tuple2(_List_Nil, _List_Nil);
-							}
-						})
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				'.hidden',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'display', 'none')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textThin),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '100')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textExtraLight),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '200')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textLight),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '300')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textNormalWeight),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '400')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textMedium),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '500')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textSemiBold),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '600')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.bold),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '700')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textExtraBold),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '800')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textHeavy),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-weight', '900')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.italic),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-style', 'italic')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.strike),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-decoration', 'line-through')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.underline),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-decoration', 'underline'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-decoration-skip-ink', 'auto'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-decoration-skip', 'ink')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				_Utils_ap(
-					$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.underline),
-					$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.strike)),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-decoration', 'line-through underline'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-decoration-skip-ink', 'auto'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-decoration-skip', 'ink')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textUnitalicized),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-style', 'normal')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textJustify),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-align', 'justify')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textJustifyAll),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-align', 'justify-all')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textCenter),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-align', 'center')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textRight),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-align', 'right')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				$mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.textLeft),
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'text-align', 'left')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Descriptor,
-				'.modal',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'position', 'fixed'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'left', '0'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'top', '0'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'width', '100%'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'height', '100%'),
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'pointer-events', 'none')
-					]))
-			]))
-	]);
-var $mdgriffith$elm_ui$Internal$Style$fontVariant = function (_var) {
-	return _List_fromArray(
-		[
-			A2(
-			$mdgriffith$elm_ui$Internal$Style$Class,
-			'.v-' + _var,
-			_List_fromArray(
-				[
-					A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-feature-settings', '\"' + (_var + '\"'))
-				])),
-			A2(
-			$mdgriffith$elm_ui$Internal$Style$Class,
-			'.v-' + (_var + '-off'),
-			_List_fromArray(
-				[
-					A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-feature-settings', '\"' + (_var + '\" 0'))
-				]))
-		]);
-};
-var $mdgriffith$elm_ui$Internal$Style$commonValues = $elm$core$List$concat(
-	_List_fromArray(
-		[
-			A2(
-			$elm$core$List$map,
-			function (x) {
-				return A2(
-					$mdgriffith$elm_ui$Internal$Style$Class,
-					'.border-' + $elm$core$String$fromInt(x),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Style$Prop,
-							'border-width',
-							$elm$core$String$fromInt(x) + 'px')
-						]));
-			},
-			A2($elm$core$List$range, 0, 6)),
-			A2(
-			$elm$core$List$map,
-			function (i) {
-				return A2(
-					$mdgriffith$elm_ui$Internal$Style$Class,
-					'.font-size-' + $elm$core$String$fromInt(i),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Style$Prop,
-							'font-size',
-							$elm$core$String$fromInt(i) + 'px')
-						]));
-			},
-			A2($elm$core$List$range, 8, 32)),
-			A2(
-			$elm$core$List$map,
-			function (i) {
-				return A2(
-					$mdgriffith$elm_ui$Internal$Style$Class,
-					'.p-' + $elm$core$String$fromInt(i),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Style$Prop,
-							'padding',
-							$elm$core$String$fromInt(i) + 'px')
-						]));
-			},
-			A2($elm$core$List$range, 0, 24)),
-			_List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Class,
-				'.v-smcp',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-variant', 'small-caps')
-					])),
-				A2(
-				$mdgriffith$elm_ui$Internal$Style$Class,
-				'.v-smcp-off',
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Internal$Style$Prop, 'font-variant', 'normal')
-					]))
-			]),
-			$mdgriffith$elm_ui$Internal$Style$fontVariant('zero'),
-			$mdgriffith$elm_ui$Internal$Style$fontVariant('onum'),
-			$mdgriffith$elm_ui$Internal$Style$fontVariant('liga'),
-			$mdgriffith$elm_ui$Internal$Style$fontVariant('dlig'),
-			$mdgriffith$elm_ui$Internal$Style$fontVariant('ordn'),
-			$mdgriffith$elm_ui$Internal$Style$fontVariant('tnum'),
-			$mdgriffith$elm_ui$Internal$Style$fontVariant('afrc'),
-			$mdgriffith$elm_ui$Internal$Style$fontVariant('frac')
-		]));
-var $mdgriffith$elm_ui$Internal$Style$explainer = '\n.explain {\n    border: 6px solid rgb(174, 121, 15) !important;\n}\n.explain > .' + ($mdgriffith$elm_ui$Internal$Style$classes.any + (' {\n    border: 4px dashed rgb(0, 151, 167) !important;\n}\n\n.ctr {\n    border: none !important;\n}\n.explain > .ctr > .' + ($mdgriffith$elm_ui$Internal$Style$classes.any + ' {\n    border: 4px dashed rgb(0, 151, 167) !important;\n}\n\n')));
-var $mdgriffith$elm_ui$Internal$Style$inputTextReset = '\ninput[type="search"],\ninput[type="search"]::-webkit-search-decoration,\ninput[type="search"]::-webkit-search-cancel-button,\ninput[type="search"]::-webkit-search-results-button,\ninput[type="search"]::-webkit-search-results-decoration {\n  -webkit-appearance:none;\n}\n';
-var $mdgriffith$elm_ui$Internal$Style$sliderReset = '\ninput[type=range] {\n  -webkit-appearance: none; \n  background: transparent;\n  position:absolute;\n  left:0;\n  top:0;\n  z-index:10;\n  width: 100%;\n  outline: dashed 1px;\n  height: 100%;\n  opacity: 0;\n}\n';
-var $mdgriffith$elm_ui$Internal$Style$thumbReset = '\ninput[type=range]::-webkit-slider-thumb {\n    -webkit-appearance: none;\n    opacity: 0.5;\n    width: 80px;\n    height: 80px;\n    background-color: black;\n    border:none;\n    border-radius: 5px;\n}\ninput[type=range]::-moz-range-thumb {\n    opacity: 0.5;\n    width: 80px;\n    height: 80px;\n    background-color: black;\n    border:none;\n    border-radius: 5px;\n}\ninput[type=range]::-ms-thumb {\n    opacity: 0.5;\n    width: 80px;\n    height: 80px;\n    background-color: black;\n    border:none;\n    border-radius: 5px;\n}\ninput[type=range][orient=vertical]{\n    writing-mode: bt-lr; /* IE */\n    -webkit-appearance: slider-vertical;  /* WebKit */\n}\n';
-var $mdgriffith$elm_ui$Internal$Style$trackReset = '\ninput[type=range]::-moz-range-track {\n    background: transparent;\n    cursor: pointer;\n}\ninput[type=range]::-ms-track {\n    background: transparent;\n    cursor: pointer;\n}\ninput[type=range]::-webkit-slider-runnable-track {\n    background: transparent;\n    cursor: pointer;\n}\n';
-var $mdgriffith$elm_ui$Internal$Style$overrides = '@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {' + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.row) + (' > ' + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + (' { flex-basis: auto !important; } ' + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.row) + (' > ' + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.container) + (' { flex-basis: auto !important; }}' + ($mdgriffith$elm_ui$Internal$Style$inputTextReset + ($mdgriffith$elm_ui$Internal$Style$sliderReset + ($mdgriffith$elm_ui$Internal$Style$trackReset + ($mdgriffith$elm_ui$Internal$Style$thumbReset + $mdgriffith$elm_ui$Internal$Style$explainer)))))))))))))));
-var $mdgriffith$elm_ui$Internal$Style$Intermediate = function (a) {
-	return {$: 'Intermediate', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Style$emptyIntermediate = F2(
-	function (selector, closing) {
-		return $mdgriffith$elm_ui$Internal$Style$Intermediate(
-			{closing: closing, others: _List_Nil, props: _List_Nil, selector: selector});
-	});
-var $mdgriffith$elm_ui$Internal$Style$renderRules = F2(
-	function (_v0, rulesToRender) {
-		var parent = _v0.a;
-		var generateIntermediates = F2(
-			function (rule, rendered) {
-				switch (rule.$) {
-					case 'Prop':
-						var name = rule.a;
-						var val = rule.b;
-						return _Utils_update(
-							rendered,
-							{
-								props: A2(
-									$elm$core$List$cons,
-									_Utils_Tuple2(name, val),
-									rendered.props)
-							});
-					case 'Supports':
-						var _v2 = rule.a;
-						var prop = _v2.a;
-						var value = _v2.b;
-						var props = rule.b;
-						return _Utils_update(
-							rendered,
-							{
-								others: A2(
-									$elm$core$List$cons,
-									$mdgriffith$elm_ui$Internal$Style$Intermediate(
-										{closing: '\n}', others: _List_Nil, props: props, selector: '@supports (' + (prop + (':' + (value + (') {' + parent.selector))))}),
-									rendered.others)
-							});
-					case 'Adjacent':
-						var selector = rule.a;
-						var adjRules = rule.b;
-						return _Utils_update(
-							rendered,
-							{
-								others: A2(
-									$elm$core$List$cons,
-									A2(
-										$mdgriffith$elm_ui$Internal$Style$renderRules,
-										A2($mdgriffith$elm_ui$Internal$Style$emptyIntermediate, parent.selector + (' + ' + selector), ''),
-										adjRules),
-									rendered.others)
-							});
-					case 'Child':
-						var child = rule.a;
-						var childRules = rule.b;
-						return _Utils_update(
-							rendered,
-							{
-								others: A2(
-									$elm$core$List$cons,
-									A2(
-										$mdgriffith$elm_ui$Internal$Style$renderRules,
-										A2($mdgriffith$elm_ui$Internal$Style$emptyIntermediate, parent.selector + (' > ' + child), ''),
-										childRules),
-									rendered.others)
-							});
-					case 'AllChildren':
-						var child = rule.a;
-						var childRules = rule.b;
-						return _Utils_update(
-							rendered,
-							{
-								others: A2(
-									$elm$core$List$cons,
-									A2(
-										$mdgriffith$elm_ui$Internal$Style$renderRules,
-										A2($mdgriffith$elm_ui$Internal$Style$emptyIntermediate, parent.selector + (' ' + child), ''),
-										childRules),
-									rendered.others)
-							});
-					case 'Descriptor':
-						var descriptor = rule.a;
-						var descriptorRules = rule.b;
-						return _Utils_update(
-							rendered,
-							{
-								others: A2(
-									$elm$core$List$cons,
-									A2(
-										$mdgriffith$elm_ui$Internal$Style$renderRules,
-										A2(
-											$mdgriffith$elm_ui$Internal$Style$emptyIntermediate,
-											_Utils_ap(parent.selector, descriptor),
-											''),
-										descriptorRules),
-									rendered.others)
-							});
-					default:
-						var batched = rule.a;
-						return _Utils_update(
-							rendered,
-							{
-								others: A2(
-									$elm$core$List$cons,
-									A2(
-										$mdgriffith$elm_ui$Internal$Style$renderRules,
-										A2($mdgriffith$elm_ui$Internal$Style$emptyIntermediate, parent.selector, ''),
-										batched),
-									rendered.others)
-							});
-				}
-			});
-		return $mdgriffith$elm_ui$Internal$Style$Intermediate(
-			A3($elm$core$List$foldr, generateIntermediates, parent, rulesToRender));
-	});
-var $mdgriffith$elm_ui$Internal$Style$renderCompact = function (styleClasses) {
-	var renderValues = function (values) {
-		return $elm$core$String$concat(
-			A2(
-				$elm$core$List$map,
-				function (_v3) {
-					var x = _v3.a;
-					var y = _v3.b;
-					return x + (':' + (y + ';'));
-				},
-				values));
-	};
-	var renderClass = function (rule) {
-		var _v2 = rule.props;
-		if (!_v2.b) {
-			return '';
-		} else {
-			return rule.selector + ('{' + (renderValues(rule.props) + (rule.closing + '}')));
-		}
-	};
-	var renderIntermediate = function (_v0) {
-		var rule = _v0.a;
-		return _Utils_ap(
-			renderClass(rule),
-			$elm$core$String$concat(
-				A2($elm$core$List$map, renderIntermediate, rule.others)));
-	};
-	return $elm$core$String$concat(
-		A2(
-			$elm$core$List$map,
-			renderIntermediate,
-			A3(
-				$elm$core$List$foldr,
-				F2(
-					function (_v1, existing) {
-						var name = _v1.a;
-						var styleRules = _v1.b;
-						return A2(
-							$elm$core$List$cons,
-							A2(
-								$mdgriffith$elm_ui$Internal$Style$renderRules,
-								A2($mdgriffith$elm_ui$Internal$Style$emptyIntermediate, name, ''),
-								styleRules),
-							existing);
-					}),
-				_List_Nil,
-				styleClasses)));
-};
-var $mdgriffith$elm_ui$Internal$Style$rules = _Utils_ap(
-	$mdgriffith$elm_ui$Internal$Style$overrides,
-	$mdgriffith$elm_ui$Internal$Style$renderCompact(
-		_Utils_ap($mdgriffith$elm_ui$Internal$Style$baseSheet, $mdgriffith$elm_ui$Internal$Style$commonValues)));
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $mdgriffith$elm_ui$Internal$Model$staticRoot = function (opts) {
-	var _v0 = opts.mode;
-	switch (_v0.$) {
-		case 'Layout':
-			return A3(
-				$elm$virtual_dom$VirtualDom$node,
-				'div',
-				_List_Nil,
-				_List_fromArray(
-					[
-						A3(
-						$elm$virtual_dom$VirtualDom$node,
-						'style',
-						_List_Nil,
-						_List_fromArray(
-							[
-								$elm$virtual_dom$VirtualDom$text($mdgriffith$elm_ui$Internal$Style$rules)
-							]))
-					]));
-		case 'NoStaticStyleSheet':
-			return $elm$virtual_dom$VirtualDom$text('');
-		default:
-			return A3(
-				$elm$virtual_dom$VirtualDom$node,
-				'elm-ui-static-rules',
-				_List_fromArray(
-					[
-						A2(
-						$elm$virtual_dom$VirtualDom$property,
-						'rules',
-						$elm$json$Json$Encode$string($mdgriffith$elm_ui$Internal$Style$rules))
-					]),
-				_List_Nil);
-	}
-};
-var $elm$json$Json$Encode$list = F2(
-	function (func, entries) {
-		return _Json_wrap(
-			A3(
-				$elm$core$List$foldl,
-				_Json_addEntry(func),
-				_Json_emptyArray(_Utils_Tuple0),
-				entries));
-	});
-var $elm$json$Json$Encode$object = function (pairs) {
-	return _Json_wrap(
-		A3(
-			$elm$core$List$foldl,
-			F2(
-				function (_v0, obj) {
-					var k = _v0.a;
-					var v = _v0.b;
-					return A3(_Json_addField, k, v, obj);
-				}),
-			_Json_emptyObject(_Utils_Tuple0),
-			pairs));
-};
-var $mdgriffith$elm_ui$Internal$Model$fontName = function (font) {
-	switch (font.$) {
-		case 'Serif':
-			return 'serif';
-		case 'SansSerif':
-			return 'sans-serif';
-		case 'Monospace':
-			return 'monospace';
-		case 'Typeface':
-			var name = font.a;
-			return '\"' + (name + '\"');
-		case 'ImportFont':
-			var name = font.a;
-			var url = font.b;
-			return '\"' + (name + '\"');
-		default:
-			var name = font.a.name;
-			return '\"' + (name + '\"');
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$isSmallCaps = function (_var) {
-	switch (_var.$) {
-		case 'VariantActive':
-			var name = _var.a;
-			return name === 'smcp';
-		case 'VariantOff':
-			var name = _var.a;
-			return false;
-		default:
-			var name = _var.a;
-			var index = _var.b;
-			return (name === 'smcp') && (index === 1);
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$hasSmallCaps = function (typeface) {
-	if (typeface.$ === 'FontWith') {
-		var font = typeface.a;
-		return A2($elm$core$List$any, $mdgriffith$elm_ui$Internal$Model$isSmallCaps, font.variants);
-	} else {
-		return false;
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$renderProps = F3(
-	function (force, _v0, existing) {
-		var key = _v0.a;
-		var val = _v0.b;
-		return force ? (existing + ('\n  ' + (key + (': ' + (val + ' !important;'))))) : (existing + ('\n  ' + (key + (': ' + (val + ';')))));
-	});
-var $mdgriffith$elm_ui$Internal$Model$renderStyle = F4(
-	function (options, maybePseudo, selector, props) {
-		if (maybePseudo.$ === 'Nothing') {
-			return _List_fromArray(
-				[
-					selector + ('{' + (A3(
-					$elm$core$List$foldl,
-					$mdgriffith$elm_ui$Internal$Model$renderProps(false),
-					'',
-					props) + '\n}'))
-				]);
-		} else {
-			var pseudo = maybePseudo.a;
-			switch (pseudo.$) {
-				case 'Hover':
-					var _v2 = options.hover;
-					switch (_v2.$) {
-						case 'NoHover':
-							return _List_Nil;
-						case 'ForceHover':
-							return _List_fromArray(
-								[
-									selector + ('-hv {' + (A3(
-									$elm$core$List$foldl,
-									$mdgriffith$elm_ui$Internal$Model$renderProps(true),
-									'',
-									props) + '\n}'))
-								]);
-						default:
-							return _List_fromArray(
-								[
-									selector + ('-hv:hover {' + (A3(
-									$elm$core$List$foldl,
-									$mdgriffith$elm_ui$Internal$Model$renderProps(false),
-									'',
-									props) + '\n}'))
-								]);
-					}
-				case 'Focus':
-					var renderedProps = A3(
-						$elm$core$List$foldl,
-						$mdgriffith$elm_ui$Internal$Model$renderProps(false),
-						'',
-						props);
-					return _List_fromArray(
-						[
-							selector + ('-fs:focus {' + (renderedProps + '\n}')),
-							('.' + ($mdgriffith$elm_ui$Internal$Style$classes.any + (':focus ' + (selector + '-fs  {')))) + (renderedProps + '\n}'),
-							(selector + '-fs:focus-within {') + (renderedProps + '\n}'),
-							('.ui-slide-bar:focus + ' + ($mdgriffith$elm_ui$Internal$Style$dot($mdgriffith$elm_ui$Internal$Style$classes.any) + (' .focusable-thumb' + (selector + '-fs {')))) + (renderedProps + '\n}')
-						]);
-				default:
-					return _List_fromArray(
-						[
-							selector + ('-act:active {' + (A3(
-							$elm$core$List$foldl,
-							$mdgriffith$elm_ui$Internal$Model$renderProps(false),
-							'',
-							props) + '\n}'))
-						]);
-			}
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$renderVariant = function (_var) {
-	switch (_var.$) {
-		case 'VariantActive':
-			var name = _var.a;
-			return '\"' + (name + '\"');
-		case 'VariantOff':
-			var name = _var.a;
-			return '\"' + (name + '\" 0');
-		default:
-			var name = _var.a;
-			var index = _var.b;
-			return '\"' + (name + ('\" ' + $elm$core$String$fromInt(index)));
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$renderVariants = function (typeface) {
-	if (typeface.$ === 'FontWith') {
-		var font = typeface.a;
-		return $elm$core$Maybe$Just(
-			A2(
-				$elm$core$String$join,
-				', ',
-				A2($elm$core$List$map, $mdgriffith$elm_ui$Internal$Model$renderVariant, font.variants)));
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$transformValue = function (transform) {
-	switch (transform.$) {
-		case 'Untransformed':
-			return $elm$core$Maybe$Nothing;
-		case 'Moved':
-			var _v1 = transform.a;
-			var x = _v1.a;
-			var y = _v1.b;
-			var z = _v1.c;
-			return $elm$core$Maybe$Just(
-				'translate3d(' + ($elm$core$String$fromFloat(x) + ('px, ' + ($elm$core$String$fromFloat(y) + ('px, ' + ($elm$core$String$fromFloat(z) + 'px)'))))));
-		default:
-			var _v2 = transform.a;
-			var tx = _v2.a;
-			var ty = _v2.b;
-			var tz = _v2.c;
-			var _v3 = transform.b;
-			var sx = _v3.a;
-			var sy = _v3.b;
-			var sz = _v3.c;
-			var _v4 = transform.c;
-			var ox = _v4.a;
-			var oy = _v4.b;
-			var oz = _v4.c;
-			var angle = transform.d;
-			var translate = 'translate3d(' + ($elm$core$String$fromFloat(tx) + ('px, ' + ($elm$core$String$fromFloat(ty) + ('px, ' + ($elm$core$String$fromFloat(tz) + 'px)')))));
-			var scale = 'scale3d(' + ($elm$core$String$fromFloat(sx) + (', ' + ($elm$core$String$fromFloat(sy) + (', ' + ($elm$core$String$fromFloat(sz) + ')')))));
-			var rotate = 'rotate3d(' + ($elm$core$String$fromFloat(ox) + (', ' + ($elm$core$String$fromFloat(oy) + (', ' + ($elm$core$String$fromFloat(oz) + (', ' + ($elm$core$String$fromFloat(angle) + 'rad)')))))));
-			return $elm$core$Maybe$Just(translate + (' ' + (scale + (' ' + rotate))));
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$renderStyleRule = F3(
-	function (options, rule, maybePseudo) {
-		switch (rule.$) {
-			case 'Style':
-				var selector = rule.a;
-				var props = rule.b;
-				return A4($mdgriffith$elm_ui$Internal$Model$renderStyle, options, maybePseudo, selector, props);
-			case 'Shadows':
-				var name = rule.a;
-				var prop = rule.b;
-				return A4(
-					$mdgriffith$elm_ui$Internal$Model$renderStyle,
-					options,
-					maybePseudo,
-					'.' + name,
-					_List_fromArray(
-						[
-							A2($mdgriffith$elm_ui$Internal$Model$Property, 'box-shadow', prop)
-						]));
-			case 'Transparency':
-				var name = rule.a;
-				var transparency = rule.b;
-				var opacity = A2(
-					$elm$core$Basics$max,
-					0,
-					A2($elm$core$Basics$min, 1, 1 - transparency));
-				return A4(
-					$mdgriffith$elm_ui$Internal$Model$renderStyle,
-					options,
-					maybePseudo,
-					'.' + name,
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Model$Property,
-							'opacity',
-							$elm$core$String$fromFloat(opacity))
-						]));
-			case 'FontSize':
-				var i = rule.a;
-				return A4(
-					$mdgriffith$elm_ui$Internal$Model$renderStyle,
-					options,
-					maybePseudo,
-					'.font-size-' + $elm$core$String$fromInt(i),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Model$Property,
-							'font-size',
-							$elm$core$String$fromInt(i) + 'px')
-						]));
-			case 'FontFamily':
-				var name = rule.a;
-				var typefaces = rule.b;
-				var features = A2(
-					$elm$core$String$join,
-					', ',
-					A2($elm$core$List$filterMap, $mdgriffith$elm_ui$Internal$Model$renderVariants, typefaces));
-				var families = _List_fromArray(
-					[
-						A2(
-						$mdgriffith$elm_ui$Internal$Model$Property,
-						'font-family',
-						A2(
-							$elm$core$String$join,
-							', ',
-							A2($elm$core$List$map, $mdgriffith$elm_ui$Internal$Model$fontName, typefaces))),
-						A2($mdgriffith$elm_ui$Internal$Model$Property, 'font-feature-settings', features),
-						A2(
-						$mdgriffith$elm_ui$Internal$Model$Property,
-						'font-variant',
-						A2($elm$core$List$any, $mdgriffith$elm_ui$Internal$Model$hasSmallCaps, typefaces) ? 'small-caps' : 'normal')
-					]);
-				return A4($mdgriffith$elm_ui$Internal$Model$renderStyle, options, maybePseudo, '.' + name, families);
-			case 'Single':
-				var _class = rule.a;
-				var prop = rule.b;
-				var val = rule.c;
-				return A4(
-					$mdgriffith$elm_ui$Internal$Model$renderStyle,
-					options,
-					maybePseudo,
-					'.' + _class,
-					_List_fromArray(
-						[
-							A2($mdgriffith$elm_ui$Internal$Model$Property, prop, val)
-						]));
-			case 'Colored':
-				var _class = rule.a;
-				var prop = rule.b;
-				var color = rule.c;
-				return A4(
-					$mdgriffith$elm_ui$Internal$Model$renderStyle,
-					options,
-					maybePseudo,
-					'.' + _class,
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Model$Property,
-							prop,
-							$mdgriffith$elm_ui$Internal$Model$formatColor(color))
-						]));
-			case 'SpacingStyle':
-				var cls = rule.a;
-				var x = rule.b;
-				var y = rule.c;
-				var yPx = $elm$core$String$fromInt(y) + 'px';
-				var xPx = $elm$core$String$fromInt(x) + 'px';
-				var single = '.' + $mdgriffith$elm_ui$Internal$Style$classes.single;
-				var row = '.' + $mdgriffith$elm_ui$Internal$Style$classes.row;
-				var wrappedRow = '.' + ($mdgriffith$elm_ui$Internal$Style$classes.wrapped + row);
-				var right = '.' + $mdgriffith$elm_ui$Internal$Style$classes.alignRight;
-				var paragraph = '.' + $mdgriffith$elm_ui$Internal$Style$classes.paragraph;
-				var page = '.' + $mdgriffith$elm_ui$Internal$Style$classes.page;
-				var left = '.' + $mdgriffith$elm_ui$Internal$Style$classes.alignLeft;
-				var halfY = $elm$core$String$fromFloat(y / 2) + 'px';
-				var halfX = $elm$core$String$fromFloat(x / 2) + 'px';
-				var column = '.' + $mdgriffith$elm_ui$Internal$Style$classes.column;
-				var _class = '.' + cls;
-				var any = '.' + $mdgriffith$elm_ui$Internal$Style$classes.any;
-				return $elm$core$List$concat(
-					_List_fromArray(
-						[
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (row + (' > ' + (any + (' + ' + any)))),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'margin-left', xPx)
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (wrappedRow + (' > ' + any)),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'margin', halfY + (' ' + halfX))
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (column + (' > ' + (any + (' + ' + any)))),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'margin-top', yPx)
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (page + (' > ' + (any + (' + ' + any)))),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'margin-top', yPx)
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (page + (' > ' + left)),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'margin-right', xPx)
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (page + (' > ' + right)),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'margin-left', xPx)
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_Utils_ap(_class, paragraph),
-							_List_fromArray(
-								[
-									A2(
-									$mdgriffith$elm_ui$Internal$Model$Property,
-									'line-height',
-									'calc(1em + ' + ($elm$core$String$fromInt(y) + 'px)'))
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							'textarea' + (any + _class),
-							_List_fromArray(
-								[
-									A2(
-									$mdgriffith$elm_ui$Internal$Model$Property,
-									'line-height',
-									'calc(1em + ' + ($elm$core$String$fromInt(y) + 'px)')),
-									A2(
-									$mdgriffith$elm_ui$Internal$Model$Property,
-									'height',
-									'calc(100% + ' + ($elm$core$String$fromInt(y) + 'px)'))
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (paragraph + (' > ' + left)),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'margin-right', xPx)
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (paragraph + (' > ' + right)),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'margin-left', xPx)
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (paragraph + '::after'),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'content', '\'\''),
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'display', 'block'),
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'height', '0'),
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'width', '0'),
-									A2(
-									$mdgriffith$elm_ui$Internal$Model$Property,
-									'margin-top',
-									$elm$core$String$fromInt((-1) * ((y / 2) | 0)) + 'px')
-								])),
-							A4(
-							$mdgriffith$elm_ui$Internal$Model$renderStyle,
-							options,
-							maybePseudo,
-							_class + (paragraph + '::before'),
-							_List_fromArray(
-								[
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'content', '\'\''),
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'display', 'block'),
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'height', '0'),
-									A2($mdgriffith$elm_ui$Internal$Model$Property, 'width', '0'),
-									A2(
-									$mdgriffith$elm_ui$Internal$Model$Property,
-									'margin-bottom',
-									$elm$core$String$fromInt((-1) * ((y / 2) | 0)) + 'px')
-								]))
-						]));
-			case 'PaddingStyle':
-				var cls = rule.a;
-				var top = rule.b;
-				var right = rule.c;
-				var bottom = rule.d;
-				var left = rule.e;
-				var _class = '.' + cls;
-				return A4(
-					$mdgriffith$elm_ui$Internal$Model$renderStyle,
-					options,
-					maybePseudo,
-					_class,
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Model$Property,
-							'padding',
-							$elm$core$String$fromFloat(top) + ('px ' + ($elm$core$String$fromFloat(right) + ('px ' + ($elm$core$String$fromFloat(bottom) + ('px ' + ($elm$core$String$fromFloat(left) + 'px')))))))
-						]));
-			case 'BorderWidth':
-				var cls = rule.a;
-				var top = rule.b;
-				var right = rule.c;
-				var bottom = rule.d;
-				var left = rule.e;
-				var _class = '.' + cls;
-				return A4(
-					$mdgriffith$elm_ui$Internal$Model$renderStyle,
-					options,
-					maybePseudo,
-					_class,
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Model$Property,
-							'border-width',
-							$elm$core$String$fromInt(top) + ('px ' + ($elm$core$String$fromInt(right) + ('px ' + ($elm$core$String$fromInt(bottom) + ('px ' + ($elm$core$String$fromInt(left) + 'px')))))))
-						]));
-			case 'GridTemplateStyle':
-				var template = rule.a;
-				var toGridLengthHelper = F3(
-					function (minimum, maximum, x) {
-						toGridLengthHelper:
-						while (true) {
-							switch (x.$) {
-								case 'Px':
-									var px = x.a;
-									return $elm$core$String$fromInt(px) + 'px';
-								case 'Content':
-									var _v2 = _Utils_Tuple2(minimum, maximum);
-									if (_v2.a.$ === 'Nothing') {
-										if (_v2.b.$ === 'Nothing') {
-											var _v3 = _v2.a;
-											var _v4 = _v2.b;
-											return 'max-content';
-										} else {
-											var _v6 = _v2.a;
-											var maxSize = _v2.b.a;
-											return 'minmax(max-content, ' + ($elm$core$String$fromInt(maxSize) + 'px)');
-										}
-									} else {
-										if (_v2.b.$ === 'Nothing') {
-											var minSize = _v2.a.a;
-											var _v5 = _v2.b;
-											return 'minmax(' + ($elm$core$String$fromInt(minSize) + ('px, ' + 'max-content)'));
-										} else {
-											var minSize = _v2.a.a;
-											var maxSize = _v2.b.a;
-											return 'minmax(' + ($elm$core$String$fromInt(minSize) + ('px, ' + ($elm$core$String$fromInt(maxSize) + 'px)')));
-										}
-									}
-								case 'Fill':
-									var i = x.a;
-									var _v7 = _Utils_Tuple2(minimum, maximum);
-									if (_v7.a.$ === 'Nothing') {
-										if (_v7.b.$ === 'Nothing') {
-											var _v8 = _v7.a;
-											var _v9 = _v7.b;
-											return $elm$core$String$fromInt(i) + 'fr';
-										} else {
-											var _v11 = _v7.a;
-											var maxSize = _v7.b.a;
-											return 'minmax(max-content, ' + ($elm$core$String$fromInt(maxSize) + 'px)');
-										}
-									} else {
-										if (_v7.b.$ === 'Nothing') {
-											var minSize = _v7.a.a;
-											var _v10 = _v7.b;
-											return 'minmax(' + ($elm$core$String$fromInt(minSize) + ('px, ' + ($elm$core$String$fromInt(i) + ('fr' + 'fr)'))));
-										} else {
-											var minSize = _v7.a.a;
-											var maxSize = _v7.b.a;
-											return 'minmax(' + ($elm$core$String$fromInt(minSize) + ('px, ' + ($elm$core$String$fromInt(maxSize) + 'px)')));
-										}
-									}
-								case 'Min':
-									var m = x.a;
-									var len = x.b;
-									var $temp$minimum = $elm$core$Maybe$Just(m),
-										$temp$maximum = maximum,
-										$temp$x = len;
-									minimum = $temp$minimum;
-									maximum = $temp$maximum;
-									x = $temp$x;
-									continue toGridLengthHelper;
-								default:
-									var m = x.a;
-									var len = x.b;
-									var $temp$minimum = minimum,
-										$temp$maximum = $elm$core$Maybe$Just(m),
-										$temp$x = len;
-									minimum = $temp$minimum;
-									maximum = $temp$maximum;
-									x = $temp$x;
-									continue toGridLengthHelper;
-							}
-						}
-					});
-				var toGridLength = function (x) {
-					return A3(toGridLengthHelper, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing, x);
-				};
-				var xSpacing = toGridLength(template.spacing.a);
-				var ySpacing = toGridLength(template.spacing.b);
-				var rows = function (x) {
-					return 'grid-template-rows: ' + (x + ';');
-				}(
-					A2(
-						$elm$core$String$join,
-						' ',
-						A2($elm$core$List$map, toGridLength, template.rows)));
-				var msRows = function (x) {
-					return '-ms-grid-rows: ' + (x + ';');
-				}(
-					A2(
-						$elm$core$String$join,
-						ySpacing,
-						A2($elm$core$List$map, toGridLength, template.columns)));
-				var msColumns = function (x) {
-					return '-ms-grid-columns: ' + (x + ';');
-				}(
-					A2(
-						$elm$core$String$join,
-						ySpacing,
-						A2($elm$core$List$map, toGridLength, template.columns)));
-				var gapY = 'grid-row-gap:' + (toGridLength(template.spacing.b) + ';');
-				var gapX = 'grid-column-gap:' + (toGridLength(template.spacing.a) + ';');
-				var columns = function (x) {
-					return 'grid-template-columns: ' + (x + ';');
-				}(
-					A2(
-						$elm$core$String$join,
-						' ',
-						A2($elm$core$List$map, toGridLength, template.columns)));
-				var _class = '.grid-rows-' + (A2(
-					$elm$core$String$join,
-					'-',
-					A2($elm$core$List$map, $mdgriffith$elm_ui$Internal$Model$lengthClassName, template.rows)) + ('-cols-' + (A2(
-					$elm$core$String$join,
-					'-',
-					A2($elm$core$List$map, $mdgriffith$elm_ui$Internal$Model$lengthClassName, template.columns)) + ('-space-x-' + ($mdgriffith$elm_ui$Internal$Model$lengthClassName(template.spacing.a) + ('-space-y-' + $mdgriffith$elm_ui$Internal$Model$lengthClassName(template.spacing.b)))))));
-				var modernGrid = _class + ('{' + (columns + (rows + (gapX + (gapY + '}')))));
-				var supports = '@supports (display:grid) {' + (modernGrid + '}');
-				var base = _class + ('{' + (msColumns + (msRows + '}')));
-				return _List_fromArray(
-					[base, supports]);
-			case 'GridPosition':
-				var position = rule.a;
-				var msPosition = A2(
-					$elm$core$String$join,
-					' ',
-					_List_fromArray(
-						[
-							'-ms-grid-row: ' + ($elm$core$String$fromInt(position.row) + ';'),
-							'-ms-grid-row-span: ' + ($elm$core$String$fromInt(position.height) + ';'),
-							'-ms-grid-column: ' + ($elm$core$String$fromInt(position.col) + ';'),
-							'-ms-grid-column-span: ' + ($elm$core$String$fromInt(position.width) + ';')
-						]));
-				var modernPosition = A2(
-					$elm$core$String$join,
-					' ',
-					_List_fromArray(
-						[
-							'grid-row: ' + ($elm$core$String$fromInt(position.row) + (' / ' + ($elm$core$String$fromInt(position.row + position.height) + ';'))),
-							'grid-column: ' + ($elm$core$String$fromInt(position.col) + (' / ' + ($elm$core$String$fromInt(position.col + position.width) + ';')))
-						]));
-				var _class = '.grid-pos-' + ($elm$core$String$fromInt(position.row) + ('-' + ($elm$core$String$fromInt(position.col) + ('-' + ($elm$core$String$fromInt(position.width) + ('-' + $elm$core$String$fromInt(position.height)))))));
-				var modernGrid = _class + ('{' + (modernPosition + '}'));
-				var supports = '@supports (display:grid) {' + (modernGrid + '}');
-				var base = _class + ('{' + (msPosition + '}'));
-				return _List_fromArray(
-					[base, supports]);
-			case 'PseudoSelector':
-				var _class = rule.a;
-				var styles = rule.b;
-				var renderPseudoRule = function (style) {
-					return A3(
-						$mdgriffith$elm_ui$Internal$Model$renderStyleRule,
-						options,
-						style,
-						$elm$core$Maybe$Just(_class));
-				};
-				return A2($elm$core$List$concatMap, renderPseudoRule, styles);
-			default:
-				var transform = rule.a;
-				var val = $mdgriffith$elm_ui$Internal$Model$transformValue(transform);
-				var _class = $mdgriffith$elm_ui$Internal$Model$transformClass(transform);
-				var _v12 = _Utils_Tuple2(_class, val);
-				if ((_v12.a.$ === 'Just') && (_v12.b.$ === 'Just')) {
-					var cls = _v12.a.a;
-					var v = _v12.b.a;
-					return A4(
-						$mdgriffith$elm_ui$Internal$Model$renderStyle,
-						options,
-						maybePseudo,
-						'.' + cls,
-						_List_fromArray(
-							[
-								A2($mdgriffith$elm_ui$Internal$Model$Property, 'transform', v)
-							]));
-				} else {
-					return _List_Nil;
-				}
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$encodeStyles = F2(
-	function (options, stylesheet) {
-		return $elm$json$Json$Encode$object(
-			A2(
-				$elm$core$List$map,
-				function (style) {
-					var styled = A3($mdgriffith$elm_ui$Internal$Model$renderStyleRule, options, style, $elm$core$Maybe$Nothing);
-					return _Utils_Tuple2(
-						$mdgriffith$elm_ui$Internal$Model$getStyleName(style),
-						A2($elm$json$Json$Encode$list, $elm$json$Json$Encode$string, styled));
-				},
-				stylesheet));
-	});
-var $mdgriffith$elm_ui$Internal$Model$bracket = F2(
-	function (selector, rules) {
-		var renderPair = function (_v0) {
-			var name = _v0.a;
-			var val = _v0.b;
-			return name + (': ' + (val + ';'));
-		};
-		return selector + (' {' + (A2(
-			$elm$core$String$join,
-			'',
-			A2($elm$core$List$map, renderPair, rules)) + '}'));
-	});
-var $mdgriffith$elm_ui$Internal$Model$fontRule = F3(
-	function (name, modifier, _v0) {
-		var parentAdj = _v0.a;
-		var textAdjustment = _v0.b;
-		return _List_fromArray(
-			[
-				A2($mdgriffith$elm_ui$Internal$Model$bracket, '.' + (name + ('.' + (modifier + (', ' + ('.' + (name + (' .' + modifier))))))), parentAdj),
-				A2($mdgriffith$elm_ui$Internal$Model$bracket, '.' + (name + ('.' + (modifier + ('> .' + ($mdgriffith$elm_ui$Internal$Style$classes.text + (', .' + (name + (' .' + (modifier + (' > .' + $mdgriffith$elm_ui$Internal$Style$classes.text)))))))))), textAdjustment)
-			]);
-	});
-var $mdgriffith$elm_ui$Internal$Model$renderFontAdjustmentRule = F3(
-	function (fontToAdjust, _v0, otherFontName) {
-		var full = _v0.a;
-		var capital = _v0.b;
-		var name = _Utils_eq(fontToAdjust, otherFontName) ? fontToAdjust : (otherFontName + (' .' + fontToAdjust));
-		return A2(
-			$elm$core$String$join,
-			' ',
-			_Utils_ap(
-				A3($mdgriffith$elm_ui$Internal$Model$fontRule, name, $mdgriffith$elm_ui$Internal$Style$classes.sizeByCapital, capital),
-				A3($mdgriffith$elm_ui$Internal$Model$fontRule, name, $mdgriffith$elm_ui$Internal$Style$classes.fullSize, full)));
-	});
-var $mdgriffith$elm_ui$Internal$Model$renderNullAdjustmentRule = F2(
-	function (fontToAdjust, otherFontName) {
-		var name = _Utils_eq(fontToAdjust, otherFontName) ? fontToAdjust : (otherFontName + (' .' + fontToAdjust));
-		return A2(
-			$elm$core$String$join,
-			' ',
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Internal$Model$bracket,
-					'.' + (name + ('.' + ($mdgriffith$elm_ui$Internal$Style$classes.sizeByCapital + (', ' + ('.' + (name + (' .' + $mdgriffith$elm_ui$Internal$Style$classes.sizeByCapital))))))),
-					_List_fromArray(
-						[
-							_Utils_Tuple2('line-height', '1')
-						])),
-					A2(
-					$mdgriffith$elm_ui$Internal$Model$bracket,
-					'.' + (name + ('.' + ($mdgriffith$elm_ui$Internal$Style$classes.sizeByCapital + ('> .' + ($mdgriffith$elm_ui$Internal$Style$classes.text + (', .' + (name + (' .' + ($mdgriffith$elm_ui$Internal$Style$classes.sizeByCapital + (' > .' + $mdgriffith$elm_ui$Internal$Style$classes.text)))))))))),
-					_List_fromArray(
-						[
-							_Utils_Tuple2('vertical-align', '0'),
-							_Utils_Tuple2('line-height', '1')
-						]))
-				]));
-	});
-var $mdgriffith$elm_ui$Internal$Model$adjust = F3(
-	function (size, height, vertical) {
-		return {height: height / size, size: size, vertical: vertical};
-	});
-var $mdgriffith$elm_ui$Internal$Model$convertAdjustment = function (adjustment) {
-	var lines = _List_fromArray(
-		[adjustment.capital, adjustment.baseline, adjustment.descender, adjustment.lowercase]);
-	var lineHeight = 1.5;
-	var normalDescender = (lineHeight - 1) / 2;
-	var oldMiddle = lineHeight / 2;
-	var descender = A2(
-		$elm$core$Maybe$withDefault,
-		adjustment.descender,
-		$elm$core$List$minimum(lines));
-	var newBaseline = A2(
-		$elm$core$Maybe$withDefault,
-		adjustment.baseline,
-		$elm$core$List$minimum(
-			A2(
-				$elm$core$List$filter,
-				function (x) {
-					return !_Utils_eq(x, descender);
-				},
-				lines)));
-	var base = lineHeight;
-	var ascender = A2(
-		$elm$core$Maybe$withDefault,
-		adjustment.capital,
-		$elm$core$List$maximum(lines));
-	var capitalSize = 1 / (ascender - newBaseline);
-	var capitalVertical = 1 - ascender;
-	var fullSize = 1 / (ascender - descender);
-	var fullVertical = 1 - ascender;
-	var newCapitalMiddle = ((ascender - newBaseline) / 2) + newBaseline;
-	var newFullMiddle = ((ascender - descender) / 2) + descender;
-	return {
-		capital: A3($mdgriffith$elm_ui$Internal$Model$adjust, capitalSize, ascender - newBaseline, capitalVertical),
-		full: A3($mdgriffith$elm_ui$Internal$Model$adjust, fullSize, ascender - descender, fullVertical)
-	};
-};
-var $mdgriffith$elm_ui$Internal$Model$fontAdjustmentRules = function (converted) {
-	return _Utils_Tuple2(
-		_List_fromArray(
-			[
-				_Utils_Tuple2('display', 'block')
-			]),
-		_List_fromArray(
-			[
-				_Utils_Tuple2('display', 'inline-block'),
-				_Utils_Tuple2(
-				'line-height',
-				$elm$core$String$fromFloat(converted.height)),
-				_Utils_Tuple2(
-				'vertical-align',
-				$elm$core$String$fromFloat(converted.vertical) + 'em'),
-				_Utils_Tuple2(
-				'font-size',
-				$elm$core$String$fromFloat(converted.size) + 'em')
-			]));
-};
-var $mdgriffith$elm_ui$Internal$Model$typefaceAdjustment = function (typefaces) {
-	return A3(
-		$elm$core$List$foldl,
-		F2(
-			function (face, found) {
-				if (found.$ === 'Nothing') {
-					if (face.$ === 'FontWith') {
-						var _with = face.a;
-						var _v2 = _with.adjustment;
-						if (_v2.$ === 'Nothing') {
-							return found;
-						} else {
-							var adjustment = _v2.a;
-							return $elm$core$Maybe$Just(
-								_Utils_Tuple2(
-									$mdgriffith$elm_ui$Internal$Model$fontAdjustmentRules(
-										function ($) {
-											return $.full;
-										}(
-											$mdgriffith$elm_ui$Internal$Model$convertAdjustment(adjustment))),
-									$mdgriffith$elm_ui$Internal$Model$fontAdjustmentRules(
-										function ($) {
-											return $.capital;
-										}(
-											$mdgriffith$elm_ui$Internal$Model$convertAdjustment(adjustment)))));
-						}
-					} else {
-						return found;
-					}
-				} else {
-					return found;
-				}
-			}),
-		$elm$core$Maybe$Nothing,
-		typefaces);
-};
-var $mdgriffith$elm_ui$Internal$Model$renderTopLevelValues = function (rules) {
-	var withImport = function (font) {
-		if (font.$ === 'ImportFont') {
-			var url = font.b;
-			return $elm$core$Maybe$Just('@import url(\'' + (url + '\');'));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	};
-	var fontImports = function (_v2) {
-		var name = _v2.a;
-		var typefaces = _v2.b;
-		var imports = A2(
-			$elm$core$String$join,
-			'\n',
-			A2($elm$core$List$filterMap, withImport, typefaces));
-		return imports;
-	};
-	var allNames = A2($elm$core$List$map, $elm$core$Tuple$first, rules);
-	var fontAdjustments = function (_v1) {
-		var name = _v1.a;
-		var typefaces = _v1.b;
-		var _v0 = $mdgriffith$elm_ui$Internal$Model$typefaceAdjustment(typefaces);
-		if (_v0.$ === 'Nothing') {
-			return A2(
-				$elm$core$String$join,
-				'',
-				A2(
-					$elm$core$List$map,
-					$mdgriffith$elm_ui$Internal$Model$renderNullAdjustmentRule(name),
-					allNames));
-		} else {
-			var adjustment = _v0.a;
-			return A2(
-				$elm$core$String$join,
-				'',
-				A2(
-					$elm$core$List$map,
-					A2($mdgriffith$elm_ui$Internal$Model$renderFontAdjustmentRule, name, adjustment),
-					allNames));
-		}
-	};
-	return _Utils_ap(
-		A2(
-			$elm$core$String$join,
-			'\n',
-			A2($elm$core$List$map, fontImports, rules)),
-		A2(
-			$elm$core$String$join,
-			'\n',
-			A2($elm$core$List$map, fontAdjustments, rules)));
-};
-var $mdgriffith$elm_ui$Internal$Model$topLevelValue = function (rule) {
-	if (rule.$ === 'FontFamily') {
-		var name = rule.a;
-		var typefaces = rule.b;
-		return $elm$core$Maybe$Just(
-			_Utils_Tuple2(name, typefaces));
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$toStyleSheetString = F2(
-	function (options, stylesheet) {
-		var combine = F2(
-			function (style, rendered) {
-				return {
-					rules: _Utils_ap(
-						rendered.rules,
-						A3($mdgriffith$elm_ui$Internal$Model$renderStyleRule, options, style, $elm$core$Maybe$Nothing)),
-					topLevel: function () {
-						var _v1 = $mdgriffith$elm_ui$Internal$Model$topLevelValue(style);
-						if (_v1.$ === 'Nothing') {
-							return rendered.topLevel;
-						} else {
-							var topLevel = _v1.a;
-							return A2($elm$core$List$cons, topLevel, rendered.topLevel);
-						}
-					}()
-				};
-			});
-		var _v0 = A3(
-			$elm$core$List$foldl,
-			combine,
-			{rules: _List_Nil, topLevel: _List_Nil},
-			stylesheet);
-		var topLevel = _v0.topLevel;
-		var rules = _v0.rules;
-		return _Utils_ap(
-			$mdgriffith$elm_ui$Internal$Model$renderTopLevelValues(topLevel),
-			$elm$core$String$concat(rules));
-	});
-var $mdgriffith$elm_ui$Internal$Model$toStyleSheet = F2(
-	function (options, styleSheet) {
-		var _v0 = options.mode;
-		switch (_v0.$) {
-			case 'Layout':
-				return A3(
-					$elm$virtual_dom$VirtualDom$node,
-					'div',
-					_List_Nil,
-					_List_fromArray(
-						[
-							A3(
-							$elm$virtual_dom$VirtualDom$node,
-							'style',
-							_List_Nil,
-							_List_fromArray(
-								[
-									$elm$virtual_dom$VirtualDom$text(
-									A2($mdgriffith$elm_ui$Internal$Model$toStyleSheetString, options, styleSheet))
-								]))
-						]));
-			case 'NoStaticStyleSheet':
-				return A3(
-					$elm$virtual_dom$VirtualDom$node,
-					'div',
-					_List_Nil,
-					_List_fromArray(
-						[
-							A3(
-							$elm$virtual_dom$VirtualDom$node,
-							'style',
-							_List_Nil,
-							_List_fromArray(
-								[
-									$elm$virtual_dom$VirtualDom$text(
-									A2($mdgriffith$elm_ui$Internal$Model$toStyleSheetString, options, styleSheet))
-								]))
-						]));
-			default:
-				return A3(
-					$elm$virtual_dom$VirtualDom$node,
-					'elm-ui-rules',
-					_List_fromArray(
-						[
-							A2(
-							$elm$virtual_dom$VirtualDom$property,
-							'rules',
-							A2($mdgriffith$elm_ui$Internal$Model$encodeStyles, options, styleSheet))
-						]),
-					_List_Nil);
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$embedKeyed = F4(
-	function (_static, opts, styles, children) {
-		var dynamicStyleSheet = A2(
-			$mdgriffith$elm_ui$Internal$Model$toStyleSheet,
-			opts,
-			A3(
-				$elm$core$List$foldl,
-				$mdgriffith$elm_ui$Internal$Model$reduceStyles,
-				_Utils_Tuple2(
-					$elm$core$Set$empty,
-					$mdgriffith$elm_ui$Internal$Model$renderFocusStyle(opts.focus)),
-				styles).b);
-		return _static ? A2(
-			$elm$core$List$cons,
-			_Utils_Tuple2(
-				'static-stylesheet',
-				$mdgriffith$elm_ui$Internal$Model$staticRoot(opts)),
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2('dynamic-stylesheet', dynamicStyleSheet),
-				children)) : A2(
-			$elm$core$List$cons,
-			_Utils_Tuple2('dynamic-stylesheet', dynamicStyleSheet),
-			children);
-	});
-var $mdgriffith$elm_ui$Internal$Model$embedWith = F4(
-	function (_static, opts, styles, children) {
-		var dynamicStyleSheet = A2(
-			$mdgriffith$elm_ui$Internal$Model$toStyleSheet,
-			opts,
-			A3(
-				$elm$core$List$foldl,
-				$mdgriffith$elm_ui$Internal$Model$reduceStyles,
-				_Utils_Tuple2(
-					$elm$core$Set$empty,
-					$mdgriffith$elm_ui$Internal$Model$renderFocusStyle(opts.focus)),
-				styles).b);
-		return _static ? A2(
-			$elm$core$List$cons,
-			$mdgriffith$elm_ui$Internal$Model$staticRoot(opts),
-			A2($elm$core$List$cons, dynamicStyleSheet, children)) : A2($elm$core$List$cons, dynamicStyleSheet, children);
-	});
-var $mdgriffith$elm_ui$Internal$Flag$heightBetween = $mdgriffith$elm_ui$Internal$Flag$flag(45);
-var $mdgriffith$elm_ui$Internal$Flag$heightFill = $mdgriffith$elm_ui$Internal$Flag$flag(37);
-var $elm$virtual_dom$VirtualDom$keyedNode = function (tag) {
-	return _VirtualDom_keyedNode(
-		_VirtualDom_noScript(tag));
-};
-var $elm$html$Html$p = _VirtualDom_node('p');
-var $mdgriffith$elm_ui$Internal$Flag$present = F2(
-	function (myFlag, _v0) {
-		var fieldOne = _v0.a;
-		var fieldTwo = _v0.b;
-		if (myFlag.$ === 'Flag') {
-			var first = myFlag.a;
-			return _Utils_eq(first & fieldOne, first);
-		} else {
-			var second = myFlag.a;
-			return _Utils_eq(second & fieldTwo, second);
-		}
-	});
-var $elm$html$Html$s = _VirtualDom_node('s');
-var $elm$html$Html$u = _VirtualDom_node('u');
-var $mdgriffith$elm_ui$Internal$Flag$widthBetween = $mdgriffith$elm_ui$Internal$Flag$flag(44);
-var $mdgriffith$elm_ui$Internal$Flag$widthFill = $mdgriffith$elm_ui$Internal$Flag$flag(39);
-var $mdgriffith$elm_ui$Internal$Model$finalizeNode = F6(
-	function (has, node, attributes, children, embedMode, parentContext) {
-		var createNode = F2(
-			function (nodeName, attrs) {
-				if (children.$ === 'Keyed') {
-					var keyed = children.a;
-					return A3(
-						$elm$virtual_dom$VirtualDom$keyedNode,
-						nodeName,
-						attrs,
-						function () {
-							switch (embedMode.$) {
-								case 'NoStyleSheet':
-									return keyed;
-								case 'OnlyDynamic':
-									var opts = embedMode.a;
-									var styles = embedMode.b;
-									return A4($mdgriffith$elm_ui$Internal$Model$embedKeyed, false, opts, styles, keyed);
-								default:
-									var opts = embedMode.a;
-									var styles = embedMode.b;
-									return A4($mdgriffith$elm_ui$Internal$Model$embedKeyed, true, opts, styles, keyed);
-							}
-						}());
-				} else {
-					var unkeyed = children.a;
-					return A2(
-						function () {
-							switch (nodeName) {
-								case 'div':
-									return $elm$html$Html$div;
-								case 'p':
-									return $elm$html$Html$p;
-								default:
-									return $elm$virtual_dom$VirtualDom$node(nodeName);
-							}
-						}(),
-						attrs,
-						function () {
-							switch (embedMode.$) {
-								case 'NoStyleSheet':
-									return unkeyed;
-								case 'OnlyDynamic':
-									var opts = embedMode.a;
-									var styles = embedMode.b;
-									return A4($mdgriffith$elm_ui$Internal$Model$embedWith, false, opts, styles, unkeyed);
-								default:
-									var opts = embedMode.a;
-									var styles = embedMode.b;
-									return A4($mdgriffith$elm_ui$Internal$Model$embedWith, true, opts, styles, unkeyed);
-							}
-						}());
-				}
-			});
-		var html = function () {
-			switch (node.$) {
-				case 'Generic':
-					return A2(createNode, 'div', attributes);
-				case 'NodeName':
-					var nodeName = node.a;
-					return A2(createNode, nodeName, attributes);
-				default:
-					var nodeName = node.a;
-					var internal = node.b;
-					return A3(
-						$elm$virtual_dom$VirtualDom$node,
-						nodeName,
-						attributes,
-						_List_fromArray(
-							[
-								A2(
-								createNode,
-								internal,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class($mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.single))
-									]))
-							]));
-			}
-		}();
-		switch (parentContext.$) {
-			case 'AsRow':
-				return (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$widthFill, has) && (!A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$widthBetween, has))) ? html : (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$alignRight, has) ? A2(
-					$elm$html$Html$u,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class(
-							A2(
-								$elm$core$String$join,
-								' ',
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Internal$Style$classes.any, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.container, $mdgriffith$elm_ui$Internal$Style$classes.contentCenterY, $mdgriffith$elm_ui$Internal$Style$classes.alignContainerRight])))
-						]),
-					_List_fromArray(
-						[html])) : (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$centerX, has) ? A2(
-					$elm$html$Html$s,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class(
-							A2(
-								$elm$core$String$join,
-								' ',
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Internal$Style$classes.any, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.container, $mdgriffith$elm_ui$Internal$Style$classes.contentCenterY, $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterX])))
-						]),
-					_List_fromArray(
-						[html])) : html));
-			case 'AsColumn':
-				return (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$heightFill, has) && (!A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$heightBetween, has))) ? html : (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$centerY, has) ? A2(
-					$elm$html$Html$s,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class(
-							A2(
-								$elm$core$String$join,
-								' ',
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Internal$Style$classes.any, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.container, $mdgriffith$elm_ui$Internal$Style$classes.alignContainerCenterY])))
-						]),
-					_List_fromArray(
-						[html])) : (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$alignBottom, has) ? A2(
-					$elm$html$Html$u,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class(
-							A2(
-								$elm$core$String$join,
-								' ',
-								_List_fromArray(
-									[$mdgriffith$elm_ui$Internal$Style$classes.any, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.container, $mdgriffith$elm_ui$Internal$Style$classes.alignContainerBottom])))
-						]),
-					_List_fromArray(
-						[html])) : html));
-			default:
-				return html;
-		}
-	});
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $mdgriffith$elm_ui$Internal$Model$textElementClasses = $mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.text + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.widthContent + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.heightContent)))));
-var $mdgriffith$elm_ui$Internal$Model$textElement = function (str) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class($mdgriffith$elm_ui$Internal$Model$textElementClasses)
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(str)
-			]));
-};
-var $mdgriffith$elm_ui$Internal$Model$textElementFillClasses = $mdgriffith$elm_ui$Internal$Style$classes.any + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.text + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.widthFill + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.heightFill)))));
-var $mdgriffith$elm_ui$Internal$Model$textElementFill = function (str) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class($mdgriffith$elm_ui$Internal$Model$textElementFillClasses)
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(str)
-			]));
-};
-var $mdgriffith$elm_ui$Internal$Model$createElement = F3(
-	function (context, children, rendered) {
-		var gatherKeyed = F2(
-			function (_v8, _v9) {
-				var key = _v8.a;
-				var child = _v8.b;
-				var htmls = _v9.a;
-				var existingStyles = _v9.b;
-				switch (child.$) {
-					case 'Unstyled':
-						var html = child.a;
-						return _Utils_eq(context, $mdgriffith$elm_ui$Internal$Model$asParagraph) ? _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2(
-									key,
-									html(context)),
-								htmls),
-							existingStyles) : _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2(
-									key,
-									html(context)),
-								htmls),
-							existingStyles);
-					case 'Styled':
-						var styled = child.a;
-						return _Utils_eq(context, $mdgriffith$elm_ui$Internal$Model$asParagraph) ? _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2(
-									key,
-									A2(styled.html, $mdgriffith$elm_ui$Internal$Model$NoStyleSheet, context)),
-								htmls),
-							$elm$core$List$isEmpty(existingStyles) ? styled.styles : _Utils_ap(styled.styles, existingStyles)) : _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2(
-									key,
-									A2(styled.html, $mdgriffith$elm_ui$Internal$Model$NoStyleSheet, context)),
-								htmls),
-							$elm$core$List$isEmpty(existingStyles) ? styled.styles : _Utils_ap(styled.styles, existingStyles));
-					case 'Text':
-						var str = child.a;
-						return _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2(
-									key,
-									_Utils_eq(context, $mdgriffith$elm_ui$Internal$Model$asEl) ? $mdgriffith$elm_ui$Internal$Model$textElementFill(str) : $mdgriffith$elm_ui$Internal$Model$textElement(str)),
-								htmls),
-							existingStyles);
-					default:
-						return _Utils_Tuple2(htmls, existingStyles);
-				}
-			});
-		var gather = F2(
-			function (child, _v6) {
-				var htmls = _v6.a;
-				var existingStyles = _v6.b;
-				switch (child.$) {
-					case 'Unstyled':
-						var html = child.a;
-						return _Utils_eq(context, $mdgriffith$elm_ui$Internal$Model$asParagraph) ? _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								html(context),
-								htmls),
-							existingStyles) : _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								html(context),
-								htmls),
-							existingStyles);
-					case 'Styled':
-						var styled = child.a;
-						return _Utils_eq(context, $mdgriffith$elm_ui$Internal$Model$asParagraph) ? _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								A2(styled.html, $mdgriffith$elm_ui$Internal$Model$NoStyleSheet, context),
-								htmls),
-							$elm$core$List$isEmpty(existingStyles) ? styled.styles : _Utils_ap(styled.styles, existingStyles)) : _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								A2(styled.html, $mdgriffith$elm_ui$Internal$Model$NoStyleSheet, context),
-								htmls),
-							$elm$core$List$isEmpty(existingStyles) ? styled.styles : _Utils_ap(styled.styles, existingStyles));
-					case 'Text':
-						var str = child.a;
-						return _Utils_Tuple2(
-							A2(
-								$elm$core$List$cons,
-								_Utils_eq(context, $mdgriffith$elm_ui$Internal$Model$asEl) ? $mdgriffith$elm_ui$Internal$Model$textElementFill(str) : $mdgriffith$elm_ui$Internal$Model$textElement(str),
-								htmls),
-							existingStyles);
-					default:
-						return _Utils_Tuple2(htmls, existingStyles);
-				}
-			});
-		if (children.$ === 'Keyed') {
-			var keyedChildren = children.a;
-			var _v1 = A3(
-				$elm$core$List$foldr,
-				gatherKeyed,
-				_Utils_Tuple2(_List_Nil, _List_Nil),
-				keyedChildren);
-			var keyed = _v1.a;
-			var styles = _v1.b;
-			var newStyles = $elm$core$List$isEmpty(styles) ? rendered.styles : _Utils_ap(rendered.styles, styles);
-			if (!newStyles.b) {
-				return $mdgriffith$elm_ui$Internal$Model$Unstyled(
-					A5(
-						$mdgriffith$elm_ui$Internal$Model$finalizeNode,
-						rendered.has,
-						rendered.node,
-						rendered.attributes,
-						$mdgriffith$elm_ui$Internal$Model$Keyed(
-							A3($mdgriffith$elm_ui$Internal$Model$addKeyedChildren, 'nearby-element-pls', keyed, rendered.children)),
-						$mdgriffith$elm_ui$Internal$Model$NoStyleSheet));
-			} else {
-				var allStyles = newStyles;
-				return $mdgriffith$elm_ui$Internal$Model$Styled(
-					{
-						html: A4(
-							$mdgriffith$elm_ui$Internal$Model$finalizeNode,
-							rendered.has,
-							rendered.node,
-							rendered.attributes,
-							$mdgriffith$elm_ui$Internal$Model$Keyed(
-								A3($mdgriffith$elm_ui$Internal$Model$addKeyedChildren, 'nearby-element-pls', keyed, rendered.children))),
-						styles: allStyles
-					});
-			}
-		} else {
-			var unkeyedChildren = children.a;
-			var _v3 = A3(
-				$elm$core$List$foldr,
-				gather,
-				_Utils_Tuple2(_List_Nil, _List_Nil),
-				unkeyedChildren);
-			var unkeyed = _v3.a;
-			var styles = _v3.b;
-			var newStyles = $elm$core$List$isEmpty(styles) ? rendered.styles : _Utils_ap(rendered.styles, styles);
-			if (!newStyles.b) {
-				return $mdgriffith$elm_ui$Internal$Model$Unstyled(
-					A5(
-						$mdgriffith$elm_ui$Internal$Model$finalizeNode,
-						rendered.has,
-						rendered.node,
-						rendered.attributes,
-						$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-							A2($mdgriffith$elm_ui$Internal$Model$addChildren, unkeyed, rendered.children)),
-						$mdgriffith$elm_ui$Internal$Model$NoStyleSheet));
-			} else {
-				var allStyles = newStyles;
-				return $mdgriffith$elm_ui$Internal$Model$Styled(
-					{
-						html: A4(
-							$mdgriffith$elm_ui$Internal$Model$finalizeNode,
-							rendered.has,
-							rendered.node,
-							rendered.attributes,
-							$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-								A2($mdgriffith$elm_ui$Internal$Model$addChildren, unkeyed, rendered.children))),
-						styles: allStyles
-					});
-			}
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$Single = F3(
-	function (a, b, c) {
-		return {$: 'Single', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Internal$Model$Transform = function (a) {
-	return {$: 'Transform', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Flag$Field = F2(
-	function (a, b) {
-		return {$: 'Field', a: a, b: b};
-	});
-var $elm$core$Bitwise$or = _Bitwise_or;
-var $mdgriffith$elm_ui$Internal$Flag$add = F2(
-	function (myFlag, _v0) {
-		var one = _v0.a;
-		var two = _v0.b;
-		if (myFlag.$ === 'Flag') {
-			var first = myFlag.a;
-			return A2($mdgriffith$elm_ui$Internal$Flag$Field, first | one, two);
-		} else {
-			var second = myFlag.a;
-			return A2($mdgriffith$elm_ui$Internal$Flag$Field, one, second | two);
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$ChildrenBehind = function (a) {
-	return {$: 'ChildrenBehind', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$ChildrenBehindAndInFront = F2(
-	function (a, b) {
-		return {$: 'ChildrenBehindAndInFront', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Model$ChildrenInFront = function (a) {
-	return {$: 'ChildrenInFront', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$nearbyElement = F2(
-	function (location, elem) {
-		return A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class(
-					function () {
-						switch (location.$) {
-							case 'Above':
-								return A2(
-									$elm$core$String$join,
-									' ',
-									_List_fromArray(
-										[$mdgriffith$elm_ui$Internal$Style$classes.nearby, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.above]));
-							case 'Below':
-								return A2(
-									$elm$core$String$join,
-									' ',
-									_List_fromArray(
-										[$mdgriffith$elm_ui$Internal$Style$classes.nearby, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.below]));
-							case 'OnRight':
-								return A2(
-									$elm$core$String$join,
-									' ',
-									_List_fromArray(
-										[$mdgriffith$elm_ui$Internal$Style$classes.nearby, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.onRight]));
-							case 'OnLeft':
-								return A2(
-									$elm$core$String$join,
-									' ',
-									_List_fromArray(
-										[$mdgriffith$elm_ui$Internal$Style$classes.nearby, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.onLeft]));
-							case 'InFront':
-								return A2(
-									$elm$core$String$join,
-									' ',
-									_List_fromArray(
-										[$mdgriffith$elm_ui$Internal$Style$classes.nearby, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.inFront]));
-							default:
-								return A2(
-									$elm$core$String$join,
-									' ',
-									_List_fromArray(
-										[$mdgriffith$elm_ui$Internal$Style$classes.nearby, $mdgriffith$elm_ui$Internal$Style$classes.single, $mdgriffith$elm_ui$Internal$Style$classes.behind]));
-						}
-					}())
-				]),
-			_List_fromArray(
-				[
-					function () {
-					switch (elem.$) {
-						case 'Empty':
-							return $elm$virtual_dom$VirtualDom$text('');
-						case 'Text':
-							var str = elem.a;
-							return $mdgriffith$elm_ui$Internal$Model$textElement(str);
-						case 'Unstyled':
-							var html = elem.a;
-							return html($mdgriffith$elm_ui$Internal$Model$asEl);
-						default:
-							var styled = elem.a;
-							return A2(styled.html, $mdgriffith$elm_ui$Internal$Model$NoStyleSheet, $mdgriffith$elm_ui$Internal$Model$asEl);
-					}
-				}()
-				]));
-	});
-var $mdgriffith$elm_ui$Internal$Model$addNearbyElement = F3(
-	function (location, elem, existing) {
-		var nearby = A2($mdgriffith$elm_ui$Internal$Model$nearbyElement, location, elem);
-		switch (existing.$) {
-			case 'NoNearbyChildren':
-				if (location.$ === 'Behind') {
-					return $mdgriffith$elm_ui$Internal$Model$ChildrenBehind(
-						_List_fromArray(
-							[nearby]));
-				} else {
-					return $mdgriffith$elm_ui$Internal$Model$ChildrenInFront(
-						_List_fromArray(
-							[nearby]));
-				}
-			case 'ChildrenBehind':
-				var existingBehind = existing.a;
-				if (location.$ === 'Behind') {
-					return $mdgriffith$elm_ui$Internal$Model$ChildrenBehind(
-						A2($elm$core$List$cons, nearby, existingBehind));
-				} else {
-					return A2(
-						$mdgriffith$elm_ui$Internal$Model$ChildrenBehindAndInFront,
-						existingBehind,
-						_List_fromArray(
-							[nearby]));
-				}
-			case 'ChildrenInFront':
-				var existingInFront = existing.a;
-				if (location.$ === 'Behind') {
-					return A2(
-						$mdgriffith$elm_ui$Internal$Model$ChildrenBehindAndInFront,
-						_List_fromArray(
-							[nearby]),
-						existingInFront);
-				} else {
-					return $mdgriffith$elm_ui$Internal$Model$ChildrenInFront(
-						A2($elm$core$List$cons, nearby, existingInFront));
-				}
-			default:
-				var existingBehind = existing.a;
-				var existingInFront = existing.b;
-				if (location.$ === 'Behind') {
-					return A2(
-						$mdgriffith$elm_ui$Internal$Model$ChildrenBehindAndInFront,
-						A2($elm$core$List$cons, nearby, existingBehind),
-						existingInFront);
-				} else {
-					return A2(
-						$mdgriffith$elm_ui$Internal$Model$ChildrenBehindAndInFront,
-						existingBehind,
-						A2($elm$core$List$cons, nearby, existingInFront));
-				}
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$Embedded = F2(
-	function (a, b) {
-		return {$: 'Embedded', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Model$NodeName = function (a) {
-	return {$: 'NodeName', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$addNodeName = F2(
-	function (newNode, old) {
-		switch (old.$) {
-			case 'Generic':
-				return $mdgriffith$elm_ui$Internal$Model$NodeName(newNode);
-			case 'NodeName':
-				var name = old.a;
-				return A2($mdgriffith$elm_ui$Internal$Model$Embedded, name, newNode);
-			default:
-				var x = old.a;
-				var y = old.b;
-				return A2($mdgriffith$elm_ui$Internal$Model$Embedded, x, y);
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$alignXName = function (align) {
-	switch (align.$) {
-		case 'Left':
-			return $mdgriffith$elm_ui$Internal$Style$classes.alignedHorizontally + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.alignLeft);
-		case 'Right':
-			return $mdgriffith$elm_ui$Internal$Style$classes.alignedHorizontally + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.alignRight);
-		default:
-			return $mdgriffith$elm_ui$Internal$Style$classes.alignedHorizontally + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.alignCenterX);
-	}
-};
-var $mdgriffith$elm_ui$Internal$Model$alignYName = function (align) {
-	switch (align.$) {
-		case 'Top':
-			return $mdgriffith$elm_ui$Internal$Style$classes.alignedVertically + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.alignTop);
-		case 'Bottom':
-			return $mdgriffith$elm_ui$Internal$Style$classes.alignedVertically + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.alignBottom);
-		default:
-			return $mdgriffith$elm_ui$Internal$Style$classes.alignedVertically + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.alignCenterY);
-	}
-};
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
-var $mdgriffith$elm_ui$Internal$Model$FullTransform = F4(
-	function (a, b, c, d) {
-		return {$: 'FullTransform', a: a, b: b, c: c, d: d};
-	});
-var $mdgriffith$elm_ui$Internal$Model$Moved = function (a) {
-	return {$: 'Moved', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$composeTransformation = F2(
-	function (transform, component) {
-		switch (transform.$) {
-			case 'Untransformed':
-				switch (component.$) {
-					case 'MoveX':
-						var x = component.a;
-						return $mdgriffith$elm_ui$Internal$Model$Moved(
-							_Utils_Tuple3(x, 0, 0));
-					case 'MoveY':
-						var y = component.a;
-						return $mdgriffith$elm_ui$Internal$Model$Moved(
-							_Utils_Tuple3(0, y, 0));
-					case 'MoveZ':
-						var z = component.a;
-						return $mdgriffith$elm_ui$Internal$Model$Moved(
-							_Utils_Tuple3(0, 0, z));
-					case 'MoveXYZ':
-						var xyz = component.a;
-						return $mdgriffith$elm_ui$Internal$Model$Moved(xyz);
-					case 'Rotate':
-						var xyz = component.a;
-						var angle = component.b;
-						return A4(
-							$mdgriffith$elm_ui$Internal$Model$FullTransform,
-							_Utils_Tuple3(0, 0, 0),
-							_Utils_Tuple3(1, 1, 1),
-							xyz,
-							angle);
-					default:
-						var xyz = component.a;
-						return A4(
-							$mdgriffith$elm_ui$Internal$Model$FullTransform,
-							_Utils_Tuple3(0, 0, 0),
-							xyz,
-							_Utils_Tuple3(0, 0, 1),
-							0);
-				}
-			case 'Moved':
-				var moved = transform.a;
-				var x = moved.a;
-				var y = moved.b;
-				var z = moved.c;
-				switch (component.$) {
-					case 'MoveX':
-						var newX = component.a;
-						return $mdgriffith$elm_ui$Internal$Model$Moved(
-							_Utils_Tuple3(newX, y, z));
-					case 'MoveY':
-						var newY = component.a;
-						return $mdgriffith$elm_ui$Internal$Model$Moved(
-							_Utils_Tuple3(x, newY, z));
-					case 'MoveZ':
-						var newZ = component.a;
-						return $mdgriffith$elm_ui$Internal$Model$Moved(
-							_Utils_Tuple3(x, y, newZ));
-					case 'MoveXYZ':
-						var xyz = component.a;
-						return $mdgriffith$elm_ui$Internal$Model$Moved(xyz);
-					case 'Rotate':
-						var xyz = component.a;
-						var angle = component.b;
-						return A4(
-							$mdgriffith$elm_ui$Internal$Model$FullTransform,
-							moved,
-							_Utils_Tuple3(1, 1, 1),
-							xyz,
-							angle);
-					default:
-						var scale = component.a;
-						return A4(
-							$mdgriffith$elm_ui$Internal$Model$FullTransform,
-							moved,
-							scale,
-							_Utils_Tuple3(0, 0, 1),
-							0);
-				}
-			default:
-				var moved = transform.a;
-				var x = moved.a;
-				var y = moved.b;
-				var z = moved.c;
-				var scaled = transform.b;
-				var origin = transform.c;
-				var angle = transform.d;
-				switch (component.$) {
-					case 'MoveX':
-						var newX = component.a;
-						return A4(
-							$mdgriffith$elm_ui$Internal$Model$FullTransform,
-							_Utils_Tuple3(newX, y, z),
-							scaled,
-							origin,
-							angle);
-					case 'MoveY':
-						var newY = component.a;
-						return A4(
-							$mdgriffith$elm_ui$Internal$Model$FullTransform,
-							_Utils_Tuple3(x, newY, z),
-							scaled,
-							origin,
-							angle);
-					case 'MoveZ':
-						var newZ = component.a;
-						return A4(
-							$mdgriffith$elm_ui$Internal$Model$FullTransform,
-							_Utils_Tuple3(x, y, newZ),
-							scaled,
-							origin,
-							angle);
-					case 'MoveXYZ':
-						var newMove = component.a;
-						return A4($mdgriffith$elm_ui$Internal$Model$FullTransform, newMove, scaled, origin, angle);
-					case 'Rotate':
-						var newOrigin = component.a;
-						var newAngle = component.b;
-						return A4($mdgriffith$elm_ui$Internal$Model$FullTransform, moved, scaled, newOrigin, newAngle);
-					default:
-						var newScale = component.a;
-						return A4($mdgriffith$elm_ui$Internal$Model$FullTransform, moved, newScale, origin, angle);
-				}
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Flag$height = $mdgriffith$elm_ui$Internal$Flag$flag(7);
-var $mdgriffith$elm_ui$Internal$Flag$heightContent = $mdgriffith$elm_ui$Internal$Flag$flag(36);
-var $mdgriffith$elm_ui$Internal$Flag$merge = F2(
-	function (_v0, _v1) {
-		var one = _v0.a;
-		var two = _v0.b;
-		var three = _v1.a;
-		var four = _v1.b;
-		return A2($mdgriffith$elm_ui$Internal$Flag$Field, one | three, two | four);
-	});
-var $mdgriffith$elm_ui$Internal$Flag$none = A2($mdgriffith$elm_ui$Internal$Flag$Field, 0, 0);
-var $mdgriffith$elm_ui$Internal$Model$renderHeight = function (h) {
-	switch (h.$) {
-		case 'Px':
-			var px = h.a;
-			var val = $elm$core$String$fromInt(px);
-			var name = 'height-px-' + val;
-			return _Utils_Tuple3(
-				$mdgriffith$elm_ui$Internal$Flag$none,
-				$mdgriffith$elm_ui$Internal$Style$classes.heightExact + (' ' + name),
-				_List_fromArray(
-					[
-						A3($mdgriffith$elm_ui$Internal$Model$Single, name, 'height', val + 'px')
-					]));
-		case 'Content':
-			return _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$heightContent, $mdgriffith$elm_ui$Internal$Flag$none),
-				$mdgriffith$elm_ui$Internal$Style$classes.heightContent,
-				_List_Nil);
-		case 'Fill':
-			var portion = h.a;
-			return (portion === 1) ? _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$heightFill, $mdgriffith$elm_ui$Internal$Flag$none),
-				$mdgriffith$elm_ui$Internal$Style$classes.heightFill,
-				_List_Nil) : _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$heightFill, $mdgriffith$elm_ui$Internal$Flag$none),
-				$mdgriffith$elm_ui$Internal$Style$classes.heightFillPortion + (' height-fill-' + $elm$core$String$fromInt(portion)),
-				_List_fromArray(
-					[
-						A3(
-						$mdgriffith$elm_ui$Internal$Model$Single,
-						$mdgriffith$elm_ui$Internal$Style$classes.any + ('.' + ($mdgriffith$elm_ui$Internal$Style$classes.column + (' > ' + $mdgriffith$elm_ui$Internal$Style$dot(
-							'height-fill-' + $elm$core$String$fromInt(portion))))),
-						'flex-grow',
-						$elm$core$String$fromInt(portion * 100000))
-					]));
-		case 'Min':
-			var minSize = h.a;
-			var len = h.b;
-			var cls = 'min-height-' + $elm$core$String$fromInt(minSize);
-			var style = A3(
-				$mdgriffith$elm_ui$Internal$Model$Single,
-				cls,
-				'min-height',
-				$elm$core$String$fromInt(minSize) + 'px !important');
-			var _v1 = $mdgriffith$elm_ui$Internal$Model$renderHeight(len);
-			var newFlag = _v1.a;
-			var newAttrs = _v1.b;
-			var newStyle = _v1.c;
-			return _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$heightBetween, newFlag),
-				cls + (' ' + newAttrs),
-				A2($elm$core$List$cons, style, newStyle));
-		default:
-			var maxSize = h.a;
-			var len = h.b;
-			var cls = 'max-height-' + $elm$core$String$fromInt(maxSize);
-			var style = A3(
-				$mdgriffith$elm_ui$Internal$Model$Single,
-				cls,
-				'max-height',
-				$elm$core$String$fromInt(maxSize) + 'px');
-			var _v2 = $mdgriffith$elm_ui$Internal$Model$renderHeight(len);
-			var newFlag = _v2.a;
-			var newAttrs = _v2.b;
-			var newStyle = _v2.c;
-			return _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$heightBetween, newFlag),
-				cls + (' ' + newAttrs),
-				A2($elm$core$List$cons, style, newStyle));
-	}
-};
-var $mdgriffith$elm_ui$Internal$Flag$widthContent = $mdgriffith$elm_ui$Internal$Flag$flag(38);
-var $mdgriffith$elm_ui$Internal$Model$renderWidth = function (w) {
-	switch (w.$) {
-		case 'Px':
-			var px = w.a;
-			return _Utils_Tuple3(
-				$mdgriffith$elm_ui$Internal$Flag$none,
-				$mdgriffith$elm_ui$Internal$Style$classes.widthExact + (' width-px-' + $elm$core$String$fromInt(px)),
-				_List_fromArray(
-					[
-						A3(
-						$mdgriffith$elm_ui$Internal$Model$Single,
-						'width-px-' + $elm$core$String$fromInt(px),
-						'width',
-						$elm$core$String$fromInt(px) + 'px')
-					]));
-		case 'Content':
-			return _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$widthContent, $mdgriffith$elm_ui$Internal$Flag$none),
-				$mdgriffith$elm_ui$Internal$Style$classes.widthContent,
-				_List_Nil);
-		case 'Fill':
-			var portion = w.a;
-			return (portion === 1) ? _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$widthFill, $mdgriffith$elm_ui$Internal$Flag$none),
-				$mdgriffith$elm_ui$Internal$Style$classes.widthFill,
-				_List_Nil) : _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$widthFill, $mdgriffith$elm_ui$Internal$Flag$none),
-				$mdgriffith$elm_ui$Internal$Style$classes.widthFillPortion + (' width-fill-' + $elm$core$String$fromInt(portion)),
-				_List_fromArray(
-					[
-						A3(
-						$mdgriffith$elm_ui$Internal$Model$Single,
-						$mdgriffith$elm_ui$Internal$Style$classes.any + ('.' + ($mdgriffith$elm_ui$Internal$Style$classes.row + (' > ' + $mdgriffith$elm_ui$Internal$Style$dot(
-							'width-fill-' + $elm$core$String$fromInt(portion))))),
-						'flex-grow',
-						$elm$core$String$fromInt(portion * 100000))
-					]));
-		case 'Min':
-			var minSize = w.a;
-			var len = w.b;
-			var cls = 'min-width-' + $elm$core$String$fromInt(minSize);
-			var style = A3(
-				$mdgriffith$elm_ui$Internal$Model$Single,
-				cls,
-				'min-width',
-				$elm$core$String$fromInt(minSize) + 'px');
-			var _v1 = $mdgriffith$elm_ui$Internal$Model$renderWidth(len);
-			var newFlag = _v1.a;
-			var newAttrs = _v1.b;
-			var newStyle = _v1.c;
-			return _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$widthBetween, newFlag),
-				cls + (' ' + newAttrs),
-				A2($elm$core$List$cons, style, newStyle));
-		default:
-			var maxSize = w.a;
-			var len = w.b;
-			var cls = 'max-width-' + $elm$core$String$fromInt(maxSize);
-			var style = A3(
-				$mdgriffith$elm_ui$Internal$Model$Single,
-				cls,
-				'max-width',
-				$elm$core$String$fromInt(maxSize) + 'px');
-			var _v2 = $mdgriffith$elm_ui$Internal$Model$renderWidth(len);
-			var newFlag = _v2.a;
-			var newAttrs = _v2.b;
-			var newStyle = _v2.c;
-			return _Utils_Tuple3(
-				A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$widthBetween, newFlag),
-				cls + (' ' + newAttrs),
-				A2($elm$core$List$cons, style, newStyle));
-	}
-};
-var $mdgriffith$elm_ui$Internal$Flag$borderWidth = $mdgriffith$elm_ui$Internal$Flag$flag(27);
-var $mdgriffith$elm_ui$Internal$Model$skippable = F2(
-	function (flag, style) {
-		if (_Utils_eq(flag, $mdgriffith$elm_ui$Internal$Flag$borderWidth)) {
-			if (style.$ === 'Single') {
-				var val = style.c;
-				switch (val) {
-					case '0px':
-						return true;
-					case '1px':
-						return true;
-					case '2px':
-						return true;
-					case '3px':
-						return true;
-					case '4px':
-						return true;
-					case '5px':
-						return true;
-					case '6px':
-						return true;
-					default:
-						return false;
-				}
-			} else {
-				return false;
-			}
-		} else {
-			switch (style.$) {
-				case 'FontSize':
-					var i = style.a;
-					return (i >= 8) && (i <= 32);
-				case 'PaddingStyle':
-					var name = style.a;
-					var t = style.b;
-					var r = style.c;
-					var b = style.d;
-					var l = style.e;
-					return _Utils_eq(t, b) && (_Utils_eq(t, r) && (_Utils_eq(t, l) && ((t >= 0) && (t <= 24))));
-				default:
-					return false;
-			}
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Flag$width = $mdgriffith$elm_ui$Internal$Flag$flag(6);
-var $mdgriffith$elm_ui$Internal$Flag$xAlign = $mdgriffith$elm_ui$Internal$Flag$flag(30);
-var $mdgriffith$elm_ui$Internal$Flag$yAlign = $mdgriffith$elm_ui$Internal$Flag$flag(29);
-var $mdgriffith$elm_ui$Internal$Model$gatherAttrRecursive = F8(
-	function (classes, node, has, transform, styles, attrs, children, elementAttrs) {
-		gatherAttrRecursive:
-		while (true) {
-			if (!elementAttrs.b) {
-				var _v1 = $mdgriffith$elm_ui$Internal$Model$transformClass(transform);
-				if (_v1.$ === 'Nothing') {
-					return {
-						attributes: A2(
-							$elm$core$List$cons,
-							$elm$html$Html$Attributes$class(classes),
-							attrs),
-						children: children,
-						has: has,
-						node: node,
-						styles: styles
-					};
-				} else {
-					var _class = _v1.a;
-					return {
-						attributes: A2(
-							$elm$core$List$cons,
-							$elm$html$Html$Attributes$class(classes + (' ' + _class)),
-							attrs),
-						children: children,
-						has: has,
-						node: node,
-						styles: A2(
-							$elm$core$List$cons,
-							$mdgriffith$elm_ui$Internal$Model$Transform(transform),
-							styles)
-					};
-				}
-			} else {
-				var attribute = elementAttrs.a;
-				var remaining = elementAttrs.b;
-				switch (attribute.$) {
-					case 'NoAttribute':
-						var $temp$classes = classes,
-							$temp$node = node,
-							$temp$has = has,
-							$temp$transform = transform,
-							$temp$styles = styles,
-							$temp$attrs = attrs,
-							$temp$children = children,
-							$temp$elementAttrs = remaining;
-						classes = $temp$classes;
-						node = $temp$node;
-						has = $temp$has;
-						transform = $temp$transform;
-						styles = $temp$styles;
-						attrs = $temp$attrs;
-						children = $temp$children;
-						elementAttrs = $temp$elementAttrs;
-						continue gatherAttrRecursive;
-					case 'Class':
-						var flag = attribute.a;
-						var exactClassName = attribute.b;
-						if (A2($mdgriffith$elm_ui$Internal$Flag$present, flag, has)) {
-							var $temp$classes = classes,
-								$temp$node = node,
-								$temp$has = has,
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						} else {
-							var $temp$classes = exactClassName + (' ' + classes),
-								$temp$node = node,
-								$temp$has = A2($mdgriffith$elm_ui$Internal$Flag$add, flag, has),
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						}
-					case 'Attr':
-						var actualAttribute = attribute.a;
-						var $temp$classes = classes,
-							$temp$node = node,
-							$temp$has = has,
-							$temp$transform = transform,
-							$temp$styles = styles,
-							$temp$attrs = A2($elm$core$List$cons, actualAttribute, attrs),
-							$temp$children = children,
-							$temp$elementAttrs = remaining;
-						classes = $temp$classes;
-						node = $temp$node;
-						has = $temp$has;
-						transform = $temp$transform;
-						styles = $temp$styles;
-						attrs = $temp$attrs;
-						children = $temp$children;
-						elementAttrs = $temp$elementAttrs;
-						continue gatherAttrRecursive;
-					case 'StyleClass':
-						var flag = attribute.a;
-						var style = attribute.b;
-						if (A2($mdgriffith$elm_ui$Internal$Flag$present, flag, has)) {
-							var $temp$classes = classes,
-								$temp$node = node,
-								$temp$has = has,
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						} else {
-							if (A2($mdgriffith$elm_ui$Internal$Model$skippable, flag, style)) {
-								var $temp$classes = $mdgriffith$elm_ui$Internal$Model$getStyleName(style) + (' ' + classes),
-									$temp$node = node,
-									$temp$has = A2($mdgriffith$elm_ui$Internal$Flag$add, flag, has),
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = attrs,
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							} else {
-								var $temp$classes = $mdgriffith$elm_ui$Internal$Model$getStyleName(style) + (' ' + classes),
-									$temp$node = node,
-									$temp$has = A2($mdgriffith$elm_ui$Internal$Flag$add, flag, has),
-									$temp$transform = transform,
-									$temp$styles = A2($elm$core$List$cons, style, styles),
-									$temp$attrs = attrs,
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							}
-						}
-					case 'TransformComponent':
-						var flag = attribute.a;
-						var component = attribute.b;
-						var $temp$classes = classes,
-							$temp$node = node,
-							$temp$has = A2($mdgriffith$elm_ui$Internal$Flag$add, flag, has),
-							$temp$transform = A2($mdgriffith$elm_ui$Internal$Model$composeTransformation, transform, component),
-							$temp$styles = styles,
-							$temp$attrs = attrs,
-							$temp$children = children,
-							$temp$elementAttrs = remaining;
-						classes = $temp$classes;
-						node = $temp$node;
-						has = $temp$has;
-						transform = $temp$transform;
-						styles = $temp$styles;
-						attrs = $temp$attrs;
-						children = $temp$children;
-						elementAttrs = $temp$elementAttrs;
-						continue gatherAttrRecursive;
-					case 'Width':
-						var width = attribute.a;
-						if (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$width, has)) {
-							var $temp$classes = classes,
-								$temp$node = node,
-								$temp$has = has,
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						} else {
-							switch (width.$) {
-								case 'Px':
-									var px = width.a;
-									var $temp$classes = ($mdgriffith$elm_ui$Internal$Style$classes.widthExact + (' width-px-' + $elm$core$String$fromInt(px))) + (' ' + classes),
-										$temp$node = node,
-										$temp$has = A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$width, has),
-										$temp$transform = transform,
-										$temp$styles = A2(
-										$elm$core$List$cons,
-										A3(
-											$mdgriffith$elm_ui$Internal$Model$Single,
-											'width-px-' + $elm$core$String$fromInt(px),
-											'width',
-											$elm$core$String$fromInt(px) + 'px'),
-										styles),
-										$temp$attrs = attrs,
-										$temp$children = children,
-										$temp$elementAttrs = remaining;
-									classes = $temp$classes;
-									node = $temp$node;
-									has = $temp$has;
-									transform = $temp$transform;
-									styles = $temp$styles;
-									attrs = $temp$attrs;
-									children = $temp$children;
-									elementAttrs = $temp$elementAttrs;
-									continue gatherAttrRecursive;
-								case 'Content':
-									var $temp$classes = classes + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.widthContent),
-										$temp$node = node,
-										$temp$has = A2(
-										$mdgriffith$elm_ui$Internal$Flag$add,
-										$mdgriffith$elm_ui$Internal$Flag$widthContent,
-										A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$width, has)),
-										$temp$transform = transform,
-										$temp$styles = styles,
-										$temp$attrs = attrs,
-										$temp$children = children,
-										$temp$elementAttrs = remaining;
-									classes = $temp$classes;
-									node = $temp$node;
-									has = $temp$has;
-									transform = $temp$transform;
-									styles = $temp$styles;
-									attrs = $temp$attrs;
-									children = $temp$children;
-									elementAttrs = $temp$elementAttrs;
-									continue gatherAttrRecursive;
-								case 'Fill':
-									var portion = width.a;
-									if (portion === 1) {
-										var $temp$classes = classes + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.widthFill),
-											$temp$node = node,
-											$temp$has = A2(
-											$mdgriffith$elm_ui$Internal$Flag$add,
-											$mdgriffith$elm_ui$Internal$Flag$widthFill,
-											A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$width, has)),
-											$temp$transform = transform,
-											$temp$styles = styles,
-											$temp$attrs = attrs,
-											$temp$children = children,
-											$temp$elementAttrs = remaining;
-										classes = $temp$classes;
-										node = $temp$node;
-										has = $temp$has;
-										transform = $temp$transform;
-										styles = $temp$styles;
-										attrs = $temp$attrs;
-										children = $temp$children;
-										elementAttrs = $temp$elementAttrs;
-										continue gatherAttrRecursive;
-									} else {
-										var $temp$classes = classes + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.widthFillPortion + (' width-fill-' + $elm$core$String$fromInt(portion)))),
-											$temp$node = node,
-											$temp$has = A2(
-											$mdgriffith$elm_ui$Internal$Flag$add,
-											$mdgriffith$elm_ui$Internal$Flag$widthFill,
-											A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$width, has)),
-											$temp$transform = transform,
-											$temp$styles = A2(
-											$elm$core$List$cons,
-											A3(
-												$mdgriffith$elm_ui$Internal$Model$Single,
-												$mdgriffith$elm_ui$Internal$Style$classes.any + ('.' + ($mdgriffith$elm_ui$Internal$Style$classes.row + (' > ' + $mdgriffith$elm_ui$Internal$Style$dot(
-													'width-fill-' + $elm$core$String$fromInt(portion))))),
-												'flex-grow',
-												$elm$core$String$fromInt(portion * 100000)),
-											styles),
-											$temp$attrs = attrs,
-											$temp$children = children,
-											$temp$elementAttrs = remaining;
-										classes = $temp$classes;
-										node = $temp$node;
-										has = $temp$has;
-										transform = $temp$transform;
-										styles = $temp$styles;
-										attrs = $temp$attrs;
-										children = $temp$children;
-										elementAttrs = $temp$elementAttrs;
-										continue gatherAttrRecursive;
-									}
-								default:
-									var _v4 = $mdgriffith$elm_ui$Internal$Model$renderWidth(width);
-									var addToFlags = _v4.a;
-									var newClass = _v4.b;
-									var newStyles = _v4.c;
-									var $temp$classes = classes + (' ' + newClass),
-										$temp$node = node,
-										$temp$has = A2(
-										$mdgriffith$elm_ui$Internal$Flag$merge,
-										addToFlags,
-										A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$width, has)),
-										$temp$transform = transform,
-										$temp$styles = _Utils_ap(newStyles, styles),
-										$temp$attrs = attrs,
-										$temp$children = children,
-										$temp$elementAttrs = remaining;
-									classes = $temp$classes;
-									node = $temp$node;
-									has = $temp$has;
-									transform = $temp$transform;
-									styles = $temp$styles;
-									attrs = $temp$attrs;
-									children = $temp$children;
-									elementAttrs = $temp$elementAttrs;
-									continue gatherAttrRecursive;
-							}
-						}
-					case 'Height':
-						var height = attribute.a;
-						if (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$height, has)) {
-							var $temp$classes = classes,
-								$temp$node = node,
-								$temp$has = has,
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						} else {
-							switch (height.$) {
-								case 'Px':
-									var px = height.a;
-									var val = $elm$core$String$fromInt(px) + 'px';
-									var name = 'height-px-' + val;
-									var $temp$classes = $mdgriffith$elm_ui$Internal$Style$classes.heightExact + (' ' + (name + (' ' + classes))),
-										$temp$node = node,
-										$temp$has = A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$height, has),
-										$temp$transform = transform,
-										$temp$styles = A2(
-										$elm$core$List$cons,
-										A3($mdgriffith$elm_ui$Internal$Model$Single, name, 'height ', val),
-										styles),
-										$temp$attrs = attrs,
-										$temp$children = children,
-										$temp$elementAttrs = remaining;
-									classes = $temp$classes;
-									node = $temp$node;
-									has = $temp$has;
-									transform = $temp$transform;
-									styles = $temp$styles;
-									attrs = $temp$attrs;
-									children = $temp$children;
-									elementAttrs = $temp$elementAttrs;
-									continue gatherAttrRecursive;
-								case 'Content':
-									var $temp$classes = $mdgriffith$elm_ui$Internal$Style$classes.heightContent + (' ' + classes),
-										$temp$node = node,
-										$temp$has = A2(
-										$mdgriffith$elm_ui$Internal$Flag$add,
-										$mdgriffith$elm_ui$Internal$Flag$heightContent,
-										A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$height, has)),
-										$temp$transform = transform,
-										$temp$styles = styles,
-										$temp$attrs = attrs,
-										$temp$children = children,
-										$temp$elementAttrs = remaining;
-									classes = $temp$classes;
-									node = $temp$node;
-									has = $temp$has;
-									transform = $temp$transform;
-									styles = $temp$styles;
-									attrs = $temp$attrs;
-									children = $temp$children;
-									elementAttrs = $temp$elementAttrs;
-									continue gatherAttrRecursive;
-								case 'Fill':
-									var portion = height.a;
-									if (portion === 1) {
-										var $temp$classes = $mdgriffith$elm_ui$Internal$Style$classes.heightFill + (' ' + classes),
-											$temp$node = node,
-											$temp$has = A2(
-											$mdgriffith$elm_ui$Internal$Flag$add,
-											$mdgriffith$elm_ui$Internal$Flag$heightFill,
-											A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$height, has)),
-											$temp$transform = transform,
-											$temp$styles = styles,
-											$temp$attrs = attrs,
-											$temp$children = children,
-											$temp$elementAttrs = remaining;
-										classes = $temp$classes;
-										node = $temp$node;
-										has = $temp$has;
-										transform = $temp$transform;
-										styles = $temp$styles;
-										attrs = $temp$attrs;
-										children = $temp$children;
-										elementAttrs = $temp$elementAttrs;
-										continue gatherAttrRecursive;
-									} else {
-										var $temp$classes = classes + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.heightFillPortion + (' height-fill-' + $elm$core$String$fromInt(portion)))),
-											$temp$node = node,
-											$temp$has = A2(
-											$mdgriffith$elm_ui$Internal$Flag$add,
-											$mdgriffith$elm_ui$Internal$Flag$heightFill,
-											A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$height, has)),
-											$temp$transform = transform,
-											$temp$styles = A2(
-											$elm$core$List$cons,
-											A3(
-												$mdgriffith$elm_ui$Internal$Model$Single,
-												$mdgriffith$elm_ui$Internal$Style$classes.any + ('.' + ($mdgriffith$elm_ui$Internal$Style$classes.column + (' > ' + $mdgriffith$elm_ui$Internal$Style$dot(
-													'height-fill-' + $elm$core$String$fromInt(portion))))),
-												'flex-grow',
-												$elm$core$String$fromInt(portion * 100000)),
-											styles),
-											$temp$attrs = attrs,
-											$temp$children = children,
-											$temp$elementAttrs = remaining;
-										classes = $temp$classes;
-										node = $temp$node;
-										has = $temp$has;
-										transform = $temp$transform;
-										styles = $temp$styles;
-										attrs = $temp$attrs;
-										children = $temp$children;
-										elementAttrs = $temp$elementAttrs;
-										continue gatherAttrRecursive;
-									}
-								default:
-									var _v6 = $mdgriffith$elm_ui$Internal$Model$renderHeight(height);
-									var addToFlags = _v6.a;
-									var newClass = _v6.b;
-									var newStyles = _v6.c;
-									var $temp$classes = classes + (' ' + newClass),
-										$temp$node = node,
-										$temp$has = A2(
-										$mdgriffith$elm_ui$Internal$Flag$merge,
-										addToFlags,
-										A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$height, has)),
-										$temp$transform = transform,
-										$temp$styles = _Utils_ap(newStyles, styles),
-										$temp$attrs = attrs,
-										$temp$children = children,
-										$temp$elementAttrs = remaining;
-									classes = $temp$classes;
-									node = $temp$node;
-									has = $temp$has;
-									transform = $temp$transform;
-									styles = $temp$styles;
-									attrs = $temp$attrs;
-									children = $temp$children;
-									elementAttrs = $temp$elementAttrs;
-									continue gatherAttrRecursive;
-							}
-						}
-					case 'Describe':
-						var description = attribute.a;
-						switch (description.$) {
-							case 'Main':
-								var $temp$classes = classes,
-									$temp$node = A2($mdgriffith$elm_ui$Internal$Model$addNodeName, 'main', node),
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = attrs,
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							case 'Navigation':
-								var $temp$classes = classes,
-									$temp$node = A2($mdgriffith$elm_ui$Internal$Model$addNodeName, 'nav', node),
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = attrs,
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							case 'ContentInfo':
-								var $temp$classes = classes,
-									$temp$node = A2($mdgriffith$elm_ui$Internal$Model$addNodeName, 'footer', node),
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = attrs,
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							case 'Complementary':
-								var $temp$classes = classes,
-									$temp$node = A2($mdgriffith$elm_ui$Internal$Model$addNodeName, 'aside', node),
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = attrs,
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							case 'Heading':
-								var i = description.a;
-								if (i <= 1) {
-									var $temp$classes = classes,
-										$temp$node = A2($mdgriffith$elm_ui$Internal$Model$addNodeName, 'h1', node),
-										$temp$has = has,
-										$temp$transform = transform,
-										$temp$styles = styles,
-										$temp$attrs = attrs,
-										$temp$children = children,
-										$temp$elementAttrs = remaining;
-									classes = $temp$classes;
-									node = $temp$node;
-									has = $temp$has;
-									transform = $temp$transform;
-									styles = $temp$styles;
-									attrs = $temp$attrs;
-									children = $temp$children;
-									elementAttrs = $temp$elementAttrs;
-									continue gatherAttrRecursive;
-								} else {
-									if (i < 7) {
-										var $temp$classes = classes,
-											$temp$node = A2(
-											$mdgriffith$elm_ui$Internal$Model$addNodeName,
-											'h' + $elm$core$String$fromInt(i),
-											node),
-											$temp$has = has,
-											$temp$transform = transform,
-											$temp$styles = styles,
-											$temp$attrs = attrs,
-											$temp$children = children,
-											$temp$elementAttrs = remaining;
-										classes = $temp$classes;
-										node = $temp$node;
-										has = $temp$has;
-										transform = $temp$transform;
-										styles = $temp$styles;
-										attrs = $temp$attrs;
-										children = $temp$children;
-										elementAttrs = $temp$elementAttrs;
-										continue gatherAttrRecursive;
-									} else {
-										var $temp$classes = classes,
-											$temp$node = A2($mdgriffith$elm_ui$Internal$Model$addNodeName, 'h6', node),
-											$temp$has = has,
-											$temp$transform = transform,
-											$temp$styles = styles,
-											$temp$attrs = attrs,
-											$temp$children = children,
-											$temp$elementAttrs = remaining;
-										classes = $temp$classes;
-										node = $temp$node;
-										has = $temp$has;
-										transform = $temp$transform;
-										styles = $temp$styles;
-										attrs = $temp$attrs;
-										children = $temp$children;
-										elementAttrs = $temp$elementAttrs;
-										continue gatherAttrRecursive;
-									}
-								}
-							case 'Paragraph':
-								var $temp$classes = classes,
-									$temp$node = node,
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = attrs,
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							case 'Button':
-								var $temp$classes = classes,
-									$temp$node = node,
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = A2(
-									$elm$core$List$cons,
-									A2($elm$virtual_dom$VirtualDom$attribute, 'role', 'button'),
-									attrs),
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							case 'Label':
-								var label = description.a;
-								var $temp$classes = classes,
-									$temp$node = node,
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = A2(
-									$elm$core$List$cons,
-									A2($elm$virtual_dom$VirtualDom$attribute, 'aria-label', label),
-									attrs),
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							case 'LivePolite':
-								var $temp$classes = classes,
-									$temp$node = node,
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = A2(
-									$elm$core$List$cons,
-									A2($elm$virtual_dom$VirtualDom$attribute, 'aria-live', 'polite'),
-									attrs),
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-							default:
-								var $temp$classes = classes,
-									$temp$node = node,
-									$temp$has = has,
-									$temp$transform = transform,
-									$temp$styles = styles,
-									$temp$attrs = A2(
-									$elm$core$List$cons,
-									A2($elm$virtual_dom$VirtualDom$attribute, 'aria-live', 'assertive'),
-									attrs),
-									$temp$children = children,
-									$temp$elementAttrs = remaining;
-								classes = $temp$classes;
-								node = $temp$node;
-								has = $temp$has;
-								transform = $temp$transform;
-								styles = $temp$styles;
-								attrs = $temp$attrs;
-								children = $temp$children;
-								elementAttrs = $temp$elementAttrs;
-								continue gatherAttrRecursive;
-						}
-					case 'Nearby':
-						var location = attribute.a;
-						var elem = attribute.b;
-						var newStyles = function () {
-							switch (elem.$) {
-								case 'Empty':
-									return styles;
-								case 'Text':
-									var str = elem.a;
-									return styles;
-								case 'Unstyled':
-									var html = elem.a;
-									return styles;
-								default:
-									var styled = elem.a;
-									return _Utils_ap(styles, styled.styles);
-							}
-						}();
-						var $temp$classes = classes,
-							$temp$node = node,
-							$temp$has = has,
-							$temp$transform = transform,
-							$temp$styles = newStyles,
-							$temp$attrs = attrs,
-							$temp$children = A3($mdgriffith$elm_ui$Internal$Model$addNearbyElement, location, elem, children),
-							$temp$elementAttrs = remaining;
-						classes = $temp$classes;
-						node = $temp$node;
-						has = $temp$has;
-						transform = $temp$transform;
-						styles = $temp$styles;
-						attrs = $temp$attrs;
-						children = $temp$children;
-						elementAttrs = $temp$elementAttrs;
-						continue gatherAttrRecursive;
-					case 'AlignX':
-						var x = attribute.a;
-						if (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$xAlign, has)) {
-							var $temp$classes = classes,
-								$temp$node = node,
-								$temp$has = has,
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						} else {
-							var $temp$classes = $mdgriffith$elm_ui$Internal$Model$alignXName(x) + (' ' + classes),
-								$temp$node = node,
-								$temp$has = function (flags) {
-								switch (x.$) {
-									case 'CenterX':
-										return A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$centerX, flags);
-									case 'Right':
-										return A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$alignRight, flags);
-									default:
-										return flags;
-								}
-							}(
-								A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$xAlign, has)),
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						}
-					default:
-						var y = attribute.a;
-						if (A2($mdgriffith$elm_ui$Internal$Flag$present, $mdgriffith$elm_ui$Internal$Flag$yAlign, has)) {
-							var $temp$classes = classes,
-								$temp$node = node,
-								$temp$has = has,
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						} else {
-							var $temp$classes = $mdgriffith$elm_ui$Internal$Model$alignYName(y) + (' ' + classes),
-								$temp$node = node,
-								$temp$has = function (flags) {
-								switch (y.$) {
-									case 'CenterY':
-										return A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$centerY, flags);
-									case 'Bottom':
-										return A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$alignBottom, flags);
-									default:
-										return flags;
-								}
-							}(
-								A2($mdgriffith$elm_ui$Internal$Flag$add, $mdgriffith$elm_ui$Internal$Flag$yAlign, has)),
-								$temp$transform = transform,
-								$temp$styles = styles,
-								$temp$attrs = attrs,
-								$temp$children = children,
-								$temp$elementAttrs = remaining;
-							classes = $temp$classes;
-							node = $temp$node;
-							has = $temp$has;
-							transform = $temp$transform;
-							styles = $temp$styles;
-							attrs = $temp$attrs;
-							children = $temp$children;
-							elementAttrs = $temp$elementAttrs;
-							continue gatherAttrRecursive;
-						}
-				}
-			}
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$Untransformed = {$: 'Untransformed'};
-var $mdgriffith$elm_ui$Internal$Model$untransformed = $mdgriffith$elm_ui$Internal$Model$Untransformed;
-var $mdgriffith$elm_ui$Internal$Model$element = F4(
-	function (context, node, attributes, children) {
-		return A3(
-			$mdgriffith$elm_ui$Internal$Model$createElement,
-			context,
-			children,
-			A8(
-				$mdgriffith$elm_ui$Internal$Model$gatherAttrRecursive,
-				$mdgriffith$elm_ui$Internal$Model$contextClasses(context),
-				node,
-				$mdgriffith$elm_ui$Internal$Flag$none,
-				$mdgriffith$elm_ui$Internal$Model$untransformed,
-				_List_Nil,
-				_List_Nil,
-				$mdgriffith$elm_ui$Internal$Model$NoNearbyChildren,
-				$elm$core$List$reverse(attributes)));
-	});
-var $mdgriffith$elm_ui$Internal$Model$Fill = function (a) {
-	return {$: 'Fill', a: a};
-};
-var $mdgriffith$elm_ui$Element$fill = $mdgriffith$elm_ui$Internal$Model$Fill(1);
-var $mdgriffith$elm_ui$Internal$Model$SpacingStyle = F3(
-	function (a, b, c) {
-		return {$: 'SpacingStyle', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$spacing = $mdgriffith$elm_ui$Internal$Flag$flag(3);
-var $mdgriffith$elm_ui$Internal$Model$spacingName = F2(
-	function (x, y) {
-		return 'spacing-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y)));
-	});
-var $mdgriffith$elm_ui$Element$spacing = function (x) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$spacing,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$SpacingStyle,
-			A2($mdgriffith$elm_ui$Internal$Model$spacingName, x, x),
-			x,
-			x));
-};
-var $mdgriffith$elm_ui$Internal$Model$Width = function (a) {
-	return {$: 'Width', a: a};
-};
-var $mdgriffith$elm_ui$Element$width = $mdgriffith$elm_ui$Internal$Model$Width;
-var $mdgriffith$elm_ui$Element$paragraph = F2(
-	function (attrs, children) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asParagraph,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$Describe($mdgriffith$elm_ui$Internal$Model$Paragraph),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$spacing(5),
-						attrs))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
-	});
-var $mdgriffith$elm_ui$Internal$Model$Px = function (a) {
-	return {$: 'Px', a: a};
-};
-var $mdgriffith$elm_ui$Element$px = $mdgriffith$elm_ui$Internal$Model$Px;
-var $mdgriffith$elm_ui$Internal$Model$AsColumn = {$: 'AsColumn'};
-var $mdgriffith$elm_ui$Internal$Model$asColumn = $mdgriffith$elm_ui$Internal$Model$AsColumn;
-var $mdgriffith$elm_ui$Internal$Model$Attr = function (a) {
-	return {$: 'Attr', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$htmlClass = function (cls) {
-	return $mdgriffith$elm_ui$Internal$Model$Attr(
-		$elm$html$Html$Attributes$class(cls));
-};
-var $mdgriffith$elm_ui$Internal$Model$Content = {$: 'Content'};
-var $mdgriffith$elm_ui$Element$shrink = $mdgriffith$elm_ui$Internal$Model$Content;
-var $mdgriffith$elm_ui$Element$column = F2(
-	function (attrs, children) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asColumn,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentTop + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.contentLeft)),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-						attrs))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$BlockType$DocumentBlock = function (a) {
-	return {$: 'DocumentBlock', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Render$BlockType$MiscBlock = function (a) {
-	return {$: 'MiscBlock', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Render$BlockType$Quotation = {$: 'Quotation'};
-var $jxxcarlson$xmarkdown_compiler$Render$BlockType$Subtitle = {$: 'Subtitle'};
-var $jxxcarlson$xmarkdown_compiler$Render$BlockType$TextBlock = function (a) {
-	return {$: 'TextBlock', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Render$BlockType$Title = {$: 'Title'};
-var $jxxcarlson$xmarkdown_compiler$Render$BlockType$fromString = function (str) {
-	switch (str) {
-		case 'quotation':
-			return $jxxcarlson$xmarkdown_compiler$Render$BlockType$TextBlock($jxxcarlson$xmarkdown_compiler$Render$BlockType$Quotation);
-		case 'title':
-			return $jxxcarlson$xmarkdown_compiler$Render$BlockType$DocumentBlock($jxxcarlson$xmarkdown_compiler$Render$BlockType$Title);
-		case 'subtitle':
-			return $jxxcarlson$xmarkdown_compiler$Render$BlockType$DocumentBlock($jxxcarlson$xmarkdown_compiler$Render$BlockType$Subtitle);
-		default:
-			return $jxxcarlson$xmarkdown_compiler$Render$BlockType$MiscBlock(str);
-	}
-};
-var $mdgriffith$elm_ui$Element$el = F2(
-	function (attrs, child) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-					attrs)),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[child])));
-	});
-var $mdgriffith$elm_ui$Internal$Model$PaddingStyle = F5(
-	function (a, b, c, d, e) {
-		return {$: 'PaddingStyle', a: a, b: b, c: c, d: d, e: e};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$padding = $mdgriffith$elm_ui$Internal$Flag$flag(2);
-var $mdgriffith$elm_ui$Internal$Model$paddingName = F4(
-	function (top, right, bottom, left) {
-		return 'pad-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left)))))));
-	});
-var $mdgriffith$elm_ui$Element$paddingEach = function (_v0) {
-	var top = _v0.top;
-	var right = _v0.right;
-	var bottom = _v0.bottom;
-	var left = _v0.left;
-	if (_Utils_eq(top, right) && (_Utils_eq(top, bottom) && _Utils_eq(top, left))) {
-		var topFloat = top;
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$padding,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-				'p-' + $elm$core$String$fromInt(top),
-				topFloat,
-				topFloat,
-				topFloat,
-				topFloat));
-	} else {
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$padding,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-				A4($mdgriffith$elm_ui$Internal$Model$paddingName, top, right, bottom, left),
-				top,
-				right,
-				bottom,
-				left));
-	}
-};
-var $mdgriffith$elm_ui$Internal$Flag$bgColor = $mdgriffith$elm_ui$Internal$Flag$flag(8);
-var $mdgriffith$elm_ui$Element$Background$color = function (clr) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$bgColor,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Colored,
-			'bg-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(clr),
-			'background-color',
-			clr));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$selectedColor = F2(
-	function (id, settings) {
-		return _Utils_eq(id, settings.selectedId) ? $mdgriffith$elm_ui$Element$Background$color(
-			A3($mdgriffith$elm_ui$Element$rgb, 0.9, 0.9, 1.0)) : $mdgriffith$elm_ui$Element$Background$color(settings.backgroundColor);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$topPaddingForIndentedElements = 10;
-var $jxxcarlson$xmarkdown_compiler$Render$Indentation$topPaddingForIndentedElements = $jxxcarlson$xmarkdown_compiler$Render$Helper$topPaddingForIndentedElements;
-var $jxxcarlson$xmarkdown_compiler$Render$Indentation$indentOrdinaryBlock = F4(
-	function (indent, id, settings, x) {
-		return (indent > 0) ? A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					A2($jxxcarlson$xmarkdown_compiler$Render$Helper$selectedColor, id, settings),
-					$mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: 0, left: 0, right: 0, top: $jxxcarlson$xmarkdown_compiler$Render$Indentation$topPaddingForIndentedElements})
-				]),
-			x) : x;
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$indentOrdinaryBlock = F4(
-	function (indent, id, settings, x) {
-		return A4($jxxcarlson$xmarkdown_compiler$Render$Indentation$indentOrdinaryBlock, indent, id, settings, x);
-	});
-var $mdgriffith$elm_ui$Internal$Model$AlignY = function (a) {
-	return {$: 'AlignY', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$Top = {$: 'Top'};
-var $mdgriffith$elm_ui$Element$alignTop = $mdgriffith$elm_ui$Internal$Model$AlignY($mdgriffith$elm_ui$Internal$Model$Top);
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendLineNumber = function (a) {
-	return {$: 'SendLineNumber', a: a};
-};
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
-var $mdgriffith$elm_ui$Element$Events$onClick = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Attr, $elm$html$Html$Events$onClick);
-var $jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper = F2(
-	function (firstLineNumber, numberOfLines) {
-		return $mdgriffith$elm_ui$Element$Events$onClick(
-			$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendLineNumber(
-				{begin: firstLineNumber, end: firstLineNumber + numberOfLines}));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdIsSelected = F3(
-	function (firstLineNumber, numberOfLines, settings) {
-		return _Utils_eq(
-			$elm$core$String$fromInt(firstLineNumber),
-			settings.selectedId) ? _List_fromArray(
-			[
-				A2($jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper, firstLineNumber, firstLineNumber + numberOfLines),
-				$mdgriffith$elm_ui$Element$Background$color(
-				A3($mdgriffith$elm_ui$Element$rgb, 0.8, 0.8, 1.0))
-			]) : _List_Nil;
-	});
-var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
-var $mdgriffith$elm_ui$Element$htmlAttribute = $mdgriffith$elm_ui$Internal$Model$Attr;
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$elementAttribute = F2(
-	function (key, value) {
-		return $mdgriffith$elm_ui$Element$htmlAttribute(
-			A2($elm$html$Html$Attributes$attribute, key, value));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$idAttribute = function (s) {
-	return A2($jxxcarlson$xmarkdown_compiler$Render$Utility$elementAttribute, 'id', s);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Sync$attributes = F2(
-	function (settings, block) {
-		return _Utils_ap(
-			_List_fromArray(
-				[
-					A2($jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper, block.meta.lineNumber, block.meta.numberOfLines),
-					$jxxcarlson$xmarkdown_compiler$Render$Utility$idAttribute(block.meta.id)
-				]),
-			A3($jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdIsSelected, block.meta.lineNumber, block.meta.numberOfLines, settings));
-	});
-var $mdgriffith$elm_ui$Internal$Model$Class = F2(
-	function (a, b) {
-		return {$: 'Class', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$fontWeight = $mdgriffith$elm_ui$Internal$Flag$flag(13);
-var $mdgriffith$elm_ui$Element$Font$bold = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.bold);
-var $jxxcarlson$xmarkdown_compiler$AST$Language$getExpressionContent = function (block) {
-	var _v0 = block.body;
-	if (_v0.$ === 'Left') {
-		return _List_Nil;
-	} else {
-		var exprs = _v0.a;
-		return exprs;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$leftPadding = function (p) {
-	return $mdgriffith$elm_ui$Element$paddingEach(
-		{bottom: 0, left: p, right: 0, top: 0});
-};
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendMeta = function (a) {
-	return {$: 'SendMeta', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$exprListToStringList = function (exprList) {
-	return A2(
-		$elm$core$List$filter,
-		function (s) {
-			return s !== '';
-		},
-		A2(
-			$elm$core$List$map,
-			$elm$core$String$trim,
-			$elmcraft$core_extra$Maybe$Extra$values(
-				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText, exprList))));
-};
-var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
-	return {$: 'Text', a: a};
-};
-var $mdgriffith$elm_ui$Element$text = function (content) {
-	return $mdgriffith$elm_ui$Internal$Model$Text(content);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$bibitem = function (exprs) {
-	return A2(
-		$mdgriffith$elm_ui$Element$paragraph,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-			]),
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$text(
-				function (s) {
-					return '[' + (s + ']');
-				}(
-					A2(
-						$elm$core$String$join,
-						' ',
-						$jxxcarlson$xmarkdown_compiler$AST$ASTTools$exprListToStringList(exprs))))
-			]));
-};
-var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
-	return {$: 'AlignX', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$CenterX = {$: 'CenterX'};
-var $mdgriffith$elm_ui$Element$centerX = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$CenterX);
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SelectId = function (a) {
-	return {$: 'SelectId', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$cite = F3(
-	function (acc, attr, str) {
-		var tag = A2(
-			$elm$core$String$join,
-			'',
-			$jxxcarlson$xmarkdown_compiler$AST$ASTTools$exprListToStringList(str));
-		var id = A2(
-			$elm$core$Maybe$withDefault,
-			'',
-			A2(
-				$elm$core$Maybe$map,
-				function ($) {
-					return $.id;
-				},
-				A2($elm$core$Dict$get, tag, acc.reference)));
-		return A2(
-			$mdgriffith$elm_ui$Element$paragraph,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-						$mdgriffith$elm_ui$Element$Events$onClick(
-						$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SelectId(id)),
-						$mdgriffith$elm_ui$Element$Font$color(
-						A3($mdgriffith$elm_ui$Element$rgb, 0.2, 0.2, 1.0)),
-						$mdgriffith$elm_ui$Element$Font$bold
-					]),
-				attr),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$text(
-					function (s) {
-						return '[' + (s + ']');
-					}(tag))
-				]));
-	});
-var $mdgriffith$elm_ui$Internal$Flag$borderColor = $mdgriffith$elm_ui$Internal$Flag$flag(28);
-var $mdgriffith$elm_ui$Element$Border$color = function (clr) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderColor,
-		A3(
-			$mdgriffith$elm_ui$Internal$Model$Colored,
-			'bc-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(clr),
-			'border-color',
-			clr));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$errorBackgroundColor = A3($mdgriffith$elm_ui$Element$rgb, 1, 0.8, 0.8);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray200 = A4($avh4$elm_color$Color$rgba, 0.89, 0.89, 0.89, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray400 = A4($avh4$elm_color$Color$rgba, 0.65, 0.65, 0.65, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo600 = A4($avh4$elm_color$Color$rgba, 0.29, 0.31, 0.58, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$transparentIndigo500 = A4($avh4$elm_color$Color$rgba, 0.35, 0.38, 0.67, 0.3);
-var $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme = {
-	background: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
-	codeBackground: A4($avh4$elm_color$Color$rgba, 0.35, 0.37, 0.42, 1),
-	codeText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray100,
-	footnote: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray400,
-	highlight: $jxxcarlson$xmarkdown_compiler$Render$NewColor$transparentIndigo500,
-	link: $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo600,
-	offsetBackground: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray700,
-	offsetText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray200,
-	text: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray100
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Theme$elementColorFromColor = function (color) {
-	var v = $avh4$elm_color$Color$toRgba(color);
-	return A3($mdgriffith$elm_ui$Element$rgb, v.red, v.green, v.blue);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray600 = A4($avh4$elm_color$Color$rgba, 0.4, 0.42, 0.44, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray800 = A4($avh4$elm_color$Color$rgba, 0.26, 0.28, 0.3, 1);
-var $jxxcarlson$xmarkdown_compiler$Render$NewColor$whiteAlpha100 = A4($avh4$elm_color$Color$rgba, 1.0, 1.0, 1.0, 0.04);
-var $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme = {
-	background: $jxxcarlson$xmarkdown_compiler$Render$NewColor$whiteAlpha100,
-	codeBackground: A4($avh4$elm_color$Color$rgba, 0.90, 0.90, 0.94, 1),
-	codeText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
-	footnote: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray600,
-	highlight: $jxxcarlson$xmarkdown_compiler$Render$NewColor$transparentIndigo500,
-	link: $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo600,
-	offsetBackground: $jxxcarlson$xmarkdown_compiler$Render$NewColor$whiteAlpha100,
-	offsetText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray800,
-	text: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Theme$getElementColor = F2(
-	function (theme, colorSelector) {
-		var actualTheme = function () {
-			if (theme.$ === 'Light') {
-				return $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme;
-			} else {
-				return $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme;
-			}
-		}();
-		return $jxxcarlson$xmarkdown_compiler$Render$Theme$elementColorFromColor(
-			colorSelector(actualTheme));
-	});
-var $mdgriffith$elm_ui$Internal$Model$unstyled = A2($elm$core$Basics$composeL, $mdgriffith$elm_ui$Internal$Model$Unstyled, $elm$core$Basics$always);
-var $mdgriffith$elm_ui$Element$html = $mdgriffith$elm_ui$Internal$Model$unstyled;
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$makeSlug = function (str) {
-	return A3(
-		$elm$core$String$replace,
-		' ',
-		'',
-		$elm$core$String$toLower(str));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$internalLink = function (str) {
-	return $jxxcarlson$xmarkdown_compiler$Render$Utility$makeSlug('#' + str);
-};
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
-var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
-var $mdgriffith$elm_ui$Element$link = F2(
-	function (attrs, _v0) {
-		var url = _v0.url;
-		var label = _v0.label;
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$Attr(
-					$elm$html$Html$Attributes$href(url)),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Internal$Model$Attr(
-						$elm$html$Html$Attributes$rel('noopener noreferrer')),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-						A2(
-							$elm$core$List$cons,
-							$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
-								attrs))))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[label])));
-	});
-var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
-var $mdgriffith$elm_ui$Internal$Model$Empty = {$: 'Empty'};
-var $mdgriffith$elm_ui$Element$none = $mdgriffith$elm_ui$Internal$Model$Empty;
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$footnote = F3(
-	function (acc, settings, exprList) {
-		if ((exprList.b && (exprList.a.$ === 'Text')) && (!exprList.b.b)) {
-			var _v1 = exprList.a;
-			var meta = _v1.b;
-			var _v2 = A2($elm$core$Dict$get, meta.id, acc.footnoteNumbers);
-			if (_v2.$ === 'Just') {
-				var k = _v2.a;
-				return A2(
-					$mdgriffith$elm_ui$Element$link,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$color(
-							A2(
-								$jxxcarlson$xmarkdown_compiler$Render$Theme$getElementColor,
-								settings.theme,
-								function ($) {
-									return $.footnote;
-								})),
-							$mdgriffith$elm_ui$Element$Font$bold,
-							$mdgriffith$elm_ui$Element$Events$onClick(
-							$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SelectId(meta.id + '_'))
-						]),
-					{
-						label: A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_Nil,
-							$mdgriffith$elm_ui$Element$html(
-								A3(
-									$elm$html$Html$node,
-									'sup',
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text(
-											$elm$core$String$fromInt(k))
-										])))),
-						url: $jxxcarlson$xmarkdown_compiler$Render$Utility$internalLink(meta.id + '_')
-					});
-			} else {
-				return $mdgriffith$elm_ui$Element$none;
-			}
-		} else {
-			return $mdgriffith$elm_ui$Element$none;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$linkColor = A3($mdgriffith$elm_ui$Element$rgb, 0, 0, 0.8);
-var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
-var $mdgriffith$elm_ui$Element$newTabLink = F2(
-	function (attrs, _v0) {
-		var url = _v0.url;
-		var label = _v0.label;
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$NodeName('a'),
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$Attr(
-					$elm$html$Html$Attributes$href(url)),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Internal$Model$Attr(
-						$elm$html$Html$Attributes$rel('noopener noreferrer')),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Internal$Model$Attr(
-							$elm$html$Html$Attributes$target('_blank')),
-						A2(
-							$elm$core$List$cons,
-							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-								A2(
-									$elm$core$List$cons,
-									$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentCenterX + (' ' + ($mdgriffith$elm_ui$Internal$Style$classes.contentCenterY + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.link)))),
-									attrs)))))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[label])));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$href = function (exprList) {
-	var url = A2(
-		$elm$core$Maybe$withDefault,
-		'',
-		A2(
-			$elm$core$Maybe$andThen,
-			$jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText,
-			A2($elmcraft$core_extra$List$Extra$getAt, 0, exprList)));
-	var label = A2(
-		$elm$core$Maybe$withDefault,
-		'',
-		A2(
-			$elm$core$Maybe$andThen,
-			$jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText,
-			A2($elmcraft$core_extra$List$Extra$getAt, 1, exprList)));
-	return A2(
-		$mdgriffith$elm_ui$Element$newTabLink,
-		_List_Nil,
-		{
-			label: A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$Font$color($jxxcarlson$xmarkdown_compiler$Render$Expression$linkColor)
-					]),
-				$mdgriffith$elm_ui$Element$text(label)),
-			url: url
-		});
-};
-var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId = function (str) {
-	return $mdgriffith$elm_ui$Element$htmlAttribute(
-		$elm$html$Html$Attributes$id(str));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Graphics$argumentsFromAST = function (body) {
-	return $elm$core$List$concat(
-		A2(
-			$elm$core$List$map,
-			$elm$core$String$words,
-			$jxxcarlson$xmarkdown_compiler$AST$ASTTools$exprListToStringList(body)));
-};
-var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
-var $elm$html$Html$Attributes$src = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
-};
-var $mdgriffith$elm_ui$Element$image = F2(
-	function (attrs, _v0) {
-		var src = _v0.src;
-		var description = _v0.description;
-		var imageAttributes = A2(
-			$elm$core$List$filter,
-			function (a) {
-				switch (a.$) {
-					case 'Width':
-						return true;
-					case 'Height':
-						return true;
-					default:
-						return false;
-				}
-			},
-			attrs);
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asEl,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.imageContainer),
-				attrs),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				_List_fromArray(
-					[
-						A4(
-						$mdgriffith$elm_ui$Internal$Model$element,
-						$mdgriffith$elm_ui$Internal$Model$asEl,
-						$mdgriffith$elm_ui$Internal$Model$NodeName('img'),
-						_Utils_ap(
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Internal$Model$Attr(
-									$elm$html$Html$Attributes$src(src)),
-									$mdgriffith$elm_ui$Internal$Model$Attr(
-									$elm$html$Html$Attributes$alt(description))
-								]),
-							imageAttributes),
-						$mdgriffith$elm_ui$Internal$Model$Unkeyed(_List_Nil))
-					])));
-	});
-var $mdgriffith$elm_ui$Internal$Model$Left = {$: 'Left'};
-var $mdgriffith$elm_ui$Element$alignLeft = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Left);
-var $mdgriffith$elm_ui$Internal$Model$Right = {$: 'Right'};
-var $mdgriffith$elm_ui$Element$alignRight = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$Right);
-var $jxxcarlson$xmarkdown_compiler$Tools$Utility$pairFromList = function (strings) {
-	if ((strings.b && strings.b.b) && (!strings.b.b.b)) {
-		var x = strings.a;
-		var _v1 = strings.b;
-		var y = _v1.a;
-		return $elm$core$Maybe$Just(
-			_Utils_Tuple2(x, y));
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Tools$Utility$keyValueDict = function (strings_) {
-	return $elm$core$Dict$fromList(
-		$elmcraft$core_extra$Maybe$Extra$values(
-			A2(
-				$elm$core$List$map,
-				$jxxcarlson$xmarkdown_compiler$Tools$Utility$pairFromList,
-				A2(
-					$elm$core$List$map,
-					$elm$core$List$map($elm$core$String$trim),
-					A2(
-						$elm$core$List$map,
-						$elm$core$String$split(':'),
-						strings_)))));
-};
-var $mdgriffith$elm_ui$Internal$Model$AsRow = {$: 'AsRow'};
-var $mdgriffith$elm_ui$Internal$Model$asRow = $mdgriffith$elm_ui$Internal$Model$AsRow;
-var $mdgriffith$elm_ui$Element$row = F2(
-	function (attrs, children) {
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asRow,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.contentLeft + (' ' + $mdgriffith$elm_ui$Internal$Style$classes.contentCenterY)),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$shrink),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-						attrs))),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(children));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Graphics$imageParameters = F2(
-	function (settings, _arguments) {
-		var url = A2(
-			$elm$core$Maybe$withDefault,
-			'no-image',
-			$elm$core$List$head(_arguments));
-		var remainingArguments = A2($elm$core$List$drop, 1, _arguments);
-		var keyValueStrings_ = A2(
-			$elm$core$List$filter,
-			function (s) {
-				return A2($elm$core$String$contains, ':', s);
-			},
-			remainingArguments);
-		var keyValueStrings = A2(
-			$elm$core$List$filter,
-			function (s) {
-				return !A2($elm$core$String$contains, 'caption', s);
-			},
-			keyValueStrings_);
-		var displayWidth = settings.width;
-		var dict = $jxxcarlson$xmarkdown_compiler$Tools$Utility$keyValueDict(keyValueStrings);
-		var placement = function () {
-			var _v2 = A2($elm$core$Dict$get, 'placement', dict);
-			if (_v2.$ === 'Nothing') {
-				return $mdgriffith$elm_ui$Element$centerX;
-			} else {
-				switch (_v2.a) {
-					case 'left':
-						return $mdgriffith$elm_ui$Element$alignLeft;
-					case 'right':
-						return $mdgriffith$elm_ui$Element$alignRight;
-					case 'center':
-						return $mdgriffith$elm_ui$Element$centerX;
-					default:
-						return $mdgriffith$elm_ui$Element$centerX;
-				}
-			}
-		}();
-		var width = function () {
-			var _v0 = A2($elm$core$Dict$get, 'width', dict);
-			if (_v0.$ === 'Nothing') {
-				return $mdgriffith$elm_ui$Element$px(displayWidth);
-			} else {
-				switch (_v0.a) {
-					case 'fill':
-						return $mdgriffith$elm_ui$Element$fill;
-					case 'to-edges':
-						return $mdgriffith$elm_ui$Element$px(
-							$elm$core$Basics$round(1.5 * displayWidth));
-					default:
-						var w_ = _v0.a;
-						var _v1 = $elm$core$String$toInt(w_);
-						if (_v1.$ === 'Nothing') {
-							return $mdgriffith$elm_ui$Element$px(displayWidth);
-						} else {
-							var w = _v1.a;
-							return $mdgriffith$elm_ui$Element$px(w);
-						}
-				}
-			}
-		}();
-		var yPadding = A2(
-			$elm$core$Maybe$andThen,
-			$elm$core$String$toInt,
-			A2($elm$core$Dict$get, 'ypadding', dict));
-		var description = A2(
-			$elm$core$Maybe$withDefault,
-			'',
-			A2($elm$core$Dict$get, 'caption', dict));
-		var captionLeadString = A3(
-			$elm$core$String$replace,
-			'caption:',
-			'',
-			A2(
-				$elm$core$String$join,
-				'',
-				A2(
-					$elm$core$List$filter,
-					function (s) {
-						return A2($elm$core$String$contains, 'caption', s);
-					},
-					keyValueStrings_)));
-		var captionPhrase = A2(
-			$elm$core$String$join,
-			' ',
-			A2(
-				$elm$core$List$cons,
-				captionLeadString,
-				A2(
-					$elm$core$List$filter,
-					function (s) {
-						return !A2($elm$core$String$contains, ':', s);
-					},
-					remainingArguments)));
-		var caption = (captionPhrase === '') ? $mdgriffith$elm_ui$Element$none : A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_fromArray(
-				[
-					placement,
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-						]),
-					$mdgriffith$elm_ui$Element$text(captionPhrase))
-				]));
-		return {caption: caption, description: description, placement: placement, url: url, width: width, yPadding: yPadding};
-	});
-var $mdgriffith$elm_ui$Element$paddingXY = F2(
-	function (x, y) {
-		if (_Utils_eq(x, y)) {
-			var f = x;
-			return A2(
-				$mdgriffith$elm_ui$Internal$Model$StyleClass,
-				$mdgriffith$elm_ui$Internal$Flag$padding,
-				A5(
-					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-					'p-' + $elm$core$String$fromInt(x),
-					f,
-					f,
-					f,
-					f));
-		} else {
-			var yFloat = y;
-			var xFloat = x;
-			return A2(
-				$mdgriffith$elm_ui$Internal$Model$StyleClass,
-				$mdgriffith$elm_ui$Internal$Flag$padding,
-				A5(
-					$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-					'p-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
-					yFloat,
-					xFloat,
-					yFloat,
-					xFloat));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Graphics$image = F3(
-	function (settings, attrs, body) {
-		var params = A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Graphics$imageParameters,
-			settings,
-			$jxxcarlson$xmarkdown_compiler$Render$Graphics$argumentsFromAST(body));
-		var ypadding = function () {
-			var _v0 = params.yPadding;
-			if (_v0.$ === 'Nothing') {
-				return 0;
-			} else {
-				var k = _v0.a;
-				return k;
-			}
-		}();
-		var inner = A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(8),
-					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(settings.width)),
-					params.placement,
-					A2($mdgriffith$elm_ui$Element$paddingXY, 0, ypadding)
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$image,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width(params.width),
-							params.placement
-						]),
-					{description: params.description, src: params.url}),
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[params.placement]),
-					params.caption)
-				]));
-		return A2(
-			$mdgriffith$elm_ui$Element$newTabLink,
-			attrs,
-			{label: inner, url: params.url});
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Html$Math$InlineMathMode = {$: 'InlineMathMode'};
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$MyMacro = F2(
-	function (a, b) {
-		return {$: 'MyMacro', a: a, b: b};
-	});
-var $elm$parser$Parser$Advanced$spaces = $elm$parser$Parser$Advanced$chompWhile(
-	function (c) {
-		return _Utils_eq(
-			c,
-			_Utils_chr(' ')) || (_Utils_eq(
-			c,
-			_Utils_chr('\n')) || _Utils_eq(
-			c,
-			_Utils_chr('\r')));
-	});
-var $elm$parser$Parser$spaces = $elm$parser$Parser$Advanced$spaces;
-var $elm$parser$Parser$ExpectingSymbol = function (a) {
-	return {$: 'ExpectingSymbol', a: a};
-};
-var $elm$parser$Parser$symbol = function (str) {
-	return $elm$parser$Parser$Advanced$symbol(
-		A2(
-			$elm$parser$Parser$Advanced$Token,
-			str,
-			$elm$parser$Parser$ExpectingSymbol(str)));
-};
-var $elm$parser$Parser$UnexpectedChar = {$: 'UnexpectedChar'};
-var $elm$parser$Parser$chompIf = function (isGood) {
-	return A2($elm$parser$Parser$Advanced$chompIf, isGood, $elm$parser$Parser$UnexpectedChar);
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$word = function (inWord) {
-	return A2(
-		$elm$parser$Parser$keeper,
-		A2(
-			$elm$parser$Parser$keeper,
-			A2(
-				$elm$parser$Parser$keeper,
-				A2(
-					$elm$parser$Parser$ignorer,
-					$elm$parser$Parser$succeed($elm$core$String$slice),
-					$elm$parser$Parser$spaces),
-				A2(
-					$elm$parser$Parser$ignorer,
-					A2(
-						$elm$parser$Parser$ignorer,
-						A2(
-							$elm$parser$Parser$ignorer,
-							$elm$parser$Parser$getOffset,
-							$elm$parser$Parser$chompIf(inWord)),
-						$elm$parser$Parser$chompWhile(inWord)),
-					$elm$parser$Parser$spaces)),
-			$elm$parser$Parser$getOffset),
-		$elm$parser$Parser$getSource);
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$arg = A2(
-	$elm$parser$Parser$keeper,
-	A2(
-		$elm$parser$Parser$ignorer,
-		A2(
-			$elm$parser$Parser$ignorer,
-			$elm$parser$Parser$succeed($elm$core$Basics$identity),
-			$elm$parser$Parser$symbol('{')),
-		$elm$parser$Parser$spaces),
-	A2(
-		$elm$parser$Parser$ignorer,
-		$jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$word(
-			function (c) {
-				return !_Utils_eq(
-					c,
-					_Utils_chr('}'));
-			}),
-		$elm$parser$Parser$symbol('}')));
-var $elm$parser$Parser$Done = function (a) {
-	return {$: 'Done', a: a};
-};
-var $elm$parser$Parser$Loop = function (a) {
-	return {$: 'Loop', a: a};
-};
-var $elm$parser$Parser$map = $elm$parser$Parser$Advanced$map;
-var $elm$parser$Parser$oneOf = $elm$parser$Parser$Advanced$oneOf;
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$itemListHelper = F2(
-	function (itemParser, revItems) {
-		return $elm$parser$Parser$oneOf(
-			_List_fromArray(
-				[
-					A2(
-					$elm$parser$Parser$keeper,
-					$elm$parser$Parser$succeed(
-						function (item_) {
-							return $elm$parser$Parser$Loop(
-								A2($elm$core$List$cons, item_, revItems));
-						}),
-					itemParser),
-					A2(
-					$elm$parser$Parser$map,
-					function (_v0) {
-						return $elm$parser$Parser$Done(
-							$elm$core$List$reverse(revItems));
-					},
-					$elm$parser$Parser$succeed(_Utils_Tuple0))
-				]));
-	});
-var $elm$parser$Parser$toAdvancedStep = function (step) {
-	if (step.$ === 'Loop') {
-		var s = step.a;
-		return $elm$parser$Parser$Advanced$Loop(s);
-	} else {
-		var a = step.a;
-		return $elm$parser$Parser$Advanced$Done(a);
-	}
-};
-var $elm$parser$Parser$loop = F2(
-	function (state, callback) {
-		return A2(
-			$elm$parser$Parser$Advanced$loop,
-			state,
-			function (s) {
-				return A2(
-					$elm$parser$Parser$map,
-					$elm$parser$Parser$toAdvancedStep,
-					callback(s));
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$itemList_ = F2(
-	function (initialList, itemParser) {
-		return A2(
-			$elm$parser$Parser$loop,
-			initialList,
-			$jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$itemListHelper(itemParser));
-	});
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$itemList = function (itemParser) {
-	return A2($jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$itemList_, _List_Nil, itemParser);
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$argsOfNamedMacro = function (name) {
-	return A2(
-		$elm$parser$Parser$keeper,
-		A2(
-			$elm$parser$Parser$ignorer,
-			A2(
-				$elm$parser$Parser$ignorer,
-				$elm$parser$Parser$succeed($elm$core$Basics$identity),
-				$elm$parser$Parser$spaces),
-			$elm$parser$Parser$symbol('\\' + name)),
-		$jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$itemList($jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$arg));
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$toString = function (_v0) {
-	var name = _v0.a;
-	var args = _v0.b;
-	return '\\' + (name + A2(
-		$elm$core$String$join,
-		'',
-		A2(
-			$elm$core$List$map,
-			function (a) {
-				return '{' + (a + '}');
-			},
-			args)));
-};
-var $jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$eraseLeadingMacro = F2(
-	function (name, str) {
-		var _v0 = A2(
-			$elm$parser$Parser$run,
-			$jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$argsOfNamedMacro(name),
-			str);
-		if (_v0.$ === 'Ok') {
-			var args = _v0.a;
-			return A3(
-				$elm$core$String$replace,
-				$jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$toString(
-					A2($jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$MyMacro, name, args)),
-				'',
-				str);
-		} else {
-			return str;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Html$Math$eraseLabeMacro = function (content) {
-	return A2(
-		$elm$core$String$join,
-		'\n',
-		A2(
-			$elm$core$List$map,
-			$jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$eraseLeadingMacro('label'),
-			$elm$core$String$lines(content)));
-};
-var $elm$json$Json$Encode$bool = _Json_wrap;
-var $jxxcarlson$xmarkdown_compiler$Render$Html$Math$isDisplayMathMode = function (displayMode) {
-	return false;
-};
-var $elm$html$Html$Attributes$property = $elm$virtual_dom$VirtualDom$property;
-var $jxxcarlson$xmarkdown_compiler$Render$Html$Math$mathText_ = F2(
-	function (displayMode, content) {
-		return A3(
-			$elm$html$Html$node,
-			'math-text',
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$Attributes$property,
-					'display',
-					$elm$json$Json$Encode$bool(
-						$jxxcarlson$xmarkdown_compiler$Render$Html$Math$isDisplayMathMode(displayMode))),
-					A2(
-					$elm$html$Html$Attributes$property,
-					'content',
-					$elm$json$Json$Encode$string(content))
-				]),
-			_List_Nil);
-	});
-var $elm$html$Html$Keyed$node = $elm$virtual_dom$VirtualDom$keyedNode;
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
-var $jxxcarlson$xmarkdown_compiler$Render$Html$Math$mathText = F5(
-	function (generation, width, id, displayMode, content) {
-		return $mdgriffith$elm_ui$Element$html(
-			A3(
-				$elm$html$Html$Keyed$node,
-				'span',
-				_List_fromArray(
-					[
-						A2($elm$html$Html$Attributes$style, 'padding-top', '0px'),
-						A2($elm$html$Html$Attributes$style, 'padding-bottom', '0px'),
-						$elm$html$Html$Attributes$id(id),
-						A2($elm$html$Html$Attributes$style, 'width', width)
-					]),
-				_List_fromArray(
-					[
-						_Utils_Tuple2(
-						$elm$core$String$fromInt(generation),
-						A2(
-							$jxxcarlson$xmarkdown_compiler$Render$Html$Math$mathText_,
-							displayMode,
-							$jxxcarlson$xmarkdown_compiler$Render$Html$Math$eraseLabeMacro(content)))
-					])));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$indent = F5(
-	function (_v0, _v1, _v2, _v3, _v4) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$height(
-					$mdgriffith$elm_ui$Element$px(5))
-				]),
-			A5($jxxcarlson$xmarkdown_compiler$Render$Html$Math$mathText, 0, '24px', 'abc', $jxxcarlson$xmarkdown_compiler$Render$Html$Math$InlineMathMode, '\\quad'));
-	});
-var $mdgriffith$elm_ui$Element$Font$italic = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.italic);
-var $mdgriffith$elm_ui$Element$rgb255 = F3(
-	function (red, green, blue) {
-		return A4($mdgriffith$elm_ui$Internal$Model$Rgba, red / 255, green / 255, blue / 255, 1);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$errorText_ = function (str) {
-	return A2(
-		$mdgriffith$elm_ui$Element$el,
-		_List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$Font$color(
-				A3($mdgriffith$elm_ui$Element$rgb255, 200, 40, 40))
-			]),
-		$mdgriffith$elm_ui$Element$text(str));
-};
-var $mdgriffith$elm_ui$Element$Font$underline = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.underline);
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$link = F2(
-	function (settings, exprList) {
-		var _v0 = $elm$core$List$head(
-			$jxxcarlson$xmarkdown_compiler$AST$ASTTools$exprListToStringList(exprList));
-		if (_v0.$ === 'Nothing') {
-			return $jxxcarlson$xmarkdown_compiler$Render$Expression$errorText_('Please provide label and url');
-		} else {
-			var argString = _v0.a;
-			var args = $elm$core$String$words(argString);
-			var n = $elm$core$List$length(args);
-			if (!n) {
-				return $jxxcarlson$xmarkdown_compiler$Render$Expression$errorText_('Please provide url');
-			} else {
-				if (n === 1) {
-					var url = argString;
-					var label = A3(
-						$elm$core$String$replace,
-						'http://',
-						'',
-						A3($elm$core$String$replace, 'https://', '', argString));
-					return A2(
-						$mdgriffith$elm_ui$Element$newTabLink,
-						_List_Nil,
-						{
-							label: A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$Background$color(settings.backgroundColor),
-										$mdgriffith$elm_ui$Element$Font$color(settings.linkColor),
-										$mdgriffith$elm_ui$Element$Font$underline
-									]),
-								$mdgriffith$elm_ui$Element$text(label)),
-							url: url
-						});
-				} else {
-					var url = A2(
-						$elm$core$String$join,
-						' ',
-						A2($elm$core$List$drop, n - 1, args));
-					var label = A2(
-						$elm$core$String$join,
-						' ',
-						A2($elm$core$List$take, n - 1, args));
-					return A2(
-						$mdgriffith$elm_ui$Element$newTabLink,
-						_List_Nil,
-						{
-							label: A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$Background$color(settings.backgroundColor),
-										$mdgriffith$elm_ui$Element$Font$color(settings.linkColor),
-										$mdgriffith$elm_ui$Element$Font$underline
-									]),
-								$mdgriffith$elm_ui$Element$text(label)),
-							url: url
-						});
-				}
-			}
-		}
-	});
-var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
-	return {$: 'MayStopPropagation', a: a};
-};
-var $elm$html$Html$Events$stopPropagationOn = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$onClickStop = function (msg) {
-	return $mdgriffith$elm_ui$Element$htmlAttribute(
-		A2(
-			$elm$html$Html$Events$stopPropagationOn,
-			'click',
-			$elm$json$Json$Decode$succeed(
-				_Utils_Tuple2(msg, true))));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$par = F5(
-	function (_v0, _v1, _v2, _v3, _v4) {
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$height(
-					$mdgriffith$elm_ui$Element$px(5))
-				]),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$text('')
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$errorText = F2(
-	function (index, str) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$color(
-					A3($mdgriffith$elm_ui$Element$rgb255, 200, 40, 40))
-				]),
-			$mdgriffith$elm_ui$Element$text(
-				'(' + ($elm$core$String$fromInt(index) + (') not implemented: ' + str))));
-	});
-var $mdgriffith$elm_ui$Element$padding = function (x) {
-	var f = x;
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$padding,
-		A5(
-			$mdgriffith$elm_ui$Internal$Model$PaddingStyle,
-			'p-' + $elm$core$String$fromInt(x),
-			f,
-			f,
-			f,
-			f));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdSelected = F3(
-	function (id, settings, attrs) {
-		return _Utils_eq(id, settings.selectedId) ? A2(
-			$elm$core$List$cons,
-			$mdgriffith$elm_ui$Element$Background$color(settings.highlight),
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$padding(8),
-				attrs)) : attrs;
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$InlineMathMode = {$: 'InlineMathMode'};
-var $jxxcarlson$etex$ETeX$Transform$Expr = function (a) {
-	return {$: 'Expr', a: a};
-};
-var $jxxcarlson$etex$ETeX$Transform$LeftParen = {$: 'LeftParen'};
-var $jxxcarlson$etex$ETeX$Transform$RightParen = {$: 'RightParen'};
-var $jxxcarlson$etex$ETeX$Transform$convertFromETeXDeco = function (deco) {
-	if (deco.$ === 'DecoM') {
-		var mathExpr = deco.a;
-		return $jxxcarlson$etex$ETeX$Transform$DecoM(
-			$jxxcarlson$etex$ETeX$Transform$convertFromETeXMathExpr(mathExpr));
-	} else {
-		var n = deco.a;
-		return $jxxcarlson$etex$ETeX$Transform$DecoI(n);
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$convertFromETeXMathExpr = function (expr) {
-	switch (expr.$) {
-		case 'AlphaNum':
-			var str = expr.a;
-			return $jxxcarlson$etex$ETeX$Transform$AlphaNum(str);
-		case 'MacroName':
-			var str = expr.a;
-			return $jxxcarlson$etex$ETeX$Transform$F0(str);
-		case 'Param':
-			var n = expr.a;
-			return $jxxcarlson$etex$ETeX$Transform$Param(n);
-		case 'WS':
-			return $jxxcarlson$etex$ETeX$Transform$WS;
-		case 'MathSpace':
-			return $jxxcarlson$etex$ETeX$Transform$MathSpace;
-		case 'MathSmallSpace':
-			return $jxxcarlson$etex$ETeX$Transform$MathSmallSpace;
-		case 'MathMediumSpace':
-			return $jxxcarlson$etex$ETeX$Transform$MathMediumSpace;
-		case 'LeftMathBrace':
-			return $jxxcarlson$etex$ETeX$Transform$LeftMathBrace;
-		case 'RightMathBrace':
-			return $jxxcarlson$etex$ETeX$Transform$RightMathBrace;
-		case 'MathSymbols':
-			var str = expr.a;
-			return $jxxcarlson$etex$ETeX$Transform$MathSymbols(str);
-		case 'Arg':
-			var exprs = expr.a;
-			return $jxxcarlson$etex$ETeX$Transform$Arg(
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertFromETeXMathExpr, exprs));
-		case 'Sub':
-			var decoExpr = expr.a;
-			return $jxxcarlson$etex$ETeX$Transform$Sub(
-				$jxxcarlson$etex$ETeX$Transform$convertFromETeXDeco(decoExpr));
-		case 'Super':
-			var decoExpr = expr.a;
-			return $jxxcarlson$etex$ETeX$Transform$Super(
-				$jxxcarlson$etex$ETeX$Transform$convertFromETeXDeco(decoExpr));
-		case 'Macro':
-			var name = expr.a;
-			var args = expr.b;
-			return A2(
-				$jxxcarlson$etex$ETeX$Transform$Macro,
-				name,
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertFromETeXMathExpr, args));
-		case 'Expr':
-			var exprs = expr.a;
-			return $jxxcarlson$etex$ETeX$Transform$Expr(
-				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertFromETeXMathExpr, exprs));
-		case 'LeftParen':
-			return $jxxcarlson$etex$ETeX$Transform$LeftParen;
-		case 'RightParen':
-			return $jxxcarlson$etex$ETeX$Transform$RightParen;
-		default:
-			return $jxxcarlson$etex$ETeX$Transform$Comma;
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$replaceParam_ = F3(
-	function (k, expr, target) {
-		switch (target.$) {
-			case 'Arg':
-				var exprs = target.a;
-				return $jxxcarlson$etex$ETeX$Transform$Arg(
-					A2(
-						$elm$core$List$map,
-						A2($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr),
-						exprs));
-			case 'Sub':
-				var decoExpr = target.a;
-				if (decoExpr.$ === 'DecoM') {
-					var decoMExpr = decoExpr.a;
-					return $jxxcarlson$etex$ETeX$Transform$Sub(
-						$jxxcarlson$etex$ETeX$Transform$DecoM(
-							A3($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr, decoMExpr)));
-				} else {
-					var m = decoExpr.a;
-					return $jxxcarlson$etex$ETeX$Transform$Sub(
-						$jxxcarlson$etex$ETeX$Transform$DecoI(m));
-				}
-			case 'Super':
-				var decoExpr = target.a;
-				if (decoExpr.$ === 'DecoM') {
-					var decoMExpr = decoExpr.a;
-					return $jxxcarlson$etex$ETeX$Transform$Super(
-						$jxxcarlson$etex$ETeX$Transform$DecoM(
-							A3($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr, decoMExpr)));
-				} else {
-					var m = decoExpr.a;
-					return $jxxcarlson$etex$ETeX$Transform$Super(
-						$jxxcarlson$etex$ETeX$Transform$DecoI(m));
-				}
-			case 'Param':
-				var m = target.a;
-				return _Utils_eq(m, k) ? expr : $jxxcarlson$etex$ETeX$Transform$Param(m);
-			case 'Macro':
-				var name = target.a;
-				var exprs = target.b;
-				return A2(
-					$jxxcarlson$etex$ETeX$Transform$Macro,
-					name,
-					A2(
-						$elm$core$List$map,
-						A2($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr),
-						exprs));
-			case 'PArg':
-				var exprs = target.a;
-				return $jxxcarlson$etex$ETeX$Transform$PArg(
-					A2(
-						$elm$core$List$map,
-						A2($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr),
-						exprs));
-			case 'ParenthExpr':
-				var exprs = target.a;
-				return $jxxcarlson$etex$ETeX$Transform$ParenthExpr(
-					A2(
-						$elm$core$List$map,
-						A2($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr),
-						exprs));
-			case 'FCall':
-				var name = target.a;
-				var args = target.b;
-				return A2(
-					$jxxcarlson$etex$ETeX$Transform$FCall,
-					name,
-					A2(
-						$elm$core$List$map,
-						A2($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr),
-						args));
-			case 'Expr':
-				var exprs = target.a;
-				return $jxxcarlson$etex$ETeX$Transform$Expr(
-					A2(
-						$elm$core$List$map,
-						A2($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr),
-						exprs));
-			case 'Text':
-				var str = target.a;
-				return $jxxcarlson$etex$ETeX$Transform$Text(str);
-			case 'AlphaNum':
-				var str = target.a;
-				return $jxxcarlson$etex$ETeX$Transform$AlphaNum(str);
-			case 'F0':
-				var str = target.a;
-				return $jxxcarlson$etex$ETeX$Transform$F0(str);
-			case 'WS':
-				return $jxxcarlson$etex$ETeX$Transform$WS;
-			case 'MathSpace':
-				return $jxxcarlson$etex$ETeX$Transform$MathSpace;
-			case 'MathSmallSpace':
-				return $jxxcarlson$etex$ETeX$Transform$MathSmallSpace;
-			case 'MathMediumSpace':
-				return $jxxcarlson$etex$ETeX$Transform$MathMediumSpace;
-			case 'LeftMathBrace':
-				return $jxxcarlson$etex$ETeX$Transform$LeftMathBrace;
-			case 'RightMathBrace':
-				return $jxxcarlson$etex$ETeX$Transform$RightMathBrace;
-			case 'LeftParen':
-				return $jxxcarlson$etex$ETeX$Transform$LeftParen;
-			case 'RightParen':
-				return $jxxcarlson$etex$ETeX$Transform$RightParen;
-			case 'Comma':
-				return $jxxcarlson$etex$ETeX$Transform$Comma;
-			default:
-				var str = target.a;
-				return $jxxcarlson$etex$ETeX$Transform$MathSymbols(str);
-		}
-	});
-var $jxxcarlson$etex$ETeX$Transform$replaceParam = F3(
-	function (k, expr, exprs) {
-		return A2(
-			$elm$core$List$map,
-			A2($jxxcarlson$etex$ETeX$Transform$replaceParam_, k, expr),
-			exprs);
-	});
-var $jxxcarlson$etex$ETeX$Transform$replaceParams = F2(
-	function (replacementList, target) {
-		return A3(
-			$elm$core$List$foldl,
-			F2(
-				function (_v0, acc) {
-					var k = _v0.a;
-					var replacement = _v0.b;
-					return A3($jxxcarlson$etex$ETeX$Transform$replaceParam, k + 1, replacement, acc);
-				}),
-			target,
-			A2(
-				$elm$core$List$indexedMap,
-				F2(
-					function (k, item) {
-						return _Utils_Tuple2(k, item);
-					}),
-				replacementList));
-	});
-var $jxxcarlson$etex$ETeX$Transform$expandMacro_ = F2(
-	function (args, _v0) {
-		var macroDefBody = _v0.b;
-		var localMacroDefBody = A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$convertFromETeXMathExpr, macroDefBody);
-		return A2($jxxcarlson$etex$ETeX$Transform$replaceParams, args, localMacroDefBody);
-	});
-var $jxxcarlson$etex$ETeX$Transform$extractMacroArgs = function (args) {
-	extractMacroArgs:
-	while (true) {
-		if (!args.b) {
-			return _List_Nil;
-		} else {
-			switch (args.a.$) {
-				case 'PArg':
-					var contents = args.a.a;
-					var rest = args.b;
-					return A2(
-						$elm$core$List$cons,
-						$jxxcarlson$etex$ETeX$Transform$Arg(contents),
-						$jxxcarlson$etex$ETeX$Transform$extractMacroArgs(rest));
-				case 'Comma':
-					var _v1 = args.a;
-					var rest = args.b;
-					var $temp$args = rest;
-					args = $temp$args;
-					continue extractMacroArgs;
-				default:
-					var other = args.a;
-					var rest = args.b;
-					return A2(
-						$elm$core$List$cons,
-						other,
-						$jxxcarlson$etex$ETeX$Transform$extractMacroArgs(rest));
-			}
-		}
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$flattenForSingleArg = function (args) {
-	if (!args.b) {
-		return _List_Nil;
-	} else {
-		if (args.a.$ === 'PArg') {
-			var contents = args.a.a;
-			var rest = args.b;
-			return _Utils_ap(
-				contents,
-				$jxxcarlson$etex$ETeX$Transform$flattenForSingleArg(rest));
-		} else {
-			var other = args.a;
-			var rest = args.b;
-			return A2(
-				$elm$core$List$cons,
-				other,
-				$jxxcarlson$etex$ETeX$Transform$flattenForSingleArg(rest));
-		}
-	}
-};
-var $jxxcarlson$etex$ETeX$Transform$expandMacroWithDict = F2(
-	function (dict, expr) {
-		switch (expr.$) {
-			case 'Macro':
-				var macroName = expr.a;
-				var args = expr.b;
-				var _v1 = A2($elm$core$Dict$get, macroName, dict);
-				if (_v1.$ === 'Nothing') {
-					return A2(
-						$jxxcarlson$etex$ETeX$Transform$Macro,
-						macroName,
-						A2(
-							$elm$core$List$map,
-							$jxxcarlson$etex$ETeX$Transform$expandMacroWithDict(dict),
-							args));
-				} else {
-					var _v2 = _v1.a;
-					var arity = _v2.a;
-					var exprs = _v2.b;
-					var macroArgs = function () {
-						if (arity === 1) {
-							if (!args.b) {
-								return _List_Nil;
-							} else {
-								return _List_fromArray(
-									[
-										$jxxcarlson$etex$ETeX$Transform$Arg(
-										$jxxcarlson$etex$ETeX$Transform$flattenForSingleArg(args))
-									]);
-							}
-						} else {
-							return $jxxcarlson$etex$ETeX$Transform$extractMacroArgs(args);
-						}
-					}();
-					return $jxxcarlson$etex$ETeX$Transform$Expr(
-						A2(
-							$jxxcarlson$etex$ETeX$Transform$expandMacro_,
-							A2(
-								$elm$core$List$map,
-								$jxxcarlson$etex$ETeX$Transform$expandMacroWithDict(dict),
-								macroArgs),
-							A2($jxxcarlson$etex$ETeX$MathMacros$MacroBody, arity, exprs)));
-				}
-			case 'Arg':
-				var exprs = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$Arg(
-					A2(
-						$elm$core$List$map,
-						$jxxcarlson$etex$ETeX$Transform$expandMacroWithDict(dict),
-						exprs));
-			case 'Sub':
-				var decoExpr = expr.a;
-				if (decoExpr.$ === 'DecoM') {
-					var decoMExpr = decoExpr.a;
-					return $jxxcarlson$etex$ETeX$Transform$Sub(
-						$jxxcarlson$etex$ETeX$Transform$DecoM(
-							A2($jxxcarlson$etex$ETeX$Transform$expandMacroWithDict, dict, decoMExpr)));
-				} else {
-					var m = decoExpr.a;
-					return $jxxcarlson$etex$ETeX$Transform$Sub(
-						$jxxcarlson$etex$ETeX$Transform$DecoI(m));
-				}
-			case 'Super':
-				var decoExpr = expr.a;
-				if (decoExpr.$ === 'DecoM') {
-					var decoMExpr = decoExpr.a;
-					return $jxxcarlson$etex$ETeX$Transform$Super(
-						$jxxcarlson$etex$ETeX$Transform$DecoM(
-							A2($jxxcarlson$etex$ETeX$Transform$expandMacroWithDict, dict, decoMExpr)));
-				} else {
-					var m = decoExpr.a;
-					return $jxxcarlson$etex$ETeX$Transform$Super(
-						$jxxcarlson$etex$ETeX$Transform$DecoI(m));
-				}
-			case 'PArg':
-				var exprs = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$PArg(
-					A2(
-						$elm$core$List$map,
-						$jxxcarlson$etex$ETeX$Transform$expandMacroWithDict(dict),
-						exprs));
-			case 'ParenthExpr':
-				var exprs = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$ParenthExpr(
-					A2(
-						$elm$core$List$map,
-						$jxxcarlson$etex$ETeX$Transform$expandMacroWithDict(dict),
-						exprs));
-			case 'FCall':
-				var name = expr.a;
-				var args = expr.b;
-				return A2(
-					$jxxcarlson$etex$ETeX$Transform$FCall,
-					name,
-					A2(
-						$elm$core$List$map,
-						$jxxcarlson$etex$ETeX$Transform$expandMacroWithDict(dict),
-						args));
-			case 'Expr':
-				var exprs = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$Expr(
-					A2(
-						$elm$core$List$map,
-						$jxxcarlson$etex$ETeX$Transform$expandMacroWithDict(dict),
-						exprs));
-			case 'Text':
-				var str = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$Text(str);
-			case 'AlphaNum':
-				var str = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$AlphaNum(str);
-			case 'F0':
-				var str = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$F0(str);
-			case 'Param':
-				var n = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$Param(n);
-			case 'WS':
-				return $jxxcarlson$etex$ETeX$Transform$WS;
-			case 'MathSpace':
-				return $jxxcarlson$etex$ETeX$Transform$MathSpace;
-			case 'MathSmallSpace':
-				return $jxxcarlson$etex$ETeX$Transform$MathSmallSpace;
-			case 'MathMediumSpace':
-				return $jxxcarlson$etex$ETeX$Transform$MathMediumSpace;
-			case 'LeftMathBrace':
-				return $jxxcarlson$etex$ETeX$Transform$LeftMathBrace;
-			case 'RightMathBrace':
-				return $jxxcarlson$etex$ETeX$Transform$RightMathBrace;
-			case 'LeftParen':
-				return $jxxcarlson$etex$ETeX$Transform$LeftParen;
-			case 'RightParen':
-				return $jxxcarlson$etex$ETeX$Transform$RightParen;
-			case 'Comma':
-				return $jxxcarlson$etex$ETeX$Transform$Comma;
-			default:
-				var str = expr.a;
-				return $jxxcarlson$etex$ETeX$Transform$MathSymbols(str);
-		}
-	});
-var $elmcraft$core_extra$Result$Extra$combineHelp = F2(
-	function (list, acc) {
-		combineHelp:
-		while (true) {
-			if (list.b) {
-				var head = list.a;
-				var tail = list.b;
-				if (head.$ === 'Ok') {
-					var a = head.a;
-					var $temp$list = tail,
-						$temp$acc = A2($elm$core$List$cons, a, acc);
-					list = $temp$list;
-					acc = $temp$acc;
-					continue combineHelp;
-				} else {
-					var x = head.a;
-					return $elm$core$Result$Err(x);
-				}
-			} else {
-				return $elm$core$Result$Ok(
-					$elm$core$List$reverse(acc));
-			}
-		}
-	});
-var $elmcraft$core_extra$Result$Extra$combine = function (list) {
-	return A2($elmcraft$core_extra$Result$Extra$combineHelp, list, _List_Nil);
-};
-var $elm$core$Result$map = F2(
-	function (func, ra) {
-		if (ra.$ === 'Ok') {
-			var a = ra.a;
-			return $elm$core$Result$Ok(
-				func(a));
-		} else {
-			var e = ra.a;
-			return $elm$core$Result$Err(e);
-		}
-	});
 var $jxxcarlson$etex$ETeX$Transform$parseWithDict = F2(
 	function (userMacroDict, str) {
 		return A2(
@@ -24883,21 +14083,6 @@ var $jxxcarlson$etex$ETeX$Transform$parseWithDict = F2(
 			$jxxcarlson$etex$ETeX$Transform$many(
 				$jxxcarlson$etex$ETeX$Transform$mathExprParser(userMacroDict)),
 			str);
-	});
-var $jxxcarlson$etex$ETeX$Transform$parseManyWithDict = F2(
-	function (userMacroDict, str) {
-		return A2(
-			$elm$core$Result$map,
-			$elm$core$List$concat,
-			$elmcraft$core_extra$Result$Extra$combine(
-				A2(
-					$elm$core$List$map,
-					$jxxcarlson$etex$ETeX$Transform$parseWithDict(userMacroDict),
-					A2(
-						$elm$core$List$map,
-						$elm$core$String$trim,
-						$elm$core$String$lines(
-							$elm$core$String$trim(str))))));
 	});
 var $jxxcarlson$etex$ETeX$Transform$encloseB = function (str) {
 	return '{' + (str + '}');
@@ -24911,22 +14096,22 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 			var str = expr.a;
 			return str;
 		case 'LeftMathBrace':
-			return '\\{';
+			return '\u005C{';
 		case 'RightMathBrace':
-			return '\\}';
+			return '\u005C}';
 		case 'LeftParen':
 			return '(';
 		case 'RightParen':
 			return ')';
 		case 'MathSmallSpace':
-			return '\\,';
+			return '\u005C,';
 		case 'MathMediumSpace':
-			return '\\;';
+			return '\u005C;';
 		case 'MathSpace':
-			return '\\ ';
+			return '\u005C ';
 		case 'F0':
 			var str = expr.a;
-			return '\\' + str;
+			return '\u005C' + str;
 		case 'Param':
 			var k = expr.a;
 			return '#' + $elm$core$String$fromInt(k);
@@ -24958,11 +14143,11 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 					switch (body.a.$) {
 						case 'PArg':
 							var exprs = body.a.a;
-							return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
+							return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
 								$jxxcarlson$etex$ETeX$Transform$printList(exprs)));
 						case 'ParenthExpr':
 							var exprs = body.a.a;
-							return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
+							return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
 								$jxxcarlson$etex$ETeX$Transform$printList(exprs)));
 						default:
 							break _v8$2;
@@ -24972,9 +14157,9 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 				}
 			}
 			if (body.b && (body.a.$ === 'PArg')) {
-				return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$printMacroArgs(body));
+				return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$printMacroArgs(body));
 			} else {
-				return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$printList(body));
+				return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$printList(body));
 			}
 		case 'FCall':
 			var name = expr.a;
@@ -24994,7 +14179,7 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 				$jxxcarlson$etex$ETeX$Transform$printList(exprs));
 		default:
 			var str = expr.a;
-			return '\\text{' + (str + '}');
+			return '\u005Ctext{' + (str + '}');
 	}
 };
 var $jxxcarlson$etex$ETeX$Transform$printArgList = function (exprs) {
@@ -25081,1173 +14266,1008 @@ var $jxxcarlson$etex$ETeX$Transform$printMacroArgs = function (exprs) {
 		}
 	}
 };
-var $jxxcarlson$etex$ETeX$Transform$evalStr = F2(
-	function (userDefinedMacroDict, str) {
-		var _v0 = A2(
-			$jxxcarlson$etex$ETeX$Transform$parseManyWithDict,
-			userDefinedMacroDict,
-			$elm$core$String$trim(str));
-		if (_v0.$ === 'Ok') {
-			var result = _v0.a;
-			return $jxxcarlson$etex$ETeX$Transform$printList(
-				A2(
-					$elm$core$List$map,
-					$jxxcarlson$etex$ETeX$Transform$expandMacroWithDict(userDefinedMacroDict),
-					result));
-		} else {
-			return str;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$eraseLabeMacro = function (content) {
-	return A2(
-		$elm$core$String$join,
-		'\n',
-		A2(
-			$elm$core$List$map,
-			$jxxcarlson$xmarkdown_compiler$Macro$PTextMacro$eraseLeadingMacro('label'),
-			$elm$core$String$lines(content)));
+var $jxxcarlson$etex$ETeX$Transform$Expr = function (a) {
+	return {$: 'Expr', a: a};
 };
-var $jxxcarlson$xmarkdown_compiler$Render$Math$isDisplayMathMode = function (displayMode) {
-	if (displayMode.$ === 'InlineMathMode') {
-		return false;
-	} else {
-		return true;
+var $jxxcarlson$etex$ETeX$Transform$LeftParen = {$: 'LeftParen'};
+var $jxxcarlson$etex$ETeX$Transform$RightParen = {$: 'RightParen'};
+var $jxxcarlson$etex$ETeX$Dictionary$symbolDict = $elm$core$Dict$fromList(
+	_List_fromArray(
+		[
+			_Utils_Tuple2('qquad', '\u005Cqquad'),
+			_Utils_Tuple2('alpha', '\u005Calpha'),
+			_Utils_Tuple2('beta', '\u005Cbeta'),
+			_Utils_Tuple2('gamma', '\u005Cgamma'),
+			_Utils_Tuple2('delta', '\u005Cdelta'),
+			_Utils_Tuple2('epsilon', '\u005Cepsilon'),
+			_Utils_Tuple2('zeta', '\u005Czeta'),
+			_Utils_Tuple2('eta', '\u005Ceta'),
+			_Utils_Tuple2('theta', '\u005Ctheta'),
+			_Utils_Tuple2('iota', '\u005Ciota'),
+			_Utils_Tuple2('kappa', '\u005Ckappa'),
+			_Utils_Tuple2('lambda', '\u005Clambda'),
+			_Utils_Tuple2('mu', '\u005Cmu'),
+			_Utils_Tuple2('nu', '\u005Cnu'),
+			_Utils_Tuple2('xi', '\u005Cxi'),
+			_Utils_Tuple2('omicron', '\u005Comicron'),
+			_Utils_Tuple2('pi', '\u005Cpi'),
+			_Utils_Tuple2('rho', '\u005Crho'),
+			_Utils_Tuple2('sigma', '\u005Csigma'),
+			_Utils_Tuple2('tau', '\u005Ctau'),
+			_Utils_Tuple2('upsilon', '\u005Cupsilon'),
+			_Utils_Tuple2('phi', '\u005Cphi'),
+			_Utils_Tuple2('chi', '\u005Cchi'),
+			_Utils_Tuple2('psi', '\u005Cpsi'),
+			_Utils_Tuple2('omega', '\u005Comega'),
+			_Utils_Tuple2('Alpha', '\u005CAlpha'),
+			_Utils_Tuple2('Beta', '\u005CBeta'),
+			_Utils_Tuple2('Gamma', '\u005CGamma'),
+			_Utils_Tuple2('Delta', '\u005CDelta'),
+			_Utils_Tuple2('Epsilon', '\u005CEpsilon'),
+			_Utils_Tuple2('Zeta', '\u005CZeta'),
+			_Utils_Tuple2('Eta', '\u005CEta'),
+			_Utils_Tuple2('Theta', '\u005CTheta'),
+			_Utils_Tuple2('Iota', '\u005CIota'),
+			_Utils_Tuple2('Kappa', '\u005CKappa'),
+			_Utils_Tuple2('Lambda', '\u005CLambda'),
+			_Utils_Tuple2('Mu', '\u005CMu'),
+			_Utils_Tuple2('Nu', '\u005CNu'),
+			_Utils_Tuple2('Xi', '\u005CXi'),
+			_Utils_Tuple2('Omicron', '\u005COmicron'),
+			_Utils_Tuple2('Pi', '\u005CPi'),
+			_Utils_Tuple2('Rho', '\u005CRho'),
+			_Utils_Tuple2('Sigma', '\u005CSigma'),
+			_Utils_Tuple2('Tau', '\u005CTau'),
+			_Utils_Tuple2('Upsilon', '\u005CUpsilon'),
+			_Utils_Tuple2('Phi', '\u005CPhi'),
+			_Utils_Tuple2('Chi', '\u005CChi'),
+			_Utils_Tuple2('Psi', '\u005CPsi'),
+			_Utils_Tuple2('Omega', '\u005COmega'),
+			_Utils_Tuple2('varepsilon', '\u005Cvarepsilon'),
+			_Utils_Tuple2('vartheta', '\u005Cvartheta'),
+			_Utils_Tuple2('varpi', '\u005Cvarpi'),
+			_Utils_Tuple2('varrho', '\u005Cvarrho'),
+			_Utils_Tuple2('varsigma', '\u005Cvarsigma'),
+			_Utils_Tuple2('varphi', '\u005Cvarphi')
+		]));
+var $jxxcarlson$etex$ETeX$Transform$resolveSymbolName = function (expr) {
+	switch (expr.$) {
+		case 'AlphaNum':
+			var str = expr.a;
+			var _v2 = A2($elm$core$Dict$get, str, $jxxcarlson$etex$ETeX$Dictionary$symbolDict);
+			if (_v2.$ === 'Just') {
+				return $jxxcarlson$etex$ETeX$Transform$AlphaNum('\u005C' + str);
+			} else {
+				return $jxxcarlson$etex$ETeX$Transform$AlphaNum(str);
+			}
+		case 'PArg':
+			var exprs = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$PArg(
+				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$resolveSymbolName, exprs));
+		case 'ParenthExpr':
+			var exprs = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$ParenthExpr(
+				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$resolveSymbolName, exprs));
+		case 'Macro':
+			var name = expr.a;
+			var args = expr.b;
+			return A2(
+				$jxxcarlson$etex$ETeX$Transform$Macro,
+				name,
+				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$resolveSymbolName, args));
+		case 'F0':
+			var str = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$F0(str);
+		case 'Arg':
+			var exprs = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$Arg(
+				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$resolveSymbolName, exprs));
+		case 'Sub':
+			var deco = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$Sub(
+				$jxxcarlson$etex$ETeX$Transform$resolveSymbolNameInDeco(deco));
+		case 'Super':
+			var deco = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$Super(
+				$jxxcarlson$etex$ETeX$Transform$resolveSymbolNameInDeco(deco));
+		case 'Param':
+			var n = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$Param(n);
+		case 'WS':
+			return $jxxcarlson$etex$ETeX$Transform$WS;
+		case 'MathSpace':
+			return $jxxcarlson$etex$ETeX$Transform$MathSpace;
+		case 'MathSmallSpace':
+			return $jxxcarlson$etex$ETeX$Transform$MathSmallSpace;
+		case 'MathMediumSpace':
+			return $jxxcarlson$etex$ETeX$Transform$MathMediumSpace;
+		case 'LeftMathBrace':
+			return $jxxcarlson$etex$ETeX$Transform$LeftMathBrace;
+		case 'RightMathBrace':
+			return $jxxcarlson$etex$ETeX$Transform$RightMathBrace;
+		case 'LeftParen':
+			return $jxxcarlson$etex$ETeX$Transform$LeftParen;
+		case 'RightParen':
+			return $jxxcarlson$etex$ETeX$Transform$RightParen;
+		case 'Comma':
+			return $jxxcarlson$etex$ETeX$Transform$Comma;
+		case 'MathSymbols':
+			var str = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$MathSymbols(str);
+		case 'FCall':
+			var name = expr.a;
+			var args = expr.b;
+			return A2(
+				$jxxcarlson$etex$ETeX$Transform$FCall,
+				name,
+				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$resolveSymbolName, args));
+		case 'Expr':
+			var exprs = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$Expr(
+				A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$resolveSymbolName, exprs));
+		default:
+			var str = expr.a;
+			return $jxxcarlson$etex$ETeX$Transform$Text(str);
 	}
 };
-var $jxxcarlson$xmarkdown_compiler$Render$Math$mathText_ = F3(
-	function (theme, displayMode, content) {
+var $jxxcarlson$etex$ETeX$Transform$resolveSymbolNameInDeco = function (deco) {
+	if (deco.$ === 'DecoM') {
+		var expr = deco.a;
+		return $jxxcarlson$etex$ETeX$Transform$DecoM(
+			$jxxcarlson$etex$ETeX$Transform$resolveSymbolName(expr));
+	} else {
+		var n = deco.a;
+		return $jxxcarlson$etex$ETeX$Transform$DecoI(n);
+	}
+};
+var $jxxcarlson$etex$ETeX$Transform$transformETeX = F2(
+	function (dict, input) {
+		if (A2($elm$core$String$contains, '\u005C', input)) {
+			var _v0 = A2(
+				$jxxcarlson$etex$ETeX$Transform$parseWithDict,
+				$elm$core$Dict$empty,
+				$elm$core$String$trim(input));
+			if (_v0.$ === 'Ok') {
+				var exprs = _v0.a;
+				return $jxxcarlson$etex$ETeX$Transform$printList(exprs);
+			} else {
+				return '[ETeX error]' + input;
+			}
+		} else {
+			var _v1 = A2(
+				$jxxcarlson$etex$ETeX$Transform$parseWithDict,
+				dict,
+				$elm$core$String$trim(input));
+			if (_v1.$ === 'Ok') {
+				var exprs = _v1.a;
+				return $jxxcarlson$etex$ETeX$Transform$printList(
+					A2($elm$core$List$map, $jxxcarlson$etex$ETeX$Transform$resolveSymbolName, exprs));
+			} else {
+				return '[ETeX error]' + input;
+			}
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent = function (block) {
+	var rawContent = function () {
+		var _v0 = block.body;
+		if (_v0.$ === 'Left') {
+			var str = _v0.a;
+			return str;
+		} else {
+			var exprs = _v0.a;
+			return $elm$core$String$concat(
+				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Render$Math$extractExprText, exprs));
+		}
+	}();
+	var stripped = $jxxcarlson$xmarkdown_compiler$Render$Math$stripMathDelimiters(
+		$elm$core$String$trim(rawContent));
+	return A2($jxxcarlson$etex$ETeX$Transform$transformETeX, $elm$core$Dict$empty, stripped);
+};
+var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
+var $elm$virtual_dom$VirtualDom$node = function (tag) {
+	return _VirtualDom_node(
+		_VirtualDom_noScript(tag));
+};
+var $elm$html$Html$node = $elm$virtual_dom$VirtualDom$node;
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $jxxcarlson$xmarkdown_compiler$Render$Math$renderMath = F3(
+	function (content, isDisplay, attrs) {
 		return A3(
 			$elm$html$Html$node,
 			'math-text',
+			_Utils_ap(
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$attribute, 'data-content', content),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-display',
+						isDisplay ? 'true' : 'false')
+					]),
+				attrs),
 			_List_fromArray(
 				[
-					A2(
-					$elm$html$Html$Attributes$property,
-					'display',
-					$elm$json$Json$Encode$bool(
-						$jxxcarlson$xmarkdown_compiler$Render$Math$isDisplayMathMode(displayMode))),
-					A2(
-					$elm$html$Html$Attributes$property,
-					'content',
-					$elm$json$Json$Encode$string(content)),
-					A2($elm$html$Html$Attributes$attribute, 'theme', theme)
-				]),
-			_List_Nil);
+					$elm$html$Html$text(content)
+				]));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$mathText = F5(
-	function (theme, generation, id, displayMode, content) {
-		return $mdgriffith$elm_ui$Element$html(
-			A3(
-				$elm$html$Html$Keyed$node,
-				'span',
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $jxxcarlson$xmarkdown_compiler$Render$Math$aligned = F5(
+	function (count, _v0, _v1, attrs, block) {
+		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
+		return A3(
+			$jxxcarlson$xmarkdown_compiler$Render$Math$renderMath,
+			content,
+			true,
+			_Utils_ap(
 				_List_fromArray(
 					[
-						A2($elm$html$Html$Attributes$style, 'padding-top', '0px'),
-						A2($elm$html$Html$Attributes$style, 'padding-bottom', '0px'),
-						$elm$html$Html$Attributes$id(id)
+						$elm$html$Html$Attributes$id(blockId),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber)),
+						A2($elm$html$Html$Attributes$style, 'padding', '8px')
 					]),
+				attrs));
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$Math$array = F5(
+	function (count, _v0, _v1, attrs, block) {
+		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
+		return A3(
+			$jxxcarlson$xmarkdown_compiler$Render$Math$renderMath,
+			content,
+			true,
+			_Utils_ap(
 				_List_fromArray(
 					[
-						_Utils_Tuple2(
-						$elm$core$String$fromInt(generation),
-						A3(
-							$jxxcarlson$xmarkdown_compiler$Render$Math$mathText_,
-							theme,
-							displayMode,
-							$jxxcarlson$xmarkdown_compiler$Render$Math$eraseLabeMacro(content)))
-					])));
+						$elm$html$Html$Attributes$id(blockId),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber)),
+						A2($elm$html$Html$Attributes$style, 'padding', '8px')
+					]),
+				attrs));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$ThemeHelpers$themeAsStringFromSettings = function (settings) {
-	var _v0 = settings.theme;
-	if (_v0.$ === 'Light') {
-		return 'light';
+var $jxxcarlson$xmarkdown_compiler$Render$Math$chem = F5(
+	function (count, _v0, _v1, attrs, block) {
+		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
+		return A3(
+			$jxxcarlson$xmarkdown_compiler$Render$Math$renderMath,
+			content,
+			false,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$id(blockId),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber)),
+						A2($elm$html$Html$Attributes$style, 'padding', '8px')
+					]),
+				attrs));
+	});
+var $elm$html$Html$dd = _VirtualDom_node('dd');
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $jxxcarlson$xmarkdown_compiler$Render$Expression$buildImageAttributes = function (props) {
+	var widthAttr = A2(
+		$elm$core$Maybe$map,
+		function (w) {
+			return A2($elm$html$Html$Attributes$style, 'width', w + 'px');
+		},
+		A2($elm$core$Dict$get, 'width', props));
+	var heightAttr = A2(
+		$elm$core$Maybe$map,
+		function (h) {
+			return A2($elm$html$Html$Attributes$style, 'height', h + 'px');
+		},
+		A2($elm$core$Dict$get, 'height', props));
+	return A2(
+		$elm$core$List$filterMap,
+		$elm$core$Basics$identity,
+		_List_fromArray(
+			[widthAttr, heightAttr]));
+};
+var $elm$html$Html$code = _VirtualDom_node('code');
+var $elm$html$Html$em = _VirtualDom_node('em');
+var $jxxcarlson$xmarkdown_compiler$Render$Expression$extractImageData = function (exprs) {
+	var combined = $elm$core$String$trim(
+		$elm$core$String$concat(
+			A2(
+				$elm$core$List$map,
+				function (expr) {
+					if (expr.$ === 'Text') {
+						var str = expr.a;
+						return str;
+					} else {
+						return '';
+					}
+				},
+				exprs)));
+	var _v0 = A2($elm$core$String$split, ' ', combined);
+	if (!_v0.b) {
+		return _Utils_Tuple2('', 'Image');
 	} else {
-		return 'dark';
+		var url = _v0.a;
+		var rest = _v0.b;
+		return _Utils_Tuple2(
+			url,
+			A2($elm$core$String$join, ' ', rest));
 	}
 };
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$mathElement = F5(
-	function (generation, acc, s, meta, str) {
-		return A5(
-			$jxxcarlson$xmarkdown_compiler$Render$Math$mathText,
-			$jxxcarlson$xmarkdown_compiler$Render$ThemeHelpers$themeAsStringFromSettings(s),
-			generation,
-			meta.id,
-			$jxxcarlson$xmarkdown_compiler$Render$Math$InlineMathMode,
-			A2($jxxcarlson$etex$ETeX$Transform$evalStr, acc.mathMacroDict, str));
+var $jxxcarlson$xmarkdown_compiler$Render$Expression$extractLinkData = function (exprs) {
+	var combined = $elm$core$String$trim(
+		$elm$core$String$concat(
+			A2(
+				$elm$core$List$map,
+				function (expr) {
+					if (expr.$ === 'Text') {
+						var str = expr.a;
+						return str;
+					} else {
+						return '';
+					}
+				},
+				exprs)));
+	var _v0 = $elm$core$List$reverse(
+		A2($elm$core$String$split, ' ', combined));
+	if (!_v0.b) {
+		return _Utils_Tuple2('Link', '#');
+	} else {
+		var url = _v0.a;
+		var rest = _v0.b;
+		return _Utils_Tuple2(
+			A2(
+				$elm$core$String$join,
+				' ',
+				$elm$core$List$reverse(rest)),
+			url);
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$Render$Expression$extractMathContent = function (exprs) {
+	return $elm$core$String$trim(
+		$elm$core$String$concat(
+			A2(
+				$elm$core$List$map,
+				function (expr) {
+					if (expr.$ === 'Text') {
+						var str = expr.a;
+						return str;
+					} else {
+						return '';
+					}
+				},
+				exprs)));
+};
+var $elm$html$Html$figcaption = _VirtualDom_node('figcaption');
+var $elm$html$Html$figure = _VirtualDom_node('figure');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$core$List$partition = F2(
+	function (pred, list) {
+		var step = F2(
+			function (x, _v0) {
+				var trues = _v0.a;
+				var falses = _v0.b;
+				return pred(x) ? _Utils_Tuple2(
+					A2($elm$core$List$cons, x, trues),
+					falses) : _Utils_Tuple2(
+					trues,
+					A2($elm$core$List$cons, x, falses));
+			});
+		return A3(
+			$elm$core$List$foldr,
+			step,
+			_Utils_Tuple2(_List_Nil, _List_Nil),
+			list);
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$chem = F5(
-	function (g, a, s, m, str) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			A3($jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdSelected, m.id, s, _List_Nil),
-			A5($jxxcarlson$xmarkdown_compiler$Render$Expression$mathElement, g, a, s, m, '\\ce{' + (str + '}')));
-	});
-var $mdgriffith$elm_ui$Internal$Model$FontFamily = F2(
-	function (a, b) {
-		return {$: 'FontFamily', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$fontFamily = $mdgriffith$elm_ui$Internal$Flag$flag(5);
-var $mdgriffith$elm_ui$Internal$Model$renderFontClassName = F2(
-	function (font, current) {
-		return _Utils_ap(
-			current,
+var $jxxcarlson$xmarkdown_compiler$Render$Expression$parseImageProperties = function (altText) {
+	var tokens = A2($elm$core$String$split, ' ', altText);
+	var _v0 = A2(
+		$elm$core$List$partition,
+		function (token) {
+			return A2($elm$core$String$contains, ':', token);
+		},
+		tokens);
+	var propTokens = _v0.a;
+	var captionTokens = _v0.b;
+	var caption = $elm$core$String$trim(
+		A2($elm$core$String$join, ' ', captionTokens));
+	var props = $elm$core$Dict$fromList(
+		A2(
+			$elm$core$List$filterMap,
+			$elm$core$Basics$identity,
+			A2(
+				$elm$core$List$map,
+				function (token) {
+					var _v1 = A2($elm$core$String$split, ':', token);
+					if ((_v1.b && _v1.b.b) && (!_v1.b.b.b)) {
+						var key = _v1.a;
+						var _v2 = _v1.b;
+						var value = _v2.a;
+						return $elm$core$Maybe$Just(
+							_Utils_Tuple2(key, value));
+					} else {
+						return $elm$core$Maybe$Nothing;
+					}
+				},
+				propTokens)));
+	return _Utils_Tuple2(caption, props);
+};
+var $elm$html$Html$Attributes$rel = _VirtualDom_attribute('rel');
+var $elm$html$Html$span = _VirtualDom_node('span');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $elm$html$Html$strong = _VirtualDom_node('strong');
+var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
+var $avh4$elm_color$Color$toRgba = function (_v0) {
+	var r = _v0.a;
+	var g = _v0.b;
+	var b = _v0.c;
+	var a = _v0.d;
+	return {alpha: a, blue: b, green: g, red: r};
+};
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$colorToRgbString = function (color) {
+	var _v0 = $avh4$elm_color$Color$toRgba(color);
+	var alpha = _v0.alpha;
+	var blue = _v0.blue;
+	var green = _v0.green;
+	var red = _v0.red;
+	return (alpha < 1.0) ? ('rgba(' + ($elm$core$String$fromInt(
+		$elm$core$Basics$round(red * 255)) + (', ' + ($elm$core$String$fromInt(
+		$elm$core$Basics$round(green * 255)) + (', ' + ($elm$core$String$fromInt(
+		$elm$core$Basics$round(blue * 255)) + (', ' + ($elm$core$String$fromFloat(alpha) + ')')))))))) : ('rgb(' + ($elm$core$String$fromInt(
+		$elm$core$Basics$round(red * 255)) + (', ' + ($elm$core$String$fromInt(
+		$elm$core$Basics$round(green * 255)) + (', ' + ($elm$core$String$fromInt(
+		$elm$core$Basics$round(blue * 255)) + ')'))))));
+};
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor = F2(
+	function (keyAccess, theme) {
+		var color = keyAccess(
 			function () {
-				switch (font.$) {
-					case 'Serif':
-						return 'serif';
-					case 'SansSerif':
-						return 'sans-serif';
-					case 'Monospace':
-						return 'monospace';
-					case 'Typeface':
-						var name = font.a;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
-					case 'ImportFont':
-						var name = font.a;
-						var url = font.b;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
-					default:
-						var name = font.a.name;
-						return A2(
-							$elm$core$String$join,
-							'-',
-							$elm$core$String$words(
-								$elm$core$String$toLower(name)));
+				if (theme.$ === 'Dark') {
+					return $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme;
+				} else {
+					return $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme;
 				}
 			}());
+		return $jxxcarlson$xmarkdown_compiler$Render$Theme$colorToRgbString(color);
 	});
-var $mdgriffith$elm_ui$Element$Font$family = function (families) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$fontFamily,
-		A2(
-			$mdgriffith$elm_ui$Internal$Model$FontFamily,
-			A3($elm$core$List$foldl, $mdgriffith$elm_ui$Internal$Model$renderFontClassName, 'ff-', families),
-			families));
-};
-var $mdgriffith$elm_ui$Internal$Model$Monospace = {$: 'Monospace'};
-var $mdgriffith$elm_ui$Element$Font$monospace = $mdgriffith$elm_ui$Internal$Model$Monospace;
-var $mdgriffith$elm_ui$Internal$Model$Typeface = function (a) {
-	return {$: 'Typeface', a: a};
-};
-var $mdgriffith$elm_ui$Element$Font$typeface = $mdgriffith$elm_ui$Internal$Model$Typeface;
-var $mdgriffith$elm_ui$Element$Font$unitalicized = $mdgriffith$elm_ui$Internal$Model$htmlClass($mdgriffith$elm_ui$Internal$Style$classes.textUnitalicized);
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$codeStyle = function (settings) {
-	return _List_fromArray(
-		[
-			$mdgriffith$elm_ui$Element$Font$family(
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$typeface('Inconsolata'),
-					$mdgriffith$elm_ui$Element$Font$monospace
-				])),
-			$mdgriffith$elm_ui$Element$Font$unitalicized,
-			$mdgriffith$elm_ui$Element$Font$color(settings.codeColor),
-			$mdgriffith$elm_ui$Element$Background$color(settings.codeBackground),
-			$mdgriffith$elm_ui$Element$paddingEach(
-			{bottom: 0, left: 2, right: 2, top: 0})
-		]);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont = F2(
-	function (settings, designSize) {
-		return $elm$core$Basics$round((settings.fontSize * designSize) / $jxxcarlson$xmarkdown_compiler$Render$Settings$referenceFontSize);
-	});
-var $mdgriffith$elm_ui$Internal$Model$FontSize = function (a) {
-	return {$: 'FontSize', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Flag$fontSize = $mdgriffith$elm_ui$Internal$Flag$flag(4);
-var $mdgriffith$elm_ui$Element$Font$size = function (i) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$fontSize,
-		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$verbatimElement = F4(
-	function (settings, formatList, meta, str) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$Font$size(
-					A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 18)),
-				A2(
-					$elm$core$List$cons,
-					$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(meta.id),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$height($mdgriffith$elm_ui$Element$shrink),
-						A2(
-							$elm$core$List$cons,
-							$mdgriffith$elm_ui$Element$Background$color(settings.codeBackground),
-							formatList)))),
-			$mdgriffith$elm_ui$Element$text(str));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$code = F3(
-	function (s, m, str) {
-		return A4(
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$verbatimElement,
-			s,
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$codeStyle(s),
-			m,
-			str);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$math = F5(
-	function (g, a, s, m, str) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			A3($jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdSelected, m.id, s, _List_Nil),
-			A5($jxxcarlson$xmarkdown_compiler$Render$Expression$mathElement, g, a, s, m, str));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$verbatimDict = $elm$core$Dict$fromList(
-	_List_fromArray(
-		[
-			_Utils_Tuple2(
-			'$',
-			F5(
-				function (g, a, s, m, str) {
-					return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$math, g, a, s, m, str);
-				})),
-			_Utils_Tuple2(
-			'`',
-			F5(
-				function (_v0, _v1, s, m, str) {
-					return A3($jxxcarlson$xmarkdown_compiler$Render$Expression$code, s, m, str);
-				})),
-			_Utils_Tuple2(
-			'code',
-			F5(
-				function (_v2, _v3, s, m, str) {
-					return A3($jxxcarlson$xmarkdown_compiler$Render$Expression$code, s, m, str);
-				})),
-			_Utils_Tuple2(
-			'math',
-			F5(
-				function (g, a, s, m, str) {
-					return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$math, g, a, s, m, str);
-				})),
-			_Utils_Tuple2(
-			'm',
-			F5(
-				function (g, a, s, m, str) {
-					return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$math, g, a, s, m, str);
-				})),
-			_Utils_Tuple2(
-			'chem',
-			F5(
-				function (g, a, s, m, str) {
-					return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$chem, g, a, s, m, str);
-				}))
-		]));
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$renderVerbatim = F6(
-	function (name, generation, acc, settings, meta, str) {
-		var _v0 = A2($elm$core$Dict$get, name, $jxxcarlson$xmarkdown_compiler$Render$Expression$verbatimDict);
-		if (_v0.$ === 'Nothing') {
-			return A2($jxxcarlson$xmarkdown_compiler$Render$Expression$errorText, 1, name);
-		} else {
-			var f = _v0.a;
-			return A5(f, generation, acc, settings, meta, str);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Constants$titleFontSize = 32;
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$vspace = F5(
-	function (_v0, _v1, _v2, _v3, exprList) {
-		var h = A2(
-			$elm$core$Maybe$withDefault,
-			1,
-			$elm$core$String$toInt(
-				A2(
-					$elm$core$String$join,
-					'',
-					$jxxcarlson$xmarkdown_compiler$AST$ASTTools$exprListToStringList(exprList))));
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$height(
-					$mdgriffith$elm_ui$Element$px(h))
-				]),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$text('')
-				]));
-	});
-var $mdgriffith$elm_ui$Internal$Model$BorderWidth = F5(
-	function (a, b, c, d, e) {
-		return {$: 'BorderWidth', a: a, b: b, c: c, d: d, e: e};
-	});
-var $mdgriffith$elm_ui$Element$Border$width = function (v) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
-		A5(
-			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
-			'b-' + $elm$core$String$fromInt(v),
-			v,
-			v,
-			v,
-			v));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$abstract = F5(
-	function (g, acc, s, attr, exprList) {
-		return A2(
-			$mdgriffith$elm_ui$Element$paragraph,
-			_List_Nil,
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$size(
-							A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, s, 18))
-						]),
-					$mdgriffith$elm_ui$Element$text('Abstract.')),
-					A6($jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement, _List_Nil, g, acc, s, attr, exprList)
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$anchor = F5(
-	function (g, acc, s, attr, exprList) {
-		return A2(
-			$mdgriffith$elm_ui$Element$paragraph,
-			A2($elm$core$List$cons, $mdgriffith$elm_ui$Element$Font$underline, attr),
-			A2(
-				$elm$core$List$map,
-				A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, g, acc, s, _List_Nil),
-				exprList));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$brackets = F5(
-	function (g, acc, s, attr, exprList) {
-		return A2(
-			$mdgriffith$elm_ui$Element$paragraph,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(8)
-				]),
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$text('['),
-					A6($jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement, _List_Nil, g, acc, s, attr, exprList),
-					$mdgriffith$elm_ui$Element$text(' ]')
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$emph = F5(
-	function (g, acc, s, attr, exprList) {
-		return A6(
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$italic,
-					$mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: 0, left: 0, right: 2, top: 0})
-				]),
-			g,
-			acc,
-			s,
-			attr,
-			exprList);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$errorHighlight = F5(
-	function (g, acc, s, attr, exprList) {
-		return A6(
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Background$color(
-					A3($mdgriffith$elm_ui$Element$rgb255, 255, 200, 200)),
-					A2($mdgriffith$elm_ui$Element$paddingXY, 4, 2)
-				]),
-			g,
-			acc,
-			s,
-			attr,
-			exprList);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$italic = F5(
-	function (g, acc, s, attr, exprList) {
-		return A6(
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$italic,
-					$mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: 0, left: 0, right: 2, top: 0})
-				]),
-			g,
-			acc,
-			s,
-			attr,
-			exprList);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$large = F5(
-	function (g, acc, s, attr, exprList) {
-		return A6(
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$size(
-					A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, s, 18))
-				]),
-			g,
-			acc,
-			s,
-			attr,
-			exprList);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$mark1 = F5(
-	function (g, acc, s, attr, exprList) {
-		if (((((exprList.b && (exprList.a.$ === 'Text')) && exprList.b.b) && (exprList.b.a.$ === 'Fun')) && (exprList.b.a.a === 'anchor')) && (!exprList.b.b.b)) {
-			var _v7 = exprList.a;
-			var str = _v7.a;
-			var _v8 = exprList.b;
-			var _v9 = _v8.a;
-			var list = _v9.b;
-			return A2(
-				$mdgriffith$elm_ui$Element$paragraph,
-				_List_fromArray(
-					[
-						$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(
-						$elm$core$String$trim(str)),
-						$mdgriffith$elm_ui$Element$Font$underline
-					]),
-				A2(
-					$elm$core$List$map,
-					A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, g, acc, s, attr),
-					list));
-		} else {
-			return $mdgriffith$elm_ui$Element$text('Parse error in element mark?');
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$marked = F5(
-	function (g, acc, s, attr, exprList) {
-		_v4$2:
-		while (true) {
-			if (exprList.b) {
-				if (!exprList.b.b) {
-					var first = exprList.a;
-					return A6(
-						$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-						_List_Nil,
-						g,
-						acc,
-						s,
-						attr,
-						_List_fromArray(
-							[first]));
-				} else {
-					if (exprList.a.$ === 'Text') {
-						var _v5 = exprList.a;
-						var str = _v5.a;
-						var rest = exprList.b;
-						return A6(
-							$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-							_List_fromArray(
-								[
-									$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(str)
-								]),
-							g,
-							acc,
-							s,
-							attr,
-							rest);
-					} else {
-						break _v4$2;
-					}
-				}
-			} else {
-				break _v4$2;
-			}
-		}
-		return $mdgriffith$elm_ui$Element$none;
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$quote = F5(
-	function (g, acc, s, attr, exprList) {
-		var rightQuote = $elm$core$String$fromChar(
-			_Utils_chr('\"'));
-		var meta = {begin: 0, end: 1, id: 'qq', index: 0};
-		var leftQuote = $elm$core$String$fromChar(
-			_Utils_chr('\"'));
-		return A2(
-			$mdgriffith$elm_ui$Element$paragraph,
-			_List_Nil,
-			A2(
-				$elm$core$List$map,
-				A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, g, acc, s, attr),
-				A2(
-					$elm$core$List$cons,
-					A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, leftQuote, meta),
-					_Utils_ap(
-						exprList,
-						_List_fromArray(
-							[
-								A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, rightQuote, meta)
-							])))));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F5(
-	function (generation, acc, settings, attrs, expr) {
-		var background = $mdgriffith$elm_ui$Element$Background$color(
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-				function ($) {
-					return $.offsetBackground;
-				},
-				settings.theme));
+var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F3(
+	function (theme, attrs, expr) {
 		switch (expr.$) {
 			case 'Text':
 				var string = expr.a;
-				var meta = expr.b;
 				return A2(
-					$mdgriffith$elm_ui$Element$el,
-					A2(
-						$elm$core$List$cons,
-						background,
-						_Utils_ap(
-							_List_fromArray(
-								[
-									$jxxcarlson$xmarkdown_compiler$Render$Expression$onClickStop(
-									$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendMeta(meta)),
-									$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(meta.id)
-								]),
-							attrs)),
-					$mdgriffith$elm_ui$Element$text(string + ' '));
-			case 'Fun':
+					$elm$html$Html$span,
+					attrs,
+					_List_fromArray(
+						[
+							$elm$html$Html$text(string + ' ')
+						]));
+			case 'VFun':
 				var name = expr.a;
-				var exprList = expr.b;
-				var meta = expr.c;
+				var content = expr.b;
 				if (A2(
 					$elm$core$List$member,
 					name,
 					_List_fromArray(
-						['chem', 'math', 'm', 'code']))) {
-					return A2(
-						$mdgriffith$elm_ui$Element$el,
+						['math', 'm', 'chem']))) {
+					var mathContent = A2($jxxcarlson$etex$ETeX$Transform$transformETeX, $elm$core$Dict$empty, content);
+					return A3(
+						$elm$html$Html$node,
+						'math-text',
 						_List_fromArray(
 							[
-								$jxxcarlson$xmarkdown_compiler$Render$Expression$onClickStop(
-								$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendMeta(meta)),
-								$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(meta.id)
+								A2($elm$html$Html$Attributes$attribute, 'data-content', mathContent),
+								A2($elm$html$Html$Attributes$attribute, 'data-display', 'false')
 							]),
-						A6(
-							$jxxcarlson$xmarkdown_compiler$Render$Expression$renderVerbatim,
-							name,
-							generation,
-							acc,
-							settings,
-							meta,
-							A2(
-								$elm$core$String$join,
-								' ',
-								$jxxcarlson$xmarkdown_compiler$AST$ASTTools$exprListToStringList(exprList))));
-				} else {
-					if (name === 'anchor') {
-						var contentIds = A2(
-							$elm$core$List$map,
-							A2(
-								$elm$core$Basics$composeR,
-								$jxxcarlson$xmarkdown_compiler$AST$Language$getMeta,
-								function ($) {
-									return $.id;
-								}),
-							exprList);
-						var contentIdMatches = A2($elm$core$List$member, settings.selectedId, contentIds);
-						var anchorIdMatches = _Utils_eq(settings.selectedId, meta.id);
-						var shouldHighlight = anchorIdMatches || contentIdMatches;
-						var highlightAttrs = shouldHighlight ? _List_fromArray(
+						_List_fromArray(
 							[
-								$mdgriffith$elm_ui$Element$htmlAttribute(
-								A2($elm$html$Html$Attributes$style, 'background-color', '#ADD8E6')),
-								$mdgriffith$elm_ui$Element$htmlAttribute(
-								A2($elm$html$Html$Attributes$style, 'padding', '4px')),
-								$mdgriffith$elm_ui$Element$htmlAttribute(
-								$elm$html$Html$Attributes$class('anchor-highlight'))
-							]) : _List_Nil;
+								$elm$html$Html$text(mathContent)
+							]));
+				} else {
+					if (name === 'code') {
 						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_Utils_ap(
+							$elm$html$Html$code,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text(content)
+								]));
+					} else {
+						return A2(
+							$elm$html$Html$span,
+							_List_Nil,
+							_List_fromArray(
+								[
+									$elm$html$Html$text(content)
+								]));
+					}
+				}
+			case 'Fun':
+				var name = expr.a;
+				var exprList = expr.b;
+				if (A2(
+					$elm$core$List$member,
+					name,
+					_List_fromArray(
+						['chem', 'math', 'm']))) {
+					var mathContent = A2(
+						$jxxcarlson$etex$ETeX$Transform$transformETeX,
+						$elm$core$Dict$empty,
+						$jxxcarlson$xmarkdown_compiler$Render$Expression$extractMathContent(exprList));
+					return A3(
+						$elm$html$Html$node,
+						'math-text',
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$attribute, 'data-content', mathContent),
+								A2($elm$html$Html$Attributes$attribute, 'data-display', 'false')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(mathContent)
+							]));
+				} else {
+					if (name === 'code') {
+						return A2(
+							$elm$html$Html$code,
+							_List_Nil,
+							A2(
+								$elm$core$List$map,
+								A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+								exprList));
+					} else {
+						if (A2(
+							$elm$core$List$member,
+							name,
+							_List_fromArray(
+								['anchor', 'mark']))) {
+							return A2(
+								$elm$html$Html$span,
+								_List_Nil,
 								_List_fromArray(
 									[
-										$jxxcarlson$xmarkdown_compiler$Render$Expression$onClickStop(
-										$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendMeta(meta)),
-										$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(meta.id)
-									]),
-								highlightAttrs),
-							A6($jxxcarlson$xmarkdown_compiler$Render$Expression$renderMarked, name, generation, acc, settings, attrs, exprList));
-					} else {
-						if (name === 'mark') {
-							var anchorIdMatches = _Utils_eq(settings.selectedId, meta.id);
-							var highlightAttrs = anchorIdMatches ? _List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$htmlAttribute(
-									A2($elm$html$Html$Attributes$style, 'background-color', '#ADD8E6')),
-									$mdgriffith$elm_ui$Element$htmlAttribute(
-									A2($elm$html$Html$Attributes$style, 'padding', '4px')),
-									$mdgriffith$elm_ui$Element$htmlAttribute(
-									$elm$html$Html$Attributes$class('anchor-highlight'))
-								]) : _List_Nil;
-							return A2(
-								$mdgriffith$elm_ui$Element$el,
-								_Utils_ap(
-									_List_fromArray(
-										[
-											$jxxcarlson$xmarkdown_compiler$Render$Expression$onClickStop(
-											$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendMeta(meta)),
-											$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(meta.id)
-										]),
-									highlightAttrs),
-								A6($jxxcarlson$xmarkdown_compiler$Render$Expression$renderMarked, name, generation, acc, settings, attrs, exprList));
+										$elm$html$Html$text('(' + (name + ' content)'))
+									]));
 						} else {
-							return A2(
-								$mdgriffith$elm_ui$Element$el,
-								A2(
-									$elm$core$List$cons,
-									background,
+							if (A2(
+								$elm$core$List$member,
+								name,
+								_List_fromArray(
+									['b', 'strong', 'bold']))) {
+								return A2(
+									$elm$html$Html$strong,
+									_List_Nil,
+									A2(
+										$elm$core$List$map,
+										A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+										exprList));
+							} else {
+								if (A2(
+									$elm$core$List$member,
+									name,
 									_List_fromArray(
-										[
-											$jxxcarlson$xmarkdown_compiler$Render$Expression$onClickStop(
-											$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendMeta(meta)),
-											$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(meta.id)
-										])),
-								A6($jxxcarlson$xmarkdown_compiler$Render$Expression$renderMarked, name, generation, acc, settings, attrs, exprList));
+										['i', 'em', 'italic']))) {
+									return A2(
+										$elm$html$Html$em,
+										_List_Nil,
+										A2(
+											$elm$core$List$map,
+											A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+											exprList));
+								} else {
+									if (A2(
+										$elm$core$List$member,
+										name,
+										_List_fromArray(
+											['strike', 'strikethrough']))) {
+										return A2(
+											$elm$html$Html$span,
+											_List_fromArray(
+												[
+													A2($elm$html$Html$Attributes$style, 'text-decoration', 'line-through')
+												]),
+											A2(
+												$elm$core$List$map,
+												A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+												exprList));
+									} else {
+										if ((name === 'a') || (name === 'link')) {
+											var _v1 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractLinkData(exprList);
+											var linkText = _v1.a;
+											var url = _v1.b;
+											return A2(
+												$elm$html$Html$a,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$href(url),
+														A2(
+														$elm$html$Html$Attributes$style,
+														'color',
+														A2(
+															$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+															function ($) {
+																return $.link;
+															},
+															theme))
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text(linkText)
+													]));
+										} else {
+											if ((name === 'image') || (name === 'img')) {
+												var _v2 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractImageData(exprList);
+												var url = _v2.a;
+												var altText = _v2.b;
+												var _v3 = $jxxcarlson$xmarkdown_compiler$Render$Expression$parseImageProperties(altText);
+												var caption = _v3.a;
+												var props = _v3.b;
+												var imgAttrs = $jxxcarlson$xmarkdown_compiler$Render$Expression$buildImageAttributes(props);
+												return A2(
+													$elm$html$Html$figure,
+													_List_fromArray(
+														[
+															A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
+															A2($elm$html$Html$Attributes$style, 'margin', '1em 0')
+														]),
+													_List_fromArray(
+														[
+															A2(
+															$elm$html$Html$a,
+															_List_fromArray(
+																[
+																	$elm$html$Html$Attributes$href(url),
+																	$elm$html$Html$Attributes$target('_blank'),
+																	$elm$html$Html$Attributes$rel('noopener noreferrer')
+																]),
+															_List_fromArray(
+																[
+																	A2(
+																	$elm$html$Html$img,
+																	_Utils_ap(
+																		_List_fromArray(
+																			[
+																				$elm$html$Html$Attributes$src(url),
+																				$elm$html$Html$Attributes$alt(caption),
+																				A2($elm$html$Html$Attributes$style, 'max-width', '100%'),
+																				A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+																			]),
+																		imgAttrs),
+																	_List_Nil)
+																])),
+															$elm$core$String$isEmpty(caption) ? $elm$html$Html$text('') : A2(
+															$elm$html$Html$figcaption,
+															_List_fromArray(
+																[
+																	A2($elm$html$Html$Attributes$style, 'font-size', '0.9em'),
+																	A2(
+																	$elm$html$Html$Attributes$style,
+																	'color',
+																	A2(
+																		$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+																		function ($) {
+																			return $.offsetText;
+																		},
+																		theme)),
+																	A2($elm$html$Html$Attributes$style, 'margin-top', '0.5em')
+																]),
+															_List_fromArray(
+																[
+																	$elm$html$Html$text(caption)
+																]))
+														]));
+											} else {
+												return A2(
+													$elm$html$Html$span,
+													_List_Nil,
+													A2(
+														$elm$core$List$map,
+														A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+														exprList));
+											}
+										}
+									}
+								}
+							}
 						}
 					}
 				}
-			case 'VFun':
-				var name = expr.a;
-				var str = expr.b;
-				var meta = expr.c;
-				return A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$jxxcarlson$xmarkdown_compiler$Render$Expression$onClickStop(
-							$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendMeta(meta)),
-							$jxxcarlson$xmarkdown_compiler$Render$Expression$htmlId(meta.id)
-						]),
-					A6($jxxcarlson$xmarkdown_compiler$Render$Expression$renderVerbatim, name, generation, acc, settings, meta, str));
 			default:
 				var exprList = expr.b;
 				return A2(
-					$mdgriffith$elm_ui$Element$column,
+					$elm$html$Html$div,
 					_List_Nil,
+					A2(
+						$elm$core$List$map,
+						A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+						exprList));
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$List$desc = F5(
+	function (count, _v0, settings, attr, block) {
+		var content = function () {
+			var _v1 = block.body;
+			if (_v1.$ === 'Right') {
+				var exprs = _v1.a;
+				return A2(
+					$elm$core$List$map,
+					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attr),
+					exprs);
+			} else {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('')
+					]);
+			}
+		}();
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
+		return A2(
+			$elm$html$Html$dd,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$id(blockId),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber))
+					]),
+				attr),
+			content);
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$empty = $elm$core$Dict$empty;
+var $jxxcarlson$xmarkdown_compiler$Render$Math$equation = F5(
+	function (count, _v0, _v1, attrs, block) {
+		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
+		return A3(
+			$jxxcarlson$xmarkdown_compiler$Render$Math$renderMath,
+			content,
+			true,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$id(blockId),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber)),
+						A2($elm$html$Html$Attributes$style, 'padding', '8px')
+					]),
+				attrs));
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol = F2(
+	function (theme, level) {
+		switch (level) {
+			case 0:
+				return A2(
+					$elm$html$Html$span,
 					_List_fromArray(
 						[
 							A2(
-							$mdgriffith$elm_ui$Element$paragraph,
+							$elm$html$Html$Attributes$style,
+							'color',
 							A2(
-								$elm$core$List$cons,
-								background,
-								_List_fromArray(
-									[
-										$mdgriffith$elm_ui$Element$paddingEach(
-										{bottom: 0, left: 2, right: 0, top: 0})
-									])),
+								$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+								function ($) {
+									return $.offsetText;
+								},
+								theme)),
+							A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
+							A2($elm$html$Html$Attributes$style, 'font-size', '0.5em')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('●')
+						]));
+			case 1:
+				return A2(
+					$elm$html$Html$span,
+					_List_fromArray(
+						[
 							A2(
-								$elm$core$List$map,
-								A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, generation, acc, settings, attrs),
-								exprList))
+							$elm$html$Html$Attributes$style,
+							'color',
+							A2(
+								$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+								function ($) {
+									return $.offsetText;
+								},
+								theme)),
+							A2($elm$html$Html$Attributes$style, 'font-size', '0.5em')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('□')
+						]));
+			default:
+				return A2(
+					$elm$html$Html$span,
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$Attributes$style,
+							'color',
+							A2(
+								$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+								function ($) {
+									return $.offsetText;
+								},
+								theme)),
+							A2($elm$html$Html$Attributes$style, 'font-size', '0.84em')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('◇')
 						]));
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$renderMarked = F6(
-	function (name, generation, acc, settings, attrs, exprList) {
-		var _v2 = A2(
-			$elm$core$Dict$get,
-			name,
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$cyclic$markupDict());
-		if (_v2.$ === 'Nothing') {
-			return A2(
-				$mdgriffith$elm_ui$Element$paragraph,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$spacing(8)
-					]),
-				A2(
-					$elm$core$List$cons,
-					A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Background$color($jxxcarlson$xmarkdown_compiler$Render$Expression$errorBackgroundColor),
-								A2($mdgriffith$elm_ui$Element$paddingXY, 4, 2)
-							]),
-						$mdgriffith$elm_ui$Element$text(name)),
-					A2(
-						$elm$core$List$map,
-						A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, generation, acc, settings, attrs),
-						exprList)));
-		} else {
-			var f = _v2.a;
-			return A5(f, generation, acc, settings, attrs, exprList);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement = F6(
-	function (formatList, g, acc, s, attr, exprList) {
-		return A2(
-			$mdgriffith$elm_ui$Element$paragraph,
-			formatList,
-			A2(
-				$elm$core$List$map,
-				A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, g, acc, s, attr),
-				exprList));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$strong = F5(
-	function (g, acc, s, attr, exprList) {
-		return A6(
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-			_List_fromArray(
-				[$mdgriffith$elm_ui$Element$Font$bold]),
-			g,
-			acc,
-			s,
-			attr,
-			exprList);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$table = F5(
-	function (g, acc, s, attr, rows) {
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(8)
-				]),
-			A2(
-				$elm$core$List$map,
-				A4($jxxcarlson$xmarkdown_compiler$Render$Expression$tableRow, g, acc, s, attr),
-				rows));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$tableItem = F5(
-	function (g, acc, s, attr, expr) {
-		if ((expr.$ === 'Fun') && (expr.a === 'tableItem')) {
-			var exprList = expr.b;
-			return A2(
-				$mdgriffith$elm_ui$Element$paragraph,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(100))
-					]),
-				A2(
-					$elm$core$List$map,
-					A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, g, acc, s, attr),
-					exprList));
-		} else {
-			return $mdgriffith$elm_ui$Element$none;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$tableRow = F5(
-	function (g, acc, s, attr, expr) {
-		if ((expr.$ === 'Fun') && (expr.a === 'tableRow')) {
-			var items = expr.b;
-			return A2(
-				$mdgriffith$elm_ui$Element$row,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$spacing(8)
-					]),
-				A2(
-					$elm$core$List$map,
-					A4($jxxcarlson$xmarkdown_compiler$Render$Expression$tableItem, g, acc, s, attr),
-					items));
-		} else {
-			return $mdgriffith$elm_ui$Element$none;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$term = F5(
-	function (g, acc, s, attr, exprList) {
-		return A6(
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$italic,
-					$mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: 0, left: 0, right: 2, top: 0})
-				]),
-			g,
-			acc,
-			s,
-			attr,
-			exprList);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$title = F5(
-	function (g, acc, s, attr, exprList) {
-		return A6(
-			$jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$size(
-					A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, s, $jxxcarlson$xmarkdown_compiler$Render$Constants$titleFontSize)),
-					$mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: 0, left: 0, right: 2, top: 0})
-				]),
-			g,
-			acc,
-			s,
-			attr,
-			exprList);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$var = F5(
-	function (g, acc, s, attr, exprList) {
-		return A6($jxxcarlson$xmarkdown_compiler$Render$Expression$simpleElement, _List_Nil, g, acc, s, attr, exprList);
-	});
-function $jxxcarlson$xmarkdown_compiler$Render$Expression$cyclic$markupDict() {
-	return $elm$core$Dict$fromList(
-		_List_fromArray(
-			[
-				_Utils_Tuple2(
-				'bibitem',
-				F5(
-					function (_v10, _v11, _v12, _v13, exprList) {
-						return $jxxcarlson$xmarkdown_compiler$Render$Expression$bibitem(exprList);
-					})),
-				_Utils_Tuple2(
-				'bold',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$strong, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'var',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$var, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'marked',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$marked, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'italic',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$italic, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'textit',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$italic, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'hrule',
-				F5(
-					function (_v14, _v15, s, _v16, _v17) {
-						return A2(
-							$mdgriffith$elm_ui$Element$column,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width(
-									$mdgriffith$elm_ui$Element$px(s.width))
-								]),
-							_List_fromArray(
-								[
-									A2(
-									$mdgriffith$elm_ui$Element$el,
-									_List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$Border$width(1),
-											$mdgriffith$elm_ui$Element$width(
-											$mdgriffith$elm_ui$Element$px(s.width)),
-											$mdgriffith$elm_ui$Element$centerX,
-											$mdgriffith$elm_ui$Element$Border$color(
-											A3($mdgriffith$elm_ui$Element$rgb, 0.75, 0.75, 0.75))
-										]),
-									$mdgriffith$elm_ui$Element$text(''))
-								]));
-					})),
-				_Utils_Tuple2(
-				'title',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$title, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'errorHighlight',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$errorHighlight, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'link',
-				F5(
-					function (_v18, _v19, s, _v20, exprList) {
-						return A2($jxxcarlson$xmarkdown_compiler$Render$Expression$link, s, exprList);
-					})),
-				_Utils_Tuple2(
-				'href',
-				F5(
-					function (_v21, _v22, _v23, _v24, exprList) {
-						return $jxxcarlson$xmarkdown_compiler$Render$Expression$href(exprList);
-					})),
-				_Utils_Tuple2(
-				'abstract',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$abstract, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'large',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$large, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'cite',
-				F5(
-					function (_v25, acc, _v26, attr, exprList) {
-						return A3($jxxcarlson$xmarkdown_compiler$Render$Expression$cite, acc, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'table',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$table, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'image',
-				F5(
-					function (_v27, _v28, s, attr, exprList) {
-						return A3($jxxcarlson$xmarkdown_compiler$Render$Graphics$image, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'tags',
-				F5(
-					function (_v29, _v30, _v31, _v32, _v33) {
-						return $mdgriffith$elm_ui$Element$none;
-					})),
-				_Utils_Tuple2('quote', $jxxcarlson$xmarkdown_compiler$Render$Expression$quote),
-				_Utils_Tuple2('anchor', $jxxcarlson$xmarkdown_compiler$Render$Expression$anchor),
-				_Utils_Tuple2('mark', $jxxcarlson$xmarkdown_compiler$Render$Expression$mark1),
-				_Utils_Tuple2('vspace', $jxxcarlson$xmarkdown_compiler$Render$Expression$vspace),
-				_Utils_Tuple2('break', $jxxcarlson$xmarkdown_compiler$Render$Expression$vspace),
-				_Utils_Tuple2('//', $jxxcarlson$xmarkdown_compiler$Render$Expression$par),
-				_Utils_Tuple2('par', $jxxcarlson$xmarkdown_compiler$Render$Expression$par),
-				_Utils_Tuple2('indent', $jxxcarlson$xmarkdown_compiler$Render$Expression$indent),
-				_Utils_Tuple2(
-				'term',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$term, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'term_',
-				F5(
-					function (_v34, _v35, _v36, _v37, _v38) {
-						return $mdgriffith$elm_ui$Element$none;
-					})),
-				_Utils_Tuple2(
-				'footnote',
-				F5(
-					function (_v39, acc, s, _v40, exprList) {
-						return A3($jxxcarlson$xmarkdown_compiler$Render$Expression$footnote, acc, s, exprList);
-					})),
-				_Utils_Tuple2(
-				'emph',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$emph, g, acc, s, attr, exprList);
-					})),
-				_Utils_Tuple2(
-				'dollarSign',
-				F5(
-					function (_v41, _v42, _v43, _v44, _v45) {
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_Nil,
-							$mdgriffith$elm_ui$Element$text('$'));
-					})),
-				_Utils_Tuple2(
-				'dollar',
-				F5(
-					function (_v46, _v47, _v48, _v49, _v50) {
-						return A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_Nil,
-							$mdgriffith$elm_ui$Element$text('$'));
-					})),
-				_Utils_Tuple2(
-				'brackets',
-				F5(
-					function (g, acc, s, attr, exprList) {
-						return A5($jxxcarlson$xmarkdown_compiler$Render$Expression$brackets, g, acc, s, attr, exprList);
-					}))
-			]));
-}
-try {
-	var $jxxcarlson$xmarkdown_compiler$Render$Expression$markupDict = $jxxcarlson$xmarkdown_compiler$Render$Expression$cyclic$markupDict();
-	$jxxcarlson$xmarkdown_compiler$Render$Expression$cyclic$markupDict = function () {
-		return $jxxcarlson$xmarkdown_compiler$Render$Expression$markupDict;
-	};
-} catch ($) {
-	throw 'Some top-level definitions from `Render.Expression` are causing infinite recursion:\n\n  ┌─────┐\n  │    abstract\n  │     ↓\n  │    markupDict\n  │     ↓\n  │    anchor\n  │     ↓\n  │    brackets\n  │     ↓\n  │    emph\n  │     ↓\n  │    errorHighlight\n  │     ↓\n  │    italic\n  │     ↓\n  │    large\n  │     ↓\n  │    mark1\n  │     ↓\n  │    marked\n  │     ↓\n  │    quote\n  │     ↓\n  │    render\n  │     ↓\n  │    renderMarked\n  │     ↓\n  │    simpleElement\n  │     ↓\n  │    strong\n  │     ↓\n  │    table\n  │     ↓\n  │    tableItem\n  │     ↓\n  │    tableRow\n  │     ↓\n  │    term\n  │     ↓\n  │    title\n  │     ↓\n  │    var\n  └─────┘\n\nThese errors are very tricky, so read https://elm-lang.org/0.19.1/bad-recursion to learn how to fix it!';}
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$renderWithDefault = F6(
-	function (_default, count, acc, settings, attr, exprs) {
-		return $elm$core$List$isEmpty(exprs) ? _List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$Font$color(settings.redColor),
-						$mdgriffith$elm_ui$Element$Font$size(
-						A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 14))
-					]),
-				$mdgriffith$elm_ui$Element$text(_default))
-			]) : A2(
-			$elm$core$List$map,
-			A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, count, acc, settings, attr),
-			exprs);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$vspace = F2(
-	function (top, bottom) {
-		return $mdgriffith$elm_ui$Element$paddingEach(
-			{bottom: bottom, left: 0, right: 0, top: top});
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$List$desc = F5(
-	function (count, acc, settings, attr, block) {
-		var label = A2($elm$core$String$join, ' ', block.args);
-		return A2(
-			$mdgriffith$elm_ui$Element$row,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$alignTop,
-						$jxxcarlson$xmarkdown_compiler$Render$Utility$idAttribute(block.meta.id),
-						A2($jxxcarlson$xmarkdown_compiler$Render$Utility$vspace, 0, settings.topMarginForChildren)
-					]),
-				A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$bold,
-							$mdgriffith$elm_ui$Element$alignTop,
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(100))
-						]),
-					$mdgriffith$elm_ui$Element$text(label)),
-					A2(
-					$mdgriffith$elm_ui$Element$paragraph,
-					A2(
-						$elm$core$List$cons,
-						$jxxcarlson$xmarkdown_compiler$Render$Utility$leftPadding(settings.leftIndentation),
-						A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-					A6(
-						$jxxcarlson$xmarkdown_compiler$Render$Helper$renderWithDefault,
-						'| desc',
-						count,
-						acc,
-						settings,
-						attr,
-						$jxxcarlson$xmarkdown_compiler$AST$Language$getExpressionContent(block)))
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$empty = $elm$core$Dict$empty;
-var $jxxcarlson$xmarkdown_compiler$Render$List$indentationScale = 15;
-var $mdgriffith$elm_ui$Internal$Model$MoveX = function (a) {
-	return {$: 'MoveX', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$TransformComponent = F2(
-	function (a, b) {
-		return {$: 'TransformComponent', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$moveX = $mdgriffith$elm_ui$Internal$Flag$flag(25);
-var $mdgriffith$elm_ui$Element$moveRight = function (x) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$TransformComponent,
-		$mdgriffith$elm_ui$Internal$Flag$moveX,
-		$mdgriffith$elm_ui$Internal$Model$MoveX(x));
-};
+var $elm$html$Html$li = _VirtualDom_node('li');
 var $jxxcarlson$xmarkdown_compiler$Render$List$item = F5(
-	function (count, acc, settings, attr, block) {
-		var level_ = (block.indent / 2) | 0;
-		var label_ = function () {
-			var _v0 = A2($elm$core$Basics$modBy, 3, level_);
-			switch (_v0) {
-				case 0:
-					return $elm$core$String$fromChar(
-						_Utils_chr('•'));
-				case 1:
-					return $elm$core$String$fromChar(
-						_Utils_chr('○'));
-				default:
-					return '◊';
+	function (count, _v0, settings, attr, block) {
+		var level = (block.indent / 2) | 0;
+		var indentation = $elm$core$Basics$round(2.2 * settings.leftIndentation) + (settings.leftIndentation * (level - 1));
+		var content = function () {
+			var _v1 = block.body;
+			if (_v1.$ === 'Right') {
+				var exprs = _v1.a;
+				return A2(
+					$elm$core$List$map,
+					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attr),
+					exprs);
+			} else {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('')
+					]);
 			}
 		}();
-		var indentation = $jxxcarlson$xmarkdown_compiler$Render$List$indentationScale * level_;
+		var hangingIndentContent = _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+						A2($elm$html$Html$Attributes$style, 'gap', '8px')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'flex-shrink', '0'),
+								A2($elm$html$Html$Attributes$style, 'white-space', 'nowrap')
+							]),
+						_List_fromArray(
+							[
+								A2($jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol, settings.theme, level)
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'flex-grow', '1')
+							]),
+						content)
+					]))
+			]);
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A2(
-			$mdgriffith$elm_ui$Element$row,
+			$elm$html$Html$li,
 			_Utils_ap(
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$moveRight(10),
-						$mdgriffith$elm_ui$Element$moveRight(indentation),
-						$mdgriffith$elm_ui$Element$alignTop,
-						$jxxcarlson$xmarkdown_compiler$Render$Utility$idAttribute(block.meta.id),
-						A2($jxxcarlson$xmarkdown_compiler$Render$Utility$vspace, 0, settings.topMarginForChildren),
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(settings.width - 50))
+						A2(
+						$elm$html$Html$Attributes$style,
+						'margin-left',
+						$elm$core$String$fromInt(indentation) + 'px'),
+						A2(
+						$elm$html$Html$Attributes$style,
+						'margin-bottom',
+						$elm$core$String$fromInt(settings.listSpacing) + 'px'),
+						A2(
+						$elm$html$Html$Attributes$style,
+						'width',
+						$elm$core$String$fromInt(settings.width - indentation) + 'px'),
+						A2($elm$html$Html$Attributes$style, 'list-style', 'none'),
+						$elm$html$Html$Attributes$id(blockId),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber))
 					]),
-				A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$size(
-							A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 24)),
-							$mdgriffith$elm_ui$Element$alignTop,
-							$mdgriffith$elm_ui$Element$moveRight(12),
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(32)),
-							$jxxcarlson$xmarkdown_compiler$Render$Utility$leftPadding(settings.leftIndentation)
-						]),
-					$mdgriffith$elm_ui$Element$text(label_)),
-					A2(
-					$mdgriffith$elm_ui$Element$paragraph,
-					A2(
-						$elm$core$List$cons,
-						$jxxcarlson$xmarkdown_compiler$Render$Utility$leftPadding(settings.leftIndentation),
-						A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-					A6(
-						$jxxcarlson$xmarkdown_compiler$Render$Helper$renderWithDefault,
-						'| item',
-						count,
-						acc,
-						_Utils_update(
-							settings,
-							{width: settings.width - indentation}),
-						attr,
-						$jxxcarlson$xmarkdown_compiler$AST$Language$getExpressionContent(block)))
-				]));
+				attr),
+			hangingIndentContent);
+	});
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
+var $elm$core$Char$fromCode = _Char_fromCode;
+var $jxxcarlson$xmarkdown_compiler$Render$List$numberToLetter = function (n) {
+	return ((n > 0) && (n <= 26)) ? $elm$core$String$fromChar(
+		$elm$core$Char$fromCode(96 + n)) : $elm$core$String$fromInt(n);
+};
+var $jxxcarlson$xmarkdown_compiler$Render$List$numberToRoman = function (n) {
+	var toRoman = F2(
+		function (num, pairs) {
+			toRoman:
+			while (true) {
+				if (!pairs.b) {
+					return '';
+				} else {
+					var _v1 = pairs.a;
+					var value = _v1.a;
+					var numeral = _v1.b;
+					var rest = pairs.b;
+					if (_Utils_cmp(num, value) > -1) {
+						return _Utils_ap(
+							numeral,
+							A2(toRoman, num - value, pairs));
+					} else {
+						var $temp$num = num,
+							$temp$pairs = rest;
+						num = $temp$num;
+						pairs = $temp$pairs;
+						continue toRoman;
+					}
+				}
+			}
+		});
+	var romanPairs = _List_fromArray(
+		[
+			_Utils_Tuple2(1000, 'm'),
+			_Utils_Tuple2(900, 'cm'),
+			_Utils_Tuple2(500, 'd'),
+			_Utils_Tuple2(400, 'cd'),
+			_Utils_Tuple2(100, 'c'),
+			_Utils_Tuple2(90, 'xc'),
+			_Utils_Tuple2(50, 'l'),
+			_Utils_Tuple2(40, 'xl'),
+			_Utils_Tuple2(10, 'x'),
+			_Utils_Tuple2(9, 'ix'),
+			_Utils_Tuple2(5, 'v'),
+			_Utils_Tuple2(4, 'iv'),
+			_Utils_Tuple2(1, 'i')
+		]);
+	return A2(toRoman, n, romanPairs);
+};
+var $jxxcarlson$xmarkdown_compiler$Render$List$formatListNumber = F2(
+	function (level, number) {
+		switch (level) {
+			case 0:
+				return $elm$core$String$fromInt(number);
+			case 1:
+				return $jxxcarlson$xmarkdown_compiler$Render$List$numberToLetter(number);
+			default:
+				return $jxxcarlson$xmarkdown_compiler$Render$List$numberToRoman(number);
+		}
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$List$numbered = F5(
 	function (count, acc, settings, attr, block) {
-		var romanNumerals = _List_fromArray(
-			['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x', 'xi', 'xii', 'xiii', 'xiv', 'xv', 'xvi', 'xvii', 'xviii', 'xix', 'xx', 'xi', 'xxii', 'xxiii', 'xxiv', 'xxv', 'vi']);
-		var roman = function (k) {
-			return A2(
-				$elm$core$Maybe$withDefault,
-				'i',
-				A2(
-					$elmcraft$core_extra$List$Extra$getAt,
-					A2($elm$core$Basics$modBy, 26, k - 1),
-					romanNumerals));
-		};
-		var id = block.meta.id;
-		var val = A2($elm$core$Dict$get, id, acc.numberedItemDict);
-		var index_ = A2(
+		var level = (block.indent / 2) | 0;
+		var itemNumber = A2(
 			$elm$core$Maybe$withDefault,
 			1,
 			A2(
@@ -26255,83 +15275,82 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$numbered = F5(
 				function ($) {
 					return $.index;
 				},
-				val));
-		var level = A2(
-			$elm$core$Maybe$withDefault,
-			0,
-			A2(
-				$elm$core$Maybe$map,
-				function ($) {
-					return $.level;
-				},
-				val));
-		var indentation = $jxxcarlson$xmarkdown_compiler$Render$List$indentationScale * level;
-		var alphabet = _List_fromArray(
-			['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']);
-		var alpha = function (k) {
-			return A2(
-				$elm$core$Maybe$withDefault,
-				'a',
-				A2(
-					$elmcraft$core_extra$List$Extra$getAt,
-					A2($elm$core$Basics$modBy, 26, k - 1),
-					alphabet));
-		};
-		var label_ = function () {
-			var _v0 = A2($elm$core$Basics$modBy, 3, level);
-			switch (_v0) {
-				case 1:
-					return alpha(index_);
-				case 2:
-					return roman(index_);
-				default:
-					return $elm$core$String$fromInt(index_);
+				A2($elm$core$Dict$get, block.meta.id, acc.numberedItemDict)));
+		var indentation = $elm$core$Basics$round(2.1 * settings.leftIndentation) + (settings.leftIndentation * (level - 1));
+		var formattedNumber = A2($jxxcarlson$xmarkdown_compiler$Render$List$formatListNumber, level, itemNumber);
+		var content = function () {
+			var _v0 = block.body;
+			if (_v0.$ === 'Right') {
+				var exprs = _v0.a;
+				return A2(
+					$elm$core$List$map,
+					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attr),
+					exprs);
+			} else {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('')
+					]);
 			}
 		}();
+		var hangingIndentContent = _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+						A2($elm$html$Html$Attributes$style, 'gap', '8px')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'flex-shrink', '0'),
+								A2($elm$html$Html$Attributes$style, 'white-space', 'nowrap')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(formattedNumber + '.')
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'flex-grow', '1')
+							]),
+						content)
+					]))
+			]);
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$moveRight(10),
-					$mdgriffith$elm_ui$Element$moveRight(indentation),
-					$mdgriffith$elm_ui$Element$alignTop,
-					$jxxcarlson$xmarkdown_compiler$Render$Utility$idAttribute(block.meta.id),
-					A2($jxxcarlson$xmarkdown_compiler$Render$Utility$vspace, 0, settings.topMarginForChildren),
-					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(settings.width - 50))
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$size(
-							A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 20)),
-							$mdgriffith$elm_ui$Element$alignTop,
-							$mdgriffith$elm_ui$Element$moveRight(12),
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(32)),
-							$jxxcarlson$xmarkdown_compiler$Render$Utility$leftPadding(settings.leftIndentation)
-						]),
-					$mdgriffith$elm_ui$Element$text(label_ + '. ')),
-					A2(
-					$mdgriffith$elm_ui$Element$paragraph,
-					A2(
-						$elm$core$List$cons,
-						$jxxcarlson$xmarkdown_compiler$Render$Utility$leftPadding(settings.leftIndentation),
-						A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-					A6(
-						$jxxcarlson$xmarkdown_compiler$Render$Helper$renderWithDefault,
-						'| numbered',
-						count,
-						acc,
-						_Utils_update(
-							settings,
-							{width: settings.width - indentation}),
-						attr,
-						$jxxcarlson$xmarkdown_compiler$AST$Language$getExpressionContent(block)))
-				]));
+			$elm$html$Html$li,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$Attributes$style,
+						'margin-left',
+						$elm$core$String$fromInt(indentation) + 'px'),
+						A2(
+						$elm$html$Html$Attributes$style,
+						'margin-bottom',
+						$elm$core$String$fromInt(settings.listSpacing) + 'px'),
+						A2(
+						$elm$html$Html$Attributes$style,
+						'width',
+						$elm$core$String$fromInt(settings.width - (6 + indentation)) + 'px'),
+						A2($elm$html$Html$Attributes$style, 'list-style', 'none'),
+						$elm$html$Html$Attributes$id(blockId),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber))
+					]),
+				attr),
+			hangingIndentContent);
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$register = F3(
 	function (name, renderer, registry) {
@@ -26350,289 +15369,94 @@ var $jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$registerBatch = F2(
 			registry,
 			renderers);
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Constants$defaultIndentWidth = 12;
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$itemLabel = function (level_) {
-	var label_ = function () {
-		var _v0 = A2($elm$core$Basics$modBy, 3, level_);
-		switch (_v0) {
-			case 0:
-				return $elm$core$String$fromChar(
-					_Utils_chr('•'));
-			case 1:
-				return $elm$core$String$fromChar(
-					_Utils_chr('○'));
-			default:
-				return '◊';
-		}
-	}();
-	return label_;
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$itemList = F5(
-	function (count, acc, settings, _v0, block) {
-		var renderItem = F2(
-			function (settings_, expr) {
-				var indentation = function () {
-					if (expr.$ === 'ExprList') {
-						var n = expr.a;
-						return n;
-					} else {
-						return 0;
-					}
-				}();
-				var level_ = (indentation / 2) | 0;
+var $elm$html$Html$dl = _VirtualDom_node('dl');
+var $elm$html$Html$dt = _VirtualDom_node('dt');
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$descriptionList = F5(
+	function (_v0, _v1, settings, attrs, block) {
+		var content = function () {
+			var _v2 = block.body;
+			if (_v2.$ === 'Right') {
+				var exprs = _v2.a;
 				return A2(
-					$mdgriffith$elm_ui$Element$row,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(8),
-							$mdgriffith$elm_ui$Element$paddingEach(
-							{bottom: 4, left: 0, right: 0, top: 0}),
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(settings.width - $jxxcarlson$xmarkdown_compiler$Render$Constants$defaultIndentWidth))
-						]),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$Font$size(
-									A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 24)),
-									$mdgriffith$elm_ui$Element$alignTop,
-									$mdgriffith$elm_ui$Element$width(
-									$mdgriffith$elm_ui$Element$px(12)),
-									$mdgriffith$elm_ui$Element$paddingEach(
-									{bottom: 0, left: 8 * (indentation + 1), right: 0, top: 0})
-								]),
-							$mdgriffith$elm_ui$Element$text(
-								$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$itemLabel(level_))),
-							A2(
-							$mdgriffith$elm_ui$Element$paragraph,
-							A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings_, block),
-							A2(
-								$elm$core$List$cons,
-								A5($jxxcarlson$xmarkdown_compiler$Render$Expression$render, count, acc, settings, _List_Nil, expr),
-								_List_Nil))
-						]));
-			});
-		var listOfExprList = function () {
-			var _v1 = block.body;
-			if (_v1.$ === 'Left') {
-				return _List_Nil;
+					$elm$core$List$map,
+					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attrs),
+					exprs);
 			} else {
-				var list = _v1.a;
-				return list;
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('')
+					]);
 			}
 		}();
 		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$spacing(2),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$moveRight(20),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$paddingEach(
-							{bottom: 0, left: 0, right: 0, top: 16}),
-						A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)))),
-			A2(
-				$elm$core$List$map,
-				renderItem(settings),
-				listOfExprList));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$top = function (stack) {
-	return $elm$core$List$head(stack);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$inc = function (stack) {
-	var _v0 = $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$top(stack);
-	if (_v0.$ === 'Just') {
-		var a = _v0.a;
-		return A2(
-			$elm$core$List$cons,
-			a + 1,
-			A2($elm$core$List$drop, 1, stack));
-	} else {
-		return stack;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$level = function (stack) {
-	return $elm$core$List$length(stack);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$pop = F2(
-	function (k, stack) {
-		return A2($elm$core$List$drop, k, stack);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$push = F2(
-	function (k, stack) {
-		return A2($elm$core$List$cons, k, stack);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$newStack = F2(
-	function (newLevel, stack) {
-		return _Utils_eq(stack, _List_Nil) ? A2($jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$push, 1, stack) : (_Utils_eq(
-			newLevel,
-			$jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$level(stack)) ? $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$inc(stack) : ((_Utils_cmp(
-			newLevel,
-			$jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$level(stack)) > 0) ? A2($jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$push, 1, stack) : $jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$inc(
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$pop,
-				$jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$level(stack) - newLevel,
-				stack))));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numbering_ = F2(
-	function (level_, index_) {
-		var romanNumerals = _List_fromArray(
-			['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii', 'viii', 'ix', 'x', 'xi', 'xii', 'xiii', 'xiv', 'xv', 'xvi', 'xvii', 'xviii', 'xix', 'xx', 'xi', 'xxii', 'xxiii', 'xxiv', 'xxv', 'vi']);
-		var roman = function (k) {
-			return A2(
-				$elm$core$Maybe$withDefault,
-				'i',
-				A2(
-					$elmcraft$core_extra$List$Extra$getAt,
-					A2($elm$core$Basics$modBy, 26, k - 1),
-					romanNumerals));
-		};
-		var alphabet = _List_fromArray(
-			['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']);
-		var alpha = function (k) {
-			return A2(
-				$elm$core$Maybe$withDefault,
-				'a',
-				A2(
-					$elmcraft$core_extra$List$Extra$getAt,
-					A2($elm$core$Basics$modBy, 26, k - 1),
-					alphabet));
-		};
-		var label_ = function () {
-			var _v0 = A2($elm$core$Basics$modBy, 3, level_);
-			switch (_v0) {
-				case 1:
-					return alpha(index_);
-				case 2:
-					return roman(index_);
-				default:
-					return $elm$core$String$fromInt(index_);
-			}
-		}();
-		return label_;
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$renderNumberedLabel = F3(
-	function (settings, level_, index_) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
+			$elm$html$Html$dl,
+			attrs,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$Font$size(
-					A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 20)),
-					$mdgriffith$elm_ui$Element$alignTop,
-					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(24)),
-					$mdgriffith$elm_ui$Element$Font$color(
-					A2(
-						$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-						function ($) {
-							return $.text;
-						},
-						settings.theme))
-				]),
-			$mdgriffith$elm_ui$Element$text(
-				A2($jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numbering_, level_ - 1, index_) + '. '));
+					A2($elm$html$Html$dt, _List_Nil, content)
+				]));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numberedList = F5(
-	function (_v0, acc, settings, _v1, block) {
-		var listOfExprList = function () {
-			var _v4 = block.body;
-			if (_v4.$ === 'Left') {
-				return _List_Nil;
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem = function (x) {
+	return A2(
+		$elm$html$Html$li,
+		_List_fromArray(
+			[
+				A2($elm$html$Html$Attributes$style, 'margin-bottom', '4px')
+			]),
+		_List_fromArray(
+			[x]));
+};
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$itemList = F5(
+	function (_v0, _v1, settings, attrs, block) {
+		var content = function () {
+			var _v2 = block.body;
+			if (_v2.$ === 'Right') {
+				var exprs = _v2.a;
+				return A2(
+					$elm$core$List$map,
+					A2(
+						$elm$core$Basics$composeR,
+						A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attrs),
+						$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem),
+					exprs);
 			} else {
-				var list = _v4.a;
-				return list;
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('')
+					]);
 			}
 		}();
-		var indentation_ = function (expr_) {
-			if (expr_.$ === 'ExprList') {
-				var n = expr_.a;
-				return n;
-			} else {
-				return 0;
-			}
-		};
-		var level = function (expr_) {
-			return 1 + ((indentation_(expr_) / 2) | 0);
-		};
-		var preRenderStep = F2(
-			function (expr, _v2) {
-				var stack_ = _v2.a;
-				var intList = _v2.b;
-				var newStack_ = A2(
-					$jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$newStack,
-					level(expr),
-					stack_);
-				return _Utils_Tuple2(
-					newStack_,
-					A2(
-						$elm$core$List$cons,
-						A2(
-							$elm$core$Maybe$withDefault,
-							1,
-							$jxxcarlson$xmarkdown_compiler$Render$Blocks$Stack$top(newStack_)),
-						intList));
-			});
-		var makeLabels = function (exprs) {
-			return $elm$core$List$reverse(
-				A3(
-					$elm$core$List$foldl,
-					preRenderStep,
-					_Utils_Tuple2(_List_Nil, _List_Nil),
-					exprs).b);
-		};
-		var renderNumberedItem_ = F2(
-			function (k, expr) {
-				return A2(
-					$mdgriffith$elm_ui$Element$row,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(settings.width - $jxxcarlson$xmarkdown_compiler$Render$Constants$defaultIndentWidth)),
-							$mdgriffith$elm_ui$Element$paddingEach(
-							{
-								bottom: 0,
-								left: 9 * (1 + indentation_(expr)),
-								right: 0,
-								top: 0
-							})
-						]),
-					_List_fromArray(
-						[
-							A3(
-							$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$renderNumberedLabel,
-							settings,
-							level(expr),
-							k),
-							A2(
-							$mdgriffith$elm_ui$Element$paragraph,
-							A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block),
-							A2(
-								$elm$core$List$cons,
-								A5($jxxcarlson$xmarkdown_compiler$Render$Expression$render, 0, acc, settings, _List_Nil, expr),
-								_List_Nil))
-						]));
-			});
 		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$spacing(2),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$moveRight(20),
-					A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block))),
-			A3(
-				$elm$core$List$map2,
-				renderNumberedItem_,
-				makeLabels(listOfExprList),
-				listOfExprList));
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'margin-left', '36px'),
+					A2($elm$html$Html$Attributes$style, 'margin-bottom', '24px')
+				]),
+			content);
+	});
+var $elm$html$Html$ol = _VirtualDom_node('ol');
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numberedList = F5(
+	function (_v0, _v1, settings, attrs, block) {
+		var content = function () {
+			var _v2 = block.body;
+			if (_v2.$ === 'Right') {
+				var exprs = _v2.a;
+				return A2(
+					$elm$core$List$map,
+					A2(
+						$elm$core$Basics$composeR,
+						A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attrs),
+						$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem),
+					exprs);
+			} else {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('')
+					]);
+			}
+		}();
+		return A2($elm$html$Html$ol, attrs, content);
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$registerRenderers = function (registry) {
 	return A2(
@@ -26640,173 +15464,99 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$registerRenderers = f
 		_List_fromArray(
 			[
 				_Utils_Tuple2('itemList', $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$itemList),
-				_Utils_Tuple2('numberedList', $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numberedList)
+				_Utils_Tuple2('numberedList', $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numberedList),
+				_Utils_Tuple2('descriptionList', $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$descriptionList)
 			]),
 		registry);
 };
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$blockLabel = function (properties) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		'',
-		A2($elm$core$Dict$get, 'label', properties));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$renderWithDefaultWithSize = F7(
-	function (size, _default, count, acc, settings, attr, exprs) {
-		return $elm$core$List$isEmpty(exprs) ? _List_fromArray(
-			[
-				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_Utils_ap(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$color(settings.redColor),
-							$mdgriffith$elm_ui$Element$Font$size(
-							A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, size))
-						]),
-					attr),
-				$mdgriffith$elm_ui$Element$text(_default))
-			]) : A2(
-			$elm$core$List$map,
-			A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, count, acc, settings, attr),
-			exprs);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$stringValue = function (expr) {
-	switch (expr.$) {
-		case 'Text':
-			var str = expr.a;
-			return str;
-		case 'Fun':
-			var textList = expr.b;
-			return A2(
-				$elm$core$String$join,
-				' ',
-				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$AST$ASTTools$stringValue, textList));
-		case 'VFun':
-			var str = expr.b;
-			return str;
-		default:
-			return '[ExprList]';
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$stringValueOfList = function (textList) {
-	return A2(
-		$elm$core$String$join,
-		' ',
-		A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$AST$ASTTools$stringValue, textList));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$makeId = function (exprs) {
-	return A2(
-		$jxxcarlson$xmarkdown_compiler$Render$Utility$elementAttribute,
-		'id',
-		$jxxcarlson$xmarkdown_compiler$Render$Utility$makeSlug(
-			$elm$core$String$trim(
-				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$stringValueOfList(exprs))));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$sectionBlockAttributes = F3(
-	function (block, settings, attrs) {
-		return _Utils_ap(
-			_List_fromArray(
-				[
-					$jxxcarlson$xmarkdown_compiler$Render$Utility$makeId(
-					$jxxcarlson$xmarkdown_compiler$AST$Language$getExpressionContent(block)),
-					$jxxcarlson$xmarkdown_compiler$Render$Utility$idAttribute(block.meta.id)
-				]),
-			_Utils_ap(
-				A3($jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdIsSelected, block.meta.lineNumber, block.meta.numberOfLines, settings),
-				attrs));
-	});
-var $elm$core$Basics$sqrt = _Basics_sqrt;
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $elm$html$Html$h3 = _VirtualDom_node('h3');
+var $elm$html$Html$h4 = _VirtualDom_node('h4');
+var $elm$html$Html$h5 = _VirtualDom_node('h5');
+var $elm$html$Html$h6 = _VirtualDom_node('h6');
 var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$section = F5(
-	function (count, acc, settings, attr, block) {
-		var maxNumberedLevel = A2(
+	function (count, _v0, settings, attr, block) {
+		var level = A2(
 			$elm$core$Maybe$withDefault,
-			0,
+			2,
 			A2(
 				$elm$core$Maybe$andThen,
-				$elm$core$String$toFloat,
-				A2($elm$core$Dict$get, 'number-to-level', settings.properties)));
-		var headingLevel = function () {
-			var _v0 = A2($elm$core$Dict$get, 'level', block.properties);
-			if (_v0.$ === 'Nothing') {
-				return 2;
-			} else {
-				var n = _v0.a;
-				return A2(
-					$elm$core$Maybe$withDefault,
-					3,
-					$elm$core$String$toFloat(n));
+				$elm$core$String$toInt,
+				A2($elm$core$Dict$get, 'level', block.properties)));
+		var sectionNumber = ((settings.numberToLevel > 0) && (_Utils_cmp(level, settings.numberToLevel) < 1)) ? A2($elm$core$Dict$get, 'label', block.properties) : $elm$core$Maybe$Nothing;
+		var headingElement = function () {
+			switch (level) {
+				case 1:
+					return $elm$html$Html$h1;
+				case 2:
+					return $elm$html$Html$h2;
+				case 3:
+					return $elm$html$Html$h3;
+				case 4:
+					return $elm$html$Html$h4;
+				case 5:
+					return $elm$html$Html$h5;
+				default:
+					return $elm$html$Html$h6;
 			}
 		}();
-		var fontSize = $elm$core$Basics$round(
-			1.2 * (settings.maxHeadingFontSize / $elm$core$Basics$sqrt(headingLevel)));
-		var sectionNumber = (_Utils_cmp(headingLevel, maxNumberedLevel) < 1) ? A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$size(fontSize)
-				]),
-			$mdgriffith$elm_ui$Element$text(
-				$jxxcarlson$xmarkdown_compiler$Render$Helper$blockLabel(block.properties) + '. ')) : $mdgriffith$elm_ui$Element$none;
-		var exprs = $jxxcarlson$xmarkdown_compiler$AST$Language$getExpressionContent(block);
-		return A2(
-			$mdgriffith$elm_ui$Element$link,
-			_Utils_ap(
-				A3(
-					$jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$sectionBlockAttributes,
-					block,
-					settings,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$size(fontSize)
-						])),
-				A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-			{
-				label: A2(
-					$mdgriffith$elm_ui$Element$paragraph,
-					_List_Nil,
+		var contentExprs = function () {
+			var _v2 = block.body;
+			if (_v2.$ === 'Right') {
+				var exprs = _v2.a;
+				return A2(
+					$elm$core$List$map,
+					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attr),
+					exprs);
+			} else {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('')
+					]);
+			}
+		}();
+		var content = function () {
+			if (sectionNumber.$ === 'Just') {
+				var num = sectionNumber.a;
+				return A2(
+					$elm$core$List$cons,
 					A2(
-						$elm$core$List$cons,
-						sectionNumber,
-						A7($jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$renderWithDefaultWithSize, 18, '--', count, acc, settings, attr, exprs))),
-				url: $jxxcarlson$xmarkdown_compiler$Render$Utility$internalLink(settings.titlePrefix + 'title')
-			});
+						$elm$html$Html$span,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'margin-right', '8px')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(num + ' ')
+							])),
+					contentExprs);
+			} else {
+				return contentExprs;
+			}
+		}();
+		return A2(
+			headingElement,
+			_Utils_ap(
+				attr,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$id(
+						'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)))),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber)),
+						A2($elm$html$Html$Attributes$style, 'margin-top', '16px'),
+						A2($elm$html$Html$Attributes$style, 'margin-bottom', '12px'),
+						A2($elm$html$Html$Attributes$style, 'font-weight', '400')
+					])),
+			content);
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$unnumberedSection = F5(
 	function (count, acc, settings, attr, block) {
-		var headingLevel = function () {
-			var _v0 = A2($elm$core$Dict$get, 'level', block.properties);
-			if (_v0.$ === 'Nothing') {
-				return 2;
-			} else {
-				var n = _v0.a;
-				return A2(
-					$elm$core$Maybe$withDefault,
-					3,
-					$elm$core$String$toFloat(n));
-			}
-		}();
-		var fontSize = $elm$core$Basics$round(
-			1.2 * (settings.maxHeadingFontSize / $elm$core$Basics$sqrt(headingLevel)));
-		var exprs = $jxxcarlson$xmarkdown_compiler$AST$Language$getExpressionContent(block);
-		return A2(
-			$mdgriffith$elm_ui$Element$link,
-			_Utils_ap(
-				A3(
-					$jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$sectionBlockAttributes,
-					block,
-					settings,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$size(fontSize)
-						])),
-				A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-			{
-				label: A2(
-					$mdgriffith$elm_ui$Element$paragraph,
-					_List_Nil,
-					A7($jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$renderWithDefaultWithSize, 18, '--', count, acc, settings, attr, exprs)),
-				url: $jxxcarlson$xmarkdown_compiler$Render$Utility$internalLink(settings.titlePrefix + 'title')
-			});
+		return A5($jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$section, count, acc, settings, attr, block);
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$registerRenderers = function (registry) {
 	return A2(
@@ -26818,12 +15568,9 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$registerRenderers = fu
 			]),
 		registry);
 };
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$htmlId = function (str) {
-	return $mdgriffith$elm_ui$Element$htmlAttribute(
-		$elm$html$Html$Attributes$id(str));
-};
 var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Text$quotation = F5(
-	function (count, acc, settings, attrs, block) {
+	function (count, _v0, settings, _v1, block) {
+		var indentWidth = $elm$core$String$fromInt(settings.leftIndentation) + 'px';
 		var content = A2(
 			$elm$core$Maybe$withDefault,
 			_List_Nil,
@@ -26832,31 +15579,38 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Text$quotation = F5(
 				function (text) {
 					return _List_fromArray(
 						[
-							$mdgriffith$elm_ui$Element$text(text)
+							$elm$html$Html$text(text)
 						]);
 				},
 				A2($elm$core$Dict$get, 'firstLine', block.properties)));
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A2(
-			$mdgriffith$elm_ui$Element$row,
+			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					$jxxcarlson$xmarkdown_compiler$Render$Helper$htmlId(block.meta.id)
+					A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+					A2($elm$html$Html$Attributes$style, 'width', '100%'),
+					$elm$html$Html$Attributes$id(blockId),
+					A2(
+					$elm$html$Html$Attributes$attribute,
+					'data-line-number',
+					$elm$core$String$fromInt(block.meta.lineNumber))
 				]),
 			_List_fromArray(
 				[
 					A2(
-					$mdgriffith$elm_ui$Element$el,
+					$elm$html$Html$div,
 					_List_fromArray(
 						[
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(40))
+							A2($elm$html$Html$Attributes$style, 'width', indentWidth)
 						]),
-					$mdgriffith$elm_ui$Element$none),
+					_List_Nil),
 					A2(
-					$mdgriffith$elm_ui$Element$paragraph,
+					$elm$html$Html$p,
 					_List_fromArray(
-						[$mdgriffith$elm_ui$Element$Font$italic]),
+						[
+							A2($elm$html$Html$Attributes$style, 'font-style', 'italic')
+						]),
 					content)
 				]));
 	});
@@ -26869,329 +15623,83 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Text$registerRenderers = functi
 			]),
 		registry);
 };
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$alignAt = F2(
-	function (i, aligns) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			$mdgriffith$elm_ui$Element$alignLeft,
-			$elm$core$List$head(
-				A2($elm$core$List$drop, i, aligns)));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$alignAttr = function (code) {
-	switch (code) {
-		case 'c':
-			return $mdgriffith$elm_ui$Element$centerX;
-		case 'r':
-			return $mdgriffith$elm_ui$Element$alignRight;
-		default:
-			return $mdgriffith$elm_ui$Element$alignLeft;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$cellAt = F2(
-	function (i, cells) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			_List_Nil,
-			$elm$core$List$head(
-				A2($elm$core$List$drop, i, cells)));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$dataCell = F5(
-	function (count, acc, settings, align, exprs) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					A2($mdgriffith$elm_ui$Element$paddingXY, 8, 6),
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-				]),
-			A2(
-				$mdgriffith$elm_ui$Element$paragraph,
-				_List_fromArray(
-					[align]),
-				A2(
-					$elm$core$List$map,
-					A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, count, acc, settings, _List_Nil),
-					exprs)));
-	});
-var $mdgriffith$elm_ui$Element$Border$widthXY = F2(
-	function (x, y) {
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$borderWidth,
-			A5(
-				$mdgriffith$elm_ui$Internal$Model$BorderWidth,
-				'b-' + ($elm$core$String$fromInt(x) + ('-' + $elm$core$String$fromInt(y))),
-				y,
-				x,
-				y,
-				x));
-	});
-var $mdgriffith$elm_ui$Element$Border$widthEach = function (_v0) {
-	var bottom = _v0.bottom;
-	var top = _v0.top;
-	var left = _v0.left;
-	var right = _v0.right;
-	return (_Utils_eq(top, bottom) && _Utils_eq(left, right)) ? (_Utils_eq(top, right) ? $mdgriffith$elm_ui$Element$Border$width(top) : A2($mdgriffith$elm_ui$Element$Border$widthXY, left, top)) : A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$borderWidth,
-		A5(
-			$mdgriffith$elm_ui$Internal$Model$BorderWidth,
-			'b-' + ($elm$core$String$fromInt(top) + ('-' + ($elm$core$String$fromInt(right) + ('-' + ($elm$core$String$fromInt(bottom) + ('-' + $elm$core$String$fromInt(left))))))),
-			top,
-			right,
-			bottom,
-			left));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$headerCell = F5(
-	function (count, acc, settings, align, exprs) {
-		return A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$bold,
-					$mdgriffith$elm_ui$Element$Border$widthEach(
-					{bottom: 1, left: 0, right: 0, top: 0}),
-					A2($mdgriffith$elm_ui$Element$paddingXY, 8, 6),
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-				]),
-			A2(
-				$mdgriffith$elm_ui$Element$paragraph,
-				_List_fromArray(
-					[align]),
-				A2(
-					$elm$core$List$map,
-					A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, count, acc, settings, _List_Nil),
-					exprs)));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$cellExprs = function (cell) {
-	if ((cell.$ === 'Fun') && (cell.a === 'cell')) {
-		var exprs = cell.b;
-		return exprs;
-	} else {
-		return _List_Nil;
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$rowCells = function (row) {
-	if ((row.$ === 'Fun') && (row.a === 'row')) {
-		var cells = row.b;
-		return A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Render$GHTable$cellExprs, cells);
-	} else {
-		return _List_Nil;
-	}
-};
-var $mdgriffith$elm_ui$Element$InternalColumn = function (a) {
-	return {$: 'InternalColumn', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$GridPosition = function (a) {
-	return {$: 'GridPosition', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$GridTemplateStyle = function (a) {
-	return {$: 'GridTemplateStyle', a: a};
-};
-var $mdgriffith$elm_ui$Internal$Model$AsGrid = {$: 'AsGrid'};
-var $mdgriffith$elm_ui$Internal$Model$asGrid = $mdgriffith$elm_ui$Internal$Model$AsGrid;
-var $mdgriffith$elm_ui$Internal$Model$getSpacing = F2(
-	function (attrs, _default) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			_default,
-			A3(
-				$elm$core$List$foldr,
-				F2(
-					function (attr, acc) {
-						if (acc.$ === 'Just') {
-							var x = acc.a;
-							return $elm$core$Maybe$Just(x);
-						} else {
-							if ((attr.$ === 'StyleClass') && (attr.b.$ === 'SpacingStyle')) {
-								var _v2 = attr.b;
-								var x = _v2.b;
-								var y = _v2.c;
-								return $elm$core$Maybe$Just(
-									_Utils_Tuple2(x, y));
-							} else {
-								return $elm$core$Maybe$Nothing;
-							}
-						}
-					}),
-				$elm$core$Maybe$Nothing,
-				attrs));
-	});
-var $mdgriffith$elm_ui$Internal$Flag$gridPosition = $mdgriffith$elm_ui$Internal$Flag$flag(35);
-var $mdgriffith$elm_ui$Internal$Flag$gridTemplate = $mdgriffith$elm_ui$Internal$Flag$flag(34);
-var $mdgriffith$elm_ui$Element$tableHelper = F2(
-	function (attrs, config) {
-		var onGrid = F3(
-			function (rowLevel, columnLevel, elem) {
-				return A4(
-					$mdgriffith$elm_ui$Internal$Model$element,
-					$mdgriffith$elm_ui$Internal$Model$asEl,
-					$mdgriffith$elm_ui$Internal$Model$div,
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Internal$Model$StyleClass,
-							$mdgriffith$elm_ui$Internal$Flag$gridPosition,
-							$mdgriffith$elm_ui$Internal$Model$GridPosition(
-								{col: columnLevel, height: 1, row: rowLevel, width: 1}))
-						]),
-					$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-						_List_fromArray(
-							[elem])));
-			});
-		var columnWidth = function (col) {
-			if (col.$ === 'InternalIndexedColumn') {
-				var colConfig = col.a;
-				return colConfig.width;
-			} else {
-				var colConfig = col.a;
-				return colConfig.width;
-			}
-		};
-		var columnHeader = function (col) {
-			if (col.$ === 'InternalIndexedColumn') {
-				var colConfig = col.a;
-				return colConfig.header;
-			} else {
-				var colConfig = col.a;
-				return colConfig.header;
-			}
-		};
-		var maybeHeaders = function (headers) {
-			return A2(
-				$elm$core$List$all,
-				$elm$core$Basics$eq($mdgriffith$elm_ui$Internal$Model$Empty),
-				headers) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
-				A2(
-					$elm$core$List$indexedMap,
-					F2(
-						function (col, header) {
-							return A3(onGrid, 1, col + 1, header);
-						}),
-					headers));
-		}(
-			A2($elm$core$List$map, columnHeader, config.columns));
-		var add = F3(
-			function (cell, columnConfig, cursor) {
-				if (columnConfig.$ === 'InternalIndexedColumn') {
-					var col = columnConfig.a;
-					return _Utils_update(
-						cursor,
-						{
-							column: cursor.column + 1,
-							elements: A2(
-								$elm$core$List$cons,
-								A3(
-									onGrid,
-									cursor.row,
-									cursor.column,
-									A2(
-										col.view,
-										_Utils_eq(maybeHeaders, $elm$core$Maybe$Nothing) ? (cursor.row - 1) : (cursor.row - 2),
-										cell)),
-								cursor.elements)
-						});
-				} else {
-					var col = columnConfig.a;
-					return {
-						column: cursor.column + 1,
-						elements: A2(
-							$elm$core$List$cons,
-							A3(
-								onGrid,
-								cursor.row,
-								cursor.column,
-								col.view(cell)),
-							cursor.elements),
-						row: cursor.row
-					};
-				}
-			});
-		var build = F3(
-			function (columns, rowData, cursor) {
-				var newCursor = A3(
-					$elm$core$List$foldl,
-					add(rowData),
-					cursor,
-					columns);
-				return {column: 1, elements: newCursor.elements, row: cursor.row + 1};
-			});
-		var children = A3(
-			$elm$core$List$foldl,
-			build(config.columns),
-			{
-				column: 1,
-				elements: _List_Nil,
-				row: _Utils_eq(maybeHeaders, $elm$core$Maybe$Nothing) ? 1 : 2
-			},
-			config.data);
-		var _v0 = A2(
-			$mdgriffith$elm_ui$Internal$Model$getSpacing,
-			attrs,
-			_Utils_Tuple2(0, 0));
-		var sX = _v0.a;
-		var sY = _v0.b;
-		var template = A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$gridTemplate,
-			$mdgriffith$elm_ui$Internal$Model$GridTemplateStyle(
-				{
-					columns: A2($elm$core$List$map, columnWidth, config.columns),
-					rows: A2(
-						$elm$core$List$repeat,
-						$elm$core$List$length(config.data),
-						$mdgriffith$elm_ui$Internal$Model$Content),
-					spacing: _Utils_Tuple2(
-						$mdgriffith$elm_ui$Element$px(sX),
-						$mdgriffith$elm_ui$Element$px(sY))
-				}));
-		return A4(
-			$mdgriffith$elm_ui$Internal$Model$element,
-			$mdgriffith$elm_ui$Internal$Model$asGrid,
-			$mdgriffith$elm_ui$Internal$Model$div,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-				A2($elm$core$List$cons, template, attrs)),
-			$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-				function () {
-					if (maybeHeaders.$ === 'Nothing') {
-						return children.elements;
-					} else {
-						var renderedHeaders = maybeHeaders.a;
-						return _Utils_ap(
-							renderedHeaders,
-							$elm$core$List$reverse(children.elements));
-					}
-				}()));
-	});
-var $mdgriffith$elm_ui$Element$table = F2(
-	function (attrs, config) {
-		return A2(
-			$mdgriffith$elm_ui$Element$tableHelper,
-			attrs,
-			{
-				columns: A2($elm$core$List$map, $mdgriffith$elm_ui$Element$InternalColumn, config.columns),
-				data: config.data
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$render = F5(
-	function (count, acc, settings, _v0, block) {
-		var _v1 = block.body;
-		if (((((_v1.$ === 'Right') && _v1.a.b) && (_v1.a.a.$ === 'Fun')) && (_v1.a.a.a === 'table')) && (!_v1.a.b.b)) {
-			var _v2 = _v1.a;
-			var _v3 = _v2.a;
-			var rows = _v3.b;
-			var allRows = A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Render$GHTable$rowCells, rows);
-			var dataRows = A2($elm$core$List$drop, 1, allRows);
-			var headerCells = A2(
-				$elm$core$Maybe$withDefault,
-				_List_Nil,
-				$elm$core$List$head(allRows));
-			var ncols = $elm$core$List$length(headerCells);
-			var aligns = A2(
+var $elm$html$Html$td = _VirtualDom_node('td');
+var $elm$html$Html$th = _VirtualDom_node('th');
+var $jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableCell = F5(
+	function (theme, alignments, isHeader, colIndex, expr) {
+		if ((expr.$ === 'Fun') && (expr.a === 'cell')) {
+			var content = expr.b;
+			var renderedContent = A2(
 				$elm$core$List$map,
-				$jxxcarlson$xmarkdown_compiler$Render$GHTable$alignAttr,
+				A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, _List_Nil),
+				content);
+			var element = isHeader ? $elm$html$Html$th : $elm$html$Html$td;
+			var alignment = A2(
+				$elm$core$Maybe$withDefault,
+				'l',
+				$elm$core$List$head(
+					A2($elm$core$List$drop, colIndex, alignments)));
+			var textAlign = function () {
+				switch (alignment) {
+					case 'c':
+						return 'center';
+					case 'r':
+						return 'right';
+					default:
+						return 'left';
+				}
+			}();
+			return A2(
+				element,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'border', '1px solid #ddd'),
+						A2($elm$html$Html$Attributes$style, 'padding', '8px'),
+						A2($elm$html$Html$Attributes$style, 'text-align', textAlign)
+					]),
+				renderedContent);
+		} else {
+			return A2($elm$html$Html$td, _List_Nil, _List_Nil);
+		}
+	});
+var $elm$html$Html$tbody = _VirtualDom_node('tbody');
+var $elm$html$Html$thead = _VirtualDom_node('thead');
+var $elm$html$Html$tr = _VirtualDom_node('tr');
+var $jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableRow = F4(
+	function (theme, alignments, rowIndex, expr) {
+		if ((expr.$ === 'Fun') && (expr.a === 'row')) {
+			var cells = expr.b;
+			var isHeader = !rowIndex;
+			var element = isHeader ? $elm$html$Html$thead : $elm$html$Html$tbody;
+			var cellElements = A2(
+				$elm$core$List$indexedMap,
+				A3($jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableCell, theme, alignments, isHeader),
+				cells);
+			return A2(
+				element,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2($elm$html$Html$tr, _List_Nil, cellElements)
+					]));
+		} else {
+			return A2($elm$html$Html$tr, _List_Nil, _List_Nil);
+		}
+	});
+var $elm$html$Html$table = _VirtualDom_node('table');
+var $jxxcarlson$xmarkdown_compiler$Render$GHTable$render = F5(
+	function (count, _v0, settings, _v1, block) {
+		var _v2 = block.body;
+		if (((((_v2.$ === 'Right') && _v2.a.b) && (_v2.a.a.$ === 'Fun')) && (_v2.a.a.a === 'table')) && (!_v2.a.b.b)) {
+			var _v3 = _v2.a;
+			var _v4 = _v3.a;
+			var rows = _v4.b;
+			var tableWidth = $elm$core$String$fromInt(settings.width - settings.leftIndentation) + 'px';
+			var indentPx = $elm$core$String$fromInt(settings.leftIndentation) + 'px';
+			var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
+			var alignments = A2(
+				$elm$core$List$map,
+				$elm$core$String$trim,
 				A2(
 					$elm$core$String$split,
 					',',
@@ -27199,40 +15707,41 @@ var $jxxcarlson$xmarkdown_compiler$Render$GHTable$render = F5(
 						$elm$core$Maybe$withDefault,
 						'',
 						A2($elm$core$Dict$get, 'alignments', block.properties))));
-			var columns = A2(
-				$elm$core$List$map,
-				function (i) {
-					return {
-						header: A5(
-							$jxxcarlson$xmarkdown_compiler$Render$GHTable$headerCell,
-							count,
-							acc,
-							settings,
-							A2($jxxcarlson$xmarkdown_compiler$Render$GHTable$alignAt, i, aligns),
-							A2($jxxcarlson$xmarkdown_compiler$Render$GHTable$cellAt, i, headerCells)),
-						view: function (row) {
-							return A5(
-								$jxxcarlson$xmarkdown_compiler$Render$GHTable$dataCell,
-								count,
-								acc,
-								settings,
-								A2($jxxcarlson$xmarkdown_compiler$Render$GHTable$alignAt, i, aligns),
-								A2($jxxcarlson$xmarkdown_compiler$Render$GHTable$cellAt, i, row));
-						},
-						width: $mdgriffith$elm_ui$Element$fill
-					};
-				},
-				A2($elm$core$List$range, 0, ncols - 1));
+			var rowElements = A2(
+				$elm$core$List$indexedMap,
+				A2($jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableRow, settings.theme, alignments),
+				rows);
 			return A2(
-				$mdgriffith$elm_ui$Element$table,
+				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$spacing(10),
-						A2($mdgriffith$elm_ui$Element$paddingXY, 0, 8)
+						A2($elm$html$Html$Attributes$style, 'margin-left', indentPx)
 					]),
-				{columns: columns, data: dataRows});
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$table,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$id(blockId),
+								A2(
+								$elm$html$Html$Attributes$attribute,
+								'data-line-number',
+								$elm$core$String$fromInt(block.meta.lineNumber)),
+								A2($elm$html$Html$Attributes$style, 'border-collapse', 'collapse'),
+								A2($elm$html$Html$Attributes$style, 'width', tableWidth),
+								A2($elm$html$Html$Attributes$style, 'border', '1px solid #ddd')
+							]),
+						rowElements)
+					]));
 		} else {
-			return $mdgriffith$elm_ui$Element$none;
+			return A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('(table)')
+					]));
 		}
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$initRegistry = A2(
@@ -27242,7 +15751,11 @@ var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$initRegistry = A2(
 			_Utils_Tuple2('table', $jxxcarlson$xmarkdown_compiler$Render$GHTable$render),
 			_Utils_Tuple2('item', $jxxcarlson$xmarkdown_compiler$Render$List$item),
 			_Utils_Tuple2('desc', $jxxcarlson$xmarkdown_compiler$Render$List$desc),
-			_Utils_Tuple2('numbered', $jxxcarlson$xmarkdown_compiler$Render$List$numbered)
+			_Utils_Tuple2('numbered', $jxxcarlson$xmarkdown_compiler$Render$List$numbered),
+			_Utils_Tuple2('equation', $jxxcarlson$xmarkdown_compiler$Render$Math$equation),
+			_Utils_Tuple2('aligned', $jxxcarlson$xmarkdown_compiler$Render$Math$aligned),
+			_Utils_Tuple2('array', $jxxcarlson$xmarkdown_compiler$Render$Math$array),
+			_Utils_Tuple2('chem', $jxxcarlson$xmarkdown_compiler$Render$Math$chem)
 		]),
 	$jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$registerRenderers(
 		$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$registerRenderers(
@@ -27253,7 +15766,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$render = F5(
 		var registry = $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$initRegistry;
 		var _v0 = block.body;
 		if (_v0.$ === 'Left') {
-			return $mdgriffith$elm_ui$Element$none;
+			return $elm$html$Html$text('');
 		} else {
 			var _v1 = block.heading;
 			if (_v1.$ === 'Ordinary') {
@@ -27265,3580 +15778,184 @@ var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$render = F5(
 							$elm$core$Maybe$withDefault,
 							F5(
 								function (_v3, _v4, _v5, _v6, _v7) {
-									return $mdgriffith$elm_ui$Element$none;
+									return $elm$html$Html$text('');
 								}),
 							A2($jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$lookup, 'env', registry));
 						return A5(envRenderer, count, acc, settings, attr, block);
 					} else {
 						var renderer = _v2.a;
-						var blockType = $jxxcarlson$xmarkdown_compiler$Render$BlockType$fromString(functionName);
-						var newSettings = settings;
-						return A5(renderer, count, acc, newSettings, attr, block);
+						return A5(renderer, count, acc, settings, attr, block);
 					}
 				}();
-				return A4(
-					$jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$indentOrdinaryBlock,
-					block.indent,
-					$elm$core$String$fromInt(block.meta.lineNumber),
-					settings,
-					renderedBlock);
+				return renderedBlock;
 			} else {
-				return $mdgriffith$elm_ui$Element$none;
+				return $elm$html$Html$text('');
 			}
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$noSuchVerbatimBlock = F2(
-	function (functionName, content) {
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(4)
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$paragraph,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$Font$color(
-							A3($mdgriffith$elm_ui$Element$rgb255, 180, 0, 0))
-						]),
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$text('No such block (V): ' + functionName)
-						])),
-					A2(
-					$mdgriffith$elm_ui$Element$column,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$spacing(4)
-						]),
-					A2(
-						$elm$core$List$map,
-						function (t) {
-							return A2(
-								$mdgriffith$elm_ui$Element$el,
-								_List_Nil,
-								$mdgriffith$elm_ui$Element$text(t));
-						},
-						$elm$core$String$lines(content)))
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$DisplayMathMode = {$: 'DisplayMathMode'};
-var $jxxcarlson$xmarkdown_compiler$Render$Sync$selectedColor = A4($mdgriffith$elm_ui$Element$rgba, 0.1, 0.1, 0.8, 0.5);
-var $jxxcarlson$xmarkdown_compiler$Render$Sync$highlighter = F2(
-	function (args, attrs) {
-		return A2($elm$core$List$member, 'highlight', args) ? A2(
-			$elm$core$List$cons,
-			$mdgriffith$elm_ui$Element$Background$color($jxxcarlson$xmarkdown_compiler$Render$Sync$selectedColor),
-			attrs) : attrs;
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$highlightMath = F2(
-	function (settings, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Math$displayedMath = F3(
+	function (count, attrs, block) {
+		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
+		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A3(
-			$jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdSelected,
-			block.meta.id,
-			settings,
-			A2($jxxcarlson$xmarkdown_compiler$Render$Sync$highlighter, block.args, _List_Nil));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$aligned = F5(
-	function (count, acc, settings, attrs, block) {
-		var str = function () {
-			var _v0 = block.body;
-			if (_v0.$ === 'Left') {
-				var str_ = _v0.a;
-				return str_;
-			} else {
-				return '';
-			}
-		}();
-		var filteredLines = A2(
-			$elm$core$List$filter,
-			function (line) {
-				return (!(A2($elm$core$String$left, 6, line) === '\\label')) && (!(line === ''));
-			},
-			$elm$core$String$lines(str));
-		var deleteTrailingSlashes = function (inputString) {
-			var str_ = $elm$core$String$trim(inputString);
-			return (A2($elm$core$String$right, 2, str_) === '\\\\') ? A2($elm$core$String$dropRight, 2, str_) : str_;
-		};
-		var adjustedLines_ = A2(
-			$elm$core$List$filter,
-			function (line) {
-				return $elm$core$String$trim(line) !== '';
-			},
-			A2(
-				$elm$core$List$map,
-				A2(
-					$elm$core$Basics$composeR,
-					deleteTrailingSlashes,
-					$jxxcarlson$etex$ETeX$Transform$evalStr(acc.mathMacroDict)),
-				filteredLines));
-		var innerContent = A2($elm$core$String$join, '\\\\\n', adjustedLines_);
-		var content = '\\begin{aligned}\n' + (innerContent + '\n\\end{aligned}');
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
+			$jxxcarlson$xmarkdown_compiler$Render$Math$renderMath,
+			content,
+			true,
 			_Utils_ap(
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(settings.width))
+						$elm$html$Html$Attributes$id(blockId),
+						A2(
+						$elm$html$Html$Attributes$attribute,
+						'data-line-number',
+						$elm$core$String$fromInt(block.meta.lineNumber)),
+						A2($elm$html$Html$Attributes$style, 'padding', '8px')
 					]),
-				_Utils_ap(
-					attrs,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block))),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$row,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(settings.width))
-						]),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Element$el,
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Element$centerX,
-								A2($jxxcarlson$xmarkdown_compiler$Render$Math$highlightMath, settings, block)),
-							A5(
-								$jxxcarlson$xmarkdown_compiler$Render$Math$mathText,
-								$jxxcarlson$xmarkdown_compiler$Render$ThemeHelpers$themeAsStringFromSettings(settings),
-								count,
-								block.meta.id,
-								$jxxcarlson$xmarkdown_compiler$Render$Math$DisplayMathMode,
-								content))
-						]))
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$array = F5(
-	function (count, acc, settings, attrs, block) {
-		var str = function () {
-			var _v0 = block.body;
-			if (_v0.$ === 'Left') {
-				var str_ = _v0.a;
-				return str_;
-			} else {
-				return '';
-			}
-		}();
-		var format = A2(
-			$elm$core$Maybe$withDefault,
-			'',
-			$elm$core$List$head(block.args));
-		var filteredLines = A2(
-			$elm$core$List$filter,
-			function (line) {
-				return (!(A2($elm$core$String$left, 6, line) === '[label')) && (!(line === ''));
-			},
-			$elm$core$String$lines(str));
-		var deleteTrailingSlashes = function (inputString) {
-			var str_ = $elm$core$String$trim(inputString);
-			return (A2($elm$core$String$right, 2, str_) === '\\\\') ? A2($elm$core$String$dropRight, 2, str_) : str_;
-		};
-		var adjustedLines_ = A2(
-			$elm$core$List$filter,
-			function (line) {
-				return line !== '';
-			},
-			A2(
-				$elm$core$List$map,
-				A2(
-					$elm$core$Basics$composeR,
-					deleteTrailingSlashes,
-					$jxxcarlson$etex$ETeX$Transform$evalStr(acc.mathMacroDict)),
-				filteredLines));
-		var innerContent = A2($elm$core$String$join, '\\\\\n', adjustedLines_);
-		var content = '\\begin{array}{' + (format + ('}\n' + (innerContent + '\n\\end{array}')));
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(settings.width))
-					]),
-				attrs),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$row,
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(settings.width)),
-						A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Element$el,
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Element$centerX,
-								A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-							A5(
-								$jxxcarlson$xmarkdown_compiler$Render$Math$mathText,
-								$jxxcarlson$xmarkdown_compiler$Render$ThemeHelpers$themeAsStringFromSettings(settings),
-								count,
-								block.meta.id,
-								$jxxcarlson$xmarkdown_compiler$Render$Math$DisplayMathMode,
-								content))
-						]))
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$getContent = function (_v0) {
-	var body = _v0.body;
-	if (body.$ === 'Left') {
-		var str = body.a;
-		return str;
-	} else {
-		return '';
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Math$displayedMath = F5(
-	function (count, acc, settings, attrs_, block) {
-		var filteredLines = A2(
-			$elm$core$List$map,
-			$jxxcarlson$etex$ETeX$Transform$evalStr(acc.mathMacroDict),
-			A2(
-				$elm$core$List$filter,
-				function (line) {
-					return line !== '';
-				},
-				A2(
-					$elm$core$List$filter,
-					function (line) {
-						return !(A2($elm$core$String$left, 6, line) === '[label');
-					},
-					A2(
-						$elm$core$List$filter,
-						function (line) {
-							return !(A2(
-								$elm$core$String$left,
-								2,
-								$elm$core$String$trim(line)) === '$$');
-						},
-						$elm$core$String$lines(
-							$jxxcarlson$xmarkdown_compiler$Render$Math$getContent(block))))));
-		var attrs = A2(
-			$elm$core$List$cons,
-			$mdgriffith$elm_ui$Element$width(
-				$mdgriffith$elm_ui$Element$px(settings.width)),
-			attrs_);
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			attrs,
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					A2(
-						$jxxcarlson$xmarkdown_compiler$Render$Sync$highlighter,
-						block.args,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX])),
-					A5(
-						$jxxcarlson$xmarkdown_compiler$Render$Math$mathText,
-						$jxxcarlson$xmarkdown_compiler$Render$ThemeHelpers$themeAsStringFromSettings(settings),
-						count,
-						block.meta.id,
-						$jxxcarlson$xmarkdown_compiler$Render$Math$DisplayMathMode,
-						A2($elm$core$String$join, '\n', filteredLines)))
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$chem = F5(
-	function (count, acc, settings, attrs_, block) {
-		var newBlock = function () {
-			var _v0 = block.body;
-			if (_v0.$ === 'Left') {
-				var s = _v0.a;
-				return _Utils_update(
-					block,
-					{
-						body: $toastal$either$Either$Left('\\ce{' + (s + '}'))
-					});
-			} else {
-				return block;
-			}
-		}();
-		return A5($jxxcarlson$xmarkdown_compiler$Render$Math$displayedMath, count, acc, settings, attrs_, newBlock);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$equationLabel = F2(
-	function (settings, properties) {
-		var labelText = '(' + (A2(
-			$elm$core$Maybe$withDefault,
-			'-',
-			A2($elm$core$Dict$get, 'equation-number', properties)) + ')');
-		var label_ = A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$size(
-					A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 12))
-				]),
-			$mdgriffith$elm_ui$Element$text(labelText));
-		return label_;
-	});
-var $elm$core$String$trimRight = _String_trimRight;
-var $jxxcarlson$xmarkdown_compiler$Render$Math$equation_ = F4(
-	function (count, acc, settings, block) {
-		var isNumbered = A2($elm$core$List$member, 'numbered', block.args);
-		var label = isNumbered ? A2($jxxcarlson$xmarkdown_compiler$Render$Math$equationLabel, settings, block.properties) : $mdgriffith$elm_ui$Element$none;
-		var labelWidth = isNumbered ? 60 : 0;
-		var filteredLines = A2(
-			$elm$core$List$map,
-			$jxxcarlson$etex$ETeX$Transform$evalStr(acc.mathMacroDict),
-			A2(
-				$elm$core$List$filter,
-				function (line) {
-					return (!(A2($elm$core$String$left, 2, line) === '$$')) && ((!(A2($elm$core$String$left, 6, line) === '[label')) && (!(line === 'end')));
-				},
-				A2(
-					$elm$core$List$map,
-					$elm$core$String$trimRight,
-					$elm$core$String$lines(
-						$jxxcarlson$xmarkdown_compiler$Render$Math$getContent(block)))));
-		var contentWidth = settings.width - labelWidth;
-		var content = A2($elm$core$String$join, '\n', filteredLines);
-		return A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_Nil,
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(contentWidth))
-						]),
-					A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$centerX,
-								$mdgriffith$elm_ui$Element$moveRight(labelWidth / 2)
-							]),
-						A5(
-							$jxxcarlson$xmarkdown_compiler$Render$Math$mathText,
-							$jxxcarlson$xmarkdown_compiler$Render$ThemeHelpers$themeAsStringFromSettings(settings),
-							count,
-							block.meta.id,
-							$jxxcarlson$xmarkdown_compiler$Render$Math$DisplayMathMode,
-							content))),
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(labelWidth))
-						]),
-					A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$alignRight]),
-						label))
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$equation = F5(
-	function (count, acc, settings, attrs, block) {
-		return A2(
-			$elm$core$String$contains,
-			'&',
-			$jxxcarlson$xmarkdown_compiler$Render$Math$getContent(block)) ? A5($jxxcarlson$xmarkdown_compiler$Render$Math$aligned, count, acc, settings, attrs, block) : A4($jxxcarlson$xmarkdown_compiler$Render$Math$equation_, count, acc, settings, block);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Graphics$getDescription = function (properties) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		'',
-		A2($elm$core$Dict$get, 'description', properties));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Graphics$parameters = F2(
-	function (settings, properties) {
-		var placement = function () {
-			var _v2 = A2($elm$core$Dict$get, 'placement', properties);
-			if (_v2.$ === 'Nothing') {
-				return $mdgriffith$elm_ui$Element$centerX;
-			} else {
-				switch (_v2.a) {
-					case 'left':
-						return $mdgriffith$elm_ui$Element$alignLeft;
-					case 'right':
-						return $mdgriffith$elm_ui$Element$alignRight;
-					case 'center':
-						return $mdgriffith$elm_ui$Element$centerX;
-					default:
-						return $mdgriffith$elm_ui$Element$centerX;
-				}
-			}
-		}();
-		var displayWidth = settings.width;
-		var width = function () {
-			var _v0 = A2($elm$core$Dict$get, 'width', properties);
-			if (_v0.$ === 'Nothing') {
-				return $mdgriffith$elm_ui$Element$px(displayWidth);
-			} else {
-				switch (_v0.a) {
-					case 'fill':
-						return $mdgriffith$elm_ui$Element$fill;
-					case 'to-edges':
-						return $mdgriffith$elm_ui$Element$px(displayWidth + 198);
-					default:
-						var w_ = _v0.a;
-						var _v1 = $elm$core$String$toInt(w_);
-						if (_v1.$ === 'Nothing') {
-							return $mdgriffith$elm_ui$Element$px(displayWidth);
-						} else {
-							var w = _v1.a;
-							return $mdgriffith$elm_ui$Element$px(w);
-						}
-				}
-			}
-		}();
-		var description = A2($elm$core$Dict$get, 'description', properties);
-		var captionPhrase = A2($elm$core$Dict$get, 'caption', properties);
-		return {caption: captionPhrase, description: description, placement: placement, width: width};
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Graphics$image2 = F5(
-	function (_v0, _v1, settings, attrs, block) {
-		var ypadding = function () {
-			var _v10 = A2($elm$core$Dict$get, 'ypadding', block.properties);
-			if (_v10.$ === 'Nothing') {
-				return 18;
-			} else {
-				var dy = _v10.a;
-				return A2(
-					$elm$core$Maybe$withDefault,
-					18,
-					$elm$core$String$toInt(dy));
-			}
-		}();
-		var width = function () {
-			var _v8 = A2($elm$core$Dict$get, 'width', block.properties);
-			if (_v8.$ === 'Nothing') {
-				return $mdgriffith$elm_ui$Element$px(settings.width);
-			} else {
-				switch (_v8.a) {
-					case 'fill':
-						return $mdgriffith$elm_ui$Element$fill;
-					case 'to-edges':
-						return $mdgriffith$elm_ui$Element$px(
-							$elm$core$Basics$round(1.2 * settings.width));
-					default:
-						var w_ = _v8.a;
-						var _v9 = $elm$core$String$toInt(w_);
-						if (_v9.$ === 'Nothing') {
-							return $mdgriffith$elm_ui$Element$px(settings.width);
-						} else {
-							var w = _v9.a;
-							return $mdgriffith$elm_ui$Element$px(w);
-						}
-				}
-			}
-		}();
-		var url = function () {
-			var _v7 = block.body;
-			if (_v7.$ === 'Left') {
-				var str = _v7.a;
-				return str;
-			} else {
-				return 'bad block';
-			}
-		}();
-		var params = A2($jxxcarlson$xmarkdown_compiler$Render$Graphics$parameters, settings, block.properties);
-		var figureLabel = function () {
-			var _v2 = _Utils_Tuple2(
-				A2($elm$core$Dict$get, 'figure', block.properties),
-				A2($elm$core$Dict$get, 'caption', block.properties));
-			if (_v2.a.$ === 'Nothing') {
-				if (_v2.b.$ === 'Nothing') {
-					var _v3 = _v2.a;
-					var _v4 = _v2.b;
-					return $mdgriffith$elm_ui$Element$none;
-				} else {
-					var _v5 = _v2.a;
-					var cap = _v2.b.a;
-					return A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
-						$mdgriffith$elm_ui$Element$text(cap));
-				}
-			} else {
-				if (_v2.b.$ === 'Nothing') {
-					var fig = _v2.a.a;
-					var _v6 = _v2.b;
-					return A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
-						$mdgriffith$elm_ui$Element$text('Figure ' + fig));
-				} else {
-					var fig = _v2.a.a;
-					var cap = _v2.b.a;
-					return A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Element$centerX]),
-						$mdgriffith$elm_ui$Element$text('Figure ' + (fig + ('. ' + cap))));
-				}
-			}
-		}();
-		var inner = A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(8),
-					$mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: ypadding, left: 0, right: 0, top: ypadding + 6}),
-					$mdgriffith$elm_ui$Element$centerX
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$image,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width(params.width)
-						]),
-					{
-						description: $jxxcarlson$xmarkdown_compiler$Render$Graphics$getDescription(block.properties),
-						src: url
-					}),
-					figureLabel
-				]));
-		var outer = A2(
-			$mdgriffith$elm_ui$Element$newTabLink,
-			_List_Nil,
-			{label: inner, url: url});
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$width(
-					$mdgriffith$elm_ui$Element$px(settings.width))
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$column,
-					_Utils_ap(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$width(width),
-								$mdgriffith$elm_ui$Element$centerX
-							]),
-						_Utils_ap(
-							attrs,
-							A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block))),
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Element$el,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$width(params.width),
-									$mdgriffith$elm_ui$Element$spacing(0)
-								]),
-							outer)
-						]))
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$getVerbatimContent = function (_v0) {
-	var body = _v0.body;
-	if (body.$ === 'Left') {
-		var str = body.a;
-		return str;
-	} else {
-		return '';
-	}
-};
-var $mdgriffith$elm_ui$Internal$Flag$overflow = $mdgriffith$elm_ui$Internal$Flag$flag(20);
-var $mdgriffith$elm_ui$Element$scrollbarX = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$overflow, $mdgriffith$elm_ui$Internal$Style$classes.scrollbarsX);
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$darkTheme = '.elmsh {color: #e7eaec;background: transparent;line-height: 1.5;}.elmsh-hl {background: transparent;}.elmsh-add {background: #5cba73;}.elmsh-del{background: #e16e77;}.elmsh-comm {color: #8c9399;}.elmsh1 {color: #a1cdff;}.elmsh2 {color: #ffbf8a;}.elmsh3 {color: #fb9fa7;}.elmsh4 {color:#a1cdff;}.elmsh5 {color: #a5f0b8;}.elmsh6 {color: #a1cdff;}.elmsh7 {color: #cbb0f6;}';
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$darkCSS2 = $mdgriffith$elm_ui$Element$html(
-	A3(
-		$elm$html$Html$node,
-		'style',
-		_List_Nil,
-		_List_fromArray(
-			[
-				$elm$html$Html$text($jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$darkTheme)
-			])));
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$ghTheme3 = '.elmsh {color: #1f2328;background: transparent;line-height: 1.5;}.elmsh-hl {background: transparent;}.elmsh-add {background: #bfdbc3;}.elmsh-del{background: #dcc7ca;}.elmsh-comm {color: #5f6770;}.elmsh1 {color: #0049a5;}.elmsh2 {color: #bc4000;}.elmsh3 {color: #b6293b;}.elmsh4 {color:#006d92;}.elmsh5 {color: #50854a;}.elmsh6 {color: #0049a5;}.elmsh7 {color: #644b88;}';
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$lightCSS2 = $mdgriffith$elm_ui$Element$html(
-	A3(
-		$elm$html$Html$node,
-		'style',
-		_List_Nil,
-		_List_fromArray(
-			[
-				$elm$html$Html$text($jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$ghTheme3)
-			])));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$HCode = function (a) {
-	return {$: 'HCode', a: a};
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style1 = {$: 'Style1'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style2 = {$: 'Style2'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style3 = {$: 'Style3'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style4 = {$: 'Style4'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style5 = {$: 'Style5'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style6 = {$: 'Style6'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$syntaxToStyle = function (syntax) {
-	switch (syntax.$) {
-		case 'String':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style2, 'elm-s');
-		case 'BasicSymbol':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style3, 'elm-bs');
-		case 'GroupSymbol':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style4, 'elm-gs');
-		case 'Capitalized':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style6, 'elm-c');
-		case 'Keyword':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style3, 'elm-k');
-		case 'Function':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style5, 'elm-f');
-		case 'TypeSignature':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style4, 'elm-ts');
-		default:
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style1, 'elm-n');
-	}
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$newLine = function (fragments) {
-	return {fragments: fragments, highlight: $elm$core$Maybe$Nothing};
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$LineBreak = {$: 'LineBreak'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Comment = {$: 'Comment'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Default = {$: 'Default'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toFragment = F2(
-	function (toStyle, _v0) {
-		var syntax = _v0.a;
-		var text = _v0.b;
-		switch (syntax.$) {
-			case 'Normal':
-				return {additionalClass: '', requiredStyle: $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Default, text: text};
-			case 'Comment':
-				return {additionalClass: '', requiredStyle: $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Comment, text: text};
-			case 'LineBreak':
-				return {additionalClass: '', requiredStyle: $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Default, text: text};
-			default:
-				var c = syntax.a;
-				var _v2 = toStyle(c);
-				var requiredStyle = _v2.a;
-				var additionalClass = _v2.b;
-				return {additionalClass: additionalClass, requiredStyle: requiredStyle, text: text};
-		}
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toLinesHelp = F3(
-	function (toStyle, _v0, _v1) {
-		var syntax = _v0.a;
-		var text = _v0.b;
-		var lines = _v1.a;
-		var fragments = _v1.b;
-		var maybeLastSyntax = _v1.c;
-		if (_Utils_eq(syntax, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$LineBreak)) {
-			return _Utils_Tuple3(
-				A2(
-					$elm$core$List$cons,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$newLine(fragments),
-					lines),
-				_List_fromArray(
-					[
-						A2(
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toFragment,
-						toStyle,
-						_Utils_Tuple2(syntax, text))
-					]),
-				$elm$core$Maybe$Nothing);
-		} else {
-			if (_Utils_eq(
-				$elm$core$Maybe$Just(syntax),
-				maybeLastSyntax)) {
-				if (fragments.b) {
-					var headFrag = fragments.a;
-					var tailFrags = fragments.b;
-					return _Utils_Tuple3(
-						lines,
-						A2(
-							$elm$core$List$cons,
-							_Utils_update(
-								headFrag,
-								{
-									text: _Utils_ap(text, headFrag.text)
-								}),
-							tailFrags),
-						maybeLastSyntax);
-				} else {
-					return _Utils_Tuple3(
-						lines,
-						A2(
-							$elm$core$List$cons,
-							A2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toFragment,
-								toStyle,
-								_Utils_Tuple2(syntax, text)),
-							fragments),
-						maybeLastSyntax);
-				}
-			} else {
-				return _Utils_Tuple3(
-					lines,
-					A2(
-						$elm$core$List$cons,
-						A2(
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toFragment,
-							toStyle,
-							_Utils_Tuple2(syntax, text)),
-						fragments),
-					$elm$core$Maybe$Just(syntax));
-			}
-		}
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toLines = F2(
-	function (toStyle, revTokens) {
-		return function (_v0) {
-			var lines = _v0.a;
-			var frags = _v0.b;
-			return A2(
-				$elm$core$List$cons,
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$newLine(frags),
-				lines);
-		}(
-			A3(
-				$elm$core$List$foldl,
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toLinesHelp(toStyle),
-				_Utils_Tuple3(_List_Nil, _List_Nil, $elm$core$Maybe$Nothing),
-				revTokens));
-	});
-var $elm$parser$Parser$andThen = $elm$parser$Parser$Advanced$andThen;
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Comment = {$: 'Comment'};
-var $elm$parser$Parser$getChompedString = $elm$parser$Parser$Advanced$getChompedString;
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr('\n'));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile = F2(
-	function (isNotRelevant, previousParser) {
-		return A2(
-			$elm$parser$Parser$ignorer,
-			previousParser,
-			$elm$parser$Parser$chompWhile(isNotRelevant));
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$inlineComment = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _List_fromArray(
-			[
-				_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Comment, b)
-			]);
-	},
-	$elm$parser$Parser$getChompedString(
-		A2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-			A2($elm$core$Basics$composeL, $elm$core$Basics$not, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak),
-			$elm$parser$Parser$symbol('--'))));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$addThen = F3(
-	function (f, list, plist) {
-		return A2(
-			$elm$parser$Parser$andThen,
-			function (n) {
-				return f(
-					_Utils_ap(n, list));
-			},
-			plist);
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$consThen = F3(
-	function (f, list, pn) {
-		return A2(
-			$elm$parser$Parser$andThen,
-			function (n) {
-				return f(
-					A2($elm$core$List$cons, n, list));
-			},
-			pn);
-	});
-var $elm$parser$Parser$ExpectingEnd = {$: 'ExpectingEnd'};
-var $elm$parser$Parser$Advanced$end = function (x) {
-	return $elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			return _Utils_eq(
-				$elm$core$String$length(s.src),
-				s.offset) ? A3($elm$parser$Parser$Advanced$Good, false, _Utils_Tuple0, s) : A2(
-				$elm$parser$Parser$Advanced$Bad,
-				false,
-				A2($elm$parser$Parser$Advanced$fromState, s, x));
-		});
-};
-var $elm$parser$Parser$end = $elm$parser$Parser$Advanced$end($elm$parser$Parser$ExpectingEnd);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedUnnestable = F2(
-	function (options, revAList) {
-		var defaultMap = options.defaultMap;
-		var isNotRelevant = options.isNotRelevant;
-		var end = options.end;
-		var innerParsers = options.innerParsers;
-		return $elm$parser$Parser$oneOf(
-			_List_fromArray(
-				[
-					A2(
-					$elm$parser$Parser$map,
-					$elm$core$Basics$always(
-						A2(
-							$elm$core$List$cons,
-							defaultMap(end),
-							revAList)),
-					$elm$parser$Parser$symbol(end)),
-					A2(
-					$elm$parser$Parser$map,
-					$elm$core$Basics$always(revAList),
-					$elm$parser$Parser$end),
-					A3(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$addThen,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedUnnestable(options),
-					revAList,
-					$elm$parser$Parser$oneOf(innerParsers)),
-					A3(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$consThen,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedUnnestable(options),
-					revAList,
-					A2(
-						$elm$parser$Parser$map,
-						defaultMap,
-						$elm$parser$Parser$getChompedString(
-							A2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-								isNotRelevant,
-								$elm$parser$Parser$chompIf(
-									$elm$core$Basics$always(true))))))
-				]));
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedNestable = F3(
-	function (nestLevel, options, revAList) {
-		var defaultMap = options.defaultMap;
-		var isNotRelevant = options.isNotRelevant;
-		var start = options.start;
-		var end = options.end;
-		var innerParsers = options.innerParsers;
-		return $elm$parser$Parser$oneOf(
-			_List_fromArray(
-				[
-					A2(
-					$elm$parser$Parser$andThen,
-					function (n) {
-						return (nestLevel === 1) ? $elm$parser$Parser$succeed(n) : A3($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedNestable, nestLevel - 1, options, n);
-					},
-					A2(
-						$elm$parser$Parser$map,
-						$elm$core$Basics$always(
-							A2(
-								$elm$core$List$cons,
-								defaultMap(end),
-								revAList)),
-						$elm$parser$Parser$symbol(end))),
-					A3(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$consThen,
-					A2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedNestable, nestLevel + 1, options),
-					revAList,
-					A2(
-						$elm$parser$Parser$map,
-						defaultMap,
-						$elm$parser$Parser$getChompedString(
-							A2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-								isNotRelevant,
-								$elm$parser$Parser$symbol(start))))),
-					A3(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$addThen,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedUnnestable(options),
-					revAList,
-					$elm$parser$Parser$oneOf(innerParsers)),
-					A2(
-					$elm$parser$Parser$map,
-					$elm$core$Basics$always(revAList),
-					$elm$parser$Parser$end),
-					A3(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$consThen,
-					A2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedNestable, nestLevel, options),
-					revAList,
-					A2(
-						$elm$parser$Parser$map,
-						defaultMap,
-						$elm$parser$Parser$getChompedString(
-							A2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-								isNotRelevant,
-								$elm$parser$Parser$chompIf(
-									$elm$core$Basics$always(true))))))
-				]));
-	});
-var $elm$parser$Parser$Problem = function (a) {
-	return {$: 'Problem', a: a};
-};
-var $elm$parser$Parser$problem = function (msg) {
-	return $elm$parser$Parser$Advanced$problem(
-		$elm$parser$Parser$Problem(msg));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedHelp = F2(
-	function (options, revAList) {
-		var start = options.start;
-		var end = options.end;
-		var isNotRelevant = options.isNotRelevant;
-		var _v0 = _Utils_Tuple2(
-			$elm$core$String$uncons(options.start),
-			$elm$core$String$uncons(options.end));
-		if (_v0.a.$ === 'Nothing') {
-			var _v1 = _v0.a;
-			return $elm$parser$Parser$problem('Trying to parse a delimited helper, but the start token cannot be an empty string!');
-		} else {
-			if (_v0.b.$ === 'Nothing') {
-				var _v2 = _v0.b;
-				return $elm$parser$Parser$problem('Trying to parse a delimited helper, but the end token cannot be an empty string!');
-			} else {
-				var _v3 = _v0.a.a;
-				var startChar = _v3.a;
-				var _v4 = _v0.b.a;
-				var endChar = _v4.a;
-				return options.isNestable ? A3(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedNestable,
-					1,
-					_Utils_update(
-						options,
-						{
-							isNotRelevant: function (c) {
-								return isNotRelevant(c) && ((!_Utils_eq(c, startChar)) && (!_Utils_eq(c, endChar)));
-							}
-						}),
-					revAList) : A2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedUnnestable,
-					_Utils_update(
-						options,
-						{
-							isNotRelevant: function (c) {
-								return isNotRelevant(c) && (!_Utils_eq(c, endChar));
-							}
-						}),
-					revAList);
-			}
-		}
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited = function (options) {
-	var start = options.start;
-	var isNotRelevant = options.isNotRelevant;
-	var defaultMap = options.defaultMap;
-	return A2(
-		$elm$parser$Parser$andThen,
-		function (n) {
-			return A2(
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimitedHelp,
-				options,
-				_List_fromArray(
-					[n]));
-		},
-		A2(
-			$elm$parser$Parser$map,
-			$elm$core$Basics$always(
-				defaultMap(start)),
-			$elm$parser$Parser$symbol(start)));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineBreakList = A2(
-	$elm$parser$Parser$map,
-	function (_v0) {
-		return _List_fromArray(
-			[
-				_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$LineBreak, '\n')
-			]);
-	},
-	$elm$parser$Parser$symbol('\n'));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$multilineComment = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited(
-	{
-		defaultMap: function (b) {
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Comment, b);
-		},
-		end: '-}',
-		innerParsers: _List_fromArray(
-			[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineBreakList]),
-		isNestable: true,
-		isNotRelevant: function (c) {
-			return !$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c);
-		},
-		start: '{-'
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$comment = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$inlineComment, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$multilineComment]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$BasicSymbol = {$: 'BasicSymbol'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C = function (a) {
-	return {$: 'C', a: a};
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Capitalized = {$: 'Capitalized'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$GroupSymbol = {$: 'GroupSymbol'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Keyword = {$: 'Keyword'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal = {$: 'Normal'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Number = {$: 'Number'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile = function (isNotRelevant) {
-	return A2(
-		$elm$parser$Parser$ignorer,
-		A2(
-			$elm$parser$Parser$ignorer,
-			$elm$parser$Parser$succeed(_Utils_Tuple0),
-			$elm$parser$Parser$chompIf(isNotRelevant)),
-		$elm$parser$Parser$chompWhile(isNotRelevant));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$basicSymbols = $elm$core$Set$fromList(
-	_List_fromArray(
-		[
-			_Utils_chr('|'),
-			_Utils_chr('.'),
-			_Utils_chr('='),
-			_Utils_chr('\\'),
-			_Utils_chr('/'),
-			_Utils_chr('('),
-			_Utils_chr(')'),
-			_Utils_chr('-'),
-			_Utils_chr('>'),
-			_Utils_chr('<'),
-			_Utils_chr(':'),
-			_Utils_chr('+'),
-			_Utils_chr('!'),
-			_Utils_chr('$'),
-			_Utils_chr('%'),
-			_Utils_chr('&'),
-			_Utils_chr('*')
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isBasicSymbol = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$basicSymbols);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$basicSymbol = $elm$parser$Parser$getChompedString(
-	$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isBasicSymbol));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$groupSymbols = $elm$core$Set$fromList(
-	_List_fromArray(
-		[
-			_Utils_chr(','),
-			_Utils_chr('['),
-			_Utils_chr(']'),
-			_Utils_chr('{'),
-			_Utils_chr('}')
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isGroupSymbol = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$groupSymbols);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isStringLiteralChar = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr('\"')) || _Utils_eq(
-		c,
-		_Utils_chr('\''));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isSpace = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr(' ')) || _Utils_eq(
-		c,
-		_Utils_chr('\t'));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace = function (c) {
-	return $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isSpace(c) || $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isVariableChar = function (c) {
-	return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isBasicSymbol(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isGroupSymbol(c) || $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isStringLiteralChar(c))));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$capitalized = $elm$parser$Parser$getChompedString(
-	A2(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isVariableChar,
-		$elm$parser$Parser$chompIf($elm$core$Char$isUpper)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$groupSymbol = $elm$parser$Parser$getChompedString(
-	$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isGroupSymbol));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Function = {$: 'Function'};
-var $elm$parser$Parser$backtrackable = $elm$parser$Parser$Advanced$backtrackable;
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$infixSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		[
-			_Utils_chr('+'),
-			_Utils_chr('-'),
-			_Utils_chr('/'),
-			_Utils_chr('*'),
-			_Utils_chr('='),
-			_Utils_chr('.'),
-			_Utils_chr('$'),
-			_Utils_chr('<'),
-			_Utils_chr('>'),
-			_Utils_chr(':'),
-			_Utils_chr('&'),
-			_Utils_chr('|'),
-			_Utils_chr('^'),
-			_Utils_chr('?'),
-			_Utils_chr('%'),
-			_Utils_chr('#'),
-			_Utils_chr('@'),
-			_Utils_chr('~'),
-			_Utils_chr('!'),
-			_Utils_chr(',')
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isInfixChar = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$infixSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$infixParser = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Function),
-			b);
-	},
-	$elm$parser$Parser$getChompedString(
-		A2(
-			$elm$parser$Parser$ignorer,
-			A2(
-				$elm$parser$Parser$ignorer,
-				A2(
-					$elm$parser$Parser$ignorer,
-					$elm$parser$Parser$succeed(_Utils_Tuple0),
-					$elm$parser$Parser$backtrackable(
-						$elm$parser$Parser$symbol('('))),
-				$elm$parser$Parser$backtrackable(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isInfixChar))),
-			$elm$parser$Parser$backtrackable(
-				$elm$parser$Parser$symbol(')')))));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$keywordSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		['as', 'where', 'let', 'in', 'if', 'else', 'then', 'case', 'of', 'type', 'alias']));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isKeyword = function (str) {
-	return A2($elm$core$Set$member, str, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$keywordSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isNumber = function (c) {
-	return $elm$core$Char$isDigit(c) || _Utils_eq(
-		c,
-		_Utils_chr('.'));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$positiveNumber = A2(
-	$elm$parser$Parser$ignorer,
-	A2(
-		$elm$parser$Parser$ignorer,
-		$elm$parser$Parser$succeed(_Utils_Tuple0),
-		$elm$parser$Parser$chompIf($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isNumber)),
-	$elm$parser$Parser$chompWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isNumber));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$negativeNumber = A2(
-	$elm$parser$Parser$ignorer,
-	A2(
-		$elm$parser$Parser$ignorer,
-		$elm$parser$Parser$succeed(_Utils_Tuple0),
-		$elm$parser$Parser$backtrackable(
-			$elm$parser$Parser$symbol('-'))),
-	$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$positiveNumber);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$number = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$positiveNumber, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$negativeNumber]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$variable = $elm$parser$Parser$getChompedString(
-	A2(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isVariableChar,
-		$elm$parser$Parser$chompIf($elm$core$Char$isLower)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$weirdText = $elm$parser$Parser$getChompedString(
-	$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isVariableChar));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBodyContent = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[
-			A2(
-			$elm$parser$Parser$map,
-			function (b) {
-				return _Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Number),
-					b);
-			},
-			$elm$parser$Parser$getChompedString($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$number)),
-			A2(
-			$elm$parser$Parser$map,
-			$elm$core$Basics$always(
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Capitalized),
-					'()')),
-			$elm$parser$Parser$symbol('()')),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$infixParser,
-			A2(
-			$elm$parser$Parser$map,
-			function (b) {
-				return _Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$BasicSymbol),
-					b);
-			},
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$basicSymbol),
-			A2(
-			$elm$parser$Parser$map,
-			function (b) {
-				return _Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$GroupSymbol),
-					b);
-			},
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$groupSymbol),
-			A2(
-			$elm$parser$Parser$map,
-			function (b) {
-				return _Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Capitalized),
-					b);
-			},
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$capitalized),
-			A2(
-			$elm$parser$Parser$map,
-			function (n) {
-				return $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isKeyword(n) ? _Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Keyword),
-					n) : _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, n);
-			},
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$variable),
-			A2(
-			$elm$parser$Parser$map,
-			function (b) {
-				return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-			},
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$weirdText)
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$String = {$: 'String'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$escapableSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		[
-			_Utils_chr('\''),
-			_Utils_chr('\"'),
-			_Utils_chr('\\'),
-			_Utils_chr('n'),
-			_Utils_chr('r'),
-			_Utils_chr('t'),
-			_Utils_chr('b'),
-			_Utils_chr('f'),
-			_Utils_chr('v')
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isEscapableChar = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$escapableSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$escapable = A2(
-	$elm$parser$Parser$ignorer,
-	A2(
-		$elm$parser$Parser$ignorer,
-		$elm$parser$Parser$succeed(_Utils_Tuple0),
-		$elm$parser$Parser$backtrackable(
-			$elm$parser$Parser$symbol('\\'))),
-	$elm$parser$Parser$chompIf($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isEscapableChar));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$elmEscapable = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _List_fromArray(
-			[
-				_Utils_Tuple2(
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Capitalized),
-				b)
-			]);
-	},
-	$elm$parser$Parser$getChompedString($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$escapable));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isEscapable = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr('\\'));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$stringDelimiter = {
-	defaultMap: function (b) {
-		return _Utils_Tuple2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$String),
-			b);
-	},
-	end: '\"',
-	innerParsers: _List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineBreakList, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$elmEscapable]),
-	isNestable: false,
-	isNotRelevant: function (c) {
-		return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c) || $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isEscapable(c));
-	},
-	start: '\"'
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$doubleQuote = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$stringDelimiter);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$quote = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited(
-	_Utils_update(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$stringDelimiter,
-		{end: '\'', start: '\''}));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$tripleDoubleQuote = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited(
-	_Utils_update(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$stringDelimiter,
-		{end: '\"\"\"', start: '\"\"\"'}));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$stringLiteral = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$tripleDoubleQuote, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$doubleQuote, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$quote]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineBreak = A2(
-	$elm$parser$Parser$map,
-	function (_v0) {
-		return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$LineBreak, '\n');
-	},
-	$elm$parser$Parser$symbol('\n'));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$space = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-	},
-	$elm$parser$Parser$getChompedString(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isSpace)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$checkContext = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStep(revTokens),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStep = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, n, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$space),
-				A2(
-				$elm$parser$Parser$andThen,
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$checkContext,
-				A2(
-					$elm$parser$Parser$map,
-					function (n) {
-						return A2($elm$core$List$cons, n, revTokens);
-					},
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineBreak)),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(n, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$comment)
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBody = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (ns) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(ns, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$stringLiteral),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, n, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBodyContent),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$TypeSignature = {$: 'TypeSignature'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$fnSigIsNotRelevant = function (c) {
-	return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace(c) || (_Utils_eq(
-		c,
-		_Utils_chr('(')) || (_Utils_eq(
-		c,
-		_Utils_chr(')')) || (_Utils_eq(
-		c,
-		_Utils_chr('-')) || _Utils_eq(
-		c,
-		_Utils_chr(','))))));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$fnSigContentHelp = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[
-			A2(
-			$elm$parser$Parser$map,
-			$elm$core$Basics$always(
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$TypeSignature),
-					'()')),
-			$elm$parser$Parser$symbol('()')),
-			A2(
-			$elm$parser$Parser$map,
-			$elm$core$Basics$always(
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$BasicSymbol),
-					'->')),
-			$elm$parser$Parser$symbol('->')),
-			A2(
-			$elm$parser$Parser$map,
-			function (b) {
-				return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-			},
-			$elm$parser$Parser$getChompedString(
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile(
-					function (c) {
-						return _Utils_eq(
-							c,
-							_Utils_chr('(')) || (_Utils_eq(
-							c,
-							_Utils_chr(')')) || (_Utils_eq(
-							c,
-							_Utils_chr('-')) || _Utils_eq(
-							c,
-							_Utils_chr(','))));
-					}))),
-			A2(
-			$elm$parser$Parser$map,
-			function (b) {
-				return _Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$TypeSignature),
-					b);
-			},
-			$elm$parser$Parser$getChompedString(
-				A2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$fnSigIsNotRelevant,
-					$elm$parser$Parser$chompIf($elm$core$Char$isUpper)))),
-			A2(
-			$elm$parser$Parser$map,
-			function (b) {
-				return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-			},
-			$elm$parser$Parser$getChompedString(
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$fnSigIsNotRelevant)))
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$fnSigContent = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, n, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$fnSigContentHelp),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionSignature = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Done,
-				A2(
-					$elm$parser$Parser$andThen,
-					function (ns) {
-						return A2($elm$parser$Parser$loop, ns, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$fnSigContent);
-					},
-					A2(
-						$elm$parser$Parser$map,
-						$elm$core$Basics$always(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2(
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$BasicSymbol),
-									':'),
-								revTokens)),
-						$elm$parser$Parser$symbol(':')))),
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Done,
-				A2($elm$parser$Parser$loop, revTokens, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBody)),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isCommentChar = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr('-')) || _Utils_eq(
-		c,
-		_Utils_chr('{'));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$commentChar = $elm$parser$Parser$getChompedString(
-	$elm$parser$Parser$chompIf($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isCommentChar));
-var $elm$parser$Parser$ExpectingKeyword = function (a) {
-	return {$: 'ExpectingKeyword', a: a};
-};
-var $elm$parser$Parser$Advanced$keyword = function (_v0) {
-	var kwd = _v0.a;
-	var expecting = _v0.b;
-	var progress = !$elm$core$String$isEmpty(kwd);
-	return $elm$parser$Parser$Advanced$Parser(
-		function (s) {
-			var _v1 = A5($elm$parser$Parser$Advanced$isSubString, kwd, s.offset, s.row, s.col, s.src);
-			var newOffset = _v1.a;
-			var newRow = _v1.b;
-			var newCol = _v1.c;
-			return (_Utils_eq(newOffset, -1) || (0 <= A3(
-				$elm$parser$Parser$Advanced$isSubChar,
-				function (c) {
-					return $elm$core$Char$isAlphaNum(c) || _Utils_eq(
-						c,
-						_Utils_chr('_'));
-				},
-				newOffset,
-				s.src))) ? A2(
-				$elm$parser$Parser$Advanced$Bad,
-				false,
-				A2($elm$parser$Parser$Advanced$fromState, s, expecting)) : A3(
-				$elm$parser$Parser$Advanced$Good,
-				progress,
-				_Utils_Tuple0,
-				{col: newCol, context: s.context, indent: s.indent, offset: newOffset, row: newRow, src: s.src});
-		});
-};
-var $elm$parser$Parser$keyword = function (kwd) {
-	return $elm$parser$Parser$Advanced$keyword(
-		A2(
-			$elm$parser$Parser$Advanced$Token,
-			kwd,
-			$elm$parser$Parser$ExpectingKeyword(kwd)));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$modDecIsNotRelevant = function (c) {
-	return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isCommentChar(c) || _Utils_eq(
-		c,
-		_Utils_chr('('))));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$mdpIsNotRelevant = function (c) {
-	return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isCommentChar(c) || (_Utils_eq(
-		c,
-		_Utils_chr('(')) || (_Utils_eq(
-		c,
-		_Utils_chr(')')) || (_Utils_eq(
-		c,
-		_Utils_chr(',')) || _Utils_eq(
-		c,
-		_Utils_chr('.')))))));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$mdpnIsSpecialChar = function (c) {
-	return $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isCommentChar(c) || (_Utils_eq(
-		c,
-		_Utils_chr('(')) || _Utils_eq(
-		c,
-		_Utils_chr(')'))));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$checkContextNested = function (_v1) {
-	var nestLevel = _v1.a;
-	var revTokens = _v1.b;
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStepNested(
-				_Utils_Tuple2(nestLevel, revTokens)),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStepNested = function (_v0) {
-	var nestLevel = _v0.a;
-	var revTokens = _v0.b;
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						_Utils_Tuple2(
-							nestLevel,
-							A2($elm$core$List$cons, n, revTokens)));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$space),
-				A2(
-				$elm$parser$Parser$andThen,
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$checkContextNested,
-				A2(
-					$elm$parser$Parser$map,
-					function (n) {
-						return _Utils_Tuple2(
-							nestLevel,
-							A2($elm$core$List$cons, n, revTokens));
-					},
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineBreak)),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						_Utils_Tuple2(
-							nestLevel,
-							_Utils_ap(n, revTokens)));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$comment)
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$modDecParNest = function (_v0) {
-	var nestLevel = _v0.a;
-	var revTokens = _v0.b;
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStepNested(
-				_Utils_Tuple2(nestLevel, revTokens)),
-				A2(
-				$elm$parser$Parser$map,
-				function (ns) {
-					return $elm$parser$Parser$Loop(
-						_Utils_Tuple2(nestLevel + 1, ns));
-				},
-				A2(
-					$elm$parser$Parser$map,
-					$elm$core$Basics$always(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, '('),
-							revTokens)),
-					$elm$parser$Parser$symbol('('))),
-				A2(
-				$elm$parser$Parser$map,
-				function (ns) {
-					return (!nestLevel) ? $elm$parser$Parser$Done(ns) : $elm$parser$Parser$Loop(
-						_Utils_Tuple2(nestLevel - 1, ns));
-				},
-				A2(
-					$elm$parser$Parser$map,
-					$elm$core$Basics$always(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, ')'),
-							revTokens)),
-					$elm$parser$Parser$symbol(')'))),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						_Utils_Tuple2(
-							nestLevel,
-							A2($elm$core$List$cons, n, revTokens)));
-				},
-				$elm$parser$Parser$oneOf(
-					_List_fromArray(
-						[
-							A2(
-							$elm$parser$Parser$map,
-							function (b) {
-								return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-							},
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$commentChar),
-							A2(
-							$elm$parser$Parser$map,
-							function (s) {
-								return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, s);
-							},
-							$elm$parser$Parser$getChompedString(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile(
-									A2($elm$core$Basics$composeL, $elm$core$Basics$not, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$mdpnIsSpecialChar))))
-						]))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$modDecParentheses = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Done,
-				A2(
-					$elm$parser$Parser$map,
-					$elm$core$Basics$always(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, ')'),
-							revTokens)),
-					$elm$parser$Parser$symbol(')'))),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, n, revTokens));
-				},
-				$elm$parser$Parser$oneOf(
-					_List_fromArray(
-						[
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$infixParser,
-							A2(
-							$elm$parser$Parser$map,
-							function (b) {
-								return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-							},
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$commentChar),
-							A2(
-							$elm$parser$Parser$map,
-							function (b) {
-								return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-							},
-							$elm$parser$Parser$getChompedString(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile(
-									function (c) {
-										return _Utils_eq(
-											c,
-											_Utils_chr(',')) || _Utils_eq(
-											c,
-											_Utils_chr('.'));
-									}))),
-							A2(
-							$elm$parser$Parser$map,
-							function (b) {
-								return _Utils_Tuple2(
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$TypeSignature),
-									b);
-							},
-							$elm$parser$Parser$getChompedString(
-								A2(
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$mdpIsNotRelevant,
-									$elm$parser$Parser$chompIf($elm$core$Char$isUpper)))),
-							A2(
-							$elm$parser$Parser$map,
-							function (b) {
-								return _Utils_Tuple2(
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Function),
-									b);
-							},
-							$elm$parser$Parser$getChompedString(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$mdpIsNotRelevant)))
-						]))),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					function (n) {
-						return A2(
-							$elm$parser$Parser$loop,
-							_Utils_Tuple2(0, n),
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$modDecParNest);
-					},
-					A2(
-						$elm$parser$Parser$map,
-						$elm$core$Basics$always(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, '('),
-								revTokens)),
-						$elm$parser$Parser$symbol('(')))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$moduleDeclaration = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					function (n) {
-						return A2($elm$parser$Parser$loop, n, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$modDecParentheses);
-					},
-					A2(
-						$elm$parser$Parser$map,
-						$elm$core$Basics$always(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, '('),
-								revTokens)),
-						$elm$parser$Parser$symbol('(')))),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, n, revTokens));
-				},
-				$elm$parser$Parser$oneOf(
-					_List_fromArray(
-						[
-							A2(
-							$elm$parser$Parser$map,
-							function (b) {
-								return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-							},
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$commentChar),
-							A2(
-							$elm$parser$Parser$map,
-							$elm$core$Basics$always(
-								_Utils_Tuple2(
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Keyword),
-									'exposing')),
-							$elm$parser$Parser$keyword('exposing')),
-							A2(
-							$elm$parser$Parser$map,
-							$elm$core$Basics$always(
-								_Utils_Tuple2(
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Keyword),
-									'as')),
-							$elm$parser$Parser$keyword('as')),
-							A2(
-							$elm$parser$Parser$map,
-							function (b) {
-								return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-							},
-							$elm$parser$Parser$getChompedString(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$modDecIsNotRelevant)))
-						]))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$portDeclarationHelp = F2(
-	function (revTokens, str) {
-		return (str === 'module') ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Keyword),
-					str),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$moduleDeclaration) : A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Function),
-					str),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionSignature);
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$portDeclaration = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Done,
-				A2(
-					$elm$parser$Parser$andThen,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$portDeclarationHelp(revTokens),
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$variable)),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Done,
-				A2($elm$parser$Parser$loop, revTokens, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBody)),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineStartVariable = F2(
-	function (revTokens, n) {
-		return ((n === 'module') || (n === 'import')) ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Keyword),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$moduleDeclaration) : ((n === 'port') ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Keyword),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$portDeclaration) : ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$isKeyword(n) ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Keyword),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBody) : A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$Function),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionSignature)));
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$mainLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, n, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$space),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, n, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineBreak),
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(n, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$comment),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$lineStartVariable(revTokens),
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$variable)),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					function (s) {
-						return A2(
-							$elm$parser$Parser$loop,
-							_Utils_ap(s, revTokens),
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBody);
-					},
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$stringLiteral)),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					function (s) {
-						return A2(
-							$elm$parser$Parser$loop,
-							A2($elm$core$List$cons, s, revTokens),
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBody);
-					},
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$functionBodyContent)),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$toRevTokens = A2($elm$parser$Parser$loop, _List_Nil, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$mainLoop);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$toLines = A2(
-	$elm$core$Basics$composeR,
-	$elm$parser$Parser$run($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$toRevTokens),
-	$elm$core$Result$map(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toLines($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$syntaxToStyle)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$elm = A2(
-	$elm$core$Basics$composeR,
-	$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Elm$toLines,
-	$elm$core$Result$map($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$HCode));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style7 = {$: 'Style7'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$syntaxToStyle = function (syntax) {
-	switch (syntax.$) {
-		case 'Number':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style1, 'js-n');
-		case 'String':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style2, 'js-s');
-		case 'Keyword':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style3, 'js-k');
-		case 'DeclarationKeyword':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style4, 'js-dk');
-		case 'FunctionEval':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style4, 'js-fe');
-		case 'Function':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style5, 'js-f');
-		case 'LiteralKeyword':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style6, 'js-lk');
-		case 'Param':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style7, 'js-p');
-		default:
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style5, 'js-ce');
-	}
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$groupSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		[
-			_Utils_chr('{'),
-			_Utils_chr('}'),
-			_Utils_chr('('),
-			_Utils_chr(')'),
-			_Utils_chr('['),
-			_Utils_chr(']'),
-			_Utils_chr(','),
-			_Utils_chr(';')
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isGroupChar = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$groupSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$groupChar = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-	},
-	$elm$parser$Parser$getChompedString(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isGroupChar)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isCommentChar = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr('/'));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$operatorSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		[
-			_Utils_chr('+'),
-			_Utils_chr('-'),
-			_Utils_chr('*'),
-			_Utils_chr('/'),
-			_Utils_chr('='),
-			_Utils_chr('!'),
-			_Utils_chr('<'),
-			_Utils_chr('>'),
-			_Utils_chr('&'),
-			_Utils_chr('|'),
-			_Utils_chr('?'),
-			_Utils_chr('^'),
-			_Utils_chr(':'),
-			_Utils_chr('~'),
-			_Utils_chr('%'),
-			_Utils_chr('.')
-		]));
-var $elm$core$Set$union = F2(
-	function (_v0, _v1) {
-		var dict1 = _v0.a;
-		var dict2 = _v1.a;
-		return $elm$core$Set$Set_elm_builtin(
-			A2($elm$core$Dict$union, dict1, dict2));
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$punctuactorSet = A2($elm$core$Set$union, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$operatorSet, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$groupSet);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isPunctuaction = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$punctuactorSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isStringLiteralChar = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr('\"')) || (_Utils_eq(
-		c,
-		_Utils_chr('\'')) || _Utils_eq(
-		c,
-		_Utils_chr('`')));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isIdentifierNameChar = function (c) {
-	return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isPunctuaction(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isStringLiteralChar(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isCommentChar(c) || $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace(c))));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$DeclarationKeyword = {$: 'DeclarationKeyword'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Function = {$: 'Function'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Keyword = {$: 'Keyword'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$LiteralKeyword = {$: 'LiteralKeyword'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Param = {$: 'Param'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$ClassExtends = {$: 'ClassExtends'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$inlineComment = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _List_fromArray(
-			[
-				_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Comment, b)
-			]);
-	},
-	$elm$parser$Parser$getChompedString(
-		A2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-			A2($elm$core$Basics$composeL, $elm$core$Basics$not, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak),
-			$elm$parser$Parser$symbol('//'))));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$lineBreakList = A2(
-	$elm$parser$Parser$map,
-	function (_v0) {
-		return _List_fromArray(
-			[
-				_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$LineBreak, '\n')
-			]);
-	},
-	$elm$parser$Parser$symbol('\n'));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$multilineComment = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited(
-	{
-		defaultMap: function (b) {
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Comment, b);
-		},
-		end: '*/',
-		innerParsers: _List_fromArray(
-			[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$lineBreakList]),
-		isNestable: false,
-		isNotRelevant: function (c) {
-			return !$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c);
-		},
-		start: '/*'
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$comment = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$inlineComment, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$multilineComment]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$whitespaceOrCommentStep = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isSpace))),
-				A2(
-				$elm$parser$Parser$map,
-				function (ns) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(ns, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$lineBreakList),
-				A2(
-				$elm$parser$Parser$map,
-				function (ns) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(ns, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$comment)
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$classExtendsLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$ClassExtends),
-								b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isIdentifierNameChar))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$classDeclarationLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$andThen,
-				function (n) {
-					return (n === 'extends') ? A2(
-						$elm$parser$Parser$map,
-						$elm$parser$Parser$Loop,
-						A2(
-							$elm$parser$Parser$loop,
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2(
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Keyword),
-									n),
-								revTokens),
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$classExtendsLoop)) : $elm$parser$Parser$succeed(
-						$elm$parser$Parser$Loop(
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2(
-									$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Function),
-									n),
-								revTokens)));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isIdentifierNameChar))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$argLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Param),
-								b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile(
-						function (c) {
-							return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isCommentChar(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace(c) || (_Utils_eq(
-								c,
-								_Utils_chr(',')) || _Utils_eq(
-								c,
-								_Utils_chr(')')))));
-						}))),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile(
-						function (c) {
-							return _Utils_eq(
-								c,
-								_Utils_chr('/')) || _Utils_eq(
-								c,
-								_Utils_chr(','));
-						}))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$functionDeclarationLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Function),
-								b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isIdentifierNameChar))),
-				A2(
-				$elm$parser$Parser$map,
-				function (_v0) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Keyword),
-								'*'),
-							revTokens));
-				},
-				$elm$parser$Parser$symbol('*')),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					function (_v1) {
-						return A2(
-							$elm$parser$Parser$loop,
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, '('),
-								revTokens),
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$argLoop);
-					},
-					$elm$parser$Parser$symbol('('))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$FunctionEval = {$: 'FunctionEval'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$functionEvalLoop = F3(
-	function (identifier, revTokens, thisRevToken) {
-		return $elm$parser$Parser$oneOf(
-			_List_fromArray(
-				[
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$whitespaceOrCommentStep(thisRevToken),
-					A2(
-					$elm$parser$Parser$map,
-					function (_v0) {
-						return $elm$parser$Parser$Done(
-							_Utils_ap(
-								A2(
-									$elm$core$List$cons,
-									_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, '('),
-									thisRevToken),
-								A2(
-									$elm$core$List$cons,
-									_Utils_Tuple2(
-										$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$FunctionEval),
-										identifier),
-									revTokens)));
-					},
-					$elm$parser$Parser$symbol('(')),
-					$elm$parser$Parser$succeed(
-					$elm$parser$Parser$Done(
-						_Utils_ap(
-							thisRevToken,
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, identifier),
-								revTokens))))
-				]));
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$declarationKeywordSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		['var', 'const', 'let']));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isDeclarationKeyword = function (str) {
-	return A2($elm$core$Set$member, str, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$declarationKeywordSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$keywordSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		['break', 'do', 'instanceof', 'typeof', 'case', 'else', 'new', 'catch', 'finally', 'return', 'void', 'continue', 'for', 'switch', 'while', 'debugger', 'this', 'with', 'default', 'if', 'throw', 'delete', 'in', 'try', 'enum', 'extends', 'export', 'import', 'implements', 'private', 'public', 'yield', 'interface', 'package', 'protected']));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isKeyword = function (str) {
-	return A2($elm$core$Set$member, str, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$keywordSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$literalKeywordSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		['true', 'false', 'null', 'undefined', 'NaN', 'Infinity']));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isLiteralKeyword = function (str) {
-	return A2($elm$core$Set$member, str, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$literalKeywordSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$keywordParser = F2(
-	function (revTokens, n) {
-		return ((n === 'function') || (n === 'static')) ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$DeclarationKeyword),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$functionDeclarationLoop) : ((n === 'class') ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$DeclarationKeyword),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$classDeclarationLoop) : (((n === 'this') || (n === 'super')) ? $elm$parser$Parser$succeed(
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Param),
-					n),
-				revTokens)) : ((n === 'constructor') ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Function),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$functionDeclarationLoop) : ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isKeyword(n) ? $elm$parser$Parser$succeed(
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Keyword),
-					n),
-				revTokens)) : ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isDeclarationKeyword(n) ? $elm$parser$Parser$succeed(
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$DeclarationKeyword),
-					n),
-				revTokens)) : ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isLiteralKeyword(n) ? $elm$parser$Parser$succeed(
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$LiteralKeyword),
-					n),
-				revTokens)) : A2(
-			$elm$parser$Parser$loop,
-			_List_Nil,
-			A2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$functionEvalLoop, n, revTokens))))))));
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Number = {$: 'Number'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$number = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Number),
-			b);
-	},
-	$elm$parser$Parser$getChompedString($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$number));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isOperatorChar = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$operatorSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$operatorChar = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$Keyword),
-			b);
-	},
-	$elm$parser$Parser$getChompedString(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isOperatorChar)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$String = {$: 'String'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$jsEscapable = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _List_fromArray(
-			[
-				_Utils_Tuple2(
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$LiteralKeyword),
-				b)
-			]);
-	},
-	$elm$parser$Parser$getChompedString($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$escapable));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$quoteDelimiter = {
-	defaultMap: function (b) {
-		return _Utils_Tuple2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$String),
-			b);
-	},
-	end: '\'',
-	innerParsers: _List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$lineBreakList, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$jsEscapable]),
-	isNestable: false,
-	isNotRelevant: function (c) {
-		return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c) || $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isEscapable(c));
-	},
-	start: '\''
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$doubleQuote = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited(
-	_Utils_update(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$quoteDelimiter,
-		{end: '\"', start: '\"'}));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$quote = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$quoteDelimiter);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$templateString = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited(
-	_Utils_update(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$quoteDelimiter,
-		{
-			end: '`',
-			innerParsers: _List_fromArray(
-				[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$lineBreakList, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$jsEscapable]),
-			isNotRelevant: function (c) {
-				return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c) || $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isEscapable(c));
-			},
-			start: '`'
-		}));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$stringLiteral = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$quote, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$doubleQuote, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$templateString]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$mainLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (s) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(s, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$stringLiteral),
-				A2(
-				$elm$parser$Parser$map,
-				function (s) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, s, revTokens));
-				},
-				$elm$parser$Parser$oneOf(
-					_List_fromArray(
-						[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$operatorChar, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$groupChar, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$number]))),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$keywordParser(revTokens),
-					$elm$parser$Parser$getChompedString(
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$isIdentifierNameChar)))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$toRevTokens = A2($elm$parser$Parser$loop, _List_Nil, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$mainLoop);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$toLines = A2(
-	$elm$core$Basics$composeR,
-	$elm$parser$Parser$run($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$toRevTokens),
-	$elm$core$Result$map(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toLines($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$syntaxToStyle)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$javascript = A2(
-	$elm$core$Basics$composeR,
-	$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Javascript$toLines,
-	$elm$core$Result$map($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$HCode));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$syntaxToStyle = function (syntax) {
-	return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Default, 'nolang');
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$lineBreak = A2(
-	$elm$parser$Parser$map,
-	function (_v0) {
-		return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$LineBreak, '\n');
-	},
-	$elm$parser$Parser$symbol('\n'));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$space = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-	},
-	$elm$parser$Parser$getChompedString(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isSpace)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$whitespace = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$space, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$lineBreak]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$mainLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$parser$Parser$map,
-				function (n) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, n, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$whitespace),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$elm$parser$Parser$chompIf(
-						$elm$core$Basics$always(true)))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$toRevTokens = A2($elm$parser$Parser$loop, _List_Nil, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$mainLoop);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$toLines = A2(
-	$elm$core$Basics$composeR,
-	$elm$parser$Parser$run($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$toRevTokens),
-	$elm$core$Result$map(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toLines($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$syntaxToStyle)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$noLang = A2(
-	$elm$core$Basics$composeR,
-	$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$NoLang$toLines,
-	$elm$core$Result$map($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$HCode));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$syntaxToStyle = function (syntax) {
-	switch (syntax.$) {
-		case 'Number':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style1, 'py-n');
-		case 'String':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style2, 'py-s');
-		case 'Keyword':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style3, 'py-k');
-		case 'DeclarationKeyword':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style4, 'py-dk');
-		case 'Function':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style5, 'py-f');
-		case 'LiteralKeyword':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style6, 'py-lk');
-		case 'Param':
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Style7, 'py-p');
-		default:
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Default, 'py-fe');
-	}
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$groupSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		[
-			_Utils_chr('{'),
-			_Utils_chr('}'),
-			_Utils_chr('('),
-			_Utils_chr(')'),
-			_Utils_chr('['),
-			_Utils_chr(']'),
-			_Utils_chr(','),
-			_Utils_chr(';')
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isGroupChar = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$groupSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$groupChar = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b);
-	},
-	$elm$parser$Parser$getChompedString(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isGroupChar)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isCommentChar = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr('#'));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$operatorSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		[
-			_Utils_chr('+'),
-			_Utils_chr('-'),
-			_Utils_chr('*'),
-			_Utils_chr('/'),
-			_Utils_chr('='),
-			_Utils_chr('!'),
-			_Utils_chr('<'),
-			_Utils_chr('>'),
-			_Utils_chr('&'),
-			_Utils_chr('|'),
-			_Utils_chr('?'),
-			_Utils_chr('^'),
-			_Utils_chr(':'),
-			_Utils_chr('~'),
-			_Utils_chr('%'),
-			_Utils_chr('.')
-		]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$punctuationSet = A2($elm$core$Set$union, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$operatorSet, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$groupSet);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isPunctuation = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$punctuationSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isStringLiteralChar = function (c) {
-	return _Utils_eq(
-		c,
-		_Utils_chr('\"')) || _Utils_eq(
-		c,
-		_Utils_chr('\''));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isIdentifierNameChar = function (c) {
-	return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isPunctuation(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isStringLiteralChar(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isCommentChar(c) || $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace(c))));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$DeclarationKeyword = {$: 'DeclarationKeyword'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$FunctionEval = {$: 'FunctionEval'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Keyword = {$: 'Keyword'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$LiteralKeyword = {$: 'LiteralKeyword'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Function = {$: 'Function'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$inlineComment = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _List_fromArray(
-			[
-				_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Comment, b)
-			]);
-	},
-	$elm$parser$Parser$getChompedString(
-		A2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$thenChompWhile,
-			A2($elm$core$Basics$composeL, $elm$core$Basics$not, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak),
-			$elm$parser$Parser$symbol('#'))));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$lineBreak = A2(
-	$elm$parser$Parser$map,
-	function (_v0) {
-		return _List_fromArray(
-			[
-				_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$LineBreak, '\n')
-			]);
-	},
-	$elm$parser$Parser$symbol('\n'));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$multilineComment = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited(
-	{
-		defaultMap: function (b) {
-			return _Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Comment, b);
-		},
-		end: '\'\'\'',
-		innerParsers: _List_fromArray(
-			[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$lineBreak]),
-		isNestable: false,
-		isNotRelevant: function (c) {
-			return !$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c);
-		},
-		start: '\'\'\''
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$comment = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$inlineComment, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$multilineComment]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$whitespaceOrCommentStep = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				A2(
-				$elm$parser$Parser$map,
-				function (s) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, s),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isSpace))),
-				A2(
-				$elm$parser$Parser$map,
-				function (ns) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(ns, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$lineBreak),
-				A2(
-				$elm$parser$Parser$map,
-				function (ns) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(ns, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$comment)
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$classDeclarationLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Function),
-								b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isIdentifierNameChar))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Param = {$: 'Param'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$argLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Param),
-								b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile(
-						function (c) {
-							return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isCommentChar(c) || ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isWhitespace(c) || (_Utils_eq(
-								c,
-								_Utils_chr(',')) || _Utils_eq(
-								c,
-								_Utils_chr(')')))));
-						}))),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile(
-						function (c) {
-							return _Utils_eq(
-								c,
-								_Utils_chr('/')) || _Utils_eq(
-								c,
-								_Utils_chr(','));
-						}))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$functionDeclarationLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (b) {
-					return $elm$parser$Parser$Loop(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2(
-								$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Function),
-								b),
-							revTokens));
-				},
-				$elm$parser$Parser$getChompedString(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isIdentifierNameChar))),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					function (_v0) {
-						return A2(
-							$elm$parser$Parser$loop,
-							A2(
-								$elm$core$List$cons,
-								_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, '('),
-								revTokens),
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$argLoop);
-					},
-					$elm$parser$Parser$symbol('('))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$functionEvalLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (_v0) {
-					return $elm$parser$Parser$Done(
-						A2(
-							$elm$core$List$cons,
-							_Utils_Tuple2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$Normal, '('),
-							revTokens));
-				},
-				$elm$parser$Parser$symbol('(')),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$keywordSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		['finally', 'is', 'return', 'continue', 'for', 'lambda', 'try', 'from', 'nonlocal', 'while', 'and', 'del', 'global', 'not', 'with', 'as', 'elif', 'if', 'or', 'yield', 'assert', 'else', 'import', 'pass', 'break', 'except', 'in', 'raise']));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isKeyword = function (str) {
-	return A2($elm$core$Set$member, str, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$keywordSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$literalKeywordSet = $elm$core$Set$fromList(
-	_List_fromArray(
-		['True', 'False', 'None']));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isLiteralKeyword = function (str) {
-	return A2($elm$core$Set$member, str, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$literalKeywordSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$keywordParser = F2(
-	function (revTokens, n) {
-		return (n === 'def') ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$DeclarationKeyword),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$functionDeclarationLoop) : ((n === 'class') ? A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$DeclarationKeyword),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$classDeclarationLoop) : ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isKeyword(n) ? $elm$parser$Parser$succeed(
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Keyword),
-					n),
-				revTokens)) : ($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isLiteralKeyword(n) ? $elm$parser$Parser$succeed(
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$LiteralKeyword),
-					n),
-				revTokens)) : A2(
-			$elm$parser$Parser$loop,
-			A2(
-				$elm$core$List$cons,
-				_Utils_Tuple2(
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$FunctionEval),
-					n),
-				revTokens),
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$functionEvalLoop))));
-	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Number = {$: 'Number'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$number = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Number),
-			b);
-	},
-	$elm$parser$Parser$getChompedString($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$number));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isOperatorChar = function (c) {
-	return A2($elm$core$Set$member, c, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$operatorSet);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$operatorChar = A2(
-	$elm$parser$Parser$map,
-	function (b) {
-		return _Utils_Tuple2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$Keyword),
-			b);
-	},
-	$elm$parser$Parser$getChompedString(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isOperatorChar)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$String = {$: 'String'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$quoteDelimiter = {
-	defaultMap: function (b) {
-		return _Utils_Tuple2(
-			$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Type$C($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$String),
-			b);
-	},
-	end: '\'',
-	innerParsers: _List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$lineBreak]),
-	isNestable: false,
-	isNotRelevant: function (c) {
-		return !($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isLineBreak(c) || $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$isEscapable(c));
-	},
-	start: '\''
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$doubleQuote = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited(
-	_Utils_update(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$quoteDelimiter,
-		{end: '\"', start: '\"'}));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$quote = $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$delimited($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$quoteDelimiter);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$stringLiteral = $elm$parser$Parser$oneOf(
-	_List_fromArray(
-		[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$quote, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$doubleQuote]));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$mainLoop = function (revTokens) {
-	return $elm$parser$Parser$oneOf(
-		_List_fromArray(
-			[
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$whitespaceOrCommentStep(revTokens),
-				A2(
-				$elm$parser$Parser$map,
-				function (s) {
-					return $elm$parser$Parser$Loop(
-						_Utils_ap(s, revTokens));
-				},
-				$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$stringLiteral),
-				A2(
-				$elm$parser$Parser$map,
-				function (s) {
-					return $elm$parser$Parser$Loop(
-						A2($elm$core$List$cons, s, revTokens));
-				},
-				$elm$parser$Parser$oneOf(
-					_List_fromArray(
-						[$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$operatorChar, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$groupChar, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$number]))),
-				A2(
-				$elm$parser$Parser$map,
-				$elm$parser$Parser$Loop,
-				A2(
-					$elm$parser$Parser$andThen,
-					$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$keywordParser(revTokens),
-					$elm$parser$Parser$getChompedString(
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Helpers$chompIfThenWhile($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$isIdentifierNameChar)))),
-				$elm$parser$Parser$succeed(
-				$elm$parser$Parser$Done(revTokens))
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$toRevTokens = A2($elm$parser$Parser$loop, _List_Nil, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$mainLoop);
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$toLines = A2(
-	$elm$core$Basics$composeR,
-	$elm$parser$Parser$run($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$toRevTokens),
-	$elm$core$Result$map(
-		$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Helpers$toLines($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$syntaxToStyle)));
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$python = A2(
-	$elm$core$Basics$composeR,
-	$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Language$Python$toLines,
-	$elm$core$Result$map($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$HCode));
-var $elm$html$Html$code = _VirtualDom_node('code');
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Add = {$: 'Add'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Del = {$: 'Del'};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Normal = {$: 'Normal'};
-var $elm$html$Html$Attributes$classList = function (classes) {
-	return $elm$html$Html$Attributes$class(
-		A2(
-			$elm$core$String$join,
-			' ',
-			A2(
-				$elm$core$List$map,
-				$elm$core$Tuple$first,
-				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$requiredStyleToString = function (required) {
-	return 'elmsh' + function () {
-		switch (required.$) {
-			case 'Default':
-				return '0';
-			case 'Comment':
-				return '-comm';
-			case 'Style1':
-				return '1';
-			case 'Style2':
-				return '2';
-			case 'Style3':
-				return '3';
-			case 'Style4':
-				return '4';
-			case 'Style5':
-				return '5';
-			case 'Style6':
-				return '6';
-			default:
-				return '7';
-		}
-	}();
-};
-var $elm$html$Html$span = _VirtualDom_node('span');
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$fragmentView = function (_v0) {
-	var text = _v0.text;
-	var requiredStyle = _v0.requiredStyle;
-	var additionalClass = _v0.additionalClass;
-	return (_Utils_eq(requiredStyle, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Default) && $elm$core$String$isEmpty(additionalClass)) ? $elm$html$Html$text(text) : A2(
-		$elm$html$Html$span,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$classList(
-				_List_fromArray(
-					[
-						_Utils_Tuple2(
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$requiredStyleToString(requiredStyle),
-						!_Utils_eq(requiredStyle, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Style$Default)),
-						_Utils_Tuple2('elmsh-' + additionalClass, additionalClass !== '')
-					]))
-			]),
-		_List_fromArray(
-			[
-				$elm$html$Html$text(text)
-			]));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$lineView = F3(
-	function (start, index, _v0) {
-		var fragments = _v0.fragments;
-		var highlight = _v0.highlight;
-		return A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$classList(
-					_List_fromArray(
-						[
-							_Utils_Tuple2('elmsh-line', true),
-							_Utils_Tuple2(
-							'elmsh-hl',
-							_Utils_eq(
-								highlight,
-								$elm$core$Maybe$Just($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Normal))),
-							_Utils_Tuple2(
-							'elmsh-add',
-							_Utils_eq(
-								highlight,
-								$elm$core$Maybe$Just($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Add))),
-							_Utils_Tuple2(
-							'elmsh-del',
-							_Utils_eq(
-								highlight,
-								$elm$core$Maybe$Just($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Del)))
-						])),
-					A2(
-					$elm$html$Html$Attributes$attribute,
-					'data-elmsh-lc',
-					$elm$core$String$fromInt(start + index))
-				]),
-			A2($elm$core$List$map, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$fragmentView, fragments));
+				attrs));
 	});
 var $elm$html$Html$pre = _VirtualDom_node('pre');
-var $elm$core$List$singleton = function (value) {
-	return _List_fromArray(
-		[value]);
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$toInlineHtml = function (lines) {
-	return A2(
-		$elm$html$Html$code,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('elmsh')
-			]),
-		$elm$core$List$concat(
-			A2(
-				$elm$core$List$map,
-				function (_v0) {
-					var highlight = _v0.highlight;
-					var fragments = _v0.fragments;
-					return _Utils_eq(highlight, $elm$core$Maybe$Nothing) ? A2($elm$core$List$map, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$fragmentView, fragments) : _List_fromArray(
-						[
-							A2(
-							$elm$html$Html$span,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$classList(
-									_List_fromArray(
-										[
-											_Utils_Tuple2(
-											'elmsh-hl',
-											_Utils_eq(
-												highlight,
-												$elm$core$Maybe$Just($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Normal))),
-											_Utils_Tuple2(
-											'elmsh-add',
-											_Utils_eq(
-												highlight,
-												$elm$core$Maybe$Just($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Add))),
-											_Utils_Tuple2(
-											'elmsh-del',
-											_Utils_eq(
-												highlight,
-												$elm$core$Maybe$Just($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$Line$Del)))
-										]))
-								]),
-							A2($elm$core$List$map, $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$fragmentView, fragments))
-						]);
-				},
-				lines)));
-};
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$toBlockHtml = F2(
-	function (maybeStart, lines) {
-		if (maybeStart.$ === 'Nothing') {
-			return A2(
-				$elm$html$Html$pre,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('elmsh')
-					]),
-				_List_fromArray(
-					[
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$toInlineHtml(lines)
-					]));
-		} else {
-			var start = maybeStart.a;
-			return A2(
-				$elm$html$Html$pre,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('elmsh')
-					]),
-				$elm$core$List$singleton(
-					A2(
-						$elm$html$Html$code,
-						_List_Nil,
-						A2(
-							$elm$core$List$indexedMap,
-							$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$lineView(start),
-							lines))));
-		}
+var $jxxcarlson$xmarkdown_compiler$Render$Theme$scaleFont = F2(
+	function (settings, designSize) {
+		return $elm$core$Basics$round((settings.fontSize * designSize) / $jxxcarlson$xmarkdown_compiler$Render$Theme$referenceFontSize);
 	});
-var $pablohirafuji$elm_syntax_highlight$SyntaxHighlight$toBlockHtml = F2(
-	function (maybeStart, _v0) {
-		var lines = _v0.a;
-		return A2($pablohirafuji$elm_syntax_highlight$SyntaxHighlight$View$toBlockHtml, maybeStart, lines);
-	});
-var $elm$core$Result$withDefault = F2(
-	function (def, result) {
-		if (result.$ === 'Ok') {
-			var a = result.a;
-			return a;
-		} else {
-			return def;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$viewCodeWithHighlight_ = F2(
-	function (language, code_) {
-		var lines_ = $elm$core$String$lines(code_);
-		var code = function () {
-			var _v1 = $elm$core$List$head(lines_);
-			if (_v1.$ === 'Just') {
-				var firstLine = _v1.a;
-				return (A2($elm$core$String$left, 2, firstLine) === '  ') ? A2(
-					$elm$core$String$join,
-					'\n',
-					A2(
-						$elm$core$List$map,
-						function (line) {
-							return A2($elm$core$String$dropLeft, 2, line);
-						},
-						lines_)) : code_;
-			} else {
-				return code_;
-			}
-		}();
-		switch (language) {
-			case 'python':
-				return A2(
-					$elm$core$Result$withDefault,
-					$elm$html$Html$text(code),
-					A2(
-						$elm$core$Result$map,
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$toBlockHtml(
-							$elm$core$Maybe$Just(1)),
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$python(code)));
-			case 'javascript':
-				return A2(
-					$elm$core$Result$withDefault,
-					$elm$html$Html$text(code),
-					A2(
-						$elm$core$Result$map,
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$toBlockHtml(
-							$elm$core$Maybe$Just(1)),
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$javascript(code)));
-			case 'elm':
-				return A2(
-					$elm$core$Result$withDefault,
-					$elm$html$Html$text(code),
-					A2(
-						$elm$core$Result$map,
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$toBlockHtml(
-							$elm$core$Maybe$Just(1)),
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$elm(code)));
-			case 'noLang':
-				return A2(
-					$elm$core$Result$withDefault,
-					$elm$html$Html$text(code),
-					A2(
-						$elm$core$Result$map,
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$toBlockHtml(
-							$elm$core$Maybe$Just(1)),
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$elm(code)));
-			default:
-				return A2(
-					$elm$core$Result$withDefault,
-					$elm$html$Html$text(code),
-					A2(
-						$elm$core$Result$map,
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$toBlockHtml(
-							$elm$core$Maybe$Just(1)),
-						$pablohirafuji$elm_syntax_highlight$SyntaxHighlight$noLang(code)));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$viewCodeWithHighlight = F3(
-	function (settings, language, code) {
-		return _List_fromArray(
-			[
-				function () {
-				var _v0 = settings.theme;
-				if (_v0.$ === 'Dark') {
-					return $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$darkCSS2;
-				} else {
-					return $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$lightCSS2;
-				}
-			}(),
-				$mdgriffith$elm_ui$Element$html(
-				A2($jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$viewCodeWithHighlight_, language, code))
-			]);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderCode = F5(
-	function (_v0, _v1, settings, _v2, block) {
-		var language = function () {
-			var _v4 = $elm$core$List$head(block.args);
-			if (_v4.$ === 'Just') {
-				var arg = _v4.a;
-				return (arg === 'numbered') ? 'python' : arg;
-			} else {
-				return 'plain';
-			}
-		}();
-		var bgColor = function () {
-			var _v3 = settings.theme;
-			if (_v3.$ === 'Dark') {
-				return $jxxcarlson$xmarkdown_compiler$Render$Settings$toElementColor($jxxcarlson$xmarkdown_compiler$Render$Settings$darkTheme.codeBackground);
-			} else {
-				return $jxxcarlson$xmarkdown_compiler$Render$Settings$toElementColor($jxxcarlson$xmarkdown_compiler$Render$Settings$lightTheme.codeBackground);
-			}
-		}();
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						A2($mdgriffith$elm_ui$Element$paddingXY, 18, 12),
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(settings.width)),
-						$mdgriffith$elm_ui$Element$scrollbarX,
-						$mdgriffith$elm_ui$Element$Font$size(
-						A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 16)),
-						$mdgriffith$elm_ui$Element$Background$color(bgColor)
-					]),
-				A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-			A3(
-				$jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$viewCodeWithHighlight,
-				settings,
-				language,
-				$jxxcarlson$xmarkdown_compiler$Render$Utility$getVerbatimContent(block)));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$renderNothing = F5(
-	function (_v0, _v1, _v2, _v3, _v4) {
-		return $mdgriffith$elm_ui$Element$none;
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderVerbatimLine = F2(
-	function (settings, str) {
-		var spacer = function (s) {
-			var n = $elm$core$String$length(s) - $elm$core$String$length(
-				$elm$core$String$trimLeft(s));
-			return $mdgriffith$elm_ui$Element$paddingEach(
-				{bottom: 0, left: n * 8, right: 0, top: 0});
-		};
-		return ($elm$core$String$trim(str) === '') ? A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_fromArray(
-				[
-					spacer(str),
-					$mdgriffith$elm_ui$Element$spacing(12)
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$height(
-							$mdgriffith$elm_ui$Element$px(11)),
-							$mdgriffith$elm_ui$Element$Font$size(
-							A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 13))
-						]),
-					$mdgriffith$elm_ui$Element$text(''))
-				])) : A2(
-			$mdgriffith$elm_ui$Element$row,
-			_List_fromArray(
-				[
-					spacer(str),
-					$mdgriffith$elm_ui$Element$spacing(12)
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$mdgriffith$elm_ui$Element$el,
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$height(
-							$mdgriffith$elm_ui$Element$px(22)),
-							$mdgriffith$elm_ui$Element$Font$size(
-							A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 13))
-						]),
-					$mdgriffith$elm_ui$Element$text(str))
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Constants$syncHighlightColor = A3($mdgriffith$elm_ui$Element$rgb, 0.955, 0.95, 0.95);
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderVerbatim = F5(
-	function (_v0, _v1, settings, attrs, block) {
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$Font$family(
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Font$typeface('Inconsolata'),
-								$mdgriffith$elm_ui$Element$Font$monospace
-							])),
-						$mdgriffith$elm_ui$Element$spacing(8),
-						$mdgriffith$elm_ui$Element$Background$color($jxxcarlson$xmarkdown_compiler$Render$Constants$syncHighlightColor),
-						$mdgriffith$elm_ui$Element$paddingEach(
-						{bottom: 0, left: 24, right: 0, top: 0}),
-						$mdgriffith$elm_ui$Element$Font$size(
-						A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, settings, 13))
-					]),
-				_Utils_ap(
-					attrs,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block))),
-			A2(
-				$elm$core$List$map,
-				$jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderVerbatimLine(settings),
-				$elm$core$String$lines(
-					$elm$core$String$trim(
-						$jxxcarlson$xmarkdown_compiler$Render$Utility$getVerbatimContent(block)))));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$leftPadding = function (k) {
-	return $mdgriffith$elm_ui$Element$paddingEach(
-		{bottom: 0, left: k, right: 0, top: 0});
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$noteFromPropertyKey = F3(
-	function (key, attrs, block) {
-		var _v0 = A2($elm$core$Dict$get, key, block.properties);
-		if (_v0.$ === 'Nothing') {
-			return $mdgriffith$elm_ui$Element$none;
-		} else {
-			var note_ = _v0.a;
-			return A2(
-				$mdgriffith$elm_ui$Element$paragraph,
-				attrs,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$text(note_)
-					]));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Utility$idAttributeFromInt = function (k) {
-	return A2(
-		$jxxcarlson$xmarkdown_compiler$Render$Utility$elementAttribute,
-		'id',
-		$elm$core$String$fromInt(k));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$verbatimBlockAttributes = F3(
-	function (lineNumber, numberOfLines, attrs) {
-		return _Utils_ap(
-			_List_fromArray(
-				[
-					A2($jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper, lineNumber, numberOfLines),
-					$jxxcarlson$xmarkdown_compiler$Render$Utility$idAttributeFromInt(lineNumber)
-				]),
-			attrs);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderVerse = F5(
-	function (_v0, _v1, settings, attrs, block) {
-		var lines_ = $elm$core$String$lines(
-			$jxxcarlson$xmarkdown_compiler$Render$Utility$getVerbatimContent(block));
-		var lines = function () {
-			var _v2 = $elm$core$List$head(lines_);
-			if (_v2.$ === 'Just') {
-				var firstLine = _v2.a;
-				return (A2($elm$core$String$left, 2, firstLine) === '  ') ? A2(
-					$elm$core$List$map,
-					function (line) {
-						return A2($elm$core$String$dropLeft, 2, line);
-					},
-					lines_) : lines_;
-			} else {
-				return lines_;
-			}
-		}();
-		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			_Utils_ap(
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$spacing(8)
-					]),
-				A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-			_List_fromArray(
-				[
-					A3(
-					$jxxcarlson$xmarkdown_compiler$Render$Helper$noteFromPropertyKey,
-					'title',
-					_List_fromArray(
-						[
-							$jxxcarlson$xmarkdown_compiler$Render$Helper$leftPadding(12),
-							$mdgriffith$elm_ui$Element$Font$bold
-						]),
-					block),
-					A2(
-					$mdgriffith$elm_ui$Element$column,
-					_Utils_ap(
-						A3(
-							$jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$verbatimBlockAttributes,
-							block.meta.lineNumber,
-							block.meta.numberOfLines,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$paddingEach(
-									{bottom: 0, left: 12, right: 0, top: 0})
-								])),
-						attrs),
-					A2(
-						$elm$core$List$map,
-						$jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderVerbatimLine(settings),
-						lines)),
-					A3(
-					$jxxcarlson$xmarkdown_compiler$Render$Helper$noteFromPropertyKey,
-					'source',
-					_List_fromArray(
-						[
-							$jxxcarlson$xmarkdown_compiler$Render$Helper$leftPadding(12)
-						]),
-					block)
-				]));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$verbatimDict = $elm$core$Dict$fromList(
-	_List_fromArray(
-		[
-			_Utils_Tuple2('math', $jxxcarlson$xmarkdown_compiler$Render$Math$displayedMath),
-			_Utils_Tuple2('chem', $jxxcarlson$xmarkdown_compiler$Render$Math$chem),
-			_Utils_Tuple2('equation', $jxxcarlson$xmarkdown_compiler$Render$Math$equation),
-			_Utils_Tuple2('aligned', $jxxcarlson$xmarkdown_compiler$Render$Math$aligned),
-			_Utils_Tuple2('array', $jxxcarlson$xmarkdown_compiler$Render$Math$array),
-			_Utils_Tuple2('code', $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderCode),
-			_Utils_Tuple2('verse', $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderVerse),
-			_Utils_Tuple2('verbatim', $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$renderVerbatim),
-			_Utils_Tuple2('docinfo', $jxxcarlson$xmarkdown_compiler$Render$Helper$renderNothing),
-			_Utils_Tuple2('image', $jxxcarlson$xmarkdown_compiler$Render$Graphics$image2)
-		]));
-var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$render = F5(
-	function (count, acc, settings, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$render = F4(
+	function (count, settings, attrs, block) {
 		var _v0 = block.body;
 		if (_v0.$ === 'Right') {
-			return $mdgriffith$elm_ui$Element$none;
+			return $elm$html$Html$text('');
 		} else {
 			var str = _v0.a;
 			var _v1 = block.heading;
 			if (_v1.$ === 'Verbatim') {
-				var functionName_ = _v1.a;
-				var functionName = functionName_;
-				var _v2 = A2($elm$core$Dict$get, functionName, $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$verbatimDict);
-				if (_v2.$ === 'Nothing') {
-					return A2($jxxcarlson$xmarkdown_compiler$Render$Helper$noSuchVerbatimBlock, functionName, str);
+				var functionName = _v1.a;
+				if (functionName === 'math') {
+					return A3(
+						$jxxcarlson$xmarkdown_compiler$Render$Math$displayedMath,
+						count,
+						attrs,
+						_Utils_update(
+							block,
+							{
+								body: $toastal$either$Either$Left(str)
+							}));
 				} else {
-					var f = _v2.a;
+					var indentPx = $elm$core$String$fromInt(settings.leftIndentation) + 'px';
+					var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 					return A2(
-						$mdgriffith$elm_ui$Element$el,
-						_Utils_ap(
-							_List_fromArray(
-								[
-									A2($jxxcarlson$xmarkdown_compiler$Render$Helper$selectedColor, block.meta.id, settings),
-									$jxxcarlson$xmarkdown_compiler$Render$Helper$htmlId(block.meta.id)
-								]),
-							attrs),
-						A5(f, count, acc, settings, attrs, block));
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								A2($elm$html$Html$Attributes$style, 'margin-left', indentPx)
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$pre,
+								_Utils_ap(
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$id(blockId),
+											A2(
+											$elm$html$Html$Attributes$attribute,
+											'data-line-number',
+											$elm$core$String$fromInt(block.meta.lineNumber)),
+											A2($elm$html$Html$Attributes$style, 'padding-left', '0'),
+											A2($elm$html$Html$Attributes$style, 'overflow-x', 'auto'),
+											A2(
+											$elm$html$Html$Attributes$style,
+											'font-size',
+											$elm$core$String$fromInt(
+												A2($jxxcarlson$xmarkdown_compiler$Render$Theme$scaleFont, settings, 16)) + 'px')
+										]),
+									attrs),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$code,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text(str)
+											]))
+									]))
+							]));
 				}
 			} else {
-				return $mdgriffith$elm_ui$Element$none;
+				return $elm$html$Html$text('');
 			}
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody = F5(
-	function (count, acc, settings, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody = F4(
+	function (count, settings, attrs, block) {
 		var _v0 = block.body;
 		if (_v0.$ === 'Right') {
 			var exprs = _v0.a;
 			return A2(
-				$mdgriffith$elm_ui$Element$paragraph,
+				$elm$html$Html$p,
 				A2(
 					$elm$core$List$cons,
-					$jxxcarlson$xmarkdown_compiler$Render$Helper$htmlId(block.meta.id),
+					$elm$html$Html$Attributes$id(
+						'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)))),
 					A2(
 						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(settings.width)),
-						attrs)),
+						A2(
+							$elm$html$Html$Attributes$attribute,
+							'data-line-number',
+							$elm$core$String$fromInt(block.meta.lineNumber)),
+						A2(
+							$elm$core$List$cons,
+							A2(
+								$elm$html$Html$Attributes$style,
+								'width',
+								$elm$core$String$fromInt(settings.width) + 'px'),
+							A2(
+								$elm$core$List$cons,
+								A2($elm$html$Html$Attributes$style, 'margin', '0'),
+								A2(
+									$elm$core$List$cons,
+									A2($elm$html$Html$Attributes$style, 'margin-bottom', '18px'),
+									A2(
+										$elm$core$List$cons,
+										A2($elm$html$Html$Attributes$style, 'line-height', '1.4'),
+										attrs)))))),
 				A2(
 					$elm$core$List$map,
-					A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, count, acc, settings, attrs),
+					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attrs),
 					exprs));
 		} else {
-			return $mdgriffith$elm_ui$Element$none;
+			return $elm$html$Html$text('');
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Helper$showError = F2(
-	function (maybeError, x) {
+var $jxxcarlson$xmarkdown_compiler$Render$Helper$showError = F3(
+	function (theme, maybeError, x) {
 		if (maybeError.$ === 'Nothing') {
 			return x;
 		} else {
 			var error = maybeError.a;
 			return A2(
-				$mdgriffith$elm_ui$Element$column,
+				$elm$html$Html$div,
 				_List_Nil,
 				_List_fromArray(
 					[
 						x,
 						A2(
-						$mdgriffith$elm_ui$Element$el,
+						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb, 0.7, 0, 0))
+								A2(
+								$elm$html$Html$Attributes$style,
+								'color',
+								A2(
+									$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+									function ($) {
+										return $.text;
+									},
+									theme))
 							]),
-						$mdgriffith$elm_ui$Element$text(error))
+						_List_fromArray(
+							[
+								$elm$html$Html$text(error)
+							]))
 					]));
 		}
 	});
@@ -30847,14 +15964,10 @@ var $jxxcarlson$xmarkdown_compiler$Render$Block$renderBody = F5(
 		var _v0 = block.heading;
 		switch (_v0.$) {
 			case 'Paragraph':
-				return $elm$core$List$singleton(
-					A2(
-						$mdgriffith$elm_ui$Element$column,
-						_List_Nil,
-						_List_fromArray(
-							[
-								A5($jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody, count, acc, settings, attrs, block)
-							])));
+				return _List_fromArray(
+					[
+						A4($jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody, count, settings, attrs, block)
+					]);
 			case 'Ordinary':
 				return _List_fromArray(
 					[
@@ -30863,407 +15976,115 @@ var $jxxcarlson$xmarkdown_compiler$Render$Block$renderBody = F5(
 			default:
 				return _List_fromArray(
 					[
-						A2(
+						A3(
 						$jxxcarlson$xmarkdown_compiler$Render$Helper$showError,
+						settings.theme,
 						block.meta.error,
-						A5($jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$render, count, acc, settings, attrs, block))
+						A4($jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$render, count, settings, attrs, block))
 					]);
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Attributes$standardLeftPadding = 12;
-var $jxxcarlson$xmarkdown_compiler$Render$Attributes$getQuotationAttributes = _List_fromArray(
-	[
-		$mdgriffith$elm_ui$Element$paddingEach(
-		{bottom: 0, left: $jxxcarlson$xmarkdown_compiler$Render$Attributes$standardLeftPadding, right: 0, top: 0})
-	]);
-var $jxxcarlson$xmarkdown_compiler$Render$Attributes$getTypeSpecificAttributes = function (blockType) {
-	if (blockType.$ === 'TextBlock') {
-		var textType = blockType.a;
-		return $jxxcarlson$xmarkdown_compiler$Render$Attributes$getQuotationAttributes;
-	} else {
-		return _List_Nil;
-	}
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendLineNumber = function (a) {
+	return {$: 'SendLineNumber', a: a};
 };
-var $jxxcarlson$xmarkdown_compiler$Render$Attributes$getBlockAttributes = function (block) {
-	var standardAttrs = _List_fromArray(
-		[
-			$jxxcarlson$xmarkdown_compiler$Render$Utility$idAttributeFromInt(block.meta.lineNumber)
-		]);
-	var blockName = A2(
-		$elm$core$Maybe$withDefault,
-		'',
-		$jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block));
-	var blockType = $jxxcarlson$xmarkdown_compiler$Render$BlockType$fromString(blockName);
-	return _Utils_ap(
-		standardAttrs,
-		$jxxcarlson$xmarkdown_compiler$Render$Attributes$getTypeSpecificAttributes(blockType));
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
 };
-var $jxxcarlson$xmarkdown_compiler$Render$Tree$getBlockAttributes = function (block) {
-	return $jxxcarlson$xmarkdown_compiler$Render$Attributes$getBlockAttributes(block);
-};
-var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$clickableParagraph = F4(
-	function (lineNumber, numberOfLines, color, elements) {
-		var id = $elm$core$String$fromInt(lineNumber);
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
 		return A2(
-			$mdgriffith$elm_ui$Element$paragraph,
-			_List_fromArray(
-				[
-					color,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper, lineNumber, numberOfLines),
-					$jxxcarlson$xmarkdown_compiler$Render$Helper$htmlId(id)
-				]),
-			elements);
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Indentation$indentParagraph = F2(
-	function (indent, x) {
-		return (indent > 0) ? A2(
-			$mdgriffith$elm_ui$Element$el,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$paddingEach(
-					{bottom: 0, left: 0, right: 0, top: $jxxcarlson$xmarkdown_compiler$Render$Indentation$topPaddingForIndentedElements})
-				]),
-			x) : x;
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$indentParagraph = F2(
-	function (indent, x) {
-		return A2($jxxcarlson$xmarkdown_compiler$Render$Indentation$indentParagraph, indent, x);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderParagraphBody = F5(
-	function (count, acc, settings, attrs, block) {
-		var _v0 = block.body;
-		if (_v0.$ === 'Right') {
-			var exprs = _v0.a;
-			return A2(
-				$mdgriffith$elm_ui$Element$paragraph,
-				A2(
-					$elm$core$List$cons,
-					$jxxcarlson$xmarkdown_compiler$Render$Helper$htmlId(block.meta.id),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(settings.width)),
-						attrs)),
-				_List_fromArray(
-					[
-						A2(
-						$jxxcarlson$xmarkdown_compiler$Render$TreeSupport$indentParagraph,
-						block.indent,
-						A4(
-							$jxxcarlson$xmarkdown_compiler$Render$TreeSupport$clickableParagraph,
-							block.meta.lineNumber,
-							block.meta.numberOfLines,
-							A2($jxxcarlson$xmarkdown_compiler$Render$Helper$selectedColor, block.meta.id, settings),
-							A2(
-								$elm$core$List$map,
-								A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, count, acc, settings, attrs),
-								exprs)))
-					]));
-		} else {
-			return $mdgriffith$elm_ui$Element$none;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$Settings$unrollTheme = function (theme) {
-	return _List_fromArray(
-		[
-			$mdgriffith$elm_ui$Element$Background$color(
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-				function ($) {
-					return $.background;
-				},
-				theme)),
-			$mdgriffith$elm_ui$Element$Font$color(
-			A2(
-				$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-				function ($) {
-					return $.text;
-				},
-				theme))
-		]);
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
 };
-var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody = F4(
-	function (params, settings, acc, block) {
-		var isHeading = A2($elm$core$Dict$member, 'level', block.properties);
-		var spacer = isHeading ? _List_fromArray(
+var $jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper = F2(
+	function (firstLineNumber, numberOfLines) {
+		return $elm$html$Html$Events$onClick(
+			$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendLineNumber(
+				{begin: firstLineNumber, end: firstLineNumber + numberOfLines}));
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdIsSelected = F3(
+	function (firstLineNumber, numberOfLines, settings) {
+		return _Utils_eq(
+			$elm$core$String$fromInt(firstLineNumber),
+			settings.selectedId) ? _List_fromArray(
 			[
+				A2($jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper, firstLineNumber, firstLineNumber + numberOfLines),
 				A2(
-				$mdgriffith$elm_ui$Element$el,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$height(
-						$mdgriffith$elm_ui$Element$px(
-							$elm$core$Basics$round(params.paddingAboveHeadings)))
-					]),
-				$mdgriffith$elm_ui$Element$none)
+				$elm$html$Html$Attributes$style,
+				'background-color',
+				$avh4$elm_color$Color$toCssString(settings.highlight))
 			]) : _List_Nil;
-		var _v0 = block.heading;
-		switch (_v0.$) {
-			case 'Paragraph':
-				return _Utils_ap(
-					spacer,
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Element$column,
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-								_Utils_ap(
-									A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block),
-									_List_fromArray(
-										[
-											$mdgriffith$elm_ui$Element$padding(8)
-										]))),
-							_List_fromArray(
-								[
-									A5(
-									$jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderParagraphBody,
-									params.editCount,
-									acc,
-									settings,
-									$jxxcarlson$xmarkdown_compiler$Render$Settings$unrollTheme(params.theme),
-									block)
-								]))
-						]));
-			case 'Ordinary':
-				return _Utils_ap(
-					spacer,
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Element$column,
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-								A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-							_List_fromArray(
-								[
-									A5(
-									$jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$render,
-									params.editCount,
-									acc,
-									settings,
-									$jxxcarlson$xmarkdown_compiler$Render$Settings$unrollTheme(params.theme),
-									block)
-								]))
-						]));
-			default:
-				return _Utils_ap(
-					spacer,
-					_List_fromArray(
-						[
-							A2(
-							$mdgriffith$elm_ui$Element$column,
-							A2(
-								$elm$core$List$cons,
-								$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-								A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block)),
-							_List_fromArray(
-								[
-									A2(
-									$jxxcarlson$xmarkdown_compiler$Render$Helper$showError,
-									block.meta.error,
-									A5(
-										$jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$render,
-										params.editCount,
-										acc,
-										settings,
-										$jxxcarlson$xmarkdown_compiler$Render$Settings$unrollTheme(params.theme),
-										block))
-								]))
-						]));
-		}
 	});
-var $mdgriffith$elm_ui$Internal$Model$Focus = {$: 'Focus'};
-var $mdgriffith$elm_ui$Internal$Model$PseudoSelector = F2(
-	function (a, b) {
-		return {$: 'PseudoSelector', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Flag$focus = $mdgriffith$elm_ui$Internal$Flag$flag(31);
-var $mdgriffith$elm_ui$Internal$Model$Nearby = F2(
-	function (a, b) {
-		return {$: 'Nearby', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Model$NoAttribute = {$: 'NoAttribute'};
-var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
-var $mdgriffith$elm_ui$Internal$Model$map = F2(
-	function (fn, el) {
-		switch (el.$) {
-			case 'Styled':
-				var styled = el.a;
-				return $mdgriffith$elm_ui$Internal$Model$Styled(
-					{
-						html: F2(
-							function (add, context) {
-								return A2(
-									$elm$virtual_dom$VirtualDom$map,
-									fn,
-									A2(styled.html, add, context));
-							}),
-						styles: styled.styles
-					});
-			case 'Unstyled':
-				var html = el.a;
-				return $mdgriffith$elm_ui$Internal$Model$Unstyled(
-					A2(
-						$elm$core$Basics$composeL,
-						$elm$virtual_dom$VirtualDom$map(fn),
-						html));
-			case 'Text':
-				var str = el.a;
-				return $mdgriffith$elm_ui$Internal$Model$Text(str);
-			default:
-				return $mdgriffith$elm_ui$Internal$Model$Empty;
-		}
-	});
-var $elm$virtual_dom$VirtualDom$mapAttribute = _VirtualDom_mapAttribute;
-var $mdgriffith$elm_ui$Internal$Model$mapAttrFromStyle = F2(
-	function (fn, attr) {
-		switch (attr.$) {
-			case 'NoAttribute':
-				return $mdgriffith$elm_ui$Internal$Model$NoAttribute;
-			case 'Describe':
-				var description = attr.a;
-				return $mdgriffith$elm_ui$Internal$Model$Describe(description);
-			case 'AlignX':
-				var x = attr.a;
-				return $mdgriffith$elm_ui$Internal$Model$AlignX(x);
-			case 'AlignY':
-				var y = attr.a;
-				return $mdgriffith$elm_ui$Internal$Model$AlignY(y);
-			case 'Width':
-				var x = attr.a;
-				return $mdgriffith$elm_ui$Internal$Model$Width(x);
-			case 'Height':
-				var x = attr.a;
-				return $mdgriffith$elm_ui$Internal$Model$Height(x);
-			case 'Class':
-				var x = attr.a;
-				var y = attr.b;
-				return A2($mdgriffith$elm_ui$Internal$Model$Class, x, y);
-			case 'StyleClass':
-				var flag = attr.a;
-				var style = attr.b;
-				return A2($mdgriffith$elm_ui$Internal$Model$StyleClass, flag, style);
-			case 'Nearby':
-				var location = attr.a;
-				var elem = attr.b;
-				return A2(
-					$mdgriffith$elm_ui$Internal$Model$Nearby,
-					location,
-					A2($mdgriffith$elm_ui$Internal$Model$map, fn, elem));
-			case 'Attr':
-				var htmlAttr = attr.a;
-				return $mdgriffith$elm_ui$Internal$Model$Attr(
-					A2($elm$virtual_dom$VirtualDom$mapAttribute, fn, htmlAttr));
-			default:
-				var fl = attr.a;
-				var trans = attr.b;
-				return A2($mdgriffith$elm_ui$Internal$Model$TransformComponent, fl, trans);
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$removeNever = function (style) {
-	return A2($mdgriffith$elm_ui$Internal$Model$mapAttrFromStyle, $elm$core$Basics$never, style);
-};
-var $mdgriffith$elm_ui$Internal$Model$unwrapDecsHelper = F2(
-	function (attr, _v0) {
-		var styles = _v0.a;
-		var trans = _v0.b;
-		var _v1 = $mdgriffith$elm_ui$Internal$Model$removeNever(attr);
-		switch (_v1.$) {
-			case 'StyleClass':
-				var style = _v1.b;
-				return _Utils_Tuple2(
-					A2($elm$core$List$cons, style, styles),
-					trans);
-			case 'TransformComponent':
-				var flag = _v1.a;
-				var component = _v1.b;
-				return _Utils_Tuple2(
-					styles,
-					A2($mdgriffith$elm_ui$Internal$Model$composeTransformation, trans, component));
-			default:
-				return _Utils_Tuple2(styles, trans);
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$unwrapDecorations = function (attrs) {
-	var _v0 = A3(
-		$elm$core$List$foldl,
-		$mdgriffith$elm_ui$Internal$Model$unwrapDecsHelper,
-		_Utils_Tuple2(_List_Nil, $mdgriffith$elm_ui$Internal$Model$Untransformed),
-		attrs);
-	var styles = _v0.a;
-	var transform = _v0.b;
-	return A2(
-		$elm$core$List$cons,
-		$mdgriffith$elm_ui$Internal$Model$Transform(transform),
-		styles);
-};
-var $mdgriffith$elm_ui$Element$focused = function (decs) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$focus,
-		A2(
-			$mdgriffith$elm_ui$Internal$Model$PseudoSelector,
-			$mdgriffith$elm_ui$Internal$Model$Focus,
-			$mdgriffith$elm_ui$Internal$Model$unwrapDecorations(decs)));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$getAttributes = function (name) {
-	var blockType = $jxxcarlson$xmarkdown_compiler$Render$BlockType$fromString(name);
-	return _List_Nil;
-};
-var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$syncAttributes = F2(
+var $jxxcarlson$xmarkdown_compiler$Render$Sync$attributes = F2(
 	function (settings, block) {
 		return _Utils_ap(
 			_List_fromArray(
 				[
-					$jxxcarlson$xmarkdown_compiler$Render$Utility$idAttributeFromInt(block.meta.lineNumber),
-					A2($jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper, block.meta.lineNumber, block.meta.numberOfLines),
-					$mdgriffith$elm_ui$Element$htmlAttribute(
-					A2(
-						$elm$html$Html$Attributes$attribute,
-						'data-line-number',
-						$elm$core$String$fromInt(block.meta.lineNumber)))
+					A2($jxxcarlson$xmarkdown_compiler$Render$Sync$rightToLeftSyncHelper, block.meta.lineNumber, block.meta.numberOfLines)
 				]),
 			A3($jxxcarlson$xmarkdown_compiler$Render$Sync$highlightIfIdIsSelected, block.meta.lineNumber, block.meta.numberOfLines, settings));
 	});
+var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$syncAttributes = F2(
+	function (settings, block) {
+		return _Utils_ap(
+			A2($jxxcarlson$xmarkdown_compiler$Render$Sync$attributes, settings, block),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$Attributes$attribute,
+					'data-line-number',
+					$elm$core$String$fromInt(block.meta.lineNumber))
+				]));
+	});
 var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes = F2(
 	function (settings, block) {
-		var _v0 = block.heading;
-		switch (_v0.$) {
-			case 'Paragraph':
-				return A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$focused(_List_Nil),
-					A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$syncAttributes, settings, block));
-			case 'Ordinary':
-				var name = _v0.a;
-				return _Utils_ap(
-					A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$syncAttributes, settings, block),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$focused(_List_Nil),
-						$jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$getAttributes(name)));
-			default:
-				return A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$focused(_List_Nil),
-					A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$syncAttributes, settings, block));
-		}
+		return A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$syncAttributes, settings, block);
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBodyWithAttrs = F5(
+	function (params, settings, acc, attrs, block) {
+		var isHeading = A2($elm$core$Dict$member, 'level', block.properties);
+		var spacer = isHeading ? _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$Attributes$style,
+						'height',
+						$elm$core$String$fromInt(
+							$elm$core$Basics$round(params.paddingAboveHeadings)) + 'px')
+					]),
+				_List_Nil)
+			]) : _List_Nil;
+		return _Utils_ap(
+			spacer,
+			A5($jxxcarlson$xmarkdown_compiler$Render$Block$renderBody, params.editCount, acc, settings, attrs, block));
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody = F4(
+	function (params, settings, acc, block) {
+		return A5(
+			$jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBodyWithAttrs,
+			params,
+			settings,
+			acc,
+			A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes, settings, block),
+			block);
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderLeafNode = F4(
 	function (params, settings, accumulator, root) {
+		var attrs = A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes, settings, root);
 		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-				_Utils_ap(
-					A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes, settings, root),
-					_Utils_ap(
-						$jxxcarlson$xmarkdown_compiler$Render$Tree$getBlockAttributes(root),
-						$jxxcarlson$xmarkdown_compiler$Render$Settings$unrollTheme(params.theme)))),
+			$elm$html$Html$div,
+			attrs,
 			A4($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody, params, settings, accumulator, root));
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderBranchNode = F5(
@@ -31273,15 +16094,19 @@ var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderBranchNode = F5(
 var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderStandardBranch = F5(
 	function (params, settings, accumulator, root, children) {
 		return A2(
-			$mdgriffith$elm_ui$Element$column,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$spacing(
-						$elm$core$Basics$round(settings.interBlockSpacing)),
-					$jxxcarlson$xmarkdown_compiler$Render$Tree$getBlockAttributes(root))),
+			$elm$html$Html$div,
+			_Utils_ap(
+				A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes, settings, root),
+				_List_fromArray(
+					[
+						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+						A2($elm$html$Html$Attributes$style, 'width', '100%'),
+						A2(
+						$elm$html$Html$Attributes$style,
+						'gap',
+						$elm$core$String$fromFloat(settings.interBlockSpacing) + 'px')
+					])),
 			_Utils_ap(
 				A4($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody, params, settings, accumulator, root),
 				A2(
@@ -31302,94 +16127,76 @@ var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_ = F4(
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree = F4(
 	function (params, settings, accumulator, tree) {
-		var width2 = $mdgriffith$elm_ui$Element$width(
-			$mdgriffith$elm_ui$Element$px(settings.width - 60));
 		var root = $maca$elm_rose_tree$RoseTree$Tree$value(tree);
-		var style = function () {
-			var _v2 = A2($elm$core$Dict$get, 'style', root.properties);
-			if ((_v2.$ === 'Just') && (_v2.a === 'italic')) {
-				return $mdgriffith$elm_ui$Element$Font$italic;
-			} else {
-				return $mdgriffith$elm_ui$Element$Font$unitalicized;
-			}
-		}();
 		var isBoxLike = function (block) {
-			var _v1 = $jxxcarlson$xmarkdown_compiler$AST$Language$getName(block);
-			if (_v1.$ === 'Nothing') {
+			var _v2 = $jxxcarlson$xmarkdown_compiler$AST$Language$getName(block);
+			if (_v2.$ === 'Nothing') {
 				return false;
 			} else {
-				var name = _v1.a;
+				var name = _v2.a;
 				return name === 'box';
 			}
 		};
+		var fontStyle = function () {
+			var _v1 = A2($elm$core$Dict$get, 'style', root.properties);
+			if ((_v1.$ === 'Just') && (_v1.a === 'italic')) {
+				return 'italic';
+			} else {
+				return 'normal';
+			}
+		}();
 		var borderColor = function () {
 			var _v0 = params.theme;
 			if (_v0.$ === 'Light') {
-				return A4($mdgriffith$elm_ui$Element$rgba, 0.7, 0.8, 0.9, 1);
+				return 'rgba(179, 204, 230, 1)';
 			} else {
-				return A4($mdgriffith$elm_ui$Element$rgba, 0.6, 0.6, 0.6, 0.5);
+				return 'rgba(153, 153, 153, 0.5)';
 			}
 		}();
-		var bgColorAttr = A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-			function ($) {
-				return $.offsetBackground;
-			},
-			params.theme);
-		var blockAttrs = A2(
-			$elm$core$List$cons,
-			style,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Element$Font$size(settings.fontSize),
+		var blockAttrs = _List_fromArray(
+			[
 				A2(
-					$elm$core$List$cons,
-					$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(settings.width)),
-					A2(
-						$elm$core$List$cons,
-						$mdgriffith$elm_ui$Element$Background$color(bgColorAttr),
-						_List_Nil))));
-		var backgroundColor = A2(
-			$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-			function ($) {
-				return $.offsetBackground;
-			},
-			params.theme);
+				$elm$html$Html$Attributes$style,
+				'width',
+				$elm$core$String$fromInt(settings.width) + 'px'),
+				A2(
+				$elm$html$Html$Attributes$style,
+				'font-size',
+				$elm$core$String$fromInt(settings.fontSize) + 'px'),
+				A2($elm$html$Html$Attributes$style, 'font-style', fontStyle)
+			]);
 		return isBoxLike(root) ? A2(
-			$mdgriffith$elm_ui$Element$column,
+			$elm$html$Html$div,
 			blockAttrs,
 			_List_fromArray(
 				[
 					A2(
-					$mdgriffith$elm_ui$Element$column,
+					$elm$html$Html$div,
 					_List_fromArray(
 						[
-							$mdgriffith$elm_ui$Element$paddingEach(
-							{bottom: 18, left: 0, right: 0, top: 0}),
-							$mdgriffith$elm_ui$Element$Border$color(borderColor),
-							$mdgriffith$elm_ui$Element$Border$width(4),
-							$mdgriffith$elm_ui$Element$centerX,
-							width2
+							A2($elm$html$Html$Attributes$style, 'padding-bottom', '0px'),
+							A2($elm$html$Html$Attributes$style, 'border', '4px solid ' + borderColor),
+							A2($elm$html$Html$Attributes$style, 'margin-left', 'auto'),
+							A2($elm$html$Html$Attributes$style, 'margin-right', 'auto'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'width',
+							$elm$core$String$fromInt(settings.width - 60) + 'px')
 						]),
 					_List_fromArray(
 						[
-							A4(
-							$jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_,
-							params,
-							_Utils_update(
-								settings,
-								{backgroundColor: backgroundColor, width: settings.width - 24}),
-							accumulator,
-							tree)
+							A4($jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_, params, settings, accumulator, tree)
 						]))
 				])) : A2(
-			$mdgriffith$elm_ui$Element$column,
+			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-					style,
-					$mdgriffith$elm_ui$Element$Font$size(settings.fontSize)
+					A2($elm$html$Html$Attributes$style, 'width', '100%'),
+					A2($elm$html$Html$Attributes$style, 'font-style', fontStyle),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'font-size',
+					$elm$core$String$fromInt(settings.fontSize) + 'px')
 				]),
 			_List_fromArray(
 				[
@@ -31403,6 +16210,36 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$renderForest = F4(
 			A3($jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree, params, settings, accumulator),
 			forest);
 	});
+var $jxxcarlson$xmarkdown_compiler$AST$Language$getExpressionContent = function (block) {
+	var _v0 = block.body;
+	if (_v0.$ === 'Left') {
+		return _List_Nil;
+	} else {
+		var exprs = _v0.a;
+		return exprs;
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText = function (expression) {
+	switch (expression.$) {
+		case 'Text':
+			var str = expression.a;
+			return $elm$core$Maybe$Just(str);
+		case 'VFun':
+			var str = expression.b;
+			return $elm$core$Maybe$Just(
+				A3($elm$core$String$replace, '`', '', str));
+		case 'Fun':
+			var expressions = expression.b;
+			return $elm$core$Maybe$Just(
+				A2(
+					$elm$core$String$join,
+					' ',
+					$elmcraft$core_extra$Maybe$Extra$values(
+						A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getText, expressions))));
+		default:
+			return $elm$core$Maybe$Nothing;
+	}
+};
 var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getValue = F2(
 	function (key, ast) {
 		var _v0 = A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$getBlockByName, key, ast);
@@ -31423,53 +16260,95 @@ var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$getValue = F2(
 var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$title = function (ast) {
 	return A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$getValue, 'title', ast);
 };
-var $jxxcarlson$xmarkdown_compiler$Library$Tree$lev = function (_v0) {
-	var block = _v0.block;
-	var _v1 = A2($elm$core$Dict$get, 'level', block.properties);
-	if (_v1.$ === 'Just') {
-		var level = _v1.a;
-		return function (x) {
-			return x - 1;
-		}(
-			A2(
-				$elm$core$Maybe$withDefault,
-				1,
-				$elm$core$String$toInt(level)));
-	} else {
-		return 0;
-	}
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SelectId = function (a) {
+	return {$: 'SelectId', a: a};
 };
-var $jxxcarlson$xmarkdown_compiler$AST$Language$updateMetaInBlock = F2(
-	function (updater, block) {
-		var newBody = function () {
-			var _v0 = block.body;
-			if (_v0.$ === 'Left') {
-				var str = _v0.a;
-				return $toastal$either$Either$Left(str);
+var $elm$virtual_dom$VirtualDom$MayPreventDefault = function (a) {
+	return {$: 'MayPreventDefault', a: a};
+};
+var $elm$html$Html$Events$preventDefaultOn = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$MayPreventDefault(decoder));
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$renderTocItem = F4(
+	function (theme, editCount, numberToLevel, block) {
+		var level = A2(
+			$elm$core$Maybe$withDefault,
+			1,
+			A2(
+				$elm$core$Maybe$andThen,
+				$elm$core$String$toInt,
+				A2($elm$core$Dict$get, 'level', block.properties)));
+		var sectionNumber = ((numberToLevel > 0) && (_Utils_cmp(level, numberToLevel) < 1)) ? A2(
+			$elm$core$Maybe$withDefault,
+			'',
+			A2($elm$core$Dict$get, 'label', block.properties)) : '';
+		var indent = 16 + ((level - 1) * 14);
+		var liStyle = _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$Attributes$style,
+				'margin-left',
+				$elm$core$String$fromInt(indent) + 'px'),
+				A2($elm$html$Html$Attributes$style, 'margin-bottom', '8px'),
+				A2($elm$html$Html$Attributes$style, 'list-style-type', 'none')
+			]);
+		var extractText = function (expr) {
+			if (expr.$ === 'Text') {
+				var text = expr.a;
+				return text;
 			} else {
+				return '';
+			}
+		};
+		var headingText = function () {
+			var _v0 = block.body;
+			if (_v0.$ === 'Right') {
 				var exprs = _v0.a;
-				return $toastal$either$Either$Right(
-					A2(
-						$elm$core$List$map,
-						$jxxcarlson$xmarkdown_compiler$AST$Language$updateMeta(updater),
-						exprs));
+				return $elm$core$String$concat(
+					A2($elm$core$List$map, extractText, exprs));
+			} else {
+				return '';
 			}
 		}();
-		return _Utils_update(
-			block,
-			{body: newBody});
+		var displayText = $elm$core$String$isEmpty(sectionNumber) ? ($elm$core$String$isEmpty(headingText) ? 'Untitled' : headingText) : (sectionNumber + (' ' + headingText));
+		var elementId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(editCount)));
+		return A2(
+			$elm$html$Html$li,
+			liStyle,
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$href('#' + elementId),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'color',
+							A2(
+								$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+								function ($) {
+									return $.link;
+								},
+								theme)),
+							A2(
+							$elm$html$Html$Events$preventDefaultOn,
+							'click',
+							$elm$json$Json$Decode$succeed(
+								_Utils_Tuple2(
+									$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SelectId(elementId),
+									true)))
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text(displayText)
+						]))
+				]));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$makeNodeValue = function (block) {
-	var newBlock = A2(
-		$jxxcarlson$xmarkdown_compiler$AST$Language$updateMetaInBlock,
-		function (m) {
-			return _Utils_update(
-				m,
-				{id: 'xy' + m.id});
-		},
-		block);
-	return {block: newBlock, visible: true};
-};
 var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2 = F3(
 	function (key, key2, block) {
 		return _Utils_eq(
@@ -31493,318 +16372,65 @@ var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents = function (ast)
 		$elm$core$List$concat(
 			A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten, ast)));
 };
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$ToggleTOCNodeID = function (a) {
-	return {$: 'ToggleTOCNodeID', a: a};
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Language$composeTextElement = F2(
-	function (text, meta) {
-		return A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, text, meta);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Language$extractText = function (expr) {
-	if (expr.$ === 'Text') {
-		var text = expr.a;
-		var meta = expr.b;
-		return $elm$core$Maybe$Just(
-			_Utils_Tuple2(text, meta));
-	} else {
-		return $elm$core$Maybe$Nothing;
-	}
-};
-var $elmcraft$core_extra$String$Extra$regexFromString = function (str) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		$elm$regex$Regex$never,
-		$elm$regex$Regex$fromString(str));
-};
-var $elmcraft$core_extra$String$Extra$softBreakRegex = function (width) {
-	return $elmcraft$core_extra$String$Extra$regexFromString(
-		'.{0,' + ($elm$core$String$fromInt(width - 1) + '}(\\s|.$)|\\S+?(\\s|$)'));
-};
-var $elmcraft$core_extra$String$Extra$softBreak = F2(
-	function (width, string) {
-		return (width <= 0) ? _List_Nil : A2(
-			$elm$core$List$map,
-			function ($) {
-				return $.match;
-			},
-			A2(
-				$elm$regex$Regex$find,
-				$elmcraft$core_extra$String$Extra$softBreakRegex(width),
-				string));
-	});
-var $elmcraft$core_extra$String$Extra$trimEndSpaceRegex = $elmcraft$core_extra$String$Extra$regexFromString(' ?$');
-var $elmcraft$core_extra$String$Extra$trimEndSpace = A2(
-	$elm$regex$Regex$replace,
-	$elmcraft$core_extra$String$Extra$trimEndSpaceRegex,
-	$elm$core$Basics$always(''));
-var $elmcraft$core_extra$String$Extra$softWrapWith = F3(
-	function (width, separator, string) {
-		return A2(
-			$elm$core$String$join,
-			separator,
-			A2(
-				$elm$core$List$map,
-				$elmcraft$core_extra$String$Extra$trimEndSpace,
-				A2($elmcraft$core_extra$String$Extra$softBreak, width, string)));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$style_ = function (theme_) {
-	if (theme_.$ === 'Dark') {
+var $elm$html$Html$ul = _VirtualDom_node('ul');
+var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$view = F3(
+	function (theme, viewParameters, documentAst) {
+		var tocAST = $jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents(documentAst);
 		return _List_fromArray(
 			[
-				$mdgriffith$elm_ui$Element$Background$color(
 				A2(
-					$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-					function ($) {
-						return $.background;
-					},
-					theme_)),
-				$mdgriffith$elm_ui$Element$Font$color(
-				A2(
-					$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-					function ($) {
-						return $.text;
-					},
-					theme_))
-			]);
-	} else {
-		return _List_fromArray(
-			[
-				$mdgriffith$elm_ui$Element$Background$color(
-				A2(
-					$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-					function ($) {
-						return $.background;
-					},
-					theme_)),
-				$mdgriffith$elm_ui$Element$Font$color(
-				A2(
-					$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-					function ($) {
-						return $.text;
-					},
-					theme_))
-			]);
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$viewTocItem_ = F5(
-	function (theme, viewParameters, acc, hasChildren, block) {
-		var body = block.body;
-		var properties = block.properties;
-		if (body.$ === 'Left') {
-			return $mdgriffith$elm_ui$Element$none;
-		} else {
-			var exprs = body.a;
-			var sectionNumber = function () {
-				var nosectionNumber = function (str) {
-					return A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$paddingEach(
-								{bottom: 0, left: 8, right: 0, top: 0})
-							]),
-						$mdgriffith$elm_ui$Element$text(str));
-				};
-				var _v3 = A2($elm$core$Dict$get, 'label', properties);
-				if (_v3.$ === 'Nothing') {
-					return nosectionNumber('');
-				} else {
-					var label = _v3.a;
-					return A2(
-						$mdgriffith$elm_ui$Element$el,
-						_List_Nil,
-						$mdgriffith$elm_ui$Element$text(label + '.'));
-				}
-			}();
-			var nodeId = block.meta.id;
-			var lvl = A2(
-				$elm$core$Maybe$withDefault,
-				4,
-				A2(
-					$elm$core$Maybe$andThen,
-					$elm$core$String$toInt,
-					A2($elm$core$Dict$get, 'level', properties)));
-			var spacer = A2(
-				$mdgriffith$elm_ui$Element$el,
+				$elm$html$Html$ul,
 				_List_fromArray(
 					[
-						$mdgriffith$elm_ui$Element$width(
-						$mdgriffith$elm_ui$Element$px(20 * lvl))
+						A2($elm$html$Html$Attributes$style, 'padding-left', '0'),
+						A2($elm$html$Html$Attributes$style, 'margin-left', '0')
 					]),
-				$mdgriffith$elm_ui$Element$none);
-			var id = $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$expressionIdPrefix + ($elm$core$String$fromInt(block.meta.lineNumber) + '.0');
-			var exprs2 = function () {
-				var _v1 = A2(
-					$elm$core$Maybe$andThen,
-					$jxxcarlson$xmarkdown_compiler$AST$Language$extractText,
-					$elm$core$List$head(exprs));
-				if (_v1.$ === 'Nothing') {
-					return exprs;
-				} else {
-					var _v2 = _v1.a;
-					var text = _v2.a;
-					var meta = _v2.b;
-					return _List_fromArray(
-						[
-							A2(
-							$jxxcarlson$xmarkdown_compiler$AST$Language$composeTextElement,
-							A3(
-								$elmcraft$core_extra$String$Extra$softWrapWith,
-								22,
-								'...',
-								$elm$core$String$trim(text)),
-							meta)
-						]);
-				}
-			}();
-			var content = A2(
-				$mdgriffith$elm_ui$Element$row,
-				_Utils_ap(
-					_List_fromArray(
-						[
-							$mdgriffith$elm_ui$Element$width(
-							$mdgriffith$elm_ui$Element$px(240)),
-							$mdgriffith$elm_ui$Element$spacing(8)
-						]),
-					_Utils_ap(
-						$jxxcarlson$xmarkdown_compiler$Render$TOCTree$style_(theme),
-						_List_fromArray(
-							[
-								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb, 0.2, 0.4, 0.8))
-							]))),
-				A2(
-					$elm$core$List$cons,
-					sectionNumber,
-					A2(
-						$elm$core$List$map,
-						A4($jxxcarlson$xmarkdown_compiler$Render$Expression$render, viewParameters.counter, acc, viewParameters.settings, viewParameters.attr),
-						exprs2)));
-			var clickHandlers = hasChildren ? _List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Events$onClick(
-					$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$ToggleTOCNodeID(nodeId)),
-					$mdgriffith$elm_ui$Element$Font$size(
-					A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, viewParameters.settings, 16))
-				]) : _List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Events$onClick(
-					$jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SelectId(id)),
-					$mdgriffith$elm_ui$Element$Font$size(
-					A2($jxxcarlson$xmarkdown_compiler$Render$Settings$scaleFont, viewParameters.settings, 16))
-				]);
-			return A2(
-				$mdgriffith$elm_ui$Element$row,
-				_List_Nil,
-				_List_fromArray(
-					[
-						spacer,
-						A2(
-						$mdgriffith$elm_ui$Element$el,
-						_Utils_ap(
-							clickHandlers,
-							$jxxcarlson$xmarkdown_compiler$Render$TOCTree$style_(theme)),
-						A2(
-							$mdgriffith$elm_ui$Element$link,
-							_List_Nil,
-							{
-								label: content,
-								url: $jxxcarlson$xmarkdown_compiler$Render$Utility$internalLink(id)
-							}))
-					]));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$viewNodeWithChildren = F5(
-	function (theme, viewParameters, acc, node, hasChildren) {
-		return A5($jxxcarlson$xmarkdown_compiler$Render$TOCTree$viewTocItem_, theme, viewParameters, acc, hasChildren, node.block);
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$viewTOCTree = F5(
-	function (theme, viewParameters, acc, depth, tocTree) {
-		var val = $maca$elm_rose_tree$RoseTree$Tree$value(tocTree);
-		var actualChildren = $maca$elm_rose_tree$RoseTree$Tree$children(tocTree);
-		var children = A2($elm$core$List$member, val.block.meta.id, viewParameters.idsOfOpenNodes) ? actualChildren : _List_Nil;
-		var hasChildren = !$elm$core$List$isEmpty(actualChildren);
-		return ((depth < 0) || (!val.visible)) ? $mdgriffith$elm_ui$Element$none : ($elm$core$List$isEmpty(children) ? A5($jxxcarlson$xmarkdown_compiler$Render$TOCTree$viewNodeWithChildren, theme, viewParameters, acc, val, hasChildren) : A2(
-			$mdgriffith$elm_ui$Element$column,
-			_List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$spacing(6)
-				]),
-			A2(
-				$elm$core$List$cons,
-				A5($jxxcarlson$xmarkdown_compiler$Render$TOCTree$viewNodeWithChildren, theme, viewParameters, acc, val, hasChildren),
 				A2(
 					$elm$core$List$map,
-					A4($jxxcarlson$xmarkdown_compiler$Render$TOCTree$viewTOCTree, theme, viewParameters, acc, depth - 1),
-					children))));
-	});
-var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$view = F4(
-	function (theme, viewParameters, acc, documentAst) {
-		var vee = function (t) {
-			return {
-				length: A3($elm$core$Basics$composeR, $maca$elm_rose_tree$RoseTree$Tree$children, $elm$core$List$length, t),
-				view: A5($jxxcarlson$xmarkdown_compiler$Render$TOCTree$viewTOCTree, theme, viewParameters, acc, 4, t)
-			};
-		};
-		var vee2 = function (t) {
-			var data = vee(t);
-			var format = (data.length > 0) ? _List_fromArray(
-				[
-					$mdgriffith$elm_ui$Element$Font$italic,
-					$mdgriffith$elm_ui$Element$Font$color(
-					A2(
-						$jxxcarlson$xmarkdown_compiler$Render$Settings$getThemedElementColor,
-						function ($) {
-							return $.text;
-						},
-						theme))
-				]) : _List_Nil;
-			return A2($mdgriffith$elm_ui$Element$el, format, data.view);
-		};
-		var tocAST = $jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents(documentAst);
-		var nodes = A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Render$TOCTree$makeNodeValue, tocAST);
-		var forest = A2($jxxcarlson$xmarkdown_compiler$Library$Forest$makeForest, $jxxcarlson$xmarkdown_compiler$Library$Tree$lev, nodes);
-		return A2($elm$core$List$map, vee2, forest);
+					A3($jxxcarlson$xmarkdown_compiler$Render$TOCTree$renderTocItem, theme, viewParameters.counter, viewParameters.settings.numberToLevel),
+					tocAST))
+			]);
 	});
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$render = F2(
 	function (params, _v0) {
 		var accumulator_ = _v0.a;
 		var forest_ = _v0.b;
-		var renderSettings = $jxxcarlson$xmarkdown_compiler$Render$Settings$defaultRenderSettings(params);
+		var renderSettings = $jxxcarlson$xmarkdown_compiler$Render$Theme$makeSettings(params);
 		var title = A2(
-			$mdgriffith$elm_ui$Element$paragraph,
+			$elm$html$Html$p,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$Font$size(renderSettings.titleSize)
+					A2(
+					$elm$html$Html$Attributes$style,
+					'font-size',
+					$elm$core$String$fromInt(renderSettings.titleSize) + 'px')
 				]),
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$text(
+					$elm$html$Html$text(
 					$jxxcarlson$xmarkdown_compiler$AST$ASTTools$title(forest_))
 				]));
-		var viewParameters = {attr: _List_Nil, counter: params.editCount, idsOfOpenNodes: params.idsOfOpenNodes, selectedId: params.selectedId, settings: renderSettings};
-		var toc = A4($jxxcarlson$xmarkdown_compiler$Render$TOCTree$view, params.theme, viewParameters, accumulator_, forest_);
+		var viewParameters = {attr: _List_Nil, counter: params.editCount, selectedId: params.selectedId, settings: renderSettings};
+		var toc = A3($jxxcarlson$xmarkdown_compiler$Render$TOCTree$view, params.theme, viewParameters, forest_);
 		var banner = A2(
 			$elm$core$Maybe$map,
-			$mdgriffith$elm_ui$Element$row(
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$height(
-						$mdgriffith$elm_ui$Element$px(40))
-					])),
-			A2(
-				$elm$core$Maybe$map,
-				A4(
-					$jxxcarlson$xmarkdown_compiler$Render$Block$renderBody,
-					params.editCount,
-					accumulator_,
-					renderSettings,
+			function (elem) {
+				return A2(
+					$elm$html$Html$div,
 					_List_fromArray(
 						[
-							$mdgriffith$elm_ui$Element$Font$color(
-							A3($mdgriffith$elm_ui$Element$rgb, 1, 0, 0))
-						])),
-				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$banner(forest_)));
+							A2($elm$html$Html$Attributes$style, 'height', '40px')
+						]),
+					_List_fromArray(
+						[elem]));
+			},
+			A2(
+				$elm$core$Maybe$andThen,
+				$elm$core$List$head,
+				A2(
+					$elm$core$Maybe$map,
+					A4($jxxcarlson$xmarkdown_compiler$Render$Block$renderBody, params.editCount, accumulator_, renderSettings, _List_Nil),
+					$jxxcarlson$xmarkdown_compiler$AST$ASTTools$banner(forest_))));
 		return {
 			banner: banner,
 			body: A4($jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$renderForest, params, renderSettings, accumulator_, forest_),
@@ -31814,13 +16440,16 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$render = F2(
 		};
 	});
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$compile = F2(
-	function (params, lines) {
+	function (params, sourceText) {
 		return A2(
 			$jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$render,
 			params,
-			A2($jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parseToForestWithAccumulator, params, lines));
+			A2(
+				$jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parseToForestWithAccumulator,
+				params,
+				$elm$core$String$lines(sourceText)));
 	});
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$compile = $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$compile;
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$compileOutput = $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$compile;
 var $author$project$Main$InputText = function (a) {
 	return {$: 'InputText', a: a};
 };
@@ -31887,246 +16516,89 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Editor$view = function (config) {
 					config.attrs))),
 		_List_Nil);
 };
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$editorView = $jxxcarlson$xmarkdown_compiler$XMarkdown$Editor$view;
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$viewEditor = $jxxcarlson$xmarkdown_compiler$XMarkdown$Editor$view;
 var $author$project$Main$editorView = function (model) {
-	return $jxxcarlson$xmarkdown_compiler$XMarkdown$API$editorView(
+	return $jxxcarlson$xmarkdown_compiler$XMarkdown$API$viewEditor(
 		{attrs: _List_Nil, highlight: model.syncHighlight, onInput: $author$project$Main$InputText, source: model.initialText});
 };
+var $elm$html$Html$input = _VirtualDom_node('input');
+var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
+var $elm$html$Html$Events$alwaysStop = function (x) {
+	return _Utils_Tuple2(x, true);
+};
+var $elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
+	return {$: 'MayStopPropagation', a: a};
+};
+var $elm$html$Html$Events$stopPropagationOn = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
+	});
+var $elm$html$Html$Events$targetValue = A2(
+	$elm$json$Json$Decode$at,
+	_List_fromArray(
+		['target', 'value']),
+	$elm$json$Json$Decode$string);
+var $elm$html$Html$Events$onInput = function (tagger) {
+	return A2(
+		$elm$html$Html$Events$stopPropagationOn,
+		'input',
+		A2(
+			$elm$json$Json$Decode$map,
+			$elm$html$Html$Events$alwaysStop,
+			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
+};
+var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
 var $author$project$Main$px = function (n) {
 	return $elm$core$String$fromInt(n) + 'px';
 };
-var $mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
-	function (a, b) {
-		return {$: 'OnlyDynamic', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Model$StaticRootAndDynamic = F2(
-	function (a, b) {
-		return {$: 'StaticRootAndDynamic', a: a, b: b};
-	});
-var $mdgriffith$elm_ui$Internal$Model$AllowHover = {$: 'AllowHover'};
-var $mdgriffith$elm_ui$Internal$Model$Layout = {$: 'Layout'};
-var $mdgriffith$elm_ui$Internal$Model$focusDefaultStyle = {
-	backgroundColor: $elm$core$Maybe$Nothing,
-	borderColor: $elm$core$Maybe$Nothing,
-	shadow: $elm$core$Maybe$Just(
-		{
-			blur: 0,
-			color: A4($mdgriffith$elm_ui$Internal$Model$Rgba, 155 / 255, 203 / 255, 1, 1),
-			offset: _Utils_Tuple2(0, 0),
-			size: 3
-		})
-};
-var $mdgriffith$elm_ui$Internal$Model$optionsToRecord = function (options) {
-	var combine = F2(
-		function (opt, record) {
-			switch (opt.$) {
-				case 'HoverOption':
-					var hoverable = opt.a;
-					var _v4 = record.hover;
-					if (_v4.$ === 'Nothing') {
-						return _Utils_update(
-							record,
-							{
-								hover: $elm$core$Maybe$Just(hoverable)
-							});
-					} else {
-						return record;
-					}
-				case 'FocusStyleOption':
-					var focusStyle = opt.a;
-					var _v5 = record.focus;
-					if (_v5.$ === 'Nothing') {
-						return _Utils_update(
-							record,
-							{
-								focus: $elm$core$Maybe$Just(focusStyle)
-							});
-					} else {
-						return record;
-					}
-				default:
-					var renderMode = opt.a;
-					var _v6 = record.mode;
-					if (_v6.$ === 'Nothing') {
-						return _Utils_update(
-							record,
-							{
-								mode: $elm$core$Maybe$Just(renderMode)
-							});
-					} else {
-						return record;
-					}
-			}
-		});
-	var andFinally = function (record) {
-		return {
-			focus: function () {
-				var _v0 = record.focus;
-				if (_v0.$ === 'Nothing') {
-					return $mdgriffith$elm_ui$Internal$Model$focusDefaultStyle;
-				} else {
-					var focusable = _v0.a;
-					return focusable;
-				}
-			}(),
-			hover: function () {
-				var _v1 = record.hover;
-				if (_v1.$ === 'Nothing') {
-					return $mdgriffith$elm_ui$Internal$Model$AllowHover;
-				} else {
-					var hoverable = _v1.a;
-					return hoverable;
-				}
-			}(),
-			mode: function () {
-				var _v2 = record.mode;
-				if (_v2.$ === 'Nothing') {
-					return $mdgriffith$elm_ui$Internal$Model$Layout;
-				} else {
-					var actualMode = _v2.a;
-					return actualMode;
-				}
-			}()
-		};
-	};
-	return andFinally(
-		A3(
-			$elm$core$List$foldr,
-			combine,
-			{focus: $elm$core$Maybe$Nothing, hover: $elm$core$Maybe$Nothing, mode: $elm$core$Maybe$Nothing},
-			options));
-};
-var $mdgriffith$elm_ui$Internal$Model$toHtml = F2(
-	function (mode, el) {
-		switch (el.$) {
-			case 'Unstyled':
-				var html = el.a;
-				return html($mdgriffith$elm_ui$Internal$Model$asEl);
-			case 'Styled':
-				var styles = el.a.styles;
-				var html = el.a.html;
-				return A2(
-					html,
-					mode(styles),
-					$mdgriffith$elm_ui$Internal$Model$asEl);
-			case 'Text':
-				var text = el.a;
-				return $mdgriffith$elm_ui$Internal$Model$textElement(text);
-			default:
-				return $mdgriffith$elm_ui$Internal$Model$textElement('');
-		}
-	});
-var $mdgriffith$elm_ui$Internal$Model$renderRoot = F3(
-	function (optionList, attributes, child) {
-		var options = $mdgriffith$elm_ui$Internal$Model$optionsToRecord(optionList);
-		var embedStyle = function () {
-			var _v0 = options.mode;
-			if (_v0.$ === 'NoStaticStyleSheet') {
-				return $mdgriffith$elm_ui$Internal$Model$OnlyDynamic(options);
-			} else {
-				return $mdgriffith$elm_ui$Internal$Model$StaticRootAndDynamic(options);
-			}
-		}();
-		return A2(
-			$mdgriffith$elm_ui$Internal$Model$toHtml,
-			embedStyle,
-			A4(
-				$mdgriffith$elm_ui$Internal$Model$element,
-				$mdgriffith$elm_ui$Internal$Model$asEl,
-				$mdgriffith$elm_ui$Internal$Model$div,
-				attributes,
-				$mdgriffith$elm_ui$Internal$Model$Unkeyed(
-					_List_fromArray(
-						[child]))));
-	});
-var $mdgriffith$elm_ui$Internal$Model$SansSerif = {$: 'SansSerif'};
-var $mdgriffith$elm_ui$Internal$Model$rootStyle = function () {
-	var families = _List_fromArray(
-		[
-			$mdgriffith$elm_ui$Internal$Model$Typeface('Open Sans'),
-			$mdgriffith$elm_ui$Internal$Model$Typeface('Helvetica'),
-			$mdgriffith$elm_ui$Internal$Model$Typeface('Verdana'),
-			$mdgriffith$elm_ui$Internal$Model$SansSerif
-		]);
-	return _List_fromArray(
-		[
-			A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$bgColor,
-			A3(
-				$mdgriffith$elm_ui$Internal$Model$Colored,
-				'bg-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(
-					A4($mdgriffith$elm_ui$Internal$Model$Rgba, 1, 1, 1, 0)),
-				'background-color',
-				A4($mdgriffith$elm_ui$Internal$Model$Rgba, 1, 1, 1, 0))),
-			A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$fontColor,
-			A3(
-				$mdgriffith$elm_ui$Internal$Model$Colored,
-				'fc-' + $mdgriffith$elm_ui$Internal$Model$formatColorClass(
-					A4($mdgriffith$elm_ui$Internal$Model$Rgba, 0, 0, 0, 1)),
-				'color',
-				A4($mdgriffith$elm_ui$Internal$Model$Rgba, 0, 0, 0, 1))),
-			A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$fontSize,
-			$mdgriffith$elm_ui$Internal$Model$FontSize(20)),
-			A2(
-			$mdgriffith$elm_ui$Internal$Model$StyleClass,
-			$mdgriffith$elm_ui$Internal$Flag$fontFamily,
-			A2(
-				$mdgriffith$elm_ui$Internal$Model$FontFamily,
-				A3($elm$core$List$foldl, $mdgriffith$elm_ui$Internal$Model$renderFontClassName, 'font-', families),
-				families))
-		]);
-}();
-var $mdgriffith$elm_ui$Element$layoutWith = F3(
-	function (_v0, attrs, child) {
-		var options = _v0.options;
-		return A3(
-			$mdgriffith$elm_ui$Internal$Model$renderRoot,
-			options,
-			A2(
-				$elm$core$List$cons,
-				$mdgriffith$elm_ui$Internal$Model$htmlClass(
-					A2(
-						$elm$core$String$join,
-						' ',
-						_List_fromArray(
-							[$mdgriffith$elm_ui$Internal$Style$classes.root, $mdgriffith$elm_ui$Internal$Style$classes.any, $mdgriffith$elm_ui$Internal$Style$classes.single]))),
-				_Utils_ap($mdgriffith$elm_ui$Internal$Model$rootStyle, attrs)),
-			child);
-	});
-var $mdgriffith$elm_ui$Element$layout = $mdgriffith$elm_ui$Element$layoutWith(
-	{options: _List_Nil});
 var $author$project$Main$renderPanel = F2(
-	function (blockSpacing, elements) {
+	function (params, elements) {
+		var settings = $jxxcarlson$xmarkdown_compiler$Render$Theme$makeSettings(params);
 		return A2(
-			$mdgriffith$elm_ui$Element$layout,
+			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
+					A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+					A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'gap',
+					$elm$core$String$fromInt(
+						$elm$core$Basics$round(settings.interBlockSpacing)) + 'px'),
+					A2($elm$html$Html$Attributes$style, 'width', '100%'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'background-color',
+					A2(
+						$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+						function ($) {
+							return $.background;
+						},
+						settings.theme)),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'color',
+					A2(
+						$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+						function ($) {
+							return $.text;
+						},
+						settings.theme))
 				]),
-			A2(
-				$mdgriffith$elm_ui$Element$column,
-				_List_fromArray(
-					[
-						$mdgriffith$elm_ui$Element$spacing(blockSpacing),
-						$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill)
-					]),
-				elements));
+			elements);
 	});
+var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
+var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $author$project$Main$view = function (model) {
 	var g = $author$project$Main$geometry(model);
 	var params = _Utils_update(
 		$jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters,
-		{docWidth: g.docWidth, editCount: model.count, filter: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$NoFilter, idsOfOpenNodes: model.idsOfOpenNodes, interBlockSpacing: 18, numberToLevel: 2, paddingAboveHeadings: 18, selectedId: model.selectId});
-	var compilerOutput = A2(
-		$jxxcarlson$xmarkdown_compiler$XMarkdown$API$compile,
-		params,
-		$elm$core$String$lines(model.sourceText));
+		{docWidth: g.docWidth, editCount: model.count, numberToLevel: 3, selectedId: model.selectId, theme: model.theme});
+	var compilerOutput = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$compileOutput, params, model.sourceText);
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -32172,6 +16644,62 @@ var $author$project$Main$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$text('Save File')
+									])),
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('toolbar-button'),
+										$elm$html$Html$Events$onClick($author$project$Main$NewFileRequested)
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('New File')
+									])),
+								A2(
+								$elm$html$Html$input,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$id('fileName'),
+										A2($elm$html$Html$Attributes$style, 'margin-left', '8px'),
+										A2($elm$html$Html$Attributes$style, 'padding', '6px'),
+										A2($elm$html$Html$Attributes$style, 'border', '1px solid #ccc'),
+										A2($elm$html$Html$Attributes$style, 'border-radius', '4px'),
+										A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
+										$elm$html$Html$Attributes$value(model.fileName),
+										$elm$html$Html$Events$onInput($author$project$Main$FileNameChanged),
+										$elm$html$Html$Attributes$placeholder('File name...')
+									]),
+								_List_Nil),
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('toolbar-button theme-toggle'),
+										$elm$html$Html$Events$onClick($author$project$Main$ToggleTheme),
+										$elm$html$Html$Attributes$title(
+										function () {
+											var _v0 = model.theme;
+											if (_v0.$ === 'Light') {
+												return 'Switch to Dark Mode';
+											} else {
+												return 'Switch to Light Mode';
+											}
+										}()),
+										A2($elm$html$Html$Attributes$style, 'background-color', 'black'),
+										A2($elm$html$Html$Attributes$style, 'margin-left', 'auto')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										function () {
+											var _v1 = model.theme;
+											if (_v1.$ === 'Light') {
+												return '🌙';
+											} else {
+												return '☀️';
+											}
+										}())
 									]))
 							])),
 						A2(
@@ -32182,7 +16710,7 @@ var $author$project$Main$view = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('XMarkdown TOC Demo')
+								$elm$html$Html$text('XMarkdown TOC+Sync Demo')
 							]))
 					])),
 				A2(
@@ -32216,34 +16744,51 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'width',
-								$author$project$Main$px(g.renderedW))
+								$author$project$Main$px(g.renderedW)),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'background-color',
+								A2(
+									$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+									function ($) {
+										return $.background;
+									},
+									model.theme))
 							]),
 						_List_fromArray(
 							[
 								A2(
 								$elm$html$Html$map,
 								$author$project$Main$Render,
-								A2(
-									$author$project$Main$renderPanel,
-									$elm$core$Basics$round(compilerOutput.interBlockSpacing),
-									compilerOutput.body))
+								A2($author$project$Main$renderPanel, model.compilerParameters, compilerOutput.body))
 							])),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('panel toc-panel'),
 								A2(
 								$elm$html$Html$Attributes$style,
 								'width',
-								$author$project$Main$px(g.tocW))
+								$author$project$Main$px(g.tocW)),
+								A2($elm$html$Html$Attributes$style, 'overflow', 'auto'),
+								A2($elm$html$Html$Attributes$style, 'overscroll-behavior', 'contain'),
+								A2($elm$html$Html$Attributes$style, 'min-height', '0'),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'background',
+								A2(
+									$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+									function ($) {
+										return $.background;
+									},
+									model.theme))
 							]),
 						_List_fromArray(
 							[
 								A2(
 								$elm$html$Html$map,
 								$author$project$Main$Render,
-								A2($author$project$Main$renderPanel, 18, compilerOutput.toc))
+								A2($author$project$Main$renderPanel, model.compilerParameters, compilerOutput.toc))
 							]))
 					]))
 			]));

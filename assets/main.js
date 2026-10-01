@@ -5620,16 +5620,44 @@ var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters = {backgroundColor: 'rgba(255, 255, 255, 1.0)', data: $elm$core$Dict$empty, docWidth: 500, editCount: 0, fontSize: 16, highlightColor: 'rgba(200, 200, 255, 0.4)', interBlockSpacing: 0, lineHeight: 1.5, numberToLevel: 0, paddingAboveHeadings: 10, scale: 1, selectedId: '', selectedSlug: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, windowWidth: 500};
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters = $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters;
+var $author$project$Main$dividerW = 16;
+var $author$project$Main$initialTocW = 200;
+var $author$project$Main$minEditorW = 200;
+var $author$project$Main$pagePad = 16;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Ports$setEditorHighlightColor = _Platform_outgoingPort('setEditorHighlightColor', $elm$json$Json$Encode$string);
 var $author$project$Data$XMarkdown$text = '\n\n\n# Sample Document\n\nXMarkdown is a version of Markdown which handles mathematical text.  This and other features are described below. See also [this online version](https://xmarkdowndemo.netlify.app/).\n\nTo understand how any piece of rendered text is constructed, click on it to see the corresponding source text.\n\nFeel free to add to or edit this text. Your changes will not be saved. Refresh your browser to return to the original text.\n\n# Math\n\nXMarkdown handles both inline and displayed mathematical text, e.g., $a^2 + b^2 = c^2$\nand\n\n$$\ncos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\n$$\n\nHere is the source text: `$a^2 + b^2 = c^2$` for inline formulas and\n\n```\n$$\ncos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\n$$\n```\n\nfor displayed formulas. The source text looks like TeX but without most of the backslashes and curly braces that are customary.  This is [ETeX](https://package.elm-lang.org/packages/jxxcarlson/etex/latest/), an Elm package which implements this simplified syntax.  You may also use regular TeX:\n\n```\n$$\n\\cos{x} = \\sum_{n=0}^\\infty(-1)^n \\frac{x^{2n}}{(2n)!}\n$$\n```\n\nIn ETeX curly braces are used for grouping.\n\n\n# Images\n\n![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)\n\nThe syntax for images is\n\n```\n[CAPTION width:WIDTH_IN_PIXELS](URL)\n```\n\nThe phrase `width:WIDTH_IN_PIXELS` is optional.\n\n# Itemized Lists\n\n## Ordinary\n\nblah blah blah blah blah blah blah blah blah \n\n- Fruits\n\n  - Oranges\n\n  - Apples\n\n    - Green\n\n    - Red\n\n      - Yada\n\n      - Mada \n\nblah blah blah blah blah blah blah blah \n\n## Numbered\n\nblah blah blah blah blah blah blah blah blah blah \n\n. Vegetables\n\n  . Green Beans\n\n  . Brocolli\n\n    . US\n\n    . Mexican\n\nblah blah blah blah blah blah blah blah \n\n# Compact Lists\n\n\n## Ordinary\n\n\nblah blah blah blah blah blah blah blah blah \n\n- Apples\n  - YOLO $= y^2$\n    - MOV $c^2$\n    - Green\n    - Red\n\n      - Yada\n      - Mada \n\nblah blah blah blah blah blah blah blah \n\n## Numbered\n\n\nblah blah blah blah blah blah blah blah blah \n\n. Apples\n\n. Oranges\n\n. Pears\n\n  . Red\n\n  . Green\n\nblah blah blah blah blah blah blah blah blah \n\n. Vegetables\n  . Green Beans\n  . Brocolli\n    . US\n    . Mexican\n\nblah blah blah blah blah blah blah blah blah \n\n# Indentation\n\nOranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \n\n  Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \n\n    Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges\n  \n# Tables\n\nXMarkdown provides for Github-style tables.  These tables may contain mathematical text.\n\n**Ages, Occupations, and Favorite Formulas**\n\n| Name  | Age | Occupation  | F.F.|\n|:-------|----:|:-------------|-----:|\n| Alice |  28 | *Engineer*    | $n!$ |\n| Bob   |  34 | *Musician*    | $3:2$ |\n| Carol |  41 | *Mathematician* | $sqrt(2 + \\sqrt5)$\n\n# Real-time Rendering\n\nXMarkdown provides for real-time rendering: the rendered text is updated as you type. Try it with this document. (Your edits will not be saved: refresh the browswer to return to the original.)\n\n# Synchronization\n\nXMarkdown can synchronize source and rendered text:\n\n- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.\n\n- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.\n\n# Section Numbering\n\nThe default is for sections not to be numbered. To automatically number sections, press the button "Section numbering: No".  To return to the default press the same button, which now reads "Section numbering: Yes"\n\n# Table of Contents\n\nXMarkdown provides for an optional real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.\n\nAlso note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.\n\n*You can edit whatever you like in this document.  Your edits will not be saved.*\n\n# Blocks and Indentation\n\nSource text in XMarkdown is divided into blocks.  Here is an example\n\n```\n  # Introduction\n  \n  Cells are the fundamental units of life.\n  Every living organism, ..\n  \n  # The Discovery of Cells\n  \n  ## Robert Hooke and the First Observation\n  \n  In 1665, the English scientist Robert Hooke\n  examined a thin slice of cork with one of the first\n  compound microscopes ...\n  \n  ## Antoine van Leeuwenhoek\n  \n  A few years later, the Dutch scientist\n  Antoine van Leeuwenhoek built microscopes\n  of much higher quality ...\n```\n\n\n ';
 var $author$project$Main$init = function (flags) {
 	var params = $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters;
 	return _Utils_Tuple2(
-		{compilerParameters: params, count: 0, currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, editorOpen: false, fileName: 'untitled.md', initialText: $author$project$Data$XMarkdown$text, lrSyncIndex: 0, lrSyncMatches: _List_Nil, lrSyncText: '', numberedSections: false, selectId: '@InitID', sourceText: $author$project$Data$XMarkdown$text, syncHighlight: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, tick: 0, windowHeight: flags.window.windowHeight, windowWidth: flags.window.windowWidth},
+		{
+			compilerParameters: params,
+			count: 0,
+			currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light,
+			dragging: $elm$core$Maybe$Nothing,
+			editorOpen: false,
+			editorWidth: A2($elm$core$Basics$max, $author$project$Main$minEditorW, ((((flags.window.windowWidth - $author$project$Main$initialTocW) - (2 * $author$project$Main$pagePad)) - (2 * $author$project$Main$dividerW)) / 2) | 0),
+			fileName: 'untitled.md',
+			initialText: $author$project$Data$XMarkdown$text,
+			lrSyncIndex: 0,
+			lrSyncMatches: _List_Nil,
+			lrSyncText: '',
+			numberedSections: false,
+			selectId: '@InitID',
+			sourceText: $author$project$Data$XMarkdown$text,
+			syncHighlight: $elm$core$Maybe$Nothing,
+			theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light,
+			tick: 0,
+			tocWidth: $author$project$Main$initialTocW,
+			windowHeight: flags.window.windowHeight,
+			windowWidth: flags.window.windowWidth
+		},
 		$author$project$Ports$setEditorHighlightColor(params.highlightColor));
 };
 var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $author$project$Main$DragMove = function (a) {
+	return {$: 'DragMove', a: a};
+};
 var $author$project$Main$GotNewWindowDimensions = F2(
 	function (a, b) {
 		return {$: 'GotNewWindowDimensions', a: a, b: b};
@@ -5637,10 +5665,13 @@ var $author$project$Main$GotNewWindowDimensions = F2(
 var $author$project$Main$LRSync = function (a) {
 	return {$: 'LRSync', a: a};
 };
+var $author$project$Main$StopDrag = {$: 'StopDrag'};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Ports$lrSyncRequest = _Platform_incomingPort('lrSyncRequest', $elm$json$Json$Decode$string);
-var $elm$browser$Browser$Events$Window = {$: 'Window'};
+var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $elm$browser$Browser$Events$Document = {$: 'Document'};
 var $elm$browser$Browser$Events$MySub = F3(
 	function (a, b, c) {
 		return {$: 'MySub', a: a, b: b, c: c};
@@ -6038,6 +6069,9 @@ var $elm$browser$Browser$Events$on = F3(
 		return $elm$browser$Browser$Events$subscription(
 			A3($elm$browser$Browser$Events$MySub, node, name, decoder));
 	});
+var $elm$browser$Browser$Events$onMouseMove = A2($elm$browser$Browser$Events$on, $elm$browser$Browser$Events$Document, 'mousemove');
+var $elm$browser$Browser$Events$onMouseUp = A2($elm$browser$Browser$Events$on, $elm$browser$Browser$Events$Document, 'mouseup');
+var $elm$browser$Browser$Events$Window = {$: 'Window'};
 var $elm$browser$Browser$Events$onResize = function (func) {
 	return A3(
 		$elm$browser$Browser$Events$on,
@@ -6052,12 +6086,30 @@ var $elm$browser$Browser$Events$onResize = function (func) {
 				A2($elm$json$Json$Decode$field, 'innerWidth', $elm$json$Json$Decode$int),
 				A2($elm$json$Json$Decode$field, 'innerHeight', $elm$json$Json$Decode$int))));
 };
-var $author$project$Main$subscriptions = function (_v0) {
+var $author$project$Main$subscriptions = function (model) {
 	return $elm$core$Platform$Sub$batch(
 		_List_fromArray(
 			[
 				$elm$browser$Browser$Events$onResize($author$project$Main$GotNewWindowDimensions),
-				$author$project$Ports$lrSyncRequest($author$project$Main$LRSync)
+				$author$project$Ports$lrSyncRequest($author$project$Main$LRSync),
+				function () {
+				var _v0 = model.dragging;
+				if (_v0.$ === 'Just') {
+					return $elm$core$Platform$Sub$batch(
+						_List_fromArray(
+							[
+								$elm$browser$Browser$Events$onMouseMove(
+								A2(
+									$elm$json$Json$Decode$map,
+									$author$project$Main$DragMove,
+									A2($elm$json$Json$Decode$field, 'clientX', $elm$json$Json$Decode$float))),
+								$elm$browser$Browser$Events$onMouseUp(
+								$elm$json$Json$Decode$succeed($author$project$Main$StopDrag))
+							]));
+				} else {
+					return $elm$core$Platform$Sub$none;
+				}
+			}()
 			]));
 };
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark = {$: 'Dark'};
@@ -6068,6 +6120,33 @@ var $author$project$Main$FileSelected = function (a) {
 	return {$: 'FileSelected', a: a};
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Basics$clamp = F3(
+	function (low, high, number) {
+		return (_Utils_cmp(number, low) < 0) ? low : ((_Utils_cmp(number, high) > 0) ? high : number);
+	});
+var $author$project$Main$minRenderedW = 300;
+var $author$project$Main$minTocW = 120;
+var $author$project$Main$panelSpace = function (model) {
+	return model.editorOpen ? ((model.windowWidth - (2 * $author$project$Main$pagePad)) - (2 * $author$project$Main$dividerW)) : ((model.windowWidth - (2 * $author$project$Main$pagePad)) - $author$project$Main$dividerW);
+};
+var $author$project$Main$clampWidths = function (model) {
+	var editorW = model.editorOpen ? model.editorWidth : 0;
+	var maxToc = A2(
+		$elm$core$Basics$max,
+		$author$project$Main$minTocW,
+		($author$project$Main$panelSpace(model) - editorW) - $author$project$Main$minRenderedW);
+	var tocWidth = A3($elm$core$Basics$clamp, $author$project$Main$minTocW, maxToc, model.tocWidth);
+	var maxEditor = A2(
+		$elm$core$Basics$max,
+		$author$project$Main$minEditorW,
+		($author$project$Main$panelSpace(model) - tocWidth) - $author$project$Main$minRenderedW);
+	return _Utils_update(
+		model,
+		{
+			editorWidth: A3($elm$core$Basics$clamp, $author$project$Main$minEditorW, maxEditor, model.editorWidth),
+			tocWidth: tocWidth
+		});
+};
 var $avh4$elm_color$Color$RgbaSpace = F4(
 	function (a, b, c, d) {
 		return {$: 'RgbaSpace', a: a, b: b, c: c, d: d};
@@ -6149,17 +6228,17 @@ var $elm$core$Basics$min = F2(
 		return (_Utils_cmp(x, y) < 0) ? x : y;
 	});
 var $author$project$Main$geometry = function (model) {
-	var tocW = 200;
 	var pad = 24;
-	var gap = 16;
-	var avail = (model.windowWidth - tocW) - (4 * gap);
-	var half = A2($elm$core$Basics$max, 240, (avail / 2) | 0);
-	var renderedW = model.editorOpen ? half : A2($elm$core$Basics$max, 240, avail + gap);
+	var editorW = model.editorOpen ? model.editorWidth : 0;
+	var renderedW = A2(
+		$elm$core$Basics$max,
+		$author$project$Main$minRenderedW,
+		($author$project$Main$panelSpace(model) - editorW) - model.tocWidth);
 	return {
 		docWidth: A2($elm$core$Basics$min, 800, renderedW - (2 * pad)),
-		editorW: half,
+		editorW: editorW,
 		renderedW: renderedW,
-		tocW: tocW
+		tocW: model.tocWidth
 	};
 };
 var $elm$core$List$head = function (list) {
@@ -6280,6 +6359,7 @@ var $elm$core$Basics$modBy = _Basics_modBy;
 var $elm$file$File$name = _File_name;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Basics$not = _Basics_not;
+var $elm$core$Basics$round = _Basics_round;
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
 		return A3(
@@ -12116,7 +12196,6 @@ var $elm$core$String$concat = function (strings) {
 	return A2($elm$core$String$join, '', strings);
 };
 var $elm$core$String$fromFloat = _String_fromNumber;
-var $elm$core$Basics$round = _Basics_round;
 var $avh4$elm_color$Color$toCssString = function (_v0) {
 	var r = _v0.a;
 	var g = _v0.b;
@@ -12156,9 +12235,68 @@ var $author$project$Main$update = F2(
 				var width = msg.a;
 				var height = msg.b;
 				return _Utils_Tuple2(
+					$author$project$Main$clampWidths(
+						_Utils_update(
+							model,
+							{windowHeight: height, windowWidth: width})),
+					$elm$core$Platform$Cmd$none);
+			case 'StartDrag':
+				var divider = msg.a;
+				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{windowHeight: height, windowWidth: width}),
+						{
+							dragging: $elm$core$Maybe$Just(divider)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 'DragMove':
+				var x = msg.a;
+				var _v1 = model.dragging;
+				if (_v1.$ === 'Just') {
+					if (_v1.a.$ === 'EditorDivider') {
+						var _v2 = _v1.a;
+						var maxEditor = A2(
+							$elm$core$Basics$max,
+							$author$project$Main$minEditorW,
+							($author$project$Main$panelSpace(model) - model.tocWidth) - $author$project$Main$minRenderedW);
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									editorWidth: A3(
+										$elm$core$Basics$clamp,
+										$author$project$Main$minEditorW,
+										maxEditor,
+										($elm$core$Basics$round(x) - $author$project$Main$pagePad) - (($author$project$Main$dividerW / 2) | 0))
+								}),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						var _v3 = _v1.a;
+						var editorW = model.editorOpen ? model.editorWidth : 0;
+						var maxToc = A2(
+							$elm$core$Basics$max,
+							$author$project$Main$minTocW,
+							($author$project$Main$panelSpace(model) - editorW) - $author$project$Main$minRenderedW);
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									tocWidth: A3(
+										$elm$core$Basics$clamp,
+										$author$project$Main$minTocW,
+										maxToc,
+										((model.windowWidth - $author$project$Main$pagePad) - (($author$project$Main$dividerW / 2) | 0)) - $elm$core$Basics$round(x))
+								}),
+							$elm$core$Platform$Cmd$none);
+					}
+				} else {
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
+			case 'StopDrag':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{dragging: $elm$core$Maybe$Nothing}),
 					$elm$core$Platform$Cmd$none);
 			case 'InputText':
 				var str = msg.a;
@@ -12206,9 +12344,10 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 			case 'ToggleEditor':
 				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{editorOpen: !model.editorOpen}),
+					$author$project$Main$clampWidths(
+						_Utils_update(
+							model,
+							{editorOpen: !model.editorOpen})),
 					$elm$core$Platform$Cmd$none);
 			case 'FileNameChanged':
 				var newFileName = msg.a;
@@ -12219,8 +12358,8 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 			case 'ToggleNumberSections':
 				var oldCompilerParameters = model.compilerParameters;
-				var _v1 = model.numberedSections;
-				if (!_v1) {
+				var _v4 = model.numberedSections;
+				if (!_v4) {
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -12246,8 +12385,8 @@ var $author$project$Main$update = F2(
 			case 'ToggleTheme':
 				var params = model.compilerParameters;
 				var newTheme = function () {
-					var _v3 = model.theme;
-					if (_v3.$ === 'Light') {
+					var _v6 = model.theme;
+					if (_v6.$ === 'Light') {
 						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
 					} else {
 						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
@@ -12320,9 +12459,9 @@ var $author$project$Main$update = F2(
 				}
 			default:
 				var msg_ = msg.a;
-				var _v5 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
-				if (_v5.$ === 'Just') {
-					var h = _v5.a;
+				var _v8 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+				if (_v8.$ === 'Just') {
+					var h = _v8.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -12357,6 +12496,7 @@ var $author$project$Main$update = F2(
 				}
 		}
 	});
+var $author$project$Main$EditorDivider = {$: 'EditorDivider'};
 var $author$project$Main$FileNameChanged = function (a) {
 	return {$: 'FileNameChanged', a: a};
 };
@@ -12366,6 +12506,7 @@ var $author$project$Main$Render = function (a) {
 	return {$: 'Render', a: a};
 };
 var $author$project$Main$SaveFileRequested = {$: 'SaveFileRequested'};
+var $author$project$Main$TocDivider = {$: 'TocDivider'};
 var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
 var $author$project$Main$ToggleNumberSections = {$: 'ToggleNumberSections'};
 var $author$project$Main$ToggleTheme = {$: 'ToggleTheme'};
@@ -12378,6 +12519,16 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$html$Html$Attributes$classList = function (classes) {
+	return $elm$html$Html$Attributes$class(
+		A2(
+			$elm$core$String$join,
+			' ',
+			A2(
+				$elm$core$List$map,
+				$elm$core$Tuple$first,
+				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
+};
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList = {$: 'SNotInList'};
 var $jxxcarlson$xmarkdown_compiler$AST$Vector$init = function (k) {
 	return {
@@ -16661,6 +16812,41 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$compile = F2(
 				$elm$core$String$lines(sourceText)));
 	});
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$compileOutput = $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$compile;
+var $author$project$Main$StartDrag = function (a) {
+	return {$: 'StartDrag', a: a};
+};
+var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
+var $author$project$Main$dividerView = F3(
+	function (model, divider, visible) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('divider'),
+					$elm$html$Html$Attributes$classList(
+					_List_fromArray(
+						[
+							_Utils_Tuple2(
+							'active',
+							_Utils_eq(
+								model.dragging,
+								$elm$core$Maybe$Just(divider)))
+						])),
+					$elm$html$Html$Attributes$title('Drag to resize'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'display',
+					visible ? 'block' : 'none'),
+					A2(
+					$elm$html$Html$Events$preventDefaultOn,
+					'mousedown',
+					$elm$json$Json$Decode$succeed(
+						_Utils_Tuple2(
+							$author$project$Main$StartDrag(divider),
+							true)))
+				]),
+			_List_Nil);
+	});
 var $author$project$Main$InputText = function (a) {
 	return {$: 'InputText', a: a};
 };
@@ -16807,7 +16993,6 @@ var $author$project$Main$renderPanel = F2(
 				]),
 			elements);
 	});
-var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('title');
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $author$project$Main$view = function (model) {
 	var g = $author$project$Main$geometry(model);
@@ -16820,7 +17005,14 @@ var $author$project$Main$view = function (model) {
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('app')
+				$elm$html$Html$Attributes$class('app'),
+				$elm$html$Html$Attributes$classList(
+				_List_fromArray(
+					[
+						_Utils_Tuple2(
+						'dragging',
+						!_Utils_eq(model.dragging, $elm$core$Maybe$Nothing))
+					]))
 			]),
 		_List_fromArray(
 			[
@@ -16980,16 +17172,13 @@ var $author$project$Main$view = function (model) {
 							[
 								$author$project$Main$editorView(model)
 							])),
+						A3($author$project$Main$dividerView, model, $author$project$Main$EditorDivider, model.editorOpen),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$class('panel rendered-panel'),
 								$elm$html$Html$Attributes$id($jxxcarlson$xmarkdown_compiler$XMarkdown$API$renderedTextId),
-								A2(
-								$elm$html$Html$Attributes$style,
-								'width',
-								$author$project$Main$px(g.renderedW)),
 								A2(
 								$elm$html$Html$Attributes$style,
 								'background-color',
@@ -17007,6 +17196,7 @@ var $author$project$Main$view = function (model) {
 								$author$project$Main$Render,
 								A2($author$project$Main$renderPanel, params, compilerOutput.body))
 							])),
+						A3($author$project$Main$dividerView, model, $author$project$Main$TocDivider, true),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
@@ -17015,6 +17205,7 @@ var $author$project$Main$view = function (model) {
 								$elm$html$Html$Attributes$style,
 								'width',
 								$author$project$Main$px(g.tocW)),
+								A2($elm$html$Html$Attributes$style, 'flex', 'none'),
 								A2($elm$html$Html$Attributes$style, 'overflow', 'auto'),
 								A2($elm$html$Html$Attributes$style, 'overscroll-behavior', 'contain'),
 								A2($elm$html$Html$Attributes$style, 'min-height', '0'),

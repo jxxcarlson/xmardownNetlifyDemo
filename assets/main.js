@@ -77,7 +77,7 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
   return fun.a === 9 ? fun.f(a, b, c, d, e, f, g, h, i) : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
 
-console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.2/optimize for better performance and smaller assets.');
+console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.1/optimize for better performance and smaller assets.');
 
 
 var _JsArray_empty = [];
@@ -4951,8 +4951,8 @@ var $elm$core$String$split = F2(
 var $elm$json$Json$Decode$indent = function (str) {
 	return A2(
 		$elm$core$String$join,
-		'\u000A    ',
-		A2($elm$core$String$split, '\u000A', str));
+		'\n    ',
+		A2($elm$core$String$split, '\n', str));
 };
 var $elm$core$List$foldl = F3(
 	function (func, acc, list) {
@@ -5044,7 +5044,7 @@ var $elm$core$List$reverse = function (list) {
 var $elm$core$String$uncons = _String_uncons;
 var $elm$json$Json$Decode$errorOneOf = F2(
 	function (i, error) {
-		return '\u000A\u000A(' + ($elm$core$String$fromInt(i + 1) + (') ' + $elm$json$Json$Decode$indent(
+		return '\n\n(' + ($elm$core$String$fromInt(i + 1) + (') ' + $elm$json$Json$Decode$indent(
 			$elm$json$Json$Decode$errorToString(error))));
 	});
 var $elm$json$Json$Decode$errorToString = function (error) {
@@ -5069,7 +5069,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 							return $elm$core$Char$isAlpha(_char) && A2($elm$core$String$all, $elm$core$Char$isAlphaNum, rest);
 						}
 					}();
-					var fieldName = isSimple ? ('.' + f) : ('[\u0027' + (f + '\u0027]'));
+					var fieldName = isSimple ? ('.' + f) : ('[\'' + (f + '\']'));
 					var $temp$error = err,
 						$temp$context = A2($elm$core$List$cons, fieldName, context);
 					error = $temp$error;
@@ -5120,7 +5120,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 								$elm$core$List$length(errors)) + ' ways:'));
 							return A2(
 								$elm$core$String$join,
-								'\u000A\u000A',
+								'\n\n',
 								A2(
 									$elm$core$List$cons,
 									introduction,
@@ -5132,16 +5132,16 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 					var json = error.b;
 					var introduction = function () {
 						if (!context.b) {
-							return 'Problem with the given value:\u000A\u000A';
+							return 'Problem with the given value:\n\n';
 						} else {
 							return 'Problem with the value at json' + (A2(
 								$elm$core$String$join,
 								'',
-								$elm$core$List$reverse(context)) + ':\u000A\u000A    ');
+								$elm$core$List$reverse(context)) + ':\n\n    ');
 						}
 					}();
 					return introduction + ($elm$json$Json$Decode$indent(
-						A2($elm$json$Json$Encode$encode, 4, json)) + ('\u000A\u000A' + msg));
+						A2($elm$json$Json$Encode$encode, 4, json)) + ('\n\n' + msg));
 			}
 		}
 	});
@@ -5622,13 +5622,11 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters = {
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters = $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Ports$setEditorHighlightColor = _Platform_outgoingPort('setEditorHighlightColor', $elm$json$Json$Encode$string);
-var $author$project$Data$XMarkdown$text = '\u000A\u000A# Sample Document\u000A\u000AXMarkdown is a version of Markdown which handles mathematical text and other features.  These are described below.\u000A\u000AFeel free to edit this text.  Your changes will not be saved.\u000A\u000A# Math\u000A\u000AXMarkdown handles both inline and displayed mathematical text, e.g., $a^2 + b^2 = c^2$\u000Aand\u000A\u000A$$\u000Acos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\u000A$$\u000A\u000AHere is the source text: `$a^2 + b^2 = c^2$` for inline formulas and\u000A\u000A```\u000A$$\u000Acos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\u000A$$\u000A```\u000A\u000Afor displayed formulas. The source text looks like TeX but without most of the backslashes and curly braces that are customary.  This is [ETeX](https://package.elm-lang.org/packages/jxxcarlson/etex/latest/), an Elm package which implements this simplified syntax.  You may also use regular TeX:\u000A\u000A```\u000A$$\u000A\u005Ccos{x} = \u005Csum_{n=0}^\u005Cinfty(-1)^n \u005Cfrac{x^{2n}}{(2n)!}\u000A$$\u000A```\u000A\u000AIn ETeX curly braces are used for grouping.\u000A\u000A# Real-time Rendering\u000A\u000AXMarkdown provides for real-time rendering: the rendered text is updated as you type.\u000A\u000A# Synchronization\u000A\u000AXMarkdown can synchronize source and rendered text:\u000A\u000A- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.\u000A\u000A- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.\u000A\u000A# Table of Contents\u000A\u000AXMarkdown provides for an optional real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.\u000A\u000AAlso note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.\u000A\u000A*You can edit whatever you like in this document.  Your edits will not be saved.*\u000A\u000A\u000A# Images\u000A\u000A![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)\u000A\u000AThe element `[...]` holds the caption for the image as well as optional properties such as `width:400`.\u000A\u000A\u000A# Tables\u000A\u000AXMarkdown provides for Github-style tables.  These tables may contain mathematical text.\u000A\u000A**Ages, Occupations, and Favorite Formulas**\u000A\u000A| Name  | Age | Occupation  | F.F.|\u000A|:-------|----:|:-------------|-----:|\u000A| Alice |  28 | *Engineer*    | $n!$ |\u000A| Bob   |  34 | *Musician*    | $3:2$ |\u000A| Carol |  41 | *Mathematician* | $sqrt(2 + \u005Csqrt5)$\u000A\u000A ';
+var $author$project$Data$XMarkdown$text = '\n\n\n# Sample Document\n\nXMarkdown is a version of Markdown which handles mathematical text.  This and other features are described below. See also [this online version](https://xmarkdowndemo.netlify.app/).\n\nTo understand how any piece of rendered text is constructed, click on it to see the corresponding source text.\n\nFeel free to add to or edit this text. Your changes will not be saved. Refresh your browser to return to the original text.\n\n# Math\n\nXMarkdown handles both inline and displayed mathematical text, e.g., $a^2 + b^2 = c^2$\nand\n\n$$\ncos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\n$$\n\nHere is the source text: `$a^2 + b^2 = c^2$` for inline formulas and\n\n```\n$$\ncos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\n$$\n```\n\nfor displayed formulas. The source text looks like TeX but without most of the backslashes and curly braces that are customary.  This is [ETeX](https://package.elm-lang.org/packages/jxxcarlson/etex/latest/), an Elm package which implements this simplified syntax.  You may also use regular TeX:\n\n```\n$$\n\\cos{x} = \\sum_{n=0}^\\infty(-1)^n \\frac{x^{2n}}{(2n)!}\n$$\n```\n\nIn ETeX curly braces are used for grouping.\n\n\n# Images\n\n![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)\n\nThe syntax for images is\n\n```\n[CAPTION width:WIDTH_IN_PIXELS](URL)\n```\n\nThe phrase `width:WIDTH_IN_PIXELS` is optional.\n\n# Itemized Lists\n\n## Ordinary\n\nblah blah blah blah blah blah blah blah blah \n\n- Fruits\n\n  - Oranges\n\n  - Apples\n\n    - Green\n\n    - Red\n\n      - Yada\n\n      - Mada \n\nblah blah blah blah blah blah blah blah \n\n## Numbered\n\nblah blah blah blah blah blah blah blah blah blah \n\n. Vegetables\n\n  . Green Beans\n\n  . Brocolli\n\n    . US\n\n    . Mexican\n\nblah blah blah blah blah blah blah blah \n\n# Compact Lists\n\n\n## Ordinary\n\n\nblah blah blah blah blah blah blah blah blah \n\n- Apples\n  - YOLO $= y^2$\n    - MOV $c^2$\n    - Green\n    - Red\n\n      - Yada\n      - Mada \n\nblah blah blah blah blah blah blah blah \n\n## Numbered\n\n\nblah blah blah blah blah blah blah blah blah \n\n. Apples\n\n. Oranges\n\n. Pears\n\n  . Red\n\n  . Green\n\nblah blah blah blah blah blah blah blah blah \n\n. Vegetables\n  . Green Beans\n  . Brocolli\n    . US\n    . Mexican\n\nblah blah blah blah blah blah blah blah blah \n\n# Indentation\n\nOranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \n\n  Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \n\n    Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges\n  \n# Tables\n\nXMarkdown provides for Github-style tables.  These tables may contain mathematical text.\n\n**Ages, Occupations, and Favorite Formulas**\n\n| Name  | Age | Occupation  | F.F.|\n|:-------|----:|:-------------|-----:|\n| Alice |  28 | *Engineer*    | $n!$ |\n| Bob   |  34 | *Musician*    | $3:2$ |\n| Carol |  41 | *Mathematician* | $sqrt(2 + \\sqrt5)$\n\n# Real-time Rendering\n\nXMarkdown provides for real-time rendering: the rendered text is updated as you type. Try it with this document. (Your edits will not be saved: refresh the browswer to return to the original.)\n\n# Synchronization\n\nXMarkdown can synchronize source and rendered text:\n\n- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.\n\n- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.\n\n# Section Numbering\n\nThe default is for sections not to be numbered. To automatically number sections, press the button "Section numbering: No".  To return to the default press the same button, which now reads "Section numbering: Yes"\n\n# Table of Contents\n\nXMarkdown provides for an optional real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.\n\nAlso note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.\n\n*You can edit whatever you like in this document.  Your edits will not be saved.*\n\n# Blocks and Indentation\n\nSource text in XMarkdown is divided into blocks.  Here is an example\n\n```\n  # Introduction\n  \n  Cells are the fundamental units of life.\n  Every living organism, ..\n  \n  # The Discovery of Cells\n  \n  ## Robert Hooke and the First Observation\n  \n  In 1665, the English scientist Robert Hooke\n  examined a thin slice of cork with one of the first\n  compound microscopes ...\n  \n  ## Antoine van Leeuwenhoek\n  \n  A few years later, the Dutch scientist\n  Antoine van Leeuwenhoek built microscopes\n  of much higher quality ...\n```\n\n\n ';
 var $author$project$Main$init = function (flags) {
-	var params = _Utils_update(
-		$jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters,
-		{numberToLevel: 0});
+	var params = $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters;
 	return _Utils_Tuple2(
-		{compilerParameters: params, count: 0, currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, fileName: 'untitled.md', initialText: $author$project$Data$XMarkdown$text, lrSyncIndex: 0, lrSyncMatches: _List_Nil, lrSyncText: '', selectId: '@InitID', sourceText: $author$project$Data$XMarkdown$text, syncHighlight: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, tick: 0, windowHeight: flags.window.windowHeight, windowWidth: flags.window.windowWidth},
+		{compilerParameters: params, count: 0, currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, fileName: 'untitled.md', initialText: $author$project$Data$XMarkdown$text, lrSyncIndex: 0, lrSyncMatches: _List_Nil, lrSyncText: '', numberedSections: false, selectId: '@InitID', sourceText: $author$project$Data$XMarkdown$text, syncHighlight: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, tick: 0, windowHeight: flags.window.windowHeight, windowWidth: flags.window.windowWidth},
 		$author$project$Ports$setEditorHighlightColor(params.highlightColor));
 };
 var $elm$json$Json$Decode$int = _Json_decodeInt;
@@ -6000,8 +5998,8 @@ var $elm$core$List$filterMap = F2(
 	});
 var $elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _v0, state) {
-		var event = _v0.event;
 		var key = _v0.key;
+		var event = _v0.event;
 		var toMessage = function (_v2) {
 			var subKey = _v2.a;
 			var _v3 = _v2.b;
@@ -6092,7 +6090,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme = {
 	codeBackground: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray800,
 	codeText: $avh4$elm_color$Color$lightBlue,
 	highlight: $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo500,
-	indentGuide: A4($avh4$elm_color$Color$rgba, 1, 1, 1, 0.15),
+	indentGuide: A4($avh4$elm_color$Color$rgba, 0.95, 0.45, 0.1, 1.0),
 	link: $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue300,
 	offsetBackground: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
 	offsetText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray400,
@@ -6235,7 +6233,7 @@ var $author$project$Main$jumpToTopOfWithLineNumber = F2(
 				A2(
 					$elm$core$Task$onError,
 					function (_v0) {
-						var selector = '[data-line-number=\u0022' + ($elm$core$String$fromInt(lineNumber) + '\u0022]');
+						var selector = '[data-line-number=\"' + ($elm$core$String$fromInt(lineNumber) + '\"]');
 						return A2(
 							$elm$core$Task$andThen,
 							$author$project$Main$performScroll,
@@ -6261,7 +6259,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme = {
 	codeBackground: A4($avh4$elm_color$Color$rgba, 0.9, 0.9, 0.94, 1),
 	codeText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$blueDark,
 	highlight: $jxxcarlson$xmarkdown_compiler$Render$NewColor$indigo200,
-	indentGuide: A4($avh4$elm_color$Color$rgba, 0, 0, 0, 0.15),
+	indentGuide: A4($avh4$elm_color$Color$rgba, 0.1, 0.1, 0.45, 0.8),
 	link: $jxxcarlson$xmarkdown_compiler$Render$NewColor$blue700,
 	offsetBackground: A3($avh4$elm_color$Color$rgb, 1, 1, 1),
 	offsetText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950,
@@ -7071,12 +7069,12 @@ var $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary = function (a) {
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$addCurrentLine_ = F2(
 	function (line, block) {
-		var content = line.content;
 		var prefix = line.prefix;
+		var content = line.content;
 		var oldMeta = block.meta;
 		var newMeta = _Utils_update(
 			oldMeta,
-			{sourceText: block.meta.sourceText + ('\u000A' + (prefix + content))});
+			{sourceText: block.meta.sourceText + ('\n' + (prefix + content))});
 		return _Utils_update(
 			block,
 			{
@@ -7454,7 +7452,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$normalizeMathDeli
 					var _v1 = _v0.a;
 					var lastLine = _v1.a;
 					var front = _v1.b;
-					return ($elm$core$String$trim(lastLine) === '\u005C]') ? _Utils_ap(
+					return ($elm$core$String$trim(lastLine) === '\\]') ? _Utils_ap(
 						front,
 						_List_fromArray(
 							['$$'])) : block.body;
@@ -7464,7 +7462,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$normalizeMathDeli
 			}(),
 			firstLine: A2(
 				$elm$core$String$startsWith,
-				'\u005C[',
+				'\\[',
 				$elm$core$String$trimLeft(block.firstLine)) ? ('$$' + A2(
 				$elm$core$String$dropLeft,
 				2,
@@ -7508,8 +7506,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$finalize = functi
 	var content = $elm$core$List$reverse(block.body);
 	var sourceText = (!_Utils_eq(block.heading, $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph)) ? A2(
 		$elm$core$String$join,
-		'\u000A',
-		A2($elm$core$List$cons, block.firstLine, content)) : A2($elm$core$String$join, '\u000A', content);
+		'\n',
+		A2($elm$core$List$cons, block.firstLine, content)) : A2($elm$core$String$join, '\n', content);
 	var newMeta = _Utils_update(
 		oldMeta,
 		{sourceText: sourceText});
@@ -7551,7 +7549,7 @@ var $elm$core$Maybe$withDefault = F2(
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$sectionRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^(#+\u005Cs*|!!\u005Cs*)'));
+	$elm$regex$Regex$fromString('^(#+\\s*|!!\\s*)'));
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -7564,61 +7562,55 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix
 				},
 				A2($elm$regex$Regex$find, $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$sectionRegex, string))));
 };
-var $elm$core$String$replace = F3(
-	function (before, after, string) {
-		return A2(
-			$elm$core$String$join,
-			after,
-			A2($elm$core$String$split, before, string));
-	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$fixMarkdownTitleBlock = function (block) {
 	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix(block.firstLine);
 	if (_v0.$ === 'Nothing') {
 		return block;
 	} else {
 		var prefix = _v0.a;
-		return (prefix === '!!') ? _Utils_update(
-			block,
-			{
-				body: A2(
-					$elm$core$List$cons,
-					A3($elm$core$String$replace, prefix, '', block.firstLine),
-					block.body),
-				heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('title')
-			}) : ((A2(
+		var stripped = A2($elm$core$String$startsWith, prefix, block.firstLine) ? A2(
+			$elm$core$String$dropLeft,
+			$elm$core$String$length(prefix),
+			block.firstLine) : block.firstLine;
+		var markerOffset = $elm$core$String$length(block.firstLine) - $elm$core$String$length(stripped);
+		var withMarker = function (b) {
+			return _Utils_update(
+				b,
+				{
+					body: A2($elm$core$List$cons, stripped, b.body),
+					properties: A3(
+						$elm$core$Dict$insert,
+						'markerOffset',
+						$elm$core$String$fromInt(markerOffset),
+						b.properties)
+				});
+		};
+		return (prefix === '!!') ? withMarker(
+			_Utils_update(
+				block,
+				{
+					heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('title')
+				})) : ((A2(
 			$elm$core$String$left,
 			1,
-			$elm$core$String$trim(prefix)) === '#') ? _Utils_update(
-			block,
-			{
-				body: A2(
-					$elm$core$List$cons,
-					A3($elm$core$String$replace, prefix, '', block.firstLine),
-					block.body),
-				heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('section')
-			}) : ((A2(
+			$elm$core$String$trim(prefix)) === '#') ? withMarker(
+			_Utils_update(
+				block,
+				{
+					heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('section')
+				})) : ((A2(
 			$elm$core$String$left,
 			1,
-			$elm$core$String$trim(prefix)) === '*') ? _Utils_update(
-			block,
-			{
-				body: A2(
-					$elm$core$List$cons,
-					A3($elm$core$String$replace, prefix, '', block.firstLine),
-					block.body),
-				heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('section*')
-			}) : _Utils_update(
-			block,
-			{
-				body: A2(
-					$elm$core$List$cons,
-					A3($elm$core$String$replace, prefix, '', block.firstLine),
-					block.body)
-			})));
+			$elm$core$String$trim(prefix)) === '*') ? withMarker(
+			_Utils_update(
+				block,
+				{
+					heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('section*')
+				})) : withMarker(block)));
 	}
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isVerbatimLine = function (str) {
-	return (A2($elm$core$String$left, 3, str) === '```') || ((A2($elm$core$String$left, 2, str) === '$$') || (A2($elm$core$String$left, 2, str) === '\u005C['));
+	return (A2($elm$core$String$left, 3, str) === '```') || ((A2($elm$core$String$left, 2, str) === '$$') || (A2($elm$core$String$left, 2, str) === '\\['));
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$acceptBlock = F2(
 	function (tag, block) {
@@ -7629,7 +7621,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$acceptBlock = F2(
 var $jxxcarlson$xmarkdown_compiler$Tools$Utility$ordinaryTagAtEndRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('.*\u000A| .*$'));
+	$elm$regex$Regex$fromString('.*\n| .*$'));
 var $jxxcarlson$xmarkdown_compiler$Tools$Utility$findOrdinaryTagAtEnd = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -7766,6 +7758,13 @@ var $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getPrimitiveBlockName = fu
 			return $elm$core$Maybe$Just(name);
 	}
 };
+var $elm$core$String$replace = F3(
+	function (before, after, string) {
+		return A2(
+			$elm$core$String$join,
+			after,
+			A2($elm$core$String$split, before, string));
+	});
 var $elm$regex$Regex$replace = _Regex_replaceAtMost(_Regex_infinity);
 var $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDashSpace = function (str) {
 	var regex = A2(
@@ -7780,11 +7779,11 @@ var $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDashSpace = funct
 		},
 		str);
 };
-var $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDotSpace = function (str) {
+var $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker = function (str) {
 	var regex = A2(
 		$elm$core$Maybe$withDefault,
 		$elm$regex$Regex$never,
-		$elm$regex$Regex$fromString('^\u005C. '));
+		$elm$regex$Regex$fromString('^(\\d+[.)]|\\.) '));
 	return A3(
 		$elm$regex$Regex$replace,
 		regex,
@@ -7840,32 +7839,46 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$transformBlock = 
 							properties: A3($elm$core$Dict$insert, 'level', '3', block.properties)
 						});
 				case 'item':
+					var stripped = $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDashSpace(
+						A3(
+							$elm$core$String$replace,
+							'| item',
+							'',
+							$elm$core$String$trim(block.firstLine)));
+					var indent = $elm$core$String$length(block.firstLine) - $elm$core$String$length(
+						$elm$core$String$trimLeft(block.firstLine));
+					var markerOffset = indent + ($elm$core$String$length(
+						$elm$core$String$trim(block.firstLine)) - $elm$core$String$length(stripped));
 					return _Utils_update(
 						block,
 						{
-							body: A2(
-								$elm$core$List$cons,
-								$jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDashSpace(
-									A3(
-										$elm$core$String$replace,
-										'| item',
-										'',
-										$elm$core$String$trim(block.firstLine))),
-								block.body)
+							body: A2($elm$core$List$cons, stripped, block.body),
+							properties: A3(
+								$elm$core$Dict$insert,
+								'markerOffset',
+								$elm$core$String$fromInt(markerOffset),
+								block.properties)
 						});
 				case 'numbered':
+					var stripped = $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker(
+						A3(
+							$elm$core$String$replace,
+							'| numbered',
+							'',
+							$elm$core$String$trim(block.firstLine)));
+					var indent = $elm$core$String$length(block.firstLine) - $elm$core$String$length(
+						$elm$core$String$trimLeft(block.firstLine));
+					var markerOffset = indent + ($elm$core$String$length(
+						$elm$core$String$trim(block.firstLine)) - $elm$core$String$length(stripped));
 					return _Utils_update(
 						block,
 						{
-							body: A2(
-								$elm$core$List$cons,
-								$jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDotSpace(
-									A3(
-										$elm$core$String$replace,
-										'| numbered',
-										'',
-										$elm$core$String$trim(block.firstLine))),
-								block.body)
+							body: A2($elm$core$List$cons, stripped, block.body),
+							properties: A3(
+								$elm$core$Dict$insert,
+								'markerOffset',
+								$elm$core$String$fromInt(markerOffset),
+								block.properties)
 						});
 				default:
 					break _v0$6;
@@ -7957,9 +7970,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$commitBlock = F2(
 								{
 									body: A2(
 										$elm$core$List$filter,
-										function (l) {
-											return l !== '```';
-										},
+										A2(
+											$elm$core$Basics$composeL,
+											$elm$core$Basics$not,
+											$elm$core$String$startsWith('```')),
 										block_.body)
 								})) : $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$finalize(
 							_Utils_update(
@@ -7989,10 +8003,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$commitBlock = F2(
 var $jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta = {error: $elm$core$Maybe$Nothing, id: '', lineNumber: 0, messages: _List_Nil, numberOfLines: 0, position: 0, sourceText: ''};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$bogusBlockFromLine = F2(
 	function (message_, _v0) {
-		var content = _v0.content;
-		var position = _v0.position;
-		var lineNumber = _v0.lineNumber;
 		var indent = _v0.indent;
+		var lineNumber = _v0.lineNumber;
+		var position = _v0.position;
+		var content = _v0.content;
 		var message = '[b [red ' + (content + (']] [blue [i ' + (message_ + ']]')));
 		var meta = _Utils_update(
 			$jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta,
@@ -8222,10 +8236,21 @@ var $jxxcarlson$xmarkdown_compiler$Tools$KV$argsAndProperties = function (words)
 		$jxxcarlson$xmarkdown_compiler$Tools$KV$prepareList(namedArgs));
 	return _Utils_Tuple2(args, properties);
 };
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$codeFenceArgs = function (prefix) {
+	var _v0 = $elm$core$String$trim(
+		A2($elm$core$String$dropLeft, 3, prefix));
+	if (_v0 === '') {
+		return _List_Nil;
+	} else {
+		var language = _v0;
+		return _List_fromArray(
+			[language]);
+	}
+};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$titleRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^!!\u005Cs'));
+	$elm$regex$Regex$fromString('^!!\\s'));
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findTitlePrefix = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -8237,6 +8262,26 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findTitlePrefix =
 					return $.match;
 				},
 				A2($elm$regex$Regex$find, $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$titleRegex, string))));
+};
+var $elm$regex$Regex$contains = _Regex_contains;
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItemPrefixRegex = A2(
+	$elm$core$Maybe$withDefault,
+	$elm$regex$Regex$never,
+	$elm$regex$Regex$fromString('^\\d+[.)]$'));
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isNumberedItemPrefix = function (prefix) {
+	return A2($elm$regex$Regex$contains, $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItemPrefixRegex, prefix);
+};
+var $elm$core$Dict$singleton = F2(
+	function (key, value) {
+		return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItem = function (reducedLine) {
+	return $elm$core$String$isEmpty(reducedLine) ? $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent) : $elm$core$Result$Ok(
+		{
+			args: _List_Nil,
+			heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('numbered'),
+			properties: A2($elm$core$Dict$singleton, 'firstLine', reducedLine)
+		});
 };
 var $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingGreaterThanSign = function (str) {
 	var regex = A2(
@@ -8251,10 +8296,6 @@ var $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingGreaterThanSign =
 		},
 		str);
 };
-var $elm$core$Dict$singleton = F2(
-	function (key, value) {
-		return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
-	});
 var $elm$core$String$words = _String_words;
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = function (line_) {
 	var line = $elm$core$String$trim(line_);
@@ -8344,13 +8385,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = 
 								properties: A2($elm$core$Dict$singleton, 'firstLine', reducedLine)
 							});
 					case '.':
-						var reducedLine = A3($elm$core$String$replace, '. ', '', line);
-						return $elm$core$String$isEmpty(reducedLine) ? $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent) : $elm$core$Result$Ok(
-							{
-								args: _List_Nil,
-								heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('numbered'),
-								properties: A2($elm$core$Dict$singleton, 'firstLine', reducedLine)
-							});
+						return $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItem(
+							$jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker(line));
 					case '$$':
 						return $elm$core$Result$Ok(
 							{
@@ -8358,42 +8394,41 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = 
 								heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
 								properties: $elm$core$Dict$empty
 							});
-					case '\u005C[':
+					case '\\[':
 						return $elm$core$Result$Ok(
 							{
 								args: _List_Nil,
 								heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
 								properties: $elm$core$Dict$empty
 							});
-					case '```':
-						return $elm$core$Result$Ok(
+					default:
+						return A2($elm$core$String$startsWith, '```', prefix) ? $elm$core$Result$Ok(
 							{
-								args: _List_Nil,
+								args: $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$codeFenceArgs(prefix),
 								heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('code'),
 								properties: $elm$core$Dict$empty
-							});
-					default:
-						return $elm$core$Result$Ok(
-							{args: _List_Nil, heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph, properties: $elm$core$Dict$empty});
+							}) : ($jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isNumberedItemPrefix(prefix) ? $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItem(
+							$jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker(line)) : $elm$core$Result$Ok(
+							{args: _List_Nil, heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph, properties: $elm$core$Dict$empty}));
 				}
 			}
 		}
 	}
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$blockFromLine = function (line) {
-	var content = line.content;
-	var prefix = line.prefix;
-	var position = line.position;
-	var lineNumber = line.lineNumber;
 	var indent = line.indent;
+	var lineNumber = line.lineNumber;
+	var position = line.position;
+	var prefix = line.prefix;
+	var content = line.content;
 	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData(content);
 	if (_v0.$ === 'Err') {
 		return $elm$core$Result$Ok(
 			A2($jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$bogusBlockFromLine, '<= something missing', line));
 	} else {
-		var properties = _v0.a.properties;
-		var args = _v0.a.args;
 		var heading = _v0.a.heading;
+		var args = _v0.a.args;
+		var properties = _v0.a.properties;
 		var meta = _Utils_update(
 			$jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta,
 			{lineNumber: lineNumber, numberOfLines: 1, position: position, sourceText: ''});
@@ -8845,9 +8880,9 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$stringValue = function (t
 		case 'MathToken':
 			return '$';
 		case 'MathTokenLeft':
-			return '\u005C(';
+			return '\\(';
 		case 'MathTokenRight':
-			return '\u005C)';
+			return '\\)';
 		case 'CodeToken':
 			return '`';
 		default:
@@ -10247,7 +10282,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 					var meta = _v0.a.a;
 					var rest = _v0.b;
 					var content = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$toString2(rest);
-					var message = (content === '') ? '\u005C(?\u005C)' : '\u005C( ';
+					var message = (content === '') ? '\\(?\\)' : '\\( ';
 					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
 						_Utils_update(
 							state,
@@ -10256,7 +10291,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 									$elm$core$List$cons,
 									$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$errorMessage(message),
 									state.committed),
-								messages: A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$prependMessage, state.lineNumber, 'opening \u005C( needs to be matched with a closing \u005C)', state.messages),
+								messages: A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$prependMessage, state.lineNumber, 'opening \\( needs to be matched with a closing \\)', state.messages),
 								numberOfTokens: 0,
 								stack: _List_Nil,
 								tokenIndex: meta.index + 1
@@ -10834,8 +10869,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenRightParser = F2
 			$elm$parser$Parser$Advanced$symbol(
 				A2(
 					$elm$parser$Parser$Advanced$Token,
-					'\u005C)',
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\u005C)'))));
+					'\\)',
+					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\\)'))));
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathParenParser_ = F2(
 	function (start, index) {
@@ -11045,8 +11080,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenLeftParser = F2(
 			$elm$parser$Parser$Advanced$symbol(
 				A2(
 					$elm$parser$Parser$Advanced$Token,
-					'\u005C(',
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\u005C('))));
+					'\\(',
+					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\\('))));
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$rightBracketParser = F2(
 	function (start, index) {
@@ -11236,9 +11271,9 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleLB = F2(
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$boostMeta = F3(
 	function (lineNumber, tokenIndex, _v0) {
-		var index = _v0.index;
-		var end = _v0.end;
 		var begin = _v0.begin;
+		var end = _v0.end;
+		var index = _v0.index;
 		return {
 			begin: begin,
 			end: end,
@@ -11529,6 +11564,15 @@ var $jxxcarlson$xmarkdown_compiler$AST$Language$boostBlock = function (block) {
 			});
 	}
 };
+var $elm$core$Maybe$andThen = F2(
+	function (callback, maybeValue) {
+		if (maybeValue.$ === 'Just') {
+			var value = maybeValue.a;
+			return callback(value);
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
 var $jxxcarlson$xmarkdown_compiler$AST$Language$emptyExprMeta = {begin: 0, end: 0, id: 'id', index: 0};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$fixItemsAux = F2(
 	function (acc, input) {
@@ -11667,7 +11711,64 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseListItems = F3(
 				$elm$core$List$foldl,
 				folder,
 				_Utils_Tuple2(0, _List_Nil),
-				A2($elm$core$String$split, '\u000A', sourceText)).b);
+				A2($elm$core$String$split, '\n', sourceText)).b);
+	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseNumberedListItems = F2(
+	function (parse, sourceText) {
+		var folder = F2(
+			function (line, _v0) {
+				var offset = _v0.a;
+				var acc = _v0.b;
+				var trimmed = $elm$core$String$trimLeft(line);
+				var nextOffset = (offset + $elm$core$String$length(line)) + 1;
+				var indent = $elm$core$String$length(line) - $elm$core$String$length(trimmed);
+				var content = $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker(trimmed);
+				var markerLen = $elm$core$String$length(trimmed) - $elm$core$String$length(content);
+				var delta = (offset + indent) + markerLen;
+				var exprs = A2(
+					$elm$core$List$map,
+					$jxxcarlson$xmarkdown_compiler$AST$Language$shiftExpressionPositions(delta),
+					parse(content));
+				return _Utils_Tuple2(
+					nextOffset,
+					A2(
+						$elm$core$List$cons,
+						A3($jxxcarlson$xmarkdown_compiler$AST$Language$ExprList, indent, exprs, $jxxcarlson$xmarkdown_compiler$AST$Language$emptyExprMeta),
+						acc));
+			});
+		return $elm$core$List$reverse(
+			A3(
+				$elm$core$List$foldl,
+				folder,
+				_Utils_Tuple2(0, _List_Nil),
+				A2($elm$core$String$split, '\n', sourceText)).b);
+	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseQuotationLines = F2(
+	function (parse, sourceText) {
+		var folder = F2(
+			function (line, _v0) {
+				var offset = _v0.a;
+				var acc = _v0.b;
+				var trimmed = $elm$core$String$trimLeft(line);
+				var nextOffset = (offset + $elm$core$String$length(line)) + 1;
+				var indent = $elm$core$String$length(line) - $elm$core$String$length(trimmed);
+				var content = $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingGreaterThanSign(trimmed);
+				var markerLen = $elm$core$String$length(trimmed) - $elm$core$String$length(content);
+				var delta = (offset + indent) + markerLen;
+				var exprs = A2(
+					$elm$core$List$map,
+					$jxxcarlson$xmarkdown_compiler$AST$Language$shiftExpressionPositions(delta),
+					parse(content));
+				return _Utils_Tuple2(
+					nextOffset,
+					A3($elm$core$List$foldl, $elm$core$List$cons, acc, exprs));
+			});
+		return $elm$core$List$reverse(
+			A3(
+				$elm$core$List$foldl,
+				folder,
+				_Utils_Tuple2(0, _List_Nil),
+				A2($elm$core$String$split, '\n', sourceText)).b);
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$alignmentCode = function (a) {
 	switch (a.$) {
@@ -11706,8 +11807,8 @@ var $elm$core$List$repeat = F2(
 	function (n, value) {
 		return A3($elm$core$List$repeatHelp, _List_Nil, n, value);
 	});
-var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$padRow = F2(
-	function (n, cells) {
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$padCells = F3(
+	function (n, endOffset, cells) {
 		return (_Utils_cmp(
 			$elm$core$List$length(cells),
 			n) > -1) ? A2($elm$core$List$take, n, cells) : _Utils_ap(
@@ -11715,7 +11816,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$padRow = F2(
 			A2(
 				$elm$core$List$repeat,
 				n - $elm$core$List$length(cells),
-				''));
+				_Utils_Tuple2(endOffset, '')));
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$AlignCenter = {$: 'AlignCenter'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$AlignLeft = {$: 'AlignLeft'};
@@ -11732,6 +11833,38 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$parseAlignments = funct
 		$jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$alignmentOfCell,
 		$jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$splitRow(separatorLine));
 };
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$splitRowWithOffsets = function (str) {
+	var t = $elm$core$String$trim(str);
+	var leadingWs = $elm$core$String$length(str) - $elm$core$String$length(
+		$elm$core$String$trimLeft(str));
+	var _v0 = A2($elm$core$String$startsWith, '|', t) ? _Utils_Tuple2(
+		A2($elm$core$String$dropLeft, 1, t),
+		leadingWs + 1) : _Utils_Tuple2(t, leadingWs);
+	var afterLeading = _v0.a;
+	var frontOffset = _v0.b;
+	var b = A2($elm$core$String$endsWith, '|', afterLeading) ? A2($elm$core$String$dropRight, 1, afterLeading) : afterLeading;
+	var step = F2(
+		function (segment, _v1) {
+			var cursor = _v1.a;
+			var acc = _v1.b;
+			var innerOffset = $elm$core$String$length(segment) - $elm$core$String$length(
+				$elm$core$String$trimLeft(segment));
+			return _Utils_Tuple2(
+				(cursor + $elm$core$String$length(segment)) + 1,
+				A2(
+					$elm$core$List$cons,
+					_Utils_Tuple2(
+						(frontOffset + cursor) + innerOffset,
+						$elm$core$String$trim(segment)),
+					acc));
+		});
+	return $elm$core$List$reverse(
+		A3(
+			$elm$core$List$foldl,
+			step,
+			_Utils_Tuple2(0, _List_Nil),
+			A2($elm$core$String$split, '|', b)).b);
+};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$toExpressionBlock = F2(
 	function (parse, pb) {
 		var rows = $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$rowsInOrder(pb);
@@ -11740,41 +11873,78 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$toExpressionBlock = F2(
 			'',
 			$elm$core$List$head(
 				A2($elm$core$List$drop, 1, rows)));
+		var rowOffsets = $elm$core$List$reverse(
+			A3(
+				$elm$core$List$foldl,
+				F2(
+					function (row, _v5) {
+						var cursor = _v5.a;
+						var acc = _v5.b;
+						return _Utils_Tuple2(
+							(cursor + $elm$core$String$length(row)) + 1,
+							A2(
+								$elm$core$List$cons,
+								_Utils_Tuple2(cursor, row),
+								acc));
+					}),
+				_Utils_Tuple2(0, _List_Nil),
+				rows).b);
+		var renderedRows = function () {
+			if (rowOffsets.b && rowOffsets.b.b) {
+				var headerRow = rowOffsets.a;
+				var _v4 = rowOffsets.b;
+				var rest = _v4.b;
+				return A2($elm$core$List$cons, headerRow, rest);
+			} else {
+				var other = rowOffsets;
+				return other;
+			}
+		}();
 		var header = A2(
 			$elm$core$Maybe$withDefault,
 			'',
 			$elm$core$List$head(rows));
 		var ncols = $elm$core$List$length(
 			$jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$splitRow(header));
-		var toRowExpr = function (rowSrc) {
-			var cells = A2(
-				$jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$padRow,
+		var toRowExpr = function (_v2) {
+			var rowOffset = _v2.a;
+			var rowSrc = _v2.b;
+			var toCellExpr = function (_v1) {
+				var cellOffset = _v1.a;
+				var cellText = _v1.b;
+				return A3(
+					$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
+					'cell',
+					A2(
+						$elm$core$List$map,
+						$jxxcarlson$xmarkdown_compiler$AST$Language$shiftExpressionPositions(cellOffset),
+						parse(cellText)),
+					$jxxcarlson$xmarkdown_compiler$AST$Language$emptyExprMeta);
+			};
+			var cells = A3(
+				$jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$padCells,
 				ncols,
-				$jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$splitRow(rowSrc));
+				rowOffset + $elm$core$String$length(rowSrc),
+				A2(
+					$elm$core$List$map,
+					function (_v0) {
+						var o = _v0.a;
+						var text = _v0.b;
+						return _Utils_Tuple2(rowOffset + o, text);
+					},
+					$jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$splitRowWithOffsets(rowSrc)));
 			return A3(
 				$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
 				'row',
-				A2(
-					$elm$core$List$map,
-					function (cellText) {
-						return A3(
-							$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
-							'cell',
-							parse(cellText),
-							$jxxcarlson$xmarkdown_compiler$AST$Language$emptyExprMeta);
-					},
-					cells),
+				A2($elm$core$List$map, toCellExpr, cells),
 				$jxxcarlson$xmarkdown_compiler$AST$Language$emptyExprMeta);
 		};
-		var dataRows = A2($elm$core$List$drop, 2, rows);
 		var tableExpr = A3(
 			$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
 			'table',
-			A2(
-				$elm$core$List$map,
-				toRowExpr,
-				A2($elm$core$List$cons, header, dataRows)),
+			A2($elm$core$List$map, toRowExpr, renderedRows),
 			$jxxcarlson$xmarkdown_compiler$AST$Language$emptyExprMeta);
+		var dataRows = A2($elm$core$List$drop, 2, rows);
 		return {
 			args: pb.args,
 			body: $toastal$either$Either$Right(
@@ -11802,7 +11972,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$toExpressionBlock_ = F2
 					case 'Paragraph':
 						return $toastal$either$Either$Right(
 							parse(
-								A2($elm$core$String$join, '\u000A', primitiveBlock.body)));
+								A2($elm$core$String$join, '\n', primitiveBlock.body)));
 					case 'Ordinary':
 						switch (_v0.a) {
 							case 'itemList_':
@@ -11820,50 +11990,29 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$toExpressionBlock_ = F2
 								return $toastal$either$Either$Right(
 									A3($jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseListItems, '- ', parse, primitiveBlock.meta.sourceText));
 							case 'numberedList':
-								var numberOfLeadingSpaces = function (str) {
-									return $elm$core$String$length(str) - $elm$core$String$length(
-										$elm$core$String$trimLeft(str));
-								};
-								var extractIndentAndContent = function (str) {
-									return _Utils_Tuple2(
-										numberOfLeadingSpaces(str),
-										A3(
-											$elm$core$String$replace,
-											'. ',
-											'',
-											$elm$core$String$trimLeft(str)));
-								};
-								var items = A2(
-									$elm$core$List$map,
-									extractIndentAndContent,
-									A2($elm$core$String$split, '\u000A', primitiveBlock.meta.sourceText));
-								var content_ = A2(
-									$elm$core$List$map,
-									function (_v2) {
-										var indent = _v2.a;
-										var str = _v2.b;
-										return _Utils_Tuple2(
-											indent,
-											parse(str));
-									},
-									items);
+								return $toastal$either$Either$Right(
+									A2($jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseNumberedListItems, parse, primitiveBlock.meta.sourceText));
+							case 'quotation':
+								return $toastal$either$Either$Right(
+									A2($jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseQuotationLines, parse, primitiveBlock.meta.sourceText));
+							default:
+								var markerOffset = A2(
+									$elm$core$Maybe$withDefault,
+									0,
+									A2(
+										$elm$core$Maybe$andThen,
+										$elm$core$String$toInt,
+										A2($elm$core$Dict$get, 'markerOffset', primitiveBlock.properties)));
 								return $toastal$either$Either$Right(
 									A2(
 										$elm$core$List$map,
-										function (_v1) {
-											var indent = _v1.a;
-											var exprList = _v1.b;
-											return A3($jxxcarlson$xmarkdown_compiler$AST$Language$ExprList, indent, exprList, $jxxcarlson$xmarkdown_compiler$AST$Language$emptyExprMeta);
-										},
-										content_));
-							default:
-								return $toastal$either$Either$Right(
-									parse(
-										A2($elm$core$String$join, '\u000A', primitiveBlock.body)));
+										$jxxcarlson$xmarkdown_compiler$AST$Language$shiftExpressionPositions(markerOffset),
+										parse(
+											A2($elm$core$String$join, '\n', primitiveBlock.body))));
 						}
 					default:
 						return $toastal$either$Either$Left(
-							A2($elm$core$String$join, '\u000A', primitiveBlock.body));
+							A2($elm$core$String$join, '\n', primitiveBlock.body));
 				}
 			}(),
 			firstLine: primitiveBlock.firstLine,
@@ -12056,11 +12205,37 @@ var $author$project$Main$update = F2(
 						model,
 						{fileName: newFileName}),
 					$elm$core$Platform$Cmd$none);
+			case 'ToggleNumberSections':
+				var oldCompilerParameters = model.compilerParameters;
+				var _v1 = model.numberedSections;
+				if (!_v1) {
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								compilerParameters: _Utils_update(
+									oldCompilerParameters,
+									{numberToLevel: 3}),
+								numberedSections: true
+							}),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								compilerParameters: _Utils_update(
+									oldCompilerParameters,
+									{numberToLevel: 0}),
+								numberedSections: false
+							}),
+						$elm$core$Platform$Cmd$none);
+				}
 			case 'ToggleTheme':
 				var params = model.compilerParameters;
 				var newTheme = function () {
-					var _v2 = model.theme;
-					if (_v2.$ === 'Light') {
+					var _v3 = model.theme;
+					if (_v3.$ === 'Light') {
 						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
 					} else {
 						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
@@ -12095,6 +12270,7 @@ var $author$project$Main$update = F2(
 						docWidth: $author$project$Main$geometry(model).docWidth,
 						editCount: model.count,
 						interBlockSpacing: 0,
+						numberToLevel: 0,
 						paddingAboveHeadings: 18,
 						selectedId: 'selectedId'
 					});
@@ -12112,7 +12288,7 @@ var $author$project$Main$update = F2(
 				if (currentMatch.$ === 'Just') {
 					var match = currentMatch.a;
 					var lineNumberStr = $elm$core$String$fromInt(match.lineNumber);
-					var css = '[data-line-number=\u0022' + (lineNumberStr + ('\u0022] { background-color: ' + (params.highlightColor + (' !important; }\u000A' + ('[data-line-number=\u0022' + (lineNumberStr + ('\u0022] * { background-color: ' + (params.highlightColor + ' !important; }'))))))));
+					var css = '[data-line-number=\"' + (lineNumberStr + ('\"] { background-color: ' + (params.highlightColor + (' !important; }\n' + ('[data-line-number=\"' + (lineNumberStr + ('\"] * { background-color: ' + (params.highlightColor + ' !important; }'))))))));
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -12132,9 +12308,9 @@ var $author$project$Main$update = F2(
 				}
 			default:
 				var msg_ = msg.a;
-				var _v4 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
-				if (_v4.$ === 'Just') {
-					var h = _v4.a;
+				var _v5 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+				if (_v5.$ === 'Just') {
+					var h = _v5.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -12178,6 +12354,7 @@ var $author$project$Main$Render = function (a) {
 	return {$: 'Render', a: a};
 };
 var $author$project$Main$SaveFileRequested = {$: 'SaveFileRequested'};
+var $author$project$Main$ToggleNumberSections = {$: 'ToggleNumberSections'};
 var $author$project$Main$ToggleTheme = {$: 'ToggleTheme'};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$Attributes$stringProperty = F2(
@@ -12320,7 +12497,7 @@ var $jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace = function (s
 	return $elm$core$String$trim(
 		A3(
 			$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
-			'\u005Cs\u005Cs+',
+			'\\s\\s+',
 			function (_v0) {
 				return ' ';
 			},
@@ -12432,15 +12609,6 @@ var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock = F2(
 							$elm$core$String$fromInt(acc.blockCounter)),
 						block.properties)
 				}) : block);
-		}
-	});
-var $elm$core$Maybe$andThen = F2(
-	function (callback, maybeValue) {
-		if (maybeValue.$ === 'Just') {
-			var value = maybeValue.a;
-			return callback(value);
-		} else {
-			return $elm$core$Maybe$Nothing;
 		}
 	});
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList = {$: 'SInList'};
@@ -12701,9 +12869,9 @@ var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock = F2(
 	});
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator = F2(
 	function (block, accumulator) {
-		var properties = block.properties;
-		var args = block.args;
 		var heading = block.heading;
+		var args = block.args;
+		var properties = block.properties;
 		switch (heading.$) {
 			case 'Ordinary':
 				switch (heading.a) {
@@ -13459,7 +13627,7 @@ var $jxxcarlson$etex$ETeX$Transform$f0Parser = A2(
 	A2(
 		$jxxcarlson$etex$ETeX$Transform$second,
 		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\u005C', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash)),
+			A2($elm$parser$Parser$Advanced$Token, '\\', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash)),
 		$jxxcarlson$etex$ETeX$Transform$alphaNumParser_));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter = {$: 'ExpectingGreekLetter'};
 var $elm$parser$Parser$Advanced$problem = function (x) {
@@ -13475,7 +13643,7 @@ var $jxxcarlson$etex$ETeX$Transform$greekSymbolParser = A2(
 	$elm$parser$Parser$Advanced$andThen,
 	function (str) {
 		return A2($elm$core$List$member, str, $jxxcarlson$etex$ETeX$KaTeX$greekLetters) ? $elm$parser$Parser$Advanced$succeed(
-			$jxxcarlson$etex$ETeX$Transform$AlphaNum('\u005C' + str)) : $elm$parser$Parser$Advanced$problem($jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter);
+			$jxxcarlson$etex$ETeX$Transform$AlphaNum('\\' + str)) : $elm$parser$Parser$Advanced$problem($jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter);
 	},
 	A2(
 		$elm$parser$Parser$Advanced$keeper,
@@ -13495,7 +13663,17 @@ var $jxxcarlson$etex$ETeX$Transform$leftBraceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$LeftMathBrace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\u005C{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftMathBrace)));
+		A2($elm$parser$Parser$Advanced$Token, '\\{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftMathBrace)));
+var $jxxcarlson$etex$ETeX$Transform$ExpectingLineBreak = {$: 'ExpectingLineBreak'};
+var $jxxcarlson$etex$ETeX$Transform$MathSymbols = function (a) {
+	return {$: 'MathSymbols', a: a};
+};
+var $jxxcarlson$etex$ETeX$Transform$lineBreakParser = A2(
+	$elm$parser$Parser$Advanced$ignorer,
+	$elm$parser$Parser$Advanced$succeed(
+		$jxxcarlson$etex$ETeX$Transform$MathSymbols('\\\\')),
+	$elm$parser$Parser$Advanced$symbol(
+		A2($elm$parser$Parser$Advanced$Token, '\\\\', $jxxcarlson$etex$ETeX$Transform$ExpectingLineBreak)));
 var $jxxcarlson$etex$ETeX$Transform$many1 = function (p) {
 	return A2(
 		$elm$parser$Parser$Advanced$keeper,
@@ -13511,25 +13689,22 @@ var $jxxcarlson$etex$ETeX$Transform$mathMediumSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathMediumSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\u005C;', $jxxcarlson$etex$ETeX$Transform$ExpectingMathMediumSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\\;', $jxxcarlson$etex$ETeX$Transform$ExpectingMathMediumSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace = {$: 'ExpectingMathSmallSpace'};
 var $jxxcarlson$etex$ETeX$Transform$MathSmallSpace = {$: 'MathSmallSpace'};
 var $jxxcarlson$etex$ETeX$Transform$mathSmallSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathSmallSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\u005C,', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\\,', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace = {$: 'ExpectingMathSpace'};
 var $jxxcarlson$etex$ETeX$Transform$MathSpace = {$: 'MathSpace'};
 var $jxxcarlson$etex$ETeX$Transform$mathSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\u005C ', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\\ ', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingNotAlpha = {$: 'ExpectingNotAlpha'};
-var $jxxcarlson$etex$ETeX$Transform$MathSymbols = function (a) {
-	return {$: 'MathSymbols', a: a};
-};
 var $jxxcarlson$etex$ETeX$Transform$mathSymbolsParser = A2(
 	$elm$parser$Parser$Advanced$map,
 	$jxxcarlson$etex$ETeX$Transform$MathSymbols,
@@ -13562,7 +13737,7 @@ var $jxxcarlson$etex$ETeX$Transform$mathSymbolsParser = A2(
 											_Utils_chr('('),
 											_Utils_chr(')'),
 											_Utils_chr(','),
-											_Utils_chr('"')
+											_Utils_chr('\"')
 										])));
 							},
 							$jxxcarlson$etex$ETeX$Transform$ExpectingNotAlpha)),
@@ -13582,7 +13757,7 @@ var $jxxcarlson$etex$ETeX$Transform$mathSymbolsParser = A2(
 										_Utils_chr('('),
 										_Utils_chr(')'),
 										_Utils_chr(','),
-										_Utils_chr('"')
+										_Utils_chr('\"')
 									])));
 						}))),
 			$elm$parser$Parser$Advanced$getOffset),
@@ -13592,6 +13767,38 @@ var $jxxcarlson$etex$ETeX$Transform$DecoI = function (a) {
 };
 var $jxxcarlson$etex$ETeX$Transform$ExpectingInt = {$: 'ExpectingInt'};
 var $jxxcarlson$etex$ETeX$Transform$InvalidNumber = {$: 'InvalidNumber'};
+var $jxxcarlson$etex$ETeX$Transform$numericDecoParser = A2(
+	$elm$parser$Parser$Advanced$andThen,
+	function (digits) {
+		var _v0 = $elm$core$String$toInt(digits);
+		if (_v0.$ === 'Just') {
+			var n = _v0.a;
+			return $elm$parser$Parser$Advanced$succeed(
+				$jxxcarlson$etex$ETeX$Transform$DecoI(n));
+		} else {
+			return $elm$parser$Parser$Advanced$problem($jxxcarlson$etex$ETeX$Transform$InvalidNumber);
+		}
+	},
+	A2(
+		$elm$parser$Parser$Advanced$keeper,
+		A2(
+			$elm$parser$Parser$Advanced$keeper,
+			A2(
+				$elm$parser$Parser$Advanced$keeper,
+				$elm$parser$Parser$Advanced$succeed($elm$core$String$slice),
+				A2(
+					$elm$parser$Parser$Advanced$ignorer,
+					A2(
+						$elm$parser$Parser$Advanced$ignorer,
+						$elm$parser$Parser$Advanced$getOffset,
+						A2($elm$parser$Parser$Advanced$chompIf, $elm$core$Char$isDigit, $jxxcarlson$etex$ETeX$Transform$ExpectingInt)),
+					$elm$parser$Parser$Advanced$chompWhile($elm$core$Char$isDigit))),
+			$elm$parser$Parser$Advanced$getOffset),
+		$elm$parser$Parser$Advanced$getSource));
+var $jxxcarlson$etex$ETeX$Transform$ExpectingHash = {$: 'ExpectingHash'};
+var $jxxcarlson$etex$ETeX$Transform$Param = function (a) {
+	return {$: 'Param', a: a};
+};
 var $elm$parser$Parser$Advanced$consumeBase = _Parser_consumeBase;
 var $elm$parser$Parser$Advanced$consumeBase16 = _Parser_consumeBase16;
 var $elm$parser$Parser$Advanced$bumpOffset = F2(
@@ -13751,14 +13958,6 @@ var $elm$parser$Parser$Advanced$int = F2(
 				octal: $elm$core$Result$Err(invalid)
 			});
 	});
-var $jxxcarlson$etex$ETeX$Transform$numericDecoParser = A2(
-	$elm$parser$Parser$Advanced$map,
-	$jxxcarlson$etex$ETeX$Transform$DecoI,
-	A2($elm$parser$Parser$Advanced$int, $jxxcarlson$etex$ETeX$Transform$ExpectingInt, $jxxcarlson$etex$ETeX$Transform$InvalidNumber));
-var $jxxcarlson$etex$ETeX$Transform$ExpectingHash = {$: 'ExpectingHash'};
-var $jxxcarlson$etex$ETeX$Transform$Param = function (a) {
-	return {$: 'Param', a: a};
-};
 var $jxxcarlson$etex$ETeX$Transform$paramParser = A2(
 	$elm$parser$Parser$Advanced$map,
 	$jxxcarlson$etex$ETeX$Transform$Param,
@@ -13776,7 +13975,7 @@ var $jxxcarlson$etex$ETeX$Transform$rightBraceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$RightMathBrace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\u005C}', $jxxcarlson$etex$ETeX$Transform$ExpectingRightMathBrace)));
+		A2($elm$parser$Parser$Advanced$Token, '\\}', $jxxcarlson$etex$ETeX$Transform$ExpectingRightMathBrace)));
 var $jxxcarlson$etex$ETeX$Transform$sepByCommaHelp = F2(
 	function (itemParser, revItems) {
 		return $elm$parser$Parser$Advanced$oneOf(
@@ -13857,7 +14056,7 @@ var $jxxcarlson$etex$ETeX$Transform$textParser = A2(
 		$elm$parser$Parser$Advanced$ignorer,
 		$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$Text),
 		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\u0022', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))),
+			A2($elm$parser$Parser$Advanced$Token, '\"', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))),
 	A2(
 		$elm$parser$Parser$Advanced$ignorer,
 		$elm$parser$Parser$Advanced$getChompedString(
@@ -13865,10 +14064,10 @@ var $jxxcarlson$etex$ETeX$Transform$textParser = A2(
 				function (c) {
 					return !_Utils_eq(
 						c,
-						_Utils_chr('"'));
+						_Utils_chr('\"'));
 				})),
 		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\u0022', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))));
+			A2($elm$parser$Parser$Advanced$Token, '\"', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingSpace = {$: 'ExpectingSpace'};
 var $jxxcarlson$etex$ETeX$Transform$WS = {$: 'WS'};
 var $jxxcarlson$etex$ETeX$Transform$whitespaceParser = A2(
@@ -13994,7 +14193,7 @@ var $jxxcarlson$etex$ETeX$Transform$macroParser = function (userMacroDict) {
 				$elm$parser$Parser$Advanced$ignorer,
 				$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$Macro),
 				$elm$parser$Parser$Advanced$symbol(
-					A2($elm$parser$Parser$Advanced$Token, '\u005C', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash))),
+					A2($elm$parser$Parser$Advanced$Token, '\\', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash))),
 			$jxxcarlson$etex$ETeX$Transform$alphaNumParser_),
 		$jxxcarlson$etex$ETeX$Transform$many(
 			$jxxcarlson$etex$ETeX$Transform$argParser(userMacroDict)));
@@ -14010,6 +14209,7 @@ var $jxxcarlson$etex$ETeX$Transform$mathExprParser = function (userMacroDict) {
 				$jxxcarlson$etex$ETeX$Transform$mathSpaceParser,
 				$jxxcarlson$etex$ETeX$Transform$leftBraceParser,
 				$jxxcarlson$etex$ETeX$Transform$rightBraceParser,
+				$jxxcarlson$etex$ETeX$Transform$lineBreakParser,
 				$jxxcarlson$etex$ETeX$Transform$alphaNumWithLookaheadParser(userMacroDict),
 				$jxxcarlson$etex$ETeX$Transform$macroParser(userMacroDict),
 				$elm$parser$Parser$Advanced$lazy(
@@ -14096,22 +14296,22 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 			var str = expr.a;
 			return str;
 		case 'LeftMathBrace':
-			return '\u005C{';
+			return '\\{';
 		case 'RightMathBrace':
-			return '\u005C}';
+			return '\\}';
 		case 'LeftParen':
 			return '(';
 		case 'RightParen':
 			return ')';
 		case 'MathSmallSpace':
-			return '\u005C,';
+			return '\\,';
 		case 'MathMediumSpace':
-			return '\u005C;';
+			return '\\;';
 		case 'MathSpace':
-			return '\u005C ';
+			return '\\ ';
 		case 'F0':
 			var str = expr.a;
-			return '\u005C' + str;
+			return '\\' + str;
 		case 'Param':
 			var k = expr.a;
 			return '#' + $elm$core$String$fromInt(k);
@@ -14143,11 +14343,11 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 					switch (body.a.$) {
 						case 'PArg':
 							var exprs = body.a.a;
-							return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
+							return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
 								$jxxcarlson$etex$ETeX$Transform$printList(exprs)));
 						case 'ParenthExpr':
 							var exprs = body.a.a;
-							return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
+							return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
 								$jxxcarlson$etex$ETeX$Transform$printList(exprs)));
 						default:
 							break _v8$2;
@@ -14157,9 +14357,9 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 				}
 			}
 			if (body.b && (body.a.$ === 'PArg')) {
-				return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$printMacroArgs(body));
+				return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$printMacroArgs(body));
 			} else {
-				return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$printList(body));
+				return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$printList(body));
 			}
 		case 'FCall':
 			var name = expr.a;
@@ -14179,7 +14379,7 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 				$jxxcarlson$etex$ETeX$Transform$printList(exprs));
 		default:
 			var str = expr.a;
-			return '\u005Ctext{' + (str + '}');
+			return '\\text{' + (str + '}');
 	}
 };
 var $jxxcarlson$etex$ETeX$Transform$printArgList = function (exprs) {
@@ -14274,61 +14474,61 @@ var $jxxcarlson$etex$ETeX$Transform$RightParen = {$: 'RightParen'};
 var $jxxcarlson$etex$ETeX$Dictionary$symbolDict = $elm$core$Dict$fromList(
 	_List_fromArray(
 		[
-			_Utils_Tuple2('qquad', '\u005Cqquad'),
-			_Utils_Tuple2('alpha', '\u005Calpha'),
-			_Utils_Tuple2('beta', '\u005Cbeta'),
-			_Utils_Tuple2('gamma', '\u005Cgamma'),
-			_Utils_Tuple2('delta', '\u005Cdelta'),
-			_Utils_Tuple2('epsilon', '\u005Cepsilon'),
-			_Utils_Tuple2('zeta', '\u005Czeta'),
-			_Utils_Tuple2('eta', '\u005Ceta'),
-			_Utils_Tuple2('theta', '\u005Ctheta'),
-			_Utils_Tuple2('iota', '\u005Ciota'),
-			_Utils_Tuple2('kappa', '\u005Ckappa'),
-			_Utils_Tuple2('lambda', '\u005Clambda'),
-			_Utils_Tuple2('mu', '\u005Cmu'),
-			_Utils_Tuple2('nu', '\u005Cnu'),
-			_Utils_Tuple2('xi', '\u005Cxi'),
-			_Utils_Tuple2('omicron', '\u005Comicron'),
-			_Utils_Tuple2('pi', '\u005Cpi'),
-			_Utils_Tuple2('rho', '\u005Crho'),
-			_Utils_Tuple2('sigma', '\u005Csigma'),
-			_Utils_Tuple2('tau', '\u005Ctau'),
-			_Utils_Tuple2('upsilon', '\u005Cupsilon'),
-			_Utils_Tuple2('phi', '\u005Cphi'),
-			_Utils_Tuple2('chi', '\u005Cchi'),
-			_Utils_Tuple2('psi', '\u005Cpsi'),
-			_Utils_Tuple2('omega', '\u005Comega'),
-			_Utils_Tuple2('Alpha', '\u005CAlpha'),
-			_Utils_Tuple2('Beta', '\u005CBeta'),
-			_Utils_Tuple2('Gamma', '\u005CGamma'),
-			_Utils_Tuple2('Delta', '\u005CDelta'),
-			_Utils_Tuple2('Epsilon', '\u005CEpsilon'),
-			_Utils_Tuple2('Zeta', '\u005CZeta'),
-			_Utils_Tuple2('Eta', '\u005CEta'),
-			_Utils_Tuple2('Theta', '\u005CTheta'),
-			_Utils_Tuple2('Iota', '\u005CIota'),
-			_Utils_Tuple2('Kappa', '\u005CKappa'),
-			_Utils_Tuple2('Lambda', '\u005CLambda'),
-			_Utils_Tuple2('Mu', '\u005CMu'),
-			_Utils_Tuple2('Nu', '\u005CNu'),
-			_Utils_Tuple2('Xi', '\u005CXi'),
-			_Utils_Tuple2('Omicron', '\u005COmicron'),
-			_Utils_Tuple2('Pi', '\u005CPi'),
-			_Utils_Tuple2('Rho', '\u005CRho'),
-			_Utils_Tuple2('Sigma', '\u005CSigma'),
-			_Utils_Tuple2('Tau', '\u005CTau'),
-			_Utils_Tuple2('Upsilon', '\u005CUpsilon'),
-			_Utils_Tuple2('Phi', '\u005CPhi'),
-			_Utils_Tuple2('Chi', '\u005CChi'),
-			_Utils_Tuple2('Psi', '\u005CPsi'),
-			_Utils_Tuple2('Omega', '\u005COmega'),
-			_Utils_Tuple2('varepsilon', '\u005Cvarepsilon'),
-			_Utils_Tuple2('vartheta', '\u005Cvartheta'),
-			_Utils_Tuple2('varpi', '\u005Cvarpi'),
-			_Utils_Tuple2('varrho', '\u005Cvarrho'),
-			_Utils_Tuple2('varsigma', '\u005Cvarsigma'),
-			_Utils_Tuple2('varphi', '\u005Cvarphi')
+			_Utils_Tuple2('qquad', '\\qquad'),
+			_Utils_Tuple2('alpha', '\\alpha'),
+			_Utils_Tuple2('beta', '\\beta'),
+			_Utils_Tuple2('gamma', '\\gamma'),
+			_Utils_Tuple2('delta', '\\delta'),
+			_Utils_Tuple2('epsilon', '\\epsilon'),
+			_Utils_Tuple2('zeta', '\\zeta'),
+			_Utils_Tuple2('eta', '\\eta'),
+			_Utils_Tuple2('theta', '\\theta'),
+			_Utils_Tuple2('iota', '\\iota'),
+			_Utils_Tuple2('kappa', '\\kappa'),
+			_Utils_Tuple2('lambda', '\\lambda'),
+			_Utils_Tuple2('mu', '\\mu'),
+			_Utils_Tuple2('nu', '\\nu'),
+			_Utils_Tuple2('xi', '\\xi'),
+			_Utils_Tuple2('omicron', '\\omicron'),
+			_Utils_Tuple2('pi', '\\pi'),
+			_Utils_Tuple2('rho', '\\rho'),
+			_Utils_Tuple2('sigma', '\\sigma'),
+			_Utils_Tuple2('tau', '\\tau'),
+			_Utils_Tuple2('upsilon', '\\upsilon'),
+			_Utils_Tuple2('phi', '\\phi'),
+			_Utils_Tuple2('chi', '\\chi'),
+			_Utils_Tuple2('psi', '\\psi'),
+			_Utils_Tuple2('omega', '\\omega'),
+			_Utils_Tuple2('Alpha', '\\Alpha'),
+			_Utils_Tuple2('Beta', '\\Beta'),
+			_Utils_Tuple2('Gamma', '\\Gamma'),
+			_Utils_Tuple2('Delta', '\\Delta'),
+			_Utils_Tuple2('Epsilon', '\\Epsilon'),
+			_Utils_Tuple2('Zeta', '\\Zeta'),
+			_Utils_Tuple2('Eta', '\\Eta'),
+			_Utils_Tuple2('Theta', '\\Theta'),
+			_Utils_Tuple2('Iota', '\\Iota'),
+			_Utils_Tuple2('Kappa', '\\Kappa'),
+			_Utils_Tuple2('Lambda', '\\Lambda'),
+			_Utils_Tuple2('Mu', '\\Mu'),
+			_Utils_Tuple2('Nu', '\\Nu'),
+			_Utils_Tuple2('Xi', '\\Xi'),
+			_Utils_Tuple2('Omicron', '\\Omicron'),
+			_Utils_Tuple2('Pi', '\\Pi'),
+			_Utils_Tuple2('Rho', '\\Rho'),
+			_Utils_Tuple2('Sigma', '\\Sigma'),
+			_Utils_Tuple2('Tau', '\\Tau'),
+			_Utils_Tuple2('Upsilon', '\\Upsilon'),
+			_Utils_Tuple2('Phi', '\\Phi'),
+			_Utils_Tuple2('Chi', '\\Chi'),
+			_Utils_Tuple2('Psi', '\\Psi'),
+			_Utils_Tuple2('Omega', '\\Omega'),
+			_Utils_Tuple2('varepsilon', '\\varepsilon'),
+			_Utils_Tuple2('vartheta', '\\vartheta'),
+			_Utils_Tuple2('varpi', '\\varpi'),
+			_Utils_Tuple2('varrho', '\\varrho'),
+			_Utils_Tuple2('varsigma', '\\varsigma'),
+			_Utils_Tuple2('varphi', '\\varphi')
 		]));
 var $jxxcarlson$etex$ETeX$Transform$resolveSymbolName = function (expr) {
 	switch (expr.$) {
@@ -14336,7 +14536,7 @@ var $jxxcarlson$etex$ETeX$Transform$resolveSymbolName = function (expr) {
 			var str = expr.a;
 			var _v2 = A2($elm$core$Dict$get, str, $jxxcarlson$etex$ETeX$Dictionary$symbolDict);
 			if (_v2.$ === 'Just') {
-				return $jxxcarlson$etex$ETeX$Transform$AlphaNum('\u005C' + str);
+				return $jxxcarlson$etex$ETeX$Transform$AlphaNum('\\' + str);
 			} else {
 				return $jxxcarlson$etex$ETeX$Transform$AlphaNum(str);
 			}
@@ -14422,7 +14622,7 @@ var $jxxcarlson$etex$ETeX$Transform$resolveSymbolNameInDeco = function (deco) {
 };
 var $jxxcarlson$etex$ETeX$Transform$transformETeX = F2(
 	function (dict, input) {
-		if (A2($elm$core$String$contains, '\u005C', input)) {
+		if (A2($elm$core$String$contains, '\\', input)) {
 			var _v0 = A2(
 				$jxxcarlson$etex$ETeX$Transform$parseWithDict,
 				$elm$core$Dict$empty,
@@ -14493,8 +14693,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$Math$renderMath = F3(
 	});
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
-var $jxxcarlson$xmarkdown_compiler$Render$Math$aligned = F5(
-	function (count, _v0, _v1, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Math$aligned = F6(
+	function (count, _v0, _v1, _v2, attrs, block) {
 		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
 		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A3(
@@ -14513,8 +14713,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$Math$aligned = F5(
 					]),
 				attrs));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$array = F5(
-	function (count, _v0, _v1, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Math$array = F6(
+	function (count, _v0, _v1, _v2, attrs, block) {
 		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
 		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A3(
@@ -14533,8 +14733,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$Math$array = F5(
 					]),
 				attrs));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Math$chem = F5(
-	function (count, _v0, _v1, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Math$chem = F6(
+	function (count, _v0, _v1, _v2, attrs, block) {
 		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
 		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A3(
@@ -14725,10 +14925,10 @@ var $avh4$elm_color$Color$toRgba = function (_v0) {
 };
 var $jxxcarlson$xmarkdown_compiler$Render$Theme$colorToRgbString = function (color) {
 	var _v0 = $avh4$elm_color$Color$toRgba(color);
-	var alpha = _v0.alpha;
-	var blue = _v0.blue;
-	var green = _v0.green;
 	var red = _v0.red;
+	var green = _v0.green;
+	var blue = _v0.blue;
+	var alpha = _v0.alpha;
 	return (alpha < 1.0) ? ('rgba(' + ($elm$core$String$fromInt(
 		$elm$core$Basics$round(red * 255)) + (', ' + ($elm$core$String$fromInt(
 		$elm$core$Basics$round(green * 255)) + (', ' + ($elm$core$String$fromInt(
@@ -14749,14 +14949,27 @@ var $jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor = F2(
 			}());
 		return $jxxcarlson$xmarkdown_compiler$Render$Theme$colorToRgbString(color);
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F3(
-	function (theme, attrs, expr) {
+var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F4(
+	function (theme, depth, attrs, expr) {
 		switch (expr.$) {
 			case 'Text':
 				var string = expr.a;
+				var meta = expr.b;
 				return A2(
 					$elm$html$Html$span,
-					attrs,
+					A2(
+						$elm$core$List$cons,
+						A2(
+							$elm$html$Html$Attributes$attribute,
+							'data-src-begin',
+							$elm$core$String$fromInt(meta.begin)),
+						A2(
+							$elm$core$List$cons,
+							A2(
+								$elm$html$Html$Attributes$attribute,
+								'data-src-end',
+								$elm$core$String$fromInt(meta.end)),
+							attrs)),
 					_List_fromArray(
 						[
 							$elm$html$Html$text(string + ' ')
@@ -14832,159 +15045,128 @@ var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F3(
 							_List_Nil,
 							A2(
 								$elm$core$List$map,
-								A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+								A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
 								exprList));
 					} else {
 						if (A2(
 							$elm$core$List$member,
 							name,
 							_List_fromArray(
-								['anchor', 'mark']))) {
+								['b', 'strong', 'bold']))) {
 							return A2(
-								$elm$html$Html$span,
+								$elm$html$Html$strong,
 								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text('(' + (name + ' content)'))
-									]));
+								A2(
+									$elm$core$List$map,
+									A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
+									exprList));
 						} else {
 							if (A2(
 								$elm$core$List$member,
 								name,
 								_List_fromArray(
-									['b', 'strong', 'bold']))) {
+									['i', 'em', 'italic']))) {
 								return A2(
-									$elm$html$Html$strong,
+									$elm$html$Html$em,
 									_List_Nil,
 									A2(
 										$elm$core$List$map,
-										A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+										A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
 										exprList));
 							} else {
-								if (A2(
-									$elm$core$List$member,
-									name,
-									_List_fromArray(
-										['i', 'em', 'italic']))) {
+								if ((name === 'a') || (name === 'link')) {
+									var _v1 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractLinkData(exprList);
+									var linkText = _v1.a;
+									var url = _v1.b;
 									return A2(
-										$elm$html$Html$em,
-										_List_Nil,
-										A2(
-											$elm$core$List$map,
-											A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
-											exprList));
-								} else {
-									if (A2(
-										$elm$core$List$member,
-										name,
+										$elm$html$Html$a,
 										_List_fromArray(
-											['strike', 'strikethrough']))) {
+											[
+												$elm$html$Html$Attributes$href(url),
+												A2(
+												$elm$html$Html$Attributes$style,
+												'color',
+												A2(
+													$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+													function ($) {
+														return $.link;
+													},
+													theme))
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text(linkText)
+											]));
+								} else {
+									if ((name === 'image') || (name === 'img')) {
+										var _v2 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractImageData(exprList);
+										var url = _v2.a;
+										var altText = _v2.b;
+										var _v3 = $jxxcarlson$xmarkdown_compiler$Render$Expression$parseImageProperties(altText);
+										var caption = _v3.a;
+										var props = _v3.b;
+										var imgAttrs = $jxxcarlson$xmarkdown_compiler$Render$Expression$buildImageAttributes(props);
 										return A2(
-											$elm$html$Html$span,
+											$elm$html$Html$figure,
 											_List_fromArray(
 												[
-													A2($elm$html$Html$Attributes$style, 'text-decoration', 'line-through')
+													A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
+													A2($elm$html$Html$Attributes$style, 'margin', '1em 0')
 												]),
-											A2(
-												$elm$core$List$map,
-												A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
-												exprList));
-									} else {
-										if ((name === 'a') || (name === 'link')) {
-											var _v1 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractLinkData(exprList);
-											var linkText = _v1.a;
-											var url = _v1.b;
-											return A2(
-												$elm$html$Html$a,
-												_List_fromArray(
-													[
-														$elm$html$Html$Attributes$href(url),
-														A2(
-														$elm$html$Html$Attributes$style,
-														'color',
-														A2(
-															$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
-															function ($) {
-																return $.link;
-															},
-															theme))
-													]),
-												_List_fromArray(
-													[
-														$elm$html$Html$text(linkText)
-													]));
-										} else {
-											if ((name === 'image') || (name === 'img')) {
-												var _v2 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractImageData(exprList);
-												var url = _v2.a;
-												var altText = _v2.b;
-												var _v3 = $jxxcarlson$xmarkdown_compiler$Render$Expression$parseImageProperties(altText);
-												var caption = _v3.a;
-												var props = _v3.b;
-												var imgAttrs = $jxxcarlson$xmarkdown_compiler$Render$Expression$buildImageAttributes(props);
-												return A2(
-													$elm$html$Html$figure,
+											_List_fromArray(
+												[
+													A2(
+													$elm$html$Html$a,
 													_List_fromArray(
 														[
-															A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
-															A2($elm$html$Html$Attributes$style, 'margin', '1em 0')
+															$elm$html$Html$Attributes$href(url),
+															$elm$html$Html$Attributes$target('_blank'),
+															$elm$html$Html$Attributes$rel('noopener noreferrer')
 														]),
 													_List_fromArray(
 														[
 															A2(
-															$elm$html$Html$a,
-															_List_fromArray(
-																[
-																	$elm$html$Html$Attributes$href(url),
-																	$elm$html$Html$Attributes$target('_blank'),
-																	$elm$html$Html$Attributes$rel('noopener noreferrer')
-																]),
-															_List_fromArray(
-																[
-																	A2(
-																	$elm$html$Html$img,
-																	_Utils_ap(
-																		_List_fromArray(
-																			[
-																				$elm$html$Html$Attributes$src(url),
-																				$elm$html$Html$Attributes$alt(caption),
-																				A2($elm$html$Html$Attributes$style, 'max-width', '100%'),
-																				A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
-																			]),
-																		imgAttrs),
-																	_List_Nil)
-																])),
-															$elm$core$String$isEmpty(caption) ? $elm$html$Html$text('') : A2(
-															$elm$html$Html$figcaption,
-															_List_fromArray(
-																[
-																	A2($elm$html$Html$Attributes$style, 'font-size', '0.9em'),
-																	A2(
-																	$elm$html$Html$Attributes$style,
-																	'color',
-																	A2(
-																		$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
-																		function ($) {
-																			return $.offsetText;
-																		},
-																		theme)),
-																	A2($elm$html$Html$Attributes$style, 'margin-top', '0.5em')
-																]),
-															_List_fromArray(
-																[
-																	$elm$html$Html$text(caption)
-																]))
-														]));
-											} else {
-												return A2(
-													$elm$html$Html$span,
-													_List_Nil,
-													A2(
-														$elm$core$List$map,
-														A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
-														exprList));
-											}
-										}
+															$elm$html$Html$img,
+															_Utils_ap(
+																_List_fromArray(
+																	[
+																		$elm$html$Html$Attributes$src(url),
+																		$elm$html$Html$Attributes$alt(caption),
+																		A2($elm$html$Html$Attributes$style, 'max-width', '100%'),
+																		A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+																	]),
+																imgAttrs),
+															_List_Nil)
+														])),
+													$elm$core$String$isEmpty(caption) ? $elm$html$Html$text('') : A2(
+													$elm$html$Html$figcaption,
+													_List_fromArray(
+														[
+															A2($elm$html$Html$Attributes$style, 'font-size', '0.9em'),
+															A2(
+															$elm$html$Html$Attributes$style,
+															'color',
+															A2(
+																$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+																function ($) {
+																	return $.offsetText;
+																},
+																theme)),
+															A2($elm$html$Html$Attributes$style, 'margin-top', '0.5em')
+														]),
+													_List_fromArray(
+														[
+															$elm$html$Html$text(caption)
+														]))
+												]));
+									} else {
+										return A2(
+											$elm$html$Html$span,
+											_List_Nil,
+											A2(
+												$elm$core$List$map,
+												A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
+												exprList));
 									}
 								}
 							}
@@ -14992,25 +15174,27 @@ var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F3(
 					}
 				}
 			default:
+				var indentation = expr.a;
 				var exprList = expr.b;
+				var pseudoDepth = (indentation / 2) | 0;
 				return A2(
 					$elm$html$Html$div,
 					_List_Nil,
 					A2(
 						$elm$core$List$map,
-						A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, attrs),
+						A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, pseudoDepth, attrs),
 						exprList));
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$List$desc = F5(
-	function (count, _v0, settings, attr, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$List$desc = F6(
+	function (count, _v0, depth, settings, attr, block) {
 		var content = function () {
 			var _v1 = block.body;
 			if (_v1.$ === 'Right') {
 				var exprs = _v1.a;
 				return A2(
 					$elm$core$List$map,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attr),
+					A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, attr),
 					exprs);
 			} else {
 				return _List_fromArray(
@@ -15035,8 +15219,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$desc = F5(
 			content);
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$empty = $elm$core$Dict$empty;
-var $jxxcarlson$xmarkdown_compiler$Render$Math$equation = F5(
-	function (count, _v0, _v1, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Math$equation = F6(
+	function (count, _v0, _v1, _v2, attrs, block) {
 		var content = $jxxcarlson$xmarkdown_compiler$Render$Math$getMathContent(block);
 		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A3(
@@ -15073,7 +15257,9 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol = F2(
 								},
 								theme)),
 							A2($elm$html$Html$Attributes$style, 'font-weight', 'bold'),
-							A2($elm$html$Html$Attributes$style, 'font-size', '0.5em')
+							A2($elm$html$Html$Attributes$style, 'font-size', '0.6em'),
+							A2($elm$html$Html$Attributes$style, 'display', 'inline-flex'),
+							A2($elm$html$Html$Attributes$style, 'align-items', 'center')
 						]),
 					_List_fromArray(
 						[
@@ -15093,7 +15279,9 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol = F2(
 									return $.offsetText;
 								},
 								theme)),
-							A2($elm$html$Html$Attributes$style, 'font-size', '0.5em')
+							A2($elm$html$Html$Attributes$style, 'font-size', '0.7em'),
+							A2($elm$html$Html$Attributes$style, 'display', 'inline-flex'),
+							A2($elm$html$Html$Attributes$style, 'align-items', 'center')
 						]),
 					_List_fromArray(
 						[
@@ -15113,7 +15301,9 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol = F2(
 									return $.offsetText;
 								},
 								theme)),
-							A2($elm$html$Html$Attributes$style, 'font-size', '0.84em')
+							A2($elm$html$Html$Attributes$style, 'font-size', '0.7em'),
+							A2($elm$html$Html$Attributes$style, 'display', 'inline-flex'),
+							A2($elm$html$Html$Attributes$style, 'align-items', 'center')
 						]),
 					_List_fromArray(
 						[
@@ -15122,17 +15312,15 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol = F2(
 		}
 	});
 var $elm$html$Html$li = _VirtualDom_node('li');
-var $jxxcarlson$xmarkdown_compiler$Render$List$item = F5(
-	function (count, _v0, settings, attr, block) {
-		var level = (block.indent / 2) | 0;
-		var indentation = $elm$core$Basics$round(2.2 * settings.leftIndentation) + (settings.leftIndentation * (level - 1));
+var $jxxcarlson$xmarkdown_compiler$Render$List$item = F6(
+	function (count, _v0, depth, settings, attr, block) {
 		var content = function () {
 			var _v1 = block.body;
 			if (_v1.$ === 'Right') {
 				var exprs = _v1.a;
 				return A2(
 					$elm$core$List$map,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attr),
+					A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, attr),
 					exprs);
 			} else {
 				return _List_fromArray(
@@ -15148,6 +15336,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$item = F5(
 				_List_fromArray(
 					[
 						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+						A2($elm$html$Html$Attributes$style, 'align-items', 'flex-start'),
 						A2($elm$html$Html$Attributes$style, 'gap', '8px')
 					]),
 				_List_fromArray(
@@ -15157,17 +15346,21 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$item = F5(
 						_List_fromArray(
 							[
 								A2($elm$html$Html$Attributes$style, 'flex-shrink', '0'),
-								A2($elm$html$Html$Attributes$style, 'white-space', 'nowrap')
+								A2($elm$html$Html$Attributes$style, 'white-space', 'nowrap'),
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
+								A2($elm$html$Html$Attributes$style, 'height', '1.4em')
 							]),
 						_List_fromArray(
 							[
-								A2($jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol, settings.theme, level)
+								A2($jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol, settings.theme, depth)
 							])),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								A2($elm$html$Html$Attributes$style, 'flex-grow', '1')
+								A2($elm$html$Html$Attributes$style, 'flex-grow', '1'),
+								A2($elm$html$Html$Attributes$style, 'line-height', '1.4')
 							]),
 						content)
 					]))
@@ -15181,7 +15374,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$item = F5(
 						A2(
 						$elm$html$Html$Attributes$style,
 						'margin-left',
-						$elm$core$String$fromInt(indentation) + 'px'),
+						$elm$core$String$fromInt(settings.leftIndentation) + 'px'),
 						A2(
 						$elm$html$Html$Attributes$style,
 						'margin-bottom',
@@ -15189,7 +15382,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$item = F5(
 						A2(
 						$elm$html$Html$Attributes$style,
 						'width',
-						$elm$core$String$fromInt(settings.width - indentation) + 'px'),
+						$elm$core$String$fromInt(settings.width - depth) + 'px'),
 						A2($elm$html$Html$Attributes$style, 'list-style', 'none'),
 						$elm$html$Html$Attributes$id(blockId),
 						A2(
@@ -15264,9 +15457,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$formatListNumber = F2(
 				return $jxxcarlson$xmarkdown_compiler$Render$List$numberToRoman(number);
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$List$numbered = F5(
-	function (count, acc, settings, attr, block) {
-		var level = (block.indent / 2) | 0;
+var $jxxcarlson$xmarkdown_compiler$Render$List$numbered = F6(
+	function (count, acc, depth, settings, attr, block) {
 		var itemNumber = A2(
 			$elm$core$Maybe$withDefault,
 			1,
@@ -15276,15 +15468,15 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$numbered = F5(
 					return $.index;
 				},
 				A2($elm$core$Dict$get, block.meta.id, acc.numberedItemDict)));
-		var indentation = $elm$core$Basics$round(2.1 * settings.leftIndentation) + (settings.leftIndentation * (level - 1));
-		var formattedNumber = A2($jxxcarlson$xmarkdown_compiler$Render$List$formatListNumber, level, itemNumber);
+		var indentation = $elm$core$Basics$round(2.1 * settings.leftIndentation) + settings.leftIndentation;
+		var formattedNumber = A2($jxxcarlson$xmarkdown_compiler$Render$List$formatListNumber, depth, itemNumber);
 		var content = function () {
 			var _v0 = block.body;
 			if (_v0.$ === 'Right') {
 				var exprs = _v0.a;
 				return A2(
 					$elm$core$List$map,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attr),
+					A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, attr),
 					exprs);
 			} else {
 				return _List_fromArray(
@@ -15333,7 +15525,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$numbered = F5(
 						A2(
 						$elm$html$Html$Attributes$style,
 						'margin-left',
-						$elm$core$String$fromInt(indentation) + 'px'),
+						$elm$core$String$fromInt(settings.leftIndentation) + 'px'),
 						A2(
 						$elm$html$Html$Attributes$style,
 						'margin-bottom',
@@ -15371,15 +15563,15 @@ var $jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$registerBatch = F2(
 	});
 var $elm$html$Html$dl = _VirtualDom_node('dl');
 var $elm$html$Html$dt = _VirtualDom_node('dt');
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$descriptionList = F5(
-	function (_v0, _v1, settings, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$descriptionList = F6(
+	function (_v0, _v1, depth, settings, attrs, block) {
 		var content = function () {
 			var _v2 = block.body;
 			if (_v2.$ === 'Right') {
 				var exprs = _v2.a;
 				return A2(
 					$elm$core$List$map,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attrs),
+					A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, attrs),
 					exprs);
 			} else {
 				return _List_fromArray(
@@ -15396,48 +15588,89 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$descriptionList = F5(
 					A2($elm$html$Html$dt, _List_Nil, content)
 				]));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem = function (x) {
-	return A2(
-		$elm$html$Html$li,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'margin-bottom', '4px')
-			]),
-		_List_fromArray(
-			[x]));
-};
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$itemList = F5(
-	function (_v0, _v1, settings, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem = F3(
+	function (settings, depth, x) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+					A2($elm$html$Html$Attributes$style, 'align-items', 'flex-start'),
+					A2($elm$html$Html$Attributes$style, 'margin-bottom', '4px'),
+					A2($elm$html$Html$Attributes$style, 'gap', '8px'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'paddingLeft',
+					$elm$core$String$fromInt(depth * settings.leftIndentation) + 'px')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'flex-shrink', '0'),
+							A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+							A2($elm$html$Html$Attributes$style, 'align-items', 'center'),
+							A2($elm$html$Html$Attributes$style, 'height', '1.4em')
+						]),
+					_List_fromArray(
+						[
+							A2($jxxcarlson$xmarkdown_compiler$Render$List$bulletSymbol, settings.theme, depth)
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'flex-grow', '1'),
+							A2($elm$html$Html$Attributes$style, 'line-height', '1.4')
+						]),
+					_List_fromArray(
+						[x]))
+				]));
+	});
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$itemList = F6(
+	function (_v0, _v1, depth, settings, attrs, block) {
 		var content = function () {
 			var _v2 = block.body;
 			if (_v2.$ === 'Right') {
 				var exprs = _v2.a;
+				var renderItem = F2(
+					function (lev_, expr_) {
+						return A2(
+							$elm$core$Basics$composeR,
+							A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, attrs),
+							A2($jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem, settings, lev_))(expr_);
+					});
+				var lev = function (expr) {
+					if (expr.$ === 'ExprList') {
+						var k = expr.a;
+						return (k / 2) | 0;
+					} else {
+						return 0;
+					}
+				};
+				var levels = A2($elm$core$List$map, lev, exprs);
 				return A2(
-					$elm$core$List$map,
-					A2(
-						$elm$core$Basics$composeR,
-						A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attrs),
-						$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem),
-					exprs);
+					$elm$html$Html$div,
+					_List_Nil,
+					A3($elm$core$List$map2, renderItem, levels, exprs));
 			} else {
-				return _List_fromArray(
-					[
-						$elm$html$Html$text('')
-					]);
+				return $elm$html$Html$text('');
 			}
 		}();
 		return A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					A2($elm$html$Html$Attributes$style, 'margin-left', '36px'),
-					A2($elm$html$Html$Attributes$style, 'margin-bottom', '24px')
+					A2($elm$html$Html$Attributes$style, 'flex-grow', '1')
 				]),
-			content);
+			_List_fromArray(
+				[content]));
 	});
 var $elm$html$Html$ol = _VirtualDom_node('ol');
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numberedList = F5(
-	function (_v0, _v1, settings, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numberedList = F6(
+	function (_v0, _v1, depth, settings, attrs, block) {
 		var content = function () {
 			var _v2 = block.body;
 			if (_v2.$ === 'Right') {
@@ -15446,8 +15679,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$numberedList = F5(
 					$elm$core$List$map,
 					A2(
 						$elm$core$Basics$composeR,
-						A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attrs),
-						$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem),
+						A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, attrs),
+						A2($jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$makeItem, settings, depth)),
 					exprs);
 			} else {
 				return _List_fromArray(
@@ -15475,8 +15708,8 @@ var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$h4 = _VirtualDom_node('h4');
 var $elm$html$Html$h5 = _VirtualDom_node('h5');
 var $elm$html$Html$h6 = _VirtualDom_node('h6');
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$section = F5(
-	function (count, _v0, settings, attr, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$section = F6(
+	function (count, _v0, depth, settings, attr, block) {
 		var level = A2(
 			$elm$core$Maybe$withDefault,
 			2,
@@ -15507,7 +15740,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$section = F5(
 				var exprs = _v2.a;
 				return A2(
 					$elm$core$List$map,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attr),
+					A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, attr),
 					exprs);
 			} else {
 				return _List_fromArray(
@@ -15554,9 +15787,9 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$section = F5(
 					])),
 			content);
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$unnumberedSection = F5(
-	function (count, acc, settings, attr, block) {
-		return A5($jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$section, count, acc, settings, attr, block);
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$unnumberedSection = F6(
+	function (count, acc, depth, settings, attr, block) {
+		return A6($jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$section, count, acc, depth, settings, attr, block);
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$registerRenderers = function (registry) {
 	return A2(
@@ -15568,21 +15801,25 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$registerRenderers = fu
 			]),
 		registry);
 };
-var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Text$quotation = F5(
-	function (count, _v0, settings, _v1, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Text$quotation = F6(
+	function (count, _v0, depth, settings, _v1, block) {
 		var indentWidth = $elm$core$String$fromInt(settings.leftIndentation) + 'px';
-		var content = A2(
-			$elm$core$Maybe$withDefault,
-			_List_Nil,
-			A2(
-				$elm$core$Maybe$map,
-				function (text) {
-					return _List_fromArray(
-						[
-							$elm$html$Html$text(text)
-						]);
-				},
-				A2($elm$core$Dict$get, 'firstLine', block.properties)));
+		var content = function () {
+			var _v2 = block.body;
+			if (_v2.$ === 'Right') {
+				var exprs = _v2.a;
+				return A2(
+					$elm$core$List$map,
+					A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, _List_Nil),
+					exprs);
+			} else {
+				var text = _v2.a;
+				return _List_fromArray(
+					[
+						$elm$html$Html$text(text)
+					]);
+			}
+		}();
 		var blockId = 'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)));
 		return A2(
 			$elm$html$Html$div,
@@ -15625,13 +15862,13 @@ var $jxxcarlson$xmarkdown_compiler$Render$Blocks$Text$registerRenderers = functi
 };
 var $elm$html$Html$td = _VirtualDom_node('td');
 var $elm$html$Html$th = _VirtualDom_node('th');
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableCell = F5(
-	function (theme, alignments, isHeader, colIndex, expr) {
+var $jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableCell = F6(
+	function (theme, depth, alignments, isHeader, colIndex, expr) {
 		if ((expr.$ === 'Fun') && (expr.a === 'cell')) {
 			var content = expr.b;
 			var renderedContent = A2(
 				$elm$core$List$map,
-				A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, _List_Nil),
+				A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, _List_Nil),
 				content);
 			var element = isHeader ? $elm$html$Html$th : $elm$html$Html$td;
 			var alignment = A2(
@@ -15665,15 +15902,15 @@ var $jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableCell = F5(
 var $elm$html$Html$tbody = _VirtualDom_node('tbody');
 var $elm$html$Html$thead = _VirtualDom_node('thead');
 var $elm$html$Html$tr = _VirtualDom_node('tr');
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableRow = F4(
-	function (theme, alignments, rowIndex, expr) {
+var $jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableRow = F5(
+	function (theme, depth, alignments, rowIndex, expr) {
 		if ((expr.$ === 'Fun') && (expr.a === 'row')) {
 			var cells = expr.b;
 			var isHeader = !rowIndex;
 			var element = isHeader ? $elm$html$Html$thead : $elm$html$Html$tbody;
 			var cellElements = A2(
 				$elm$core$List$indexedMap,
-				A3($jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableCell, theme, alignments, isHeader),
+				A4($jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableCell, theme, depth, alignments, isHeader),
 				cells);
 			return A2(
 				element,
@@ -15687,8 +15924,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableRow = F4(
 		}
 	});
 var $elm$html$Html$table = _VirtualDom_node('table');
-var $jxxcarlson$xmarkdown_compiler$Render$GHTable$render = F5(
-	function (count, _v0, settings, _v1, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$GHTable$render = F6(
+	function (count, _v0, depth, settings, _v1, block) {
 		var _v2 = block.body;
 		if (((((_v2.$ === 'Right') && _v2.a.b) && (_v2.a.a.$ === 'Fun')) && (_v2.a.a.a === 'table')) && (!_v2.a.b.b)) {
 			var _v3 = _v2.a;
@@ -15709,7 +15946,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$GHTable$render = F5(
 						A2($elm$core$Dict$get, 'alignments', block.properties))));
 			var rowElements = A2(
 				$elm$core$List$indexedMap,
-				A2($jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableRow, settings.theme, alignments),
+				A3($jxxcarlson$xmarkdown_compiler$Render$GHTable$renderTableRow, settings.theme, depth, alignments),
 				rows);
 			return A2(
 				$elm$html$Html$div,
@@ -15761,8 +15998,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$initRegistry = A2(
 		$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$registerRenderers(
 			$jxxcarlson$xmarkdown_compiler$Render$Blocks$Text$registerRenderers($jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$empty))));
 var $jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$lookup = $elm$core$Dict$get;
-var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$render = F5(
-	function (count, acc, settings, attr, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$render = F6(
+	function (count, acc, depth, settings, attr, block) {
 		var registry = $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$initRegistry;
 		var _v0 = block.body;
 		if (_v0.$ === 'Left') {
@@ -15776,15 +16013,15 @@ var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$render = F5(
 					if (_v2.$ === 'Nothing') {
 						var envRenderer = A2(
 							$elm$core$Maybe$withDefault,
-							F5(
-								function (_v3, _v4, _v5, _v6, _v7) {
+							F6(
+								function (_v3, _v4, _v5, _v6, _v7, _v8) {
 									return $elm$html$Html$text('');
 								}),
 							A2($jxxcarlson$xmarkdown_compiler$Render$BlockRegistry$lookup, 'env', registry));
-						return A5(envRenderer, count, acc, settings, attr, block);
+						return A6(envRenderer, count, acc, depth, settings, attr, block);
 					} else {
 						var renderer = _v2.a;
-						return A5(renderer, count, acc, settings, attr, block);
+						return A6(renderer, count, acc, depth, settings, attr, block);
 					}
 				}();
 				return renderedBlock;
@@ -15885,8 +16122,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$render = F4(
 			}
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody = F4(
-	function (count, settings, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody = F5(
+	function (count, depth, settings, attrs, block) {
 		var _v0 = block.body;
 		if (_v0.$ === 'Right') {
 			var exprs = _v0.a;
@@ -15920,7 +16157,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody = F4(
 										attrs)))))),
 				A2(
 					$elm$core$List$map,
-					A2($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, attrs),
+					A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, attrs),
 					exprs));
 		} else {
 			return $elm$html$Html$text('');
@@ -15959,19 +16196,19 @@ var $jxxcarlson$xmarkdown_compiler$Render$Helper$showError = F3(
 					]));
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Block$renderBody = F5(
-	function (count, acc, settings, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$Block$renderBody = F6(
+	function (count, acc, depth, settings, attrs, block) {
 		var _v0 = block.heading;
 		switch (_v0.$) {
 			case 'Paragraph':
 				return _List_fromArray(
 					[
-						A4($jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody, count, settings, attrs, block)
+						A5($jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody, count, depth, settings, attrs, block)
 					]);
 			case 'Ordinary':
 				return _List_fromArray(
 					[
-						A5($jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$render, count, acc, settings, attrs, block)
+						A6($jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$render, count, acc, depth, settings, attrs, block)
 					]);
 			default:
 				return _List_fromArray(
@@ -15984,6 +16221,13 @@ var $jxxcarlson$xmarkdown_compiler$Render$Block$renderBody = F5(
 					]);
 		}
 	});
+var $jxxcarlson$xmarkdown_compiler$Render$Tree$indentAttributes = function (depth) {
+	return (!depth) ? _List_Nil : _List_fromArray(
+		[
+			A2($elm$html$Html$Attributes$style, 'padding-left', '12px'),
+			A2($elm$html$Html$Attributes$style, 'box-sizing', 'border-box')
+		]);
+};
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$SendLineNumber = function (a) {
 	return {$: 'SendLineNumber', a: a};
 };
@@ -16048,8 +16292,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes = F2(
 	function (settings, block) {
 		return A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$syncAttributes, settings, block);
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBodyWithAttrs = F5(
-	function (params, settings, acc, attrs, block) {
+var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBodyWithAttrs = F6(
+	function (params, settings, acc, depth, attrs, block) {
 		var isHeading = A2($elm$core$Dict$member, 'level', block.properties);
 		var spacer = isHeading ? _List_fromArray(
 			[
@@ -16067,127 +16311,81 @@ var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBodyWithAttrs = F5(
 			]) : _List_Nil;
 		return _Utils_ap(
 			spacer,
-			A5($jxxcarlson$xmarkdown_compiler$Render$Block$renderBody, params.editCount, acc, settings, attrs, block));
+			A6($jxxcarlson$xmarkdown_compiler$Render$Block$renderBody, params.editCount, acc, depth, settings, attrs, block));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody = F4(
-	function (params, settings, acc, block) {
-		return A5(
+var $jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody = F5(
+	function (params, settings, acc, depth, block) {
+		return A6(
 			$jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBodyWithAttrs,
 			params,
 			settings,
 			acc,
+			depth,
 			A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes, settings, block),
 			block);
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderLeafNode = F4(
-	function (params, settings, accumulator, root) {
+var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderLeafNode = F5(
+	function (params, settings, accumulator, depth, root) {
 		var attrs = A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes, settings, root);
 		return A2(
 			$elm$html$Html$div,
-			attrs,
-			A4($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody, params, settings, accumulator, root));
+			_Utils_ap(
+				attrs,
+				$jxxcarlson$xmarkdown_compiler$Render$Tree$indentAttributes(depth)),
+			A5($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody, params, settings, accumulator, depth, root));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderBranchNode = F5(
-	function (params, settings, accumulator, root, children) {
-		return A5($jxxcarlson$xmarkdown_compiler$Render$Tree$renderStandardBranch, params, settings, accumulator, root, children);
+var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderBranchNode = F6(
+	function (params, settings, accumulator, depth, root, children) {
+		return A6($jxxcarlson$xmarkdown_compiler$Render$Tree$renderStandardBranch, params, settings, accumulator, depth, root, children);
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderStandardBranch = F5(
-	function (params, settings, accumulator, root, children) {
+var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderStandardBranch = F6(
+	function (params, settings, accumulator, depth, root, children) {
 		return A2(
 			$elm$html$Html$div,
 			_Utils_ap(
 				A2($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderAttributes, settings, root),
-				_List_fromArray(
-					[
-						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-						A2($elm$html$Html$Attributes$style, 'width', '100%'),
-						A2(
-						$elm$html$Html$Attributes$style,
-						'gap',
-						$elm$core$String$fromFloat(settings.interBlockSpacing) + 'px')
-					])),
+				_Utils_ap(
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+							A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+							A2($elm$html$Html$Attributes$style, 'width', '100%'),
+							A2(
+							$elm$html$Html$Attributes$style,
+							'gap',
+							$elm$core$String$fromFloat(settings.interBlockSpacing) + 'px')
+						]),
+					$jxxcarlson$xmarkdown_compiler$Render$Tree$indentAttributes(depth))),
 			_Utils_ap(
-				A4($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody, params, settings, accumulator, root),
+				A5($jxxcarlson$xmarkdown_compiler$Render$TreeSupport$renderBody, params, settings, accumulator, depth, root),
 				A2(
 					$elm$core$List$map,
-					A3($jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_, params, settings, accumulator),
+					A4($jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_, params, settings, accumulator, depth + 1),
 					children)));
 	});
-var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_ = F4(
-	function (params, settings, accumulator, tree) {
+var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_ = F5(
+	function (params, settings, accumulator, depth, tree) {
 		var root = $maca$elm_rose_tree$RoseTree$Tree$value(tree);
 		var _v0 = $maca$elm_rose_tree$RoseTree$Tree$children(tree);
 		if (!_v0.b) {
-			return A4($jxxcarlson$xmarkdown_compiler$Render$Tree$renderLeafNode, params, settings, accumulator, root);
+			return A5($jxxcarlson$xmarkdown_compiler$Render$Tree$renderLeafNode, params, settings, accumulator, depth, root);
 		} else {
 			var children = _v0;
-			return A5($jxxcarlson$xmarkdown_compiler$Render$Tree$renderBranchNode, params, settings, accumulator, root, children);
+			return A6($jxxcarlson$xmarkdown_compiler$Render$Tree$renderBranchNode, params, settings, accumulator, depth, root, children);
 		}
 	});
 var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree = F4(
 	function (params, settings, accumulator, tree) {
 		var root = $maca$elm_rose_tree$RoseTree$Tree$value(tree);
-		var isBoxLike = function (block) {
-			var _v2 = $jxxcarlson$xmarkdown_compiler$AST$Language$getName(block);
-			if (_v2.$ === 'Nothing') {
-				return false;
-			} else {
-				var name = _v2.a;
-				return name === 'box';
-			}
-		};
 		var fontStyle = function () {
-			var _v1 = A2($elm$core$Dict$get, 'style', root.properties);
-			if ((_v1.$ === 'Just') && (_v1.a === 'italic')) {
+			var _v0 = A2($elm$core$Dict$get, 'style', root.properties);
+			if ((_v0.$ === 'Just') && (_v0.a === 'italic')) {
 				return 'italic';
 			} else {
 				return 'normal';
 			}
 		}();
-		var borderColor = function () {
-			var _v0 = params.theme;
-			if (_v0.$ === 'Light') {
-				return 'rgba(179, 204, 230, 1)';
-			} else {
-				return 'rgba(153, 153, 153, 0.5)';
-			}
-		}();
-		var blockAttrs = _List_fromArray(
-			[
-				A2(
-				$elm$html$Html$Attributes$style,
-				'width',
-				$elm$core$String$fromInt(settings.width) + 'px'),
-				A2(
-				$elm$html$Html$Attributes$style,
-				'font-size',
-				$elm$core$String$fromInt(settings.fontSize) + 'px'),
-				A2($elm$html$Html$Attributes$style, 'font-style', fontStyle)
-			]);
-		return isBoxLike(root) ? A2(
-			$elm$html$Html$div,
-			blockAttrs,
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							A2($elm$html$Html$Attributes$style, 'padding-bottom', '0px'),
-							A2($elm$html$Html$Attributes$style, 'border', '4px solid ' + borderColor),
-							A2($elm$html$Html$Attributes$style, 'margin-left', 'auto'),
-							A2($elm$html$Html$Attributes$style, 'margin-right', 'auto'),
-							A2(
-							$elm$html$Html$Attributes$style,
-							'width',
-							$elm$core$String$fromInt(settings.width - 60) + 'px')
-						]),
-					_List_fromArray(
-						[
-							A4($jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_, params, settings, accumulator, tree)
-						]))
-				])) : A2(
+		return A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
@@ -16200,7 +16398,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree = F4(
 				]),
 			_List_fromArray(
 				[
-					A4($jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_, params, settings, accumulator, tree)
+					A5($jxxcarlson$xmarkdown_compiler$Render$Tree$renderTree_, params, settings, accumulator, 0, tree)
 				]));
 	});
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$renderForest = F4(
@@ -16429,7 +16627,7 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$render = F2(
 				$elm$core$List$head,
 				A2(
 					$elm$core$Maybe$map,
-					A4($jxxcarlson$xmarkdown_compiler$Render$Block$renderBody, params.editCount, accumulator_, renderSettings, _List_Nil),
+					A5($jxxcarlson$xmarkdown_compiler$Render$Block$renderBody, params.editCount, accumulator_, 0, renderSettings, _List_Nil),
 					$jxxcarlson$xmarkdown_compiler$AST$ASTTools$banner(forest_))));
 		return {
 			banner: banner,
@@ -16595,9 +16793,10 @@ var $elm$html$Html$Attributes$title = $elm$html$Html$Attributes$stringProperty('
 var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $author$project$Main$view = function (model) {
 	var g = $author$project$Main$geometry(model);
+	var compilerParameters = model.compilerParameters;
 	var params = _Utils_update(
-		$jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters,
-		{docWidth: g.docWidth, editCount: model.count, numberToLevel: 3, selectedId: model.selectId, theme: model.theme});
+		compilerParameters,
+		{docWidth: g.docWidth, editCount: model.count, selectedId: model.selectId, theme: model.theme});
 	var compilerOutput = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$compileOutput, params, model.sourceText);
 	return A2(
 		$elm$html$Html$div,
@@ -16643,18 +16842,7 @@ var $author$project$Main$view = function (model) {
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('Save File')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('toolbar-button'),
-										$elm$html$Html$Events$onClick($author$project$Main$NewFileRequested)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('New File')
+										$elm$html$Html$text('Save File As')
 									])),
 								A2(
 								$elm$html$Html$input,
@@ -16671,6 +16859,17 @@ var $author$project$Main$view = function (model) {
 										$elm$html$Html$Attributes$placeholder('File name...')
 									]),
 								_List_Nil),
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('toolbar-button'),
+										$elm$html$Html$Events$onClick($author$project$Main$NewFileRequested)
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('New File')
+									])),
 								A2(
 								$elm$html$Html$button,
 								_List_fromArray(
@@ -16700,6 +16899,18 @@ var $author$project$Main$view = function (model) {
 												return '☀️';
 											}
 										}())
+									])),
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('toolbar-button'),
+										$elm$html$Html$Events$onClick($author$project$Main$ToggleNumberSections)
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										model.numberedSections ? 'Section numbering: Yes' : 'Section numbering: No')
 									]))
 							])),
 						A2(

@@ -77,7 +77,7 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
   return fun.a === 9 ? fun.f(a, b, c, d, e, f, g, h, i) : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
 
-console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.1/optimize for better performance and smaller assets.');
+console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.2/optimize for better performance and smaller assets.');
 
 
 var _JsArray_empty = [];
@@ -4951,8 +4951,8 @@ var $elm$core$String$split = F2(
 var $elm$json$Json$Decode$indent = function (str) {
 	return A2(
 		$elm$core$String$join,
-		'\n    ',
-		A2($elm$core$String$split, '\n', str));
+		'\u000A    ',
+		A2($elm$core$String$split, '\u000A', str));
 };
 var $elm$core$List$foldl = F3(
 	function (func, acc, list) {
@@ -5044,7 +5044,7 @@ var $elm$core$List$reverse = function (list) {
 var $elm$core$String$uncons = _String_uncons;
 var $elm$json$Json$Decode$errorOneOf = F2(
 	function (i, error) {
-		return '\n\n(' + ($elm$core$String$fromInt(i + 1) + (') ' + $elm$json$Json$Decode$indent(
+		return '\u000A\u000A(' + ($elm$core$String$fromInt(i + 1) + (') ' + $elm$json$Json$Decode$indent(
 			$elm$json$Json$Decode$errorToString(error))));
 	});
 var $elm$json$Json$Decode$errorToString = function (error) {
@@ -5069,7 +5069,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 							return $elm$core$Char$isAlpha(_char) && A2($elm$core$String$all, $elm$core$Char$isAlphaNum, rest);
 						}
 					}();
-					var fieldName = isSimple ? ('.' + f) : ('[\'' + (f + '\']'));
+					var fieldName = isSimple ? ('.' + f) : ('[\u0027' + (f + '\u0027]'));
 					var $temp$error = err,
 						$temp$context = A2($elm$core$List$cons, fieldName, context);
 					error = $temp$error;
@@ -5120,7 +5120,7 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 								$elm$core$List$length(errors)) + ' ways:'));
 							return A2(
 								$elm$core$String$join,
-								'\n\n',
+								'\u000A\u000A',
 								A2(
 									$elm$core$List$cons,
 									introduction,
@@ -5132,16 +5132,16 @@ var $elm$json$Json$Decode$errorToStringHelp = F2(
 					var json = error.b;
 					var introduction = function () {
 						if (!context.b) {
-							return 'Problem with the given value:\n\n';
+							return 'Problem with the given value:\u000A\u000A';
 						} else {
 							return 'Problem with the value at json' + (A2(
 								$elm$core$String$join,
 								'',
-								$elm$core$List$reverse(context)) + ':\n\n    ');
+								$elm$core$List$reverse(context)) + ':\u000A\u000A    ');
 						}
 					}();
 					return introduction + ($elm$json$Json$Decode$indent(
-						A2($elm$json$Json$Encode$encode, 4, json)) + ('\n\n' + msg));
+						A2($elm$json$Json$Encode$encode, 4, json)) + ('\u000A\u000A' + msg));
 			}
 		}
 	});
@@ -5626,7 +5626,7 @@ var $author$project$Main$minEditorW = 200;
 var $author$project$Main$pagePad = 16;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Ports$setEditorHighlightColor = _Platform_outgoingPort('setEditorHighlightColor', $elm$json$Json$Encode$string);
-var $author$project$Data$XMarkdown$text = '\n\n\n# Sample Document\n\nXMarkdown is a version of Markdown which handles mathematical text.  This and other features are described below. See also [this online version](https://xmarkdowndemo.netlify.app/).\n\nTo understand how any piece of rendered text is constructed, click on it to see the corresponding source text.\n\nFeel free to add to or edit this text. Your changes will not be saved. Refresh your browser to return to the original text.\n\n# Math\n\nXMarkdown handles both inline and displayed mathematical text, e.g., $a^2 + b^2 = c^2$\nand\n\n$$\ncos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\n$$\n\nHere is the source text: `$a^2 + b^2 = c^2$` for inline formulas and\n\n```\n$$\ncos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\n$$\n```\n\nfor displayed formulas. The source text looks like TeX but without most of the backslashes and curly braces that are customary.  This is [ETeX](https://package.elm-lang.org/packages/jxxcarlson/etex/latest/), an Elm package which implements this simplified syntax.  You may also use regular TeX:\n\n```\n$$\n\\cos{x} = \\sum_{n=0}^\\infty(-1)^n \\frac{x^{2n}}{(2n)!}\n$$\n```\n\nIn ETeX curly braces are used for grouping.\n\n\n# Images\n\n![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)\n\nThe syntax for images is\n\n```\n[CAPTION width:WIDTH_IN_PIXELS](URL)\n```\n\nThe phrase `width:WIDTH_IN_PIXELS` is optional.\n\n# Itemized Lists\n\n## Ordinary\n\nblah blah blah blah blah blah blah blah blah \n\n- Fruits\n\n  - Oranges\n\n  - Apples\n\n    - Green\n\n    - Red\n\n      - Yada\n\n      - Mada \n\nblah blah blah blah blah blah blah blah \n\n## Numbered\n\nblah blah blah blah blah blah blah blah blah blah \n\n. Vegetables\n\n  . Green Beans\n\n  . Brocolli\n\n    . US\n\n    . Mexican\n\nblah blah blah blah blah blah blah blah \n\n# Compact Lists\n\n\n## Ordinary\n\n\nblah blah blah blah blah blah blah blah blah \n\n- Apples\n  - YOLO $= y^2$\n    - MOV $c^2$\n    - Green\n    - Red\n\n      - Yada\n      - Mada \n\nblah blah blah blah blah blah blah blah \n\n## Numbered\n\n\nblah blah blah blah blah blah blah blah blah \n\n. Apples\n\n. Oranges\n\n. Pears\n\n  . Red\n\n  . Green\n\nblah blah blah blah blah blah blah blah blah \n\n. Vegetables\n  . Green Beans\n  . Brocolli\n    . US\n    . Mexican\n\nblah blah blah blah blah blah blah blah blah \n\n# Indentation\n\nOranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \n\n  Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \n\n    Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges\n  \n# Tables\n\nXMarkdown provides for Github-style tables.  These tables may contain mathematical text.\n\n**Ages, Occupations, and Favorite Formulas**\n\n| Name  | Age | Occupation  | F.F.|\n|:-------|----:|:-------------|-----:|\n| Alice |  28 | *Engineer*    | $n!$ |\n| Bob   |  34 | *Musician*    | $3:2$ |\n| Carol |  41 | *Mathematician* | $sqrt(2 + \\sqrt5)$\n\n# Real-time Rendering\n\nXMarkdown provides for real-time rendering: the rendered text is updated as you type. Try it with this document. (Your edits will not be saved: refresh the browswer to return to the original.)\n\n# Synchronization\n\nXMarkdown can synchronize source and rendered text:\n\n- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.\n\n- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.\n\n# Section Numbering\n\nThe default is for sections not to be numbered. To automatically number sections, press the button "Section numbering: No".  To return to the default press the same button, which now reads "Section numbering: Yes"\n\n# Table of Contents\n\nXMarkdown provides for an optional real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.\n\nAlso note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.\n\n*You can edit whatever you like in this document.  Your edits will not be saved.*\n\n# Blocks and Indentation\n\nSource text in XMarkdown is divided into blocks.  Here is an example\n\n```\n  # Introduction\n  \n  Cells are the fundamental units of life.\n  Every living organism, ..\n  \n  # The Discovery of Cells\n  \n  ## Robert Hooke and the First Observation\n  \n  In 1665, the English scientist Robert Hooke\n  examined a thin slice of cork with one of the first\n  compound microscopes ...\n  \n  ## Antoine van Leeuwenhoek\n  \n  A few years later, the Dutch scientist\n  Antoine van Leeuwenhoek built microscopes\n  of much higher quality ...\n```\n\n\n ';
+var $author$project$Data$XMarkdown$text = '\u000A\u000A\u000A# Sample Document\u000A\u000AXMarkdown is a version of Markdown which handles mathematical text.  This and other features are described below. See also [this online version](https://xmarkdowndemo.netlify.app/).\u000A\u000ATo understand how any piece of rendered text is constructed, click on it to see the corresponding source text.\u000A\u000AFeel free to add to or edit this text. Your changes will not be saved. Refresh your browser to return to the original text.\u000A\u000A# Math\u000A\u000AXMarkdown handles both inline and displayed mathematical text, e.g., $a^2 + b^2 = c^2$\u000Aand\u000A\u000A$$\u000Acos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\u000A$$\u000A\u000AHere is the source text: `$a^2 + b^2 = c^2$` for inline formulas and\u000A\u000A```\u000A$$\u000Acos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\u000A$$\u000A```\u000A\u000Afor displayed formulas. The source text looks like TeX but without most of the backslashes and curly braces that are customary.  This is [ETeX](https://package.elm-lang.org/packages/jxxcarlson/etex/latest/), an Elm package which implements this simplified syntax.  You may also use regular TeX:\u000A\u000A```\u000A$$\u000A\u005Ccos{x} = \u005Csum_{n=0}^\u005Cinfty(-1)^n \u005Cfrac{x^{2n}}{(2n)!}\u000A$$\u000A```\u000A\u000AIn ETeX curly braces are used for grouping.\u000A\u000A\u000A# Images\u000A\u000A![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)\u000A\u000AThe syntax for images is\u000A\u000A```\u000A[CAPTION width:WIDTH_IN_PIXELS](URL)\u000A```\u000A\u000AThe phrase `width:WIDTH_IN_PIXELS` is optional.\u000A\u000A# Itemized Lists\u000A\u000A## Ordinary\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A- Fruits\u000A\u000A  - Oranges\u000A\u000A  - Apples\u000A\u000A    - Green\u000A\u000A    - Red\u000A\u000A      - Yada\u000A\u000A      - Mada \u000A\u000Ablah blah blah blah blah blah blah blah \u000A\u000A## Numbered\u000A\u000Ablah blah blah blah blah blah blah blah blah blah \u000A\u000A. Vegetables\u000A\u000A  . Green Beans\u000A\u000A  . Brocolli\u000A\u000A    . US\u000A\u000A    . Mexican\u000A\u000Ablah blah blah blah blah blah blah blah \u000A\u000A# Compact Lists\u000A\u000A\u000A## Ordinary\u000A\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A- Apples\u000A  - YOLO $= y^2$\u000A    - MOV $c^2$\u000A    - Green\u000A    - Red\u000A\u000A      - Yada\u000A      - Mada \u000A\u000Ablah blah blah blah blah blah blah blah \u000A\u000A## Numbered\u000A\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A. Apples\u000A\u000A. Oranges\u000A\u000A. Pears\u000A\u000A  . Red\u000A\u000A  . Green\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A. Vegetables\u000A  . Green Beans\u000A  . Brocolli\u000A    . US\u000A    . Mexican\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A# Indentation\u000A\u000AOranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \u000A\u000A  Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \u000A\u000A    Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges\u000A  \u000A# Tables\u000A\u000AXMarkdown provides for Github-style tables.  These tables may contain mathematical text.\u000A\u000A**Ages, Occupations, and Favorite Formulas**\u000A\u000A| Name  | Age | Occupation  | F.F.|\u000A|:-------|----:|:-------------|-----:|\u000A| Alice |  28 | *Engineer*    | $n!$ |\u000A| Bob   |  34 | *Musician*    | $3:2$ |\u000A| Carol |  41 | *Mathematician* | $sqrt(2 + \u005Csqrt5)$\u000A\u000A# Real-time Rendering\u000A\u000AXMarkdown provides for real-time rendering: the rendered text is updated as you type. Try it with this document. (Your edits will not be saved: refresh the browswer to return to the original.)\u000A\u000A# Synchronization\u000A\u000AXMarkdown can synchronize source and rendered text:\u000A\u000A- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.\u000A\u000A- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.\u000A\u000A# Section Numbering\u000A\u000AThe default is for sections not to be numbered. To automatically number sections, press the button \u0022Section numbering: No\u0022.  To return to the default press the same button, which now reads \u0022Section numbering: Yes\u0022\u000A\u000A# Table of Contents\u000A\u000AXMarkdown provides for an optional real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.\u000A\u000AAlso note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.\u000A\u000A*You can edit whatever you like in this document.  Your edits will not be saved.*\u000A\u000A# Blocks and Indentation\u000A\u000ASource text in XMarkdown is divided into blocks.  Here is an example\u000A\u000A```\u000A  # Introduction\u000A  \u000A  Cells are the fundamental units of life.\u000A  Every living organism, ..\u000A  \u000A  # The Discovery of Cells\u000A  \u000A  ## Robert Hooke and the First Observation\u000A  \u000A  In 1665, the English scientist Robert Hooke\u000A  examined a thin slice of cork with one of the first\u000A  compound microscopes ...\u000A  \u000A  ## Antoine van Leeuwenhoek\u000A  \u000A  A few years later, the Dutch scientist\u000A  Antoine van Leeuwenhoek built microscopes\u000A  of much higher quality ...\u000A```\u000A\u000A\u000A ';
 var $author$project$Main$init = function (flags) {
 	var params = $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters;
 	return _Utils_Tuple2(
@@ -5638,10 +5638,12 @@ var $author$project$Main$init = function (flags) {
 			editorOpen: false,
 			editorWidth: A2($elm$core$Basics$max, $author$project$Main$minEditorW, ((((flags.window.windowWidth - $author$project$Main$initialTocW) - (2 * $author$project$Main$pagePad)) - (2 * $author$project$Main$dividerW)) / 2) | 0),
 			fileName: 'untitled.md',
+			folderName: $elm$core$Maybe$Nothing,
 			initialText: $author$project$Data$XMarkdown$text,
 			lrSyncIndex: 0,
 			lrSyncMatches: _List_Nil,
 			lrSyncText: '',
+			notice: $elm$core$Maybe$Nothing,
 			numberedSections: false,
 			selectId: '@InitID',
 			sourceText: $author$project$Data$XMarkdown$text,
@@ -5658,6 +5660,9 @@ var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $author$project$Main$DragMove = function (a) {
 	return {$: 'DragMove', a: a};
 };
+var $author$project$Main$FolderOpened = function (a) {
+	return {$: 'FolderOpened', a: a};
+};
 var $author$project$Main$GotNewWindowDimensions = F2(
 	function (a, b) {
 		return {$: 'GotNewWindowDimensions', a: a, b: b};
@@ -5665,10 +5670,51 @@ var $author$project$Main$GotNewWindowDimensions = F2(
 var $author$project$Main$LRSync = function (a) {
 	return {$: 'LRSync', a: a};
 };
+var $author$project$Main$LinkedFileClicked = function (a) {
+	return {$: 'LinkedFileClicked', a: a};
+};
 var $author$project$Main$StopDrag = {$: 'StopDrag'};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Ports$folderOpened = _Platform_incomingPort('folderOpened', $elm$json$Json$Decode$string);
+var $elm$json$Json$Decode$null = _Json_decodeNull;
+var $elm$json$Json$Decode$oneOf = _Json_oneOf;
+var $author$project$Ports$linkedFile = _Platform_incomingPort(
+	'linkedFile',
+	A2(
+		$elm$json$Json$Decode$andThen,
+		function (name) {
+			return A2(
+				$elm$json$Json$Decode$andThen,
+				function (folder) {
+					return A2(
+						$elm$json$Json$Decode$andThen,
+						function (content) {
+							return $elm$json$Json$Decode$succeed(
+								{content: content, folder: folder, name: name});
+						},
+						A2(
+							$elm$json$Json$Decode$field,
+							'content',
+							$elm$json$Json$Decode$oneOf(
+								_List_fromArray(
+									[
+										$elm$json$Json$Decode$null($elm$core$Maybe$Nothing),
+										A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, $elm$json$Json$Decode$string)
+									]))));
+				},
+				A2(
+					$elm$json$Json$Decode$field,
+					'folder',
+					$elm$json$Json$Decode$oneOf(
+						_List_fromArray(
+							[
+								$elm$json$Json$Decode$null($elm$core$Maybe$Nothing),
+								A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, $elm$json$Json$Decode$string)
+							]))));
+		},
+		A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string)));
 var $author$project$Ports$lrSyncRequest = _Platform_incomingPort('lrSyncRequest', $elm$json$Json$Decode$string);
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $elm$browser$Browser$Events$Document = {$: 'Document'};
@@ -6029,8 +6075,8 @@ var $elm$core$List$filterMap = F2(
 	});
 var $elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _v0, state) {
-		var key = _v0.key;
 		var event = _v0.event;
+		var key = _v0.key;
 		var toMessage = function (_v2) {
 			var subKey = _v2.a;
 			var _v3 = _v2.b;
@@ -6092,6 +6138,8 @@ var $author$project$Main$subscriptions = function (model) {
 			[
 				$elm$browser$Browser$Events$onResize($author$project$Main$GotNewWindowDimensions),
 				$author$project$Ports$lrSyncRequest($author$project$Main$LRSync),
+				$author$project$Ports$folderOpened($author$project$Main$FolderOpened),
+				$author$project$Ports$linkedFile($author$project$Main$LinkedFileClicked),
 				function () {
 				var _v0 = model.dragging;
 				if (_v0.$ === 'Just') {
@@ -6322,7 +6370,7 @@ var $author$project$Main$jumpToTopOfWithLineNumber = F2(
 				A2(
 					$elm$core$Task$onError,
 					function (_v0) {
-						var selector = '[data-line-number=\"' + ($elm$core$String$fromInt(lineNumber) + '\"]');
+						var selector = '[data-line-number=\u0022' + ($elm$core$String$fromInt(lineNumber) + '\u0022]');
 						return A2(
 							$elm$core$Task$andThen,
 							$author$project$Main$performScroll,
@@ -6355,10 +6403,22 @@ var $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme = {
 	text: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray950
 };
 var $elm$core$String$lines = _String_lines;
+var $author$project$Main$loadDocument = F2(
+	function (content, model) {
+		return _Utils_update(
+			model,
+			{count: model.count + 1, initialText: content, notice: $elm$core$Maybe$Nothing, sourceText: content, syncHighlight: $elm$core$Maybe$Nothing});
+	});
 var $elm$core$Basics$modBy = _Basics_modBy;
 var $elm$file$File$name = _File_name;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Basics$not = _Basics_not;
+var $elm$json$Json$Encode$null = _Json_encodeNull;
+var $author$project$Ports$openFolder = _Platform_outgoingPort(
+	'openFolder',
+	function ($) {
+		return $elm$json$Json$Encode$null;
+	});
 var $elm$core$Basics$round = _Basics_round;
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
@@ -7159,12 +7219,12 @@ var $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary = function (a) {
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$addCurrentLine_ = F2(
 	function (line, block) {
-		var prefix = line.prefix;
 		var content = line.content;
+		var prefix = line.prefix;
 		var oldMeta = block.meta;
 		var newMeta = _Utils_update(
 			oldMeta,
-			{sourceText: block.meta.sourceText + ('\n' + (prefix + content))});
+			{sourceText: block.meta.sourceText + ('\u000A' + (prefix + content))});
 		return _Utils_update(
 			block,
 			{
@@ -7542,7 +7602,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$normalizeMathDeli
 					var _v1 = _v0.a;
 					var lastLine = _v1.a;
 					var front = _v1.b;
-					return ($elm$core$String$trim(lastLine) === '\\]') ? _Utils_ap(
+					return ($elm$core$String$trim(lastLine) === '\u005C]') ? _Utils_ap(
 						front,
 						_List_fromArray(
 							['$$'])) : block.body;
@@ -7552,7 +7612,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$normalizeMathDeli
 			}(),
 			firstLine: A2(
 				$elm$core$String$startsWith,
-				'\\[',
+				'\u005C[',
 				$elm$core$String$trimLeft(block.firstLine)) ? ('$$' + A2(
 				$elm$core$String$dropLeft,
 				2,
@@ -7596,8 +7656,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$finalize = functi
 	var content = $elm$core$List$reverse(block.body);
 	var sourceText = (!_Utils_eq(block.heading, $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph)) ? A2(
 		$elm$core$String$join,
-		'\n',
-		A2($elm$core$List$cons, block.firstLine, content)) : A2($elm$core$String$join, '\n', content);
+		'\u000A',
+		A2($elm$core$List$cons, block.firstLine, content)) : A2($elm$core$String$join, '\u000A', content);
 	var newMeta = _Utils_update(
 		oldMeta,
 		{sourceText: sourceText});
@@ -7639,7 +7699,7 @@ var $elm$core$Maybe$withDefault = F2(
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$sectionRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^(#+\\s*|!!\\s*)'));
+	$elm$regex$Regex$fromString('^(#+\u005Cs*|!!\u005Cs*)'));
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -7700,7 +7760,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$fixMarkdownTitleB
 	}
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isVerbatimLine = function (str) {
-	return (A2($elm$core$String$left, 3, str) === '```') || ((A2($elm$core$String$left, 2, str) === '$$') || (A2($elm$core$String$left, 2, str) === '\\['));
+	return (A2($elm$core$String$left, 3, str) === '```') || ((A2($elm$core$String$left, 2, str) === '$$') || (A2($elm$core$String$left, 2, str) === '\u005C['));
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$acceptBlock = F2(
 	function (tag, block) {
@@ -7711,7 +7771,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$acceptBlock = F2(
 var $jxxcarlson$xmarkdown_compiler$Tools$Utility$ordinaryTagAtEndRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('.*\n| .*$'));
+	$elm$regex$Regex$fromString('.*\u000A| .*$'));
 var $jxxcarlson$xmarkdown_compiler$Tools$Utility$findOrdinaryTagAtEnd = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -7873,7 +7933,7 @@ var $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker = 
 	var regex = A2(
 		$elm$core$Maybe$withDefault,
 		$elm$regex$Regex$never,
-		$elm$regex$Regex$fromString('^(\\d+[.)]|\\.) '));
+		$elm$regex$Regex$fromString('^(\u005Cd+[.)]|\u005C.) '));
 	return A3(
 		$elm$regex$Regex$replace,
 		regex,
@@ -8093,10 +8153,10 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$commitBlock = F2(
 var $jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta = {error: $elm$core$Maybe$Nothing, id: '', lineNumber: 0, messages: _List_Nil, numberOfLines: 0, position: 0, sourceText: ''};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$bogusBlockFromLine = F2(
 	function (message_, _v0) {
-		var indent = _v0.indent;
-		var lineNumber = _v0.lineNumber;
-		var position = _v0.position;
 		var content = _v0.content;
+		var position = _v0.position;
+		var lineNumber = _v0.lineNumber;
+		var indent = _v0.indent;
 		var message = '[b [red ' + (content + (']] [blue [i ' + (message_ + ']]')));
 		var meta = _Utils_update(
 			$jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta,
@@ -8340,7 +8400,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$codeFenceArgs = f
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$titleRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^!!\\s'));
+	$elm$regex$Regex$fromString('^!!\u005Cs'));
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findTitlePrefix = function (string) {
 	return A2(
 		$elm$core$Maybe$map,
@@ -8357,7 +8417,7 @@ var $elm$regex$Regex$contains = _Regex_contains;
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItemPrefixRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^\\d+[.)]$'));
+	$elm$regex$Regex$fromString('^\u005Cd+[.)]$'));
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isNumberedItemPrefix = function (prefix) {
 	return A2($elm$regex$Regex$contains, $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItemPrefixRegex, prefix);
 };
@@ -8484,7 +8544,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = 
 								heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
 								properties: $elm$core$Dict$empty
 							});
-					case '\\[':
+					case '\u005C[':
 						return $elm$core$Result$Ok(
 							{
 								args: _List_Nil,
@@ -8506,19 +8566,19 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = 
 	}
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$blockFromLine = function (line) {
-	var indent = line.indent;
-	var lineNumber = line.lineNumber;
-	var position = line.position;
-	var prefix = line.prefix;
 	var content = line.content;
+	var prefix = line.prefix;
+	var position = line.position;
+	var lineNumber = line.lineNumber;
+	var indent = line.indent;
 	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData(content);
 	if (_v0.$ === 'Err') {
 		return $elm$core$Result$Ok(
 			A2($jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$bogusBlockFromLine, '<= something missing', line));
 	} else {
-		var heading = _v0.a.heading;
-		var args = _v0.a.args;
 		var properties = _v0.a.properties;
+		var args = _v0.a.args;
+		var heading = _v0.a.heading;
 		var meta = _Utils_update(
 			$jxxcarlson$xmarkdown_compiler$AST$Language$emptyBlockMeta,
 			{lineNumber: lineNumber, numberOfLines: 1, position: position, sourceText: ''});
@@ -8966,9 +9026,9 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$stringValue = function (t
 		case 'MathToken':
 			return '$';
 		case 'MathTokenLeft':
-			return '\\(';
+			return '\u005C(';
 		case 'MathTokenRight':
-			return '\\)';
+			return '\u005C)';
 		case 'CodeToken':
 			return '`';
 		default:
@@ -10368,7 +10428,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 					var meta = _v0.a.a;
 					var rest = _v0.b;
 					var content = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$toString2(rest);
-					var message = (content === '') ? '\\(?\\)' : '\\( ';
+					var message = (content === '') ? '\u005C(?\u005C)' : '\u005C( ';
 					return $jxxcarlson$xmarkdown_compiler$Tools$Loop$Loop(
 						_Utils_update(
 							state,
@@ -10377,7 +10437,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 									$elm$core$List$cons,
 									$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$errorMessage(message),
 									state.committed),
-								messages: A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$prependMessage, state.lineNumber, 'opening \\( needs to be matched with a closing \\)', state.messages),
+								messages: A3($jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$prependMessage, state.lineNumber, 'opening \u005C( needs to be matched with a closing \u005C)', state.messages),
 								numberOfTokens: 0,
 								stack: _List_Nil,
 								tokenIndex: meta.index + 1
@@ -10955,8 +11015,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenRightParser = F2
 			$elm$parser$Parser$Advanced$symbol(
 				A2(
 					$elm$parser$Parser$Advanced$Token,
-					'\\)',
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\\)'))));
+					'\u005C)',
+					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\u005C)'))));
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathParenParser_ = F2(
 	function (start, index) {
@@ -11166,8 +11226,8 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenLeftParser = F2(
 			$elm$parser$Parser$Advanced$symbol(
 				A2(
 					$elm$parser$Parser$Advanced$Token,
-					'\\(',
-					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\\('))));
+					'\u005C(',
+					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\u005C('))));
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$rightBracketParser = F2(
 	function (start, index) {
@@ -11357,9 +11417,9 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$handleLB = F2(
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$boostMeta = F3(
 	function (lineNumber, tokenIndex, _v0) {
-		var begin = _v0.begin;
-		var end = _v0.end;
 		var index = _v0.index;
+		var end = _v0.end;
+		var begin = _v0.begin;
 		return {
 			begin: begin,
 			end: end,
@@ -11797,7 +11857,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseListItems = F3(
 				$elm$core$List$foldl,
 				folder,
 				_Utils_Tuple2(0, _List_Nil),
-				A2($elm$core$String$split, '\n', sourceText)).b);
+				A2($elm$core$String$split, '\u000A', sourceText)).b);
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseNumberedListItems = F2(
 	function (parse, sourceText) {
@@ -11827,7 +11887,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseNumberedListItems 
 				$elm$core$List$foldl,
 				folder,
 				_Utils_Tuple2(0, _List_Nil),
-				A2($elm$core$String$split, '\n', sourceText)).b);
+				A2($elm$core$String$split, '\u000A', sourceText)).b);
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseQuotationLines = F2(
 	function (parse, sourceText) {
@@ -11854,7 +11914,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$parseQuotationLines = F
 				$elm$core$List$foldl,
 				folder,
 				_Utils_Tuple2(0, _List_Nil),
-				A2($elm$core$String$split, '\n', sourceText)).b);
+				A2($elm$core$String$split, '\u000A', sourceText)).b);
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$GFMTable$alignmentCode = function (a) {
 	switch (a.$) {
@@ -12058,7 +12118,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$toExpressionBlock_ = F2
 					case 'Paragraph':
 						return $toastal$either$Either$Right(
 							parse(
-								A2($elm$core$String$join, '\n', primitiveBlock.body)));
+								A2($elm$core$String$join, '\u000A', primitiveBlock.body)));
 					case 'Ordinary':
 						switch (_v0.a) {
 							case 'itemList_':
@@ -12094,11 +12154,11 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$Pipeline$toExpressionBlock_ = F2
 										$elm$core$List$map,
 										$jxxcarlson$xmarkdown_compiler$AST$Language$shiftExpressionPositions(markerOffset),
 										parse(
-											A2($elm$core$String$join, '\n', primitiveBlock.body))));
+											A2($elm$core$String$join, '\u000A', primitiveBlock.body))));
 						}
 					default:
 						return $toastal$either$Either$Left(
-							A2($elm$core$String$join, '\n', primitiveBlock.body));
+							A2($elm$core$String$join, '\u000A', primitiveBlock.body));
 				}
 			}(),
 			firstLine: primitiveBlock.firstLine,
@@ -12328,10 +12388,60 @@ var $author$project$Main$update = F2(
 			case 'FileLoaded':
 				var content = msg.a;
 				return _Utils_Tuple2(
+					A2($author$project$Main$loadDocument, content, model),
+					$elm$core$Platform$Cmd$none);
+			case 'OpenFolderRequested':
+				return _Utils_Tuple2(
+					model,
+					$author$project$Ports$openFolder(_Utils_Tuple0));
+			case 'FolderOpened':
+				var name = msg.a;
+				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{count: model.count + 1, initialText: content, sourceText: content, syncHighlight: $elm$core$Maybe$Nothing}),
+						{
+							folderName: $elm$core$Maybe$Just(name),
+							notice: $elm$core$Maybe$Nothing
+						}),
 					$elm$core$Platform$Cmd$none);
+			case 'LinkedFileClicked':
+				var folder = msg.a.folder;
+				var content = msg.a.content;
+				var name = msg.a.name;
+				var _v4 = _Utils_Tuple2(content, folder);
+				if (_v4.a.$ === 'Just') {
+					var fileText = _v4.a.a;
+					return _Utils_Tuple2(
+						A2(
+							$author$project$Main$loadDocument,
+							fileText,
+							_Utils_update(
+								model,
+								{fileName: name})),
+						$elm$core$Platform$Cmd$none);
+				} else {
+					if (_v4.b.$ === 'Nothing') {
+						var _v5 = _v4.a;
+						var _v6 = _v4.b;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									notice: $elm$core$Maybe$Just('To follow links to files such as ' + (name + ', first use Open Folder.'))
+								}),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						var _v7 = _v4.a;
+						var folderName = _v4.b.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									notice: $elm$core$Maybe$Just(name + (' was not found in ' + (folderName + '.')))
+								}),
+							$elm$core$Platform$Cmd$none);
+					}
+				}
 			case 'SaveFileRequested':
 				return _Utils_Tuple2(
 					model,
@@ -12358,8 +12468,8 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 			case 'ToggleNumberSections':
 				var oldCompilerParameters = model.compilerParameters;
-				var _v4 = model.numberedSections;
-				if (!_v4) {
+				var _v8 = model.numberedSections;
+				if (!_v8) {
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -12385,8 +12495,8 @@ var $author$project$Main$update = F2(
 			case 'ToggleTheme':
 				var params = model.compilerParameters;
 				var newTheme = function () {
-					var _v6 = model.theme;
-					if (_v6.$ === 'Light') {
+					var _v10 = model.theme;
+					if (_v10.$ === 'Light') {
 						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
 					} else {
 						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
@@ -12439,7 +12549,7 @@ var $author$project$Main$update = F2(
 				if (currentMatch.$ === 'Just') {
 					var match = currentMatch.a;
 					var lineNumberStr = $elm$core$String$fromInt(match.lineNumber);
-					var css = '[data-line-number=\"' + (lineNumberStr + ('\"] { background-color: ' + (params.highlightColor + (' !important; }\n' + ('[data-line-number=\"' + (lineNumberStr + ('\"] * { background-color: ' + (params.highlightColor + ' !important; }'))))))));
+					var css = '[data-line-number=\u0022' + (lineNumberStr + ('\u0022] { background-color: ' + (params.highlightColor + (' !important; }\u000A' + ('[data-line-number=\u0022' + (lineNumberStr + ('\u0022] * { background-color: ' + (params.highlightColor + ' !important; }'))))))));
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -12459,9 +12569,9 @@ var $author$project$Main$update = F2(
 				}
 			default:
 				var msg_ = msg.a;
-				var _v8 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
-				if (_v8.$ === 'Just') {
-					var h = _v8.a;
+				var _v12 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+				if (_v12.$ === 'Just') {
+					var h = _v12.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
@@ -12502,6 +12612,7 @@ var $author$project$Main$FileNameChanged = function (a) {
 };
 var $author$project$Main$NewFileRequested = {$: 'NewFileRequested'};
 var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
+var $author$project$Main$OpenFolderRequested = {$: 'OpenFolderRequested'};
 var $author$project$Main$Render = function (a) {
 	return {$: 'Render', a: a};
 };
@@ -12661,7 +12772,7 @@ var $jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace = function (s
 	return $elm$core$String$trim(
 		A3(
 			$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
-			'\\s\\s+',
+			'\u005Cs\u005Cs+',
 			function (_v0) {
 				return ' ';
 			},
@@ -13033,9 +13144,9 @@ var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock = F2(
 	});
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator = F2(
 	function (block, accumulator) {
-		var heading = block.heading;
-		var args = block.args;
 		var properties = block.properties;
+		var args = block.args;
+		var heading = block.heading;
 		switch (heading.$) {
 			case 'Ordinary':
 				switch (heading.a) {
@@ -13791,7 +13902,7 @@ var $jxxcarlson$etex$ETeX$Transform$f0Parser = A2(
 	A2(
 		$jxxcarlson$etex$ETeX$Transform$second,
 		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\\', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash)),
+			A2($elm$parser$Parser$Advanced$Token, '\u005C', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash)),
 		$jxxcarlson$etex$ETeX$Transform$alphaNumParser_));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter = {$: 'ExpectingGreekLetter'};
 var $elm$parser$Parser$Advanced$problem = function (x) {
@@ -13807,7 +13918,7 @@ var $jxxcarlson$etex$ETeX$Transform$greekSymbolParser = A2(
 	$elm$parser$Parser$Advanced$andThen,
 	function (str) {
 		return A2($elm$core$List$member, str, $jxxcarlson$etex$ETeX$KaTeX$greekLetters) ? $elm$parser$Parser$Advanced$succeed(
-			$jxxcarlson$etex$ETeX$Transform$AlphaNum('\\' + str)) : $elm$parser$Parser$Advanced$problem($jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter);
+			$jxxcarlson$etex$ETeX$Transform$AlphaNum('\u005C' + str)) : $elm$parser$Parser$Advanced$problem($jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter);
 	},
 	A2(
 		$elm$parser$Parser$Advanced$keeper,
@@ -13827,7 +13938,7 @@ var $jxxcarlson$etex$ETeX$Transform$leftBraceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$LeftMathBrace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftMathBrace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftMathBrace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingLineBreak = {$: 'ExpectingLineBreak'};
 var $jxxcarlson$etex$ETeX$Transform$MathSymbols = function (a) {
 	return {$: 'MathSymbols', a: a};
@@ -13835,9 +13946,9 @@ var $jxxcarlson$etex$ETeX$Transform$MathSymbols = function (a) {
 var $jxxcarlson$etex$ETeX$Transform$lineBreakParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed(
-		$jxxcarlson$etex$ETeX$Transform$MathSymbols('\\\\')),
+		$jxxcarlson$etex$ETeX$Transform$MathSymbols('\u005C\u005C')),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\\\', $jxxcarlson$etex$ETeX$Transform$ExpectingLineBreak)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C\u005C', $jxxcarlson$etex$ETeX$Transform$ExpectingLineBreak)));
 var $jxxcarlson$etex$ETeX$Transform$many1 = function (p) {
 	return A2(
 		$elm$parser$Parser$Advanced$keeper,
@@ -13853,21 +13964,21 @@ var $jxxcarlson$etex$ETeX$Transform$mathMediumSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathMediumSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\;', $jxxcarlson$etex$ETeX$Transform$ExpectingMathMediumSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C;', $jxxcarlson$etex$ETeX$Transform$ExpectingMathMediumSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace = {$: 'ExpectingMathSmallSpace'};
 var $jxxcarlson$etex$ETeX$Transform$MathSmallSpace = {$: 'MathSmallSpace'};
 var $jxxcarlson$etex$ETeX$Transform$mathSmallSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathSmallSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\,', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C,', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSmallSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace = {$: 'ExpectingMathSpace'};
 var $jxxcarlson$etex$ETeX$Transform$MathSpace = {$: 'MathSpace'};
 var $jxxcarlson$etex$ETeX$Transform$mathSpaceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$MathSpace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\ ', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C ', $jxxcarlson$etex$ETeX$Transform$ExpectingMathSpace)));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingNotAlpha = {$: 'ExpectingNotAlpha'};
 var $jxxcarlson$etex$ETeX$Transform$mathSymbolsParser = A2(
 	$elm$parser$Parser$Advanced$map,
@@ -13901,7 +14012,7 @@ var $jxxcarlson$etex$ETeX$Transform$mathSymbolsParser = A2(
 											_Utils_chr('('),
 											_Utils_chr(')'),
 											_Utils_chr(','),
-											_Utils_chr('\"')
+											_Utils_chr('"')
 										])));
 							},
 							$jxxcarlson$etex$ETeX$Transform$ExpectingNotAlpha)),
@@ -13921,7 +14032,7 @@ var $jxxcarlson$etex$ETeX$Transform$mathSymbolsParser = A2(
 										_Utils_chr('('),
 										_Utils_chr(')'),
 										_Utils_chr(','),
-										_Utils_chr('\"')
+										_Utils_chr('"')
 									])));
 						}))),
 			$elm$parser$Parser$Advanced$getOffset),
@@ -14139,7 +14250,7 @@ var $jxxcarlson$etex$ETeX$Transform$rightBraceParser = A2(
 	$elm$parser$Parser$Advanced$ignorer,
 	$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$RightMathBrace),
 	$elm$parser$Parser$Advanced$symbol(
-		A2($elm$parser$Parser$Advanced$Token, '\\}', $jxxcarlson$etex$ETeX$Transform$ExpectingRightMathBrace)));
+		A2($elm$parser$Parser$Advanced$Token, '\u005C}', $jxxcarlson$etex$ETeX$Transform$ExpectingRightMathBrace)));
 var $jxxcarlson$etex$ETeX$Transform$sepByCommaHelp = F2(
 	function (itemParser, revItems) {
 		return $elm$parser$Parser$Advanced$oneOf(
@@ -14220,7 +14331,7 @@ var $jxxcarlson$etex$ETeX$Transform$textParser = A2(
 		$elm$parser$Parser$Advanced$ignorer,
 		$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$Text),
 		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\"', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))),
+			A2($elm$parser$Parser$Advanced$Token, '\u0022', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))),
 	A2(
 		$elm$parser$Parser$Advanced$ignorer,
 		$elm$parser$Parser$Advanced$getChompedString(
@@ -14228,10 +14339,10 @@ var $jxxcarlson$etex$ETeX$Transform$textParser = A2(
 				function (c) {
 					return !_Utils_eq(
 						c,
-						_Utils_chr('\"'));
+						_Utils_chr('"'));
 				})),
 		$elm$parser$Parser$Advanced$symbol(
-			A2($elm$parser$Parser$Advanced$Token, '\"', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))));
+			A2($elm$parser$Parser$Advanced$Token, '\u0022', $jxxcarlson$etex$ETeX$Transform$ExpectingQuote))));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingSpace = {$: 'ExpectingSpace'};
 var $jxxcarlson$etex$ETeX$Transform$WS = {$: 'WS'};
 var $jxxcarlson$etex$ETeX$Transform$whitespaceParser = A2(
@@ -14357,7 +14468,7 @@ var $jxxcarlson$etex$ETeX$Transform$macroParser = function (userMacroDict) {
 				$elm$parser$Parser$Advanced$ignorer,
 				$elm$parser$Parser$Advanced$succeed($jxxcarlson$etex$ETeX$Transform$Macro),
 				$elm$parser$Parser$Advanced$symbol(
-					A2($elm$parser$Parser$Advanced$Token, '\\', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash))),
+					A2($elm$parser$Parser$Advanced$Token, '\u005C', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash))),
 			$jxxcarlson$etex$ETeX$Transform$alphaNumParser_),
 		$jxxcarlson$etex$ETeX$Transform$many(
 			$jxxcarlson$etex$ETeX$Transform$argParser(userMacroDict)));
@@ -14460,22 +14571,22 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 			var str = expr.a;
 			return str;
 		case 'LeftMathBrace':
-			return '\\{';
+			return '\u005C{';
 		case 'RightMathBrace':
-			return '\\}';
+			return '\u005C}';
 		case 'LeftParen':
 			return '(';
 		case 'RightParen':
 			return ')';
 		case 'MathSmallSpace':
-			return '\\,';
+			return '\u005C,';
 		case 'MathMediumSpace':
-			return '\\;';
+			return '\u005C;';
 		case 'MathSpace':
-			return '\\ ';
+			return '\u005C ';
 		case 'F0':
 			var str = expr.a;
-			return '\\' + str;
+			return '\u005C' + str;
 		case 'Param':
 			var k = expr.a;
 			return '#' + $elm$core$String$fromInt(k);
@@ -14507,11 +14618,11 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 					switch (body.a.$) {
 						case 'PArg':
 							var exprs = body.a.a;
-							return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
+							return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
 								$jxxcarlson$etex$ETeX$Transform$printList(exprs)));
 						case 'ParenthExpr':
 							var exprs = body.a.a;
-							return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
+							return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$encloseB(
 								$jxxcarlson$etex$ETeX$Transform$printList(exprs)));
 						default:
 							break _v8$2;
@@ -14521,9 +14632,9 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 				}
 			}
 			if (body.b && (body.a.$ === 'PArg')) {
-				return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$printMacroArgs(body));
+				return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$printMacroArgs(body));
 			} else {
-				return '\\' + (name + $jxxcarlson$etex$ETeX$Transform$printList(body));
+				return '\u005C' + (name + $jxxcarlson$etex$ETeX$Transform$printList(body));
 			}
 		case 'FCall':
 			var name = expr.a;
@@ -14543,7 +14654,7 @@ var $jxxcarlson$etex$ETeX$Transform$print = function (expr) {
 				$jxxcarlson$etex$ETeX$Transform$printList(exprs));
 		default:
 			var str = expr.a;
-			return '\\text{' + (str + '}');
+			return '\u005Ctext{' + (str + '}');
 	}
 };
 var $jxxcarlson$etex$ETeX$Transform$printArgList = function (exprs) {
@@ -14638,61 +14749,61 @@ var $jxxcarlson$etex$ETeX$Transform$RightParen = {$: 'RightParen'};
 var $jxxcarlson$etex$ETeX$Dictionary$symbolDict = $elm$core$Dict$fromList(
 	_List_fromArray(
 		[
-			_Utils_Tuple2('qquad', '\\qquad'),
-			_Utils_Tuple2('alpha', '\\alpha'),
-			_Utils_Tuple2('beta', '\\beta'),
-			_Utils_Tuple2('gamma', '\\gamma'),
-			_Utils_Tuple2('delta', '\\delta'),
-			_Utils_Tuple2('epsilon', '\\epsilon'),
-			_Utils_Tuple2('zeta', '\\zeta'),
-			_Utils_Tuple2('eta', '\\eta'),
-			_Utils_Tuple2('theta', '\\theta'),
-			_Utils_Tuple2('iota', '\\iota'),
-			_Utils_Tuple2('kappa', '\\kappa'),
-			_Utils_Tuple2('lambda', '\\lambda'),
-			_Utils_Tuple2('mu', '\\mu'),
-			_Utils_Tuple2('nu', '\\nu'),
-			_Utils_Tuple2('xi', '\\xi'),
-			_Utils_Tuple2('omicron', '\\omicron'),
-			_Utils_Tuple2('pi', '\\pi'),
-			_Utils_Tuple2('rho', '\\rho'),
-			_Utils_Tuple2('sigma', '\\sigma'),
-			_Utils_Tuple2('tau', '\\tau'),
-			_Utils_Tuple2('upsilon', '\\upsilon'),
-			_Utils_Tuple2('phi', '\\phi'),
-			_Utils_Tuple2('chi', '\\chi'),
-			_Utils_Tuple2('psi', '\\psi'),
-			_Utils_Tuple2('omega', '\\omega'),
-			_Utils_Tuple2('Alpha', '\\Alpha'),
-			_Utils_Tuple2('Beta', '\\Beta'),
-			_Utils_Tuple2('Gamma', '\\Gamma'),
-			_Utils_Tuple2('Delta', '\\Delta'),
-			_Utils_Tuple2('Epsilon', '\\Epsilon'),
-			_Utils_Tuple2('Zeta', '\\Zeta'),
-			_Utils_Tuple2('Eta', '\\Eta'),
-			_Utils_Tuple2('Theta', '\\Theta'),
-			_Utils_Tuple2('Iota', '\\Iota'),
-			_Utils_Tuple2('Kappa', '\\Kappa'),
-			_Utils_Tuple2('Lambda', '\\Lambda'),
-			_Utils_Tuple2('Mu', '\\Mu'),
-			_Utils_Tuple2('Nu', '\\Nu'),
-			_Utils_Tuple2('Xi', '\\Xi'),
-			_Utils_Tuple2('Omicron', '\\Omicron'),
-			_Utils_Tuple2('Pi', '\\Pi'),
-			_Utils_Tuple2('Rho', '\\Rho'),
-			_Utils_Tuple2('Sigma', '\\Sigma'),
-			_Utils_Tuple2('Tau', '\\Tau'),
-			_Utils_Tuple2('Upsilon', '\\Upsilon'),
-			_Utils_Tuple2('Phi', '\\Phi'),
-			_Utils_Tuple2('Chi', '\\Chi'),
-			_Utils_Tuple2('Psi', '\\Psi'),
-			_Utils_Tuple2('Omega', '\\Omega'),
-			_Utils_Tuple2('varepsilon', '\\varepsilon'),
-			_Utils_Tuple2('vartheta', '\\vartheta'),
-			_Utils_Tuple2('varpi', '\\varpi'),
-			_Utils_Tuple2('varrho', '\\varrho'),
-			_Utils_Tuple2('varsigma', '\\varsigma'),
-			_Utils_Tuple2('varphi', '\\varphi')
+			_Utils_Tuple2('qquad', '\u005Cqquad'),
+			_Utils_Tuple2('alpha', '\u005Calpha'),
+			_Utils_Tuple2('beta', '\u005Cbeta'),
+			_Utils_Tuple2('gamma', '\u005Cgamma'),
+			_Utils_Tuple2('delta', '\u005Cdelta'),
+			_Utils_Tuple2('epsilon', '\u005Cepsilon'),
+			_Utils_Tuple2('zeta', '\u005Czeta'),
+			_Utils_Tuple2('eta', '\u005Ceta'),
+			_Utils_Tuple2('theta', '\u005Ctheta'),
+			_Utils_Tuple2('iota', '\u005Ciota'),
+			_Utils_Tuple2('kappa', '\u005Ckappa'),
+			_Utils_Tuple2('lambda', '\u005Clambda'),
+			_Utils_Tuple2('mu', '\u005Cmu'),
+			_Utils_Tuple2('nu', '\u005Cnu'),
+			_Utils_Tuple2('xi', '\u005Cxi'),
+			_Utils_Tuple2('omicron', '\u005Comicron'),
+			_Utils_Tuple2('pi', '\u005Cpi'),
+			_Utils_Tuple2('rho', '\u005Crho'),
+			_Utils_Tuple2('sigma', '\u005Csigma'),
+			_Utils_Tuple2('tau', '\u005Ctau'),
+			_Utils_Tuple2('upsilon', '\u005Cupsilon'),
+			_Utils_Tuple2('phi', '\u005Cphi'),
+			_Utils_Tuple2('chi', '\u005Cchi'),
+			_Utils_Tuple2('psi', '\u005Cpsi'),
+			_Utils_Tuple2('omega', '\u005Comega'),
+			_Utils_Tuple2('Alpha', '\u005CAlpha'),
+			_Utils_Tuple2('Beta', '\u005CBeta'),
+			_Utils_Tuple2('Gamma', '\u005CGamma'),
+			_Utils_Tuple2('Delta', '\u005CDelta'),
+			_Utils_Tuple2('Epsilon', '\u005CEpsilon'),
+			_Utils_Tuple2('Zeta', '\u005CZeta'),
+			_Utils_Tuple2('Eta', '\u005CEta'),
+			_Utils_Tuple2('Theta', '\u005CTheta'),
+			_Utils_Tuple2('Iota', '\u005CIota'),
+			_Utils_Tuple2('Kappa', '\u005CKappa'),
+			_Utils_Tuple2('Lambda', '\u005CLambda'),
+			_Utils_Tuple2('Mu', '\u005CMu'),
+			_Utils_Tuple2('Nu', '\u005CNu'),
+			_Utils_Tuple2('Xi', '\u005CXi'),
+			_Utils_Tuple2('Omicron', '\u005COmicron'),
+			_Utils_Tuple2('Pi', '\u005CPi'),
+			_Utils_Tuple2('Rho', '\u005CRho'),
+			_Utils_Tuple2('Sigma', '\u005CSigma'),
+			_Utils_Tuple2('Tau', '\u005CTau'),
+			_Utils_Tuple2('Upsilon', '\u005CUpsilon'),
+			_Utils_Tuple2('Phi', '\u005CPhi'),
+			_Utils_Tuple2('Chi', '\u005CChi'),
+			_Utils_Tuple2('Psi', '\u005CPsi'),
+			_Utils_Tuple2('Omega', '\u005COmega'),
+			_Utils_Tuple2('varepsilon', '\u005Cvarepsilon'),
+			_Utils_Tuple2('vartheta', '\u005Cvartheta'),
+			_Utils_Tuple2('varpi', '\u005Cvarpi'),
+			_Utils_Tuple2('varrho', '\u005Cvarrho'),
+			_Utils_Tuple2('varsigma', '\u005Cvarsigma'),
+			_Utils_Tuple2('varphi', '\u005Cvarphi')
 		]));
 var $jxxcarlson$etex$ETeX$Transform$resolveSymbolName = function (expr) {
 	switch (expr.$) {
@@ -14700,7 +14811,7 @@ var $jxxcarlson$etex$ETeX$Transform$resolveSymbolName = function (expr) {
 			var str = expr.a;
 			var _v2 = A2($elm$core$Dict$get, str, $jxxcarlson$etex$ETeX$Dictionary$symbolDict);
 			if (_v2.$ === 'Just') {
-				return $jxxcarlson$etex$ETeX$Transform$AlphaNum('\\' + str);
+				return $jxxcarlson$etex$ETeX$Transform$AlphaNum('\u005C' + str);
 			} else {
 				return $jxxcarlson$etex$ETeX$Transform$AlphaNum(str);
 			}
@@ -14786,7 +14897,7 @@ var $jxxcarlson$etex$ETeX$Transform$resolveSymbolNameInDeco = function (deco) {
 };
 var $jxxcarlson$etex$ETeX$Transform$transformETeX = F2(
 	function (dict, input) {
-		if (A2($elm$core$String$contains, '\\', input)) {
+		if (A2($elm$core$String$contains, '\u005C', input)) {
 			var _v0 = A2(
 				$jxxcarlson$etex$ETeX$Transform$parseWithDict,
 				$elm$core$Dict$empty,
@@ -15089,10 +15200,10 @@ var $avh4$elm_color$Color$toRgba = function (_v0) {
 };
 var $jxxcarlson$xmarkdown_compiler$Render$Theme$colorToRgbString = function (color) {
 	var _v0 = $avh4$elm_color$Color$toRgba(color);
-	var red = _v0.red;
-	var green = _v0.green;
-	var blue = _v0.blue;
 	var alpha = _v0.alpha;
+	var blue = _v0.blue;
+	var green = _v0.green;
+	var red = _v0.red;
 	return (alpha < 1.0) ? ('rgba(' + ($elm$core$String$fromInt(
 		$elm$core$Basics$round(red * 255)) + (', ' + ($elm$core$String$fromInt(
 		$elm$core$Basics$round(green * 255)) + (', ' + ($elm$core$String$fromInt(
@@ -17060,6 +17171,18 @@ var $author$project$Main$view = function (model) {
 								_List_fromArray(
 									[
 										$elm$html$Html$Attributes$class('toolbar-button'),
+										$elm$html$Html$Events$onClick($author$project$Main$OpenFolderRequested),
+										$elm$html$Html$Attributes$title('Choose the folder that file:// links in the document refer to')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Open Folder')
+									])),
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('toolbar-button'),
 										$elm$html$Html$Events$onClick($author$project$Main$SaveFileRequested)
 									]),
 								_List_fromArray(
@@ -17135,6 +17258,43 @@ var $author$project$Main$view = function (model) {
 										model.numberedSections ? 'Section numbering: Yes' : 'Section numbering: No')
 									]))
 							])),
+						function () {
+						var _v2 = model.folderName;
+						if (_v2.$ === 'Just') {
+							var name = _v2.a;
+							return A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('folder-name'),
+										$elm$html$Html$Attributes$title('file:// links are opened from this folder')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Folder: ' + name)
+									]));
+						} else {
+							return $elm$html$Html$text('');
+						}
+					}(),
+						function () {
+						var _v3 = model.notice;
+						if (_v3.$ === 'Just') {
+							var message = _v3.a;
+							return A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('notice')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(message)
+									]));
+						} else {
+							return $elm$html$Html$text('');
+						}
+					}(),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(

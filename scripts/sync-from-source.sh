@@ -154,16 +154,16 @@ if [[ $BUILD -eq 1 ]]; then
         info "elm.json changed; clearing elm-stuff"
         rm -rf elm-stuff
     fi
-    # elm.json pins 0.19.1 (what Netlify installs via npm). Find a matching
-    # compiler: $ELM, then node_modules, then PATH.
+    # Use a compiler matching elm.json's elm-version (what Netlify installs
+    # via npm, per package.json): $ELM, then node_modules, then PATH.
+    WANT="$(python3 -c 'import json; print(json.load(open("elm.json"))["elm-version"])')"
     ELM_BIN=""
     for cand in "${ELM:-}" node_modules/.bin/elm "$(command -v elm || true)"; do
-        if [[ -n "$cand" && -x "$cand" && "$("$cand" --version 2>/dev/null)" == "0.19.1" ]]; then
+        if [[ -n "$cand" && -x "$cand" && "$("$cand" --version 2>/dev/null)" == "$WANT" ]]; then
             ELM_BIN="$cand"; break
         fi
     done
-    [[ -n "$ELM_BIN" ]] || die "no Elm 0.19.1 compiler found; set ELM=/path/to/elm-0.19.1
-       (https://github.com/elm/compiler/releases/download/0.19.1/binary-for-mac-64-bit.gz)"
+    [[ -n "$ELM_BIN" ]] || die "no Elm $WANT compiler found (elm.json asks for $WANT); set ELM=/path/to/elm"
     info "building with $ELM_BIN"
     "$ELM_BIN" make src/Main.elm --output=assets/main.js
 fi

@@ -1,0 +1,15 @@
+{
+  "name": "xmarkdown-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "XMarkdown as a macOS app (Tauri 2), sharing ../assets and ../src with the web app",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build --bundles app",
+    "elm": "cd .. && elm make src/Main.elm --output=assets/main.js"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

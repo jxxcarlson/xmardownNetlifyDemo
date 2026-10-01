@@ -80,6 +80,271 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
 console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.2/optimize for better performance and smaller assets.');
 
 
+// EQUALITY
+
+function _Utils_eq(x, y)
+{
+	for (
+		var pair, stack = [], isEqual = _Utils_eqHelp(x, y, 0, stack);
+		isEqual && (pair = stack.pop());
+		isEqual = _Utils_eqHelp(pair.a, pair.b, 0, stack)
+		)
+	{}
+
+	return isEqual;
+}
+
+function _Utils_eqHelp(x, y, depth, stack)
+{
+	if (x === y)
+	{
+		return true;
+	}
+
+	if (typeof x !== 'object' || x === null || y === null)
+	{
+		typeof x === 'function' && _Debug_crash(5);
+		return false;
+	}
+
+	if (depth > 100)
+	{
+		stack.push(_Utils_Tuple2(x,y));
+		return true;
+	}
+
+	/**/
+	if (x.$ === 'Set_elm_builtin')
+	{
+		x = $elm$core$Set$toList(x);
+		y = $elm$core$Set$toList(y);
+	}
+	if (x.$ === 'RBNode_elm_builtin' || x.$ === 'RBEmpty_elm_builtin')
+	{
+		x = $elm$core$Dict$toList(x);
+		y = $elm$core$Dict$toList(y);
+	}
+	//*/
+
+	/**_UNUSED/
+	if (x.$ < 0)
+	{
+		x = $elm$core$Dict$toList(x);
+		y = $elm$core$Dict$toList(y);
+	}
+	//*/
+
+	for (var key in x)
+	{
+		if (!_Utils_eqHelp(x[key], y[key], depth + 1, stack))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+var _Utils_equal = F2(_Utils_eq);
+var _Utils_notEqual = F2(function(a, b) { return !_Utils_eq(a,b); });
+
+
+
+// COMPARISONS
+
+// Code in Generate/JavaScript.hs, Basics.js, and List.js depends on
+// the particular integer values assigned to LT, EQ, and GT.
+
+function _Utils_cmp(x, y, ord)
+{
+	if (typeof x !== 'object')
+	{
+		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
+	}
+
+	/**/
+	if (x instanceof String)
+	{
+		var a = x.valueOf();
+		var b = y.valueOf();
+		return a === b ? 0 : a < b ? -1 : 1;
+	}
+	//*/
+
+	/**_UNUSED/
+	if (typeof x.$ === 'undefined')
+	//*/
+	/**/
+	if (x.$[0] === '#')
+	//*/
+	{
+		return (ord = _Utils_cmp(x.a, y.a))
+			? ord
+			: (ord = _Utils_cmp(x.b, y.b))
+				? ord
+				: _Utils_cmp(x.c, y.c);
+	}
+
+	// traverse conses until end of a list or a mismatch
+	for (; x.b && y.b && !(ord = _Utils_cmp(x.a, y.a)); x = x.b, y = y.b) {} // WHILE_CONSES
+	return ord || (x.b ? /*GT*/ 1 : y.b ? /*LT*/ -1 : /*EQ*/ 0);
+}
+
+var _Utils_lt = F2(function(a, b) { return _Utils_cmp(a, b) < 0; });
+var _Utils_le = F2(function(a, b) { return _Utils_cmp(a, b) < 1; });
+var _Utils_gt = F2(function(a, b) { return _Utils_cmp(a, b) > 0; });
+var _Utils_ge = F2(function(a, b) { return _Utils_cmp(a, b) >= 0; });
+
+var _Utils_compare = F2(function(x, y)
+{
+	var n = _Utils_cmp(x, y);
+	return n < 0 ? $elm$core$Basics$LT : n ? $elm$core$Basics$GT : $elm$core$Basics$EQ;
+});
+
+
+// COMMON VALUES
+
+var _Utils_Tuple0_UNUSED = 0;
+var _Utils_Tuple0 = { $: '#0' };
+
+function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
+function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
+
+function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
+function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
+
+function _Utils_chr_UNUSED(c) { return c; }
+function _Utils_chr(c) { return new String(c); }
+
+
+// RECORDS
+
+function _Utils_update(oldRecord, updatedFields)
+{
+	var newRecord = {};
+
+	for (var key in oldRecord)
+	{
+		newRecord[key] = oldRecord[key];
+	}
+
+	for (var key in updatedFields)
+	{
+		newRecord[key] = updatedFields[key];
+	}
+
+	return newRecord;
+}
+
+
+// APPEND
+
+var _Utils_append = F2(_Utils_ap);
+
+function _Utils_ap(xs, ys)
+{
+	// append Strings
+	if (typeof xs === 'string')
+	{
+		return xs + ys;
+	}
+
+	// append Lists
+	if (!xs.b)
+	{
+		return ys;
+	}
+	var root = _List_Cons(xs.a, ys);
+	xs = xs.b
+	for (var curr = root; xs.b; xs = xs.b) // WHILE_CONS
+	{
+		curr = curr.b = _List_Cons(xs.a, ys);
+	}
+	return root;
+}
+
+
+
+var _List_Nil_UNUSED = { $: 0 };
+var _List_Nil = { $: '[]' };
+
+function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
+function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
+
+
+var _List_cons = F2(_List_Cons);
+
+function _List_fromArray(arr)
+{
+	var out = _List_Nil;
+	for (var i = arr.length; i--; )
+	{
+		out = _List_Cons(arr[i], out);
+	}
+	return out;
+}
+
+function _List_toArray(xs)
+{
+	for (var out = []; xs.b; xs = xs.b) // WHILE_CONS
+	{
+		out.push(xs.a);
+	}
+	return out;
+}
+
+var _List_map2 = F3(function(f, xs, ys)
+{
+	for (var arr = []; xs.b && ys.b; xs = xs.b, ys = ys.b) // WHILE_CONSES
+	{
+		arr.push(A2(f, xs.a, ys.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map3 = F4(function(f, xs, ys, zs)
+{
+	for (var arr = []; xs.b && ys.b && zs.b; xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A3(f, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map4 = F5(function(f, ws, xs, ys, zs)
+{
+	for (var arr = []; ws.b && xs.b && ys.b && zs.b; ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A4(f, ws.a, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_map5 = F6(function(f, vs, ws, xs, ys, zs)
+{
+	for (var arr = []; vs.b && ws.b && xs.b && ys.b && zs.b; vs = vs.b, ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
+	{
+		arr.push(A5(f, vs.a, ws.a, xs.a, ys.a, zs.a));
+	}
+	return _List_fromArray(arr);
+});
+
+var _List_sortBy = F2(function(f, xs)
+{
+	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
+		return _Utils_cmp(f(a), f(b));
+	}));
+});
+
+var _List_sortWith = F2(function(f, xs)
+{
+	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
+		var ord = A2(f, a, b);
+		return ord === $elm$core$Basics$EQ ? 0 : ord === $elm$core$Basics$LT ? -1 : 1;
+	}));
+});
+
+
+
 var _JsArray_empty = [];
 
 function _JsArray_singleton(value)
@@ -525,271 +790,6 @@ function _Debug_regionToString(region)
 	}
 	return 'on lines ' + region.start.line + ' through ' + region.end.line;
 }
-
-
-
-// EQUALITY
-
-function _Utils_eq(x, y)
-{
-	for (
-		var pair, stack = [], isEqual = _Utils_eqHelp(x, y, 0, stack);
-		isEqual && (pair = stack.pop());
-		isEqual = _Utils_eqHelp(pair.a, pair.b, 0, stack)
-		)
-	{}
-
-	return isEqual;
-}
-
-function _Utils_eqHelp(x, y, depth, stack)
-{
-	if (x === y)
-	{
-		return true;
-	}
-
-	if (typeof x !== 'object' || x === null || y === null)
-	{
-		typeof x === 'function' && _Debug_crash(5);
-		return false;
-	}
-
-	if (depth > 100)
-	{
-		stack.push(_Utils_Tuple2(x,y));
-		return true;
-	}
-
-	/**/
-	if (x.$ === 'Set_elm_builtin')
-	{
-		x = $elm$core$Set$toList(x);
-		y = $elm$core$Set$toList(y);
-	}
-	if (x.$ === 'RBNode_elm_builtin' || x.$ === 'RBEmpty_elm_builtin')
-	{
-		x = $elm$core$Dict$toList(x);
-		y = $elm$core$Dict$toList(y);
-	}
-	//*/
-
-	/**_UNUSED/
-	if (x.$ < 0)
-	{
-		x = $elm$core$Dict$toList(x);
-		y = $elm$core$Dict$toList(y);
-	}
-	//*/
-
-	for (var key in x)
-	{
-		if (!_Utils_eqHelp(x[key], y[key], depth + 1, stack))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-var _Utils_equal = F2(_Utils_eq);
-var _Utils_notEqual = F2(function(a, b) { return !_Utils_eq(a,b); });
-
-
-
-// COMPARISONS
-
-// Code in Generate/JavaScript.hs, Basics.js, and List.js depends on
-// the particular integer values assigned to LT, EQ, and GT.
-
-function _Utils_cmp(x, y, ord)
-{
-	if (typeof x !== 'object')
-	{
-		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
-	}
-
-	/**/
-	if (x instanceof String)
-	{
-		var a = x.valueOf();
-		var b = y.valueOf();
-		return a === b ? 0 : a < b ? -1 : 1;
-	}
-	//*/
-
-	/**_UNUSED/
-	if (typeof x.$ === 'undefined')
-	//*/
-	/**/
-	if (x.$[0] === '#')
-	//*/
-	{
-		return (ord = _Utils_cmp(x.a, y.a))
-			? ord
-			: (ord = _Utils_cmp(x.b, y.b))
-				? ord
-				: _Utils_cmp(x.c, y.c);
-	}
-
-	// traverse conses until end of a list or a mismatch
-	for (; x.b && y.b && !(ord = _Utils_cmp(x.a, y.a)); x = x.b, y = y.b) {} // WHILE_CONSES
-	return ord || (x.b ? /*GT*/ 1 : y.b ? /*LT*/ -1 : /*EQ*/ 0);
-}
-
-var _Utils_lt = F2(function(a, b) { return _Utils_cmp(a, b) < 0; });
-var _Utils_le = F2(function(a, b) { return _Utils_cmp(a, b) < 1; });
-var _Utils_gt = F2(function(a, b) { return _Utils_cmp(a, b) > 0; });
-var _Utils_ge = F2(function(a, b) { return _Utils_cmp(a, b) >= 0; });
-
-var _Utils_compare = F2(function(x, y)
-{
-	var n = _Utils_cmp(x, y);
-	return n < 0 ? $elm$core$Basics$LT : n ? $elm$core$Basics$GT : $elm$core$Basics$EQ;
-});
-
-
-// COMMON VALUES
-
-var _Utils_Tuple0_UNUSED = 0;
-var _Utils_Tuple0 = { $: '#0' };
-
-function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
-function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
-
-function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
-function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
-
-function _Utils_chr_UNUSED(c) { return c; }
-function _Utils_chr(c) { return new String(c); }
-
-
-// RECORDS
-
-function _Utils_update(oldRecord, updatedFields)
-{
-	var newRecord = {};
-
-	for (var key in oldRecord)
-	{
-		newRecord[key] = oldRecord[key];
-	}
-
-	for (var key in updatedFields)
-	{
-		newRecord[key] = updatedFields[key];
-	}
-
-	return newRecord;
-}
-
-
-// APPEND
-
-var _Utils_append = F2(_Utils_ap);
-
-function _Utils_ap(xs, ys)
-{
-	// append Strings
-	if (typeof xs === 'string')
-	{
-		return xs + ys;
-	}
-
-	// append Lists
-	if (!xs.b)
-	{
-		return ys;
-	}
-	var root = _List_Cons(xs.a, ys);
-	xs = xs.b
-	for (var curr = root; xs.b; xs = xs.b) // WHILE_CONS
-	{
-		curr = curr.b = _List_Cons(xs.a, ys);
-	}
-	return root;
-}
-
-
-
-var _List_Nil_UNUSED = { $: 0 };
-var _List_Nil = { $: '[]' };
-
-function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
-function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
-
-
-var _List_cons = F2(_List_Cons);
-
-function _List_fromArray(arr)
-{
-	var out = _List_Nil;
-	for (var i = arr.length; i--; )
-	{
-		out = _List_Cons(arr[i], out);
-	}
-	return out;
-}
-
-function _List_toArray(xs)
-{
-	for (var out = []; xs.b; xs = xs.b) // WHILE_CONS
-	{
-		out.push(xs.a);
-	}
-	return out;
-}
-
-var _List_map2 = F3(function(f, xs, ys)
-{
-	for (var arr = []; xs.b && ys.b; xs = xs.b, ys = ys.b) // WHILE_CONSES
-	{
-		arr.push(A2(f, xs.a, ys.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map3 = F4(function(f, xs, ys, zs)
-{
-	for (var arr = []; xs.b && ys.b && zs.b; xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A3(f, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map4 = F5(function(f, ws, xs, ys, zs)
-{
-	for (var arr = []; ws.b && xs.b && ys.b && zs.b; ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A4(f, ws.a, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_map5 = F6(function(f, vs, ws, xs, ys, zs)
-{
-	for (var arr = []; vs.b && ws.b && xs.b && ys.b && zs.b; vs = vs.b, ws = ws.b, xs = xs.b, ys = ys.b, zs = zs.b) // WHILE_CONSES
-	{
-		arr.push(A5(f, vs.a, ws.a, xs.a, ys.a, zs.a));
-	}
-	return _List_fromArray(arr);
-});
-
-var _List_sortBy = F2(function(f, xs)
-{
-	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
-		return _Utils_cmp(f(a), f(b));
-	}));
-});
-
-var _List_sortWith = F2(function(f, xs)
-{
-	return _List_fromArray(_List_toArray(xs).sort(function(a, b) {
-		var ord = A2(f, a, b);
-		return ord === $elm$core$Basics$EQ ? 0 : ord === $elm$core$Basics$LT ? -1 : 1;
-	}));
-});
 
 
 
@@ -4824,31 +4824,10 @@ var _Regex_splitAtMost = F3(function(n, re, str)
 });
 
 var _Regex_infinity = Infinity;
+var $elm$core$Basics$EQ = {$: 'EQ'};
+var $elm$core$Basics$GT = {$: 'GT'};
+var $elm$core$Basics$LT = {$: 'LT'};
 var $elm$core$List$cons = _List_cons;
-var $elm$core$Elm$JsArray$foldr = _JsArray_foldr;
-var $elm$core$Array$foldr = F3(
-	function (func, baseCase, _v0) {
-		var tree = _v0.c;
-		var tail = _v0.d;
-		var helper = F2(
-			function (node, acc) {
-				if (node.$ === 'SubTree') {
-					var subTree = node.a;
-					return A3($elm$core$Elm$JsArray$foldr, helper, acc, subTree);
-				} else {
-					var values = node.a;
-					return A3($elm$core$Elm$JsArray$foldr, func, acc, values);
-				}
-			});
-		return A3(
-			$elm$core$Elm$JsArray$foldr,
-			helper,
-			A3($elm$core$Elm$JsArray$foldr, func, baseCase, tail),
-			tree);
-	});
-var $elm$core$Array$toList = function (array) {
-	return A3($elm$core$Array$foldr, $elm$core$List$cons, _List_Nil, array);
-};
 var $elm$core$Dict$foldr = F3(
 	function (func, acc, t) {
 		foldr:
@@ -4901,9 +4880,30 @@ var $elm$core$Set$toList = function (_v0) {
 	var dict = _v0.a;
 	return $elm$core$Dict$keys(dict);
 };
-var $elm$core$Basics$EQ = {$: 'EQ'};
-var $elm$core$Basics$GT = {$: 'GT'};
-var $elm$core$Basics$LT = {$: 'LT'};
+var $elm$core$Elm$JsArray$foldr = _JsArray_foldr;
+var $elm$core$Array$foldr = F3(
+	function (func, baseCase, _v0) {
+		var tree = _v0.c;
+		var tail = _v0.d;
+		var helper = F2(
+			function (node, acc) {
+				if (node.$ === 'SubTree') {
+					var subTree = node.a;
+					return A3($elm$core$Elm$JsArray$foldr, helper, acc, subTree);
+				} else {
+					var values = node.a;
+					return A3($elm$core$Elm$JsArray$foldr, func, acc, values);
+				}
+			});
+		return A3(
+			$elm$core$Elm$JsArray$foldr,
+			helper,
+			A3($elm$core$Elm$JsArray$foldr, func, baseCase, tail),
+			tree);
+	});
+var $elm$core$Array$toList = function (array) {
+	return A3($elm$core$Array$foldr, $elm$core$List$cons, _List_Nil, array);
+};
 var $elm$core$Result$Err = function (a) {
 	return {$: 'Err', a: a};
 };
@@ -5299,7 +5299,6 @@ var $elm$core$Result$isOk = function (result) {
 		return false;
 	}
 };
-var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$json$Json$Decode$map = _Json_map1;
 var $elm$json$Json$Decode$map2 = _Json_map2;
 var $elm$json$Json$Decode$succeed = _Json_succeed;
@@ -5614,39 +5613,96 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $elm$json$Json$Decode$field = _Json_decodeField;
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light = {$: 'Light'};
+var $author$project$Main$Web = {$: 'Web'};
+var $elm$json$Json$Decode$decodeValue = _Json_run;
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters = {backgroundColor: 'rgba(255, 255, 255, 1.0)', data: $elm$core$Dict$empty, docWidth: 500, editCount: 0, fontSize: 16, highlightColor: 'rgba(200, 200, 255, 0.4)', interBlockSpacing: 0, lineHeight: 1.5, numberToLevel: 0, paddingAboveHeadings: 10, scale: 1, selectedId: '', selectedSlug: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, windowWidth: 500};
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters = $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$defaultCompilerParameters;
 var $author$project$Main$dividerW = 16;
+var $author$project$Main$Desktop = {$: 'Desktop'};
+var $author$project$Main$Flags = F2(
+	function (window, platform) {
+		return {platform: platform, window: window};
+	});
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $elm$json$Json$Decode$oneOf = _Json_oneOf;
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Main$flagsDecoder = A3(
+	$elm$json$Json$Decode$map2,
+	$author$project$Main$Flags,
+	A2(
+		$elm$json$Json$Decode$field,
+		'window',
+		A3(
+			$elm$json$Json$Decode$map2,
+			F2(
+				function (w, h) {
+					return {windowHeight: h, windowWidth: w};
+				}),
+			A2($elm$json$Json$Decode$field, 'windowWidth', $elm$json$Json$Decode$int),
+			A2($elm$json$Json$Decode$field, 'windowHeight', $elm$json$Json$Decode$int))),
+	$elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2(
+				$elm$json$Json$Decode$map,
+				function (p) {
+					return (p === 'desktop') ? $author$project$Main$Desktop : $author$project$Main$Web;
+				},
+				A2($elm$json$Json$Decode$field, 'platform', $elm$json$Json$Decode$string)),
+				$elm$json$Json$Decode$succeed($author$project$Main$Web)
+			])));
 var $author$project$Main$initialTocW = 200;
 var $author$project$Main$minEditorW = 200;
 var $author$project$Main$pagePad = 16;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Ports$setEditorHighlightColor = _Platform_outgoingPort('setEditorHighlightColor', $elm$json$Json$Encode$string);
 var $author$project$Data$XMarkdown$text = '\u000A\u000A\u000A# Sample Document\u000A\u000AXMarkdown is a version of Markdown which handles mathematical text.  This and other features are described below. See also [this online version](https://xmarkdowndemo.netlify.app/).\u000A\u000ATo understand how any piece of rendered text is constructed, click on it to see the corresponding source text.\u000A\u000AFeel free to add to or edit this text. Your changes will not be saved. Refresh your browser to return to the original text.\u000A\u000A# Math\u000A\u000AXMarkdown handles both inline and displayed mathematical text, e.g., $a^2 + b^2 = c^2$\u000Aand\u000A\u000A$$\u000Acos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\u000A$$\u000A\u000AHere is the source text: `$a^2 + b^2 = c^2$` for inline formulas and\u000A\u000A```\u000A$$\u000Acos(x) = sum_{n=0}^infty (-1)^n frac(x^{2n},(2n)!)\u000A$$\u000A```\u000A\u000Afor displayed formulas. The source text looks like TeX but without most of the backslashes and curly braces that are customary.  This is [ETeX](https://package.elm-lang.org/packages/jxxcarlson/etex/latest/), an Elm package which implements this simplified syntax.  You may also use regular TeX:\u000A\u000A```\u000A$$\u000A\u005Ccos{x} = \u005Csum_{n=0}^\u005Cinfty(-1)^n \u005Cfrac{x^{2n}}{(2n)!}\u000A$$\u000A```\u000A\u000AIn ETeX curly braces are used for grouping.\u000A\u000A\u000A# Images\u000A\u000A![European Robin — click to open in new tab width:400](https://fathersonbirding.com/wp-content/uploads/2020/01/European-Robin-Amsterdam-2019_12_282743-1536x1238.jpg)\u000A\u000AThe syntax for images is\u000A\u000A```\u000A[CAPTION width:WIDTH_IN_PIXELS](URL)\u000A```\u000A\u000AThe phrase `width:WIDTH_IN_PIXELS` is optional.\u000A\u000A# Itemized Lists\u000A\u000A## Ordinary\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A- Fruits\u000A\u000A  - Oranges\u000A\u000A  - Apples\u000A\u000A    - Green\u000A\u000A    - Red\u000A\u000A      - Yada\u000A\u000A      - Mada \u000A\u000Ablah blah blah blah blah blah blah blah \u000A\u000A## Numbered\u000A\u000Ablah blah blah blah blah blah blah blah blah blah \u000A\u000A. Vegetables\u000A\u000A  . Green Beans\u000A\u000A  . Brocolli\u000A\u000A    . US\u000A\u000A    . Mexican\u000A\u000Ablah blah blah blah blah blah blah blah \u000A\u000A# Compact Lists\u000A\u000A\u000A## Ordinary\u000A\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A- Apples\u000A  - YOLO $= y^2$\u000A    - MOV $c^2$\u000A    - Green\u000A    - Red\u000A\u000A      - Yada\u000A      - Mada \u000A\u000Ablah blah blah blah blah blah blah blah \u000A\u000A## Numbered\u000A\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A. Apples\u000A\u000A. Oranges\u000A\u000A. Pears\u000A\u000A  . Red\u000A\u000A  . Green\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A. Vegetables\u000A  . Green Beans\u000A  . Brocolli\u000A    . US\u000A    . Mexican\u000A\u000Ablah blah blah blah blah blah blah blah blah \u000A\u000A# Indentation\u000A\u000AOranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \u000A\u000A  Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges \u000A\u000A    Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges Oranges\u000A  \u000A# Tables\u000A\u000AXMarkdown provides for Github-style tables.  These tables may contain mathematical text.\u000A\u000A**Ages, Occupations, and Favorite Formulas**\u000A\u000A| Name  | Age | Occupation  | F.F.|\u000A|:-------|----:|:-------------|-----:|\u000A| Alice |  28 | *Engineer*    | $n!$ |\u000A| Bob   |  34 | *Musician*    | $3:2$ |\u000A| Carol |  41 | *Mathematician* | $sqrt(2 + \u005Csqrt5)$\u000A\u000A# Real-time Rendering\u000A\u000AXMarkdown provides for real-time rendering: the rendered text is updated as you type. Try it with this document. (Your edits will not be saved: refresh the browswer to return to the original.)\u000A\u000A# Synchronization\u000A\u000AXMarkdown can synchronize source and rendered text:\u000A\u000A- Click on a piece of rendered text. The corresponding piece of source text will be highlighted and scrolled into view.\u000A\u000A- Select a piece of of rendered text and type cmd-S. (S for sync). The block of rendered text will be highlighted and scrolled into view.\u000A\u000A# Section Numbering\u000A\u000AThe default is for sections not to be numbered. To automatically number sections, press the button \u0022Section numbering: No\u0022.  To return to the default press the same button, which now reads \u0022Section numbering: Yes\u0022\u000A\u000A# Table of Contents\u000A\u000AXMarkdown provides for an optional real-time active table of contents.  If you create, edit, or remove sections, these changes will be reflected immediately in the table of contents.  Click on an entry in the table of contents and the corresponding source and rendered text will be scrolled into view.\u000A\u000AAlso note the search and replace features of the editor. Type cmd-F to bring up the editor, ESC to dismiss it.\u000A\u000A*You can edit whatever you like in this document.  Your edits will not be saved.*\u000A\u000A# Blocks and Indentation\u000A\u000ASource text in XMarkdown is divided into blocks.  Here is an example\u000A\u000A```\u000A  # Introduction\u000A  \u000A  Cells are the fundamental units of life.\u000A  Every living organism, ..\u000A  \u000A  # The Discovery of Cells\u000A  \u000A  ## Robert Hooke and the First Observation\u000A  \u000A  In 1665, the English scientist Robert Hooke\u000A  examined a thin slice of cork with one of the first\u000A  compound microscopes ...\u000A  \u000A  ## Antoine van Leeuwenhoek\u000A  \u000A  A few years later, the Dutch scientist\u000A  Antoine van Leeuwenhoek built microscopes\u000A  of much higher quality ...\u000A```\u000A\u000A\u000A ';
-var $author$project$Main$init = function (flags) {
+var $elm$core$Result$withDefault = F2(
+	function (def, result) {
+		if (result.$ === 'Ok') {
+			var a = result.a;
+			return a;
+		} else {
+			return def;
+		}
+	});
+var $author$project$Main$init = function (flagsValue) {
 	var params = $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters;
+	var flags = A2(
+		$elm$core$Result$withDefault,
+		{
+			platform: $author$project$Main$Web,
+			window: {windowHeight: 800, windowWidth: 1200}
+		},
+		A2($elm$json$Json$Decode$decodeValue, $author$project$Main$flagsDecoder, flagsValue));
 	return _Utils_Tuple2(
 		{
 			compilerParameters: params,
 			count: 0,
 			currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light,
 			dialog: $elm$core$Maybe$Nothing,
+			dirty: false,
+			docVersion: 0,
 			dragging: $elm$core$Maybe$Nothing,
+			editVersion: 0,
 			editorOpen: false,
 			editorWidth: A2($elm$core$Basics$max, $author$project$Main$minEditorW, ((((flags.window.windowWidth - $author$project$Main$initialTocW) - (2 * $author$project$Main$pagePad)) - (2 * $author$project$Main$dividerW)) / 2) | 0),
 			fileMenuOpen: false,
 			fileName: 'untitled.md',
+			filePath: $elm$core$Maybe$Nothing,
 			folderName: $elm$core$Maybe$Nothing,
+			folderPath: $elm$core$Maybe$Nothing,
 			initialText: $author$project$Data$XMarkdown$text,
 			lrSyncIndex: 0,
 			lrSyncMatches: _List_Nil,
 			lrSyncText: '',
 			notice: $elm$core$Maybe$Nothing,
 			numberedSections: false,
+			platform: flags.platform,
 			selectId: '@InitID',
 			sourceText: $author$project$Data$XMarkdown$text,
 			syncHighlight: $elm$core$Maybe$Nothing,
@@ -5658,13 +5714,16 @@ var $author$project$Main$init = function (flags) {
 		},
 		$author$project$Ports$setEditorHighlightColor(params.highlightColor));
 };
-var $elm$json$Json$Decode$int = _Json_decodeInt;
+var $author$project$Main$DesktopCancelled = {$: 'DesktopCancelled'};
 var $author$project$Main$DragMove = function (a) {
 	return {$: 'DragMove', a: a};
 };
 var $author$project$Main$EscapePressed = {$: 'EscapePressed'};
 var $author$project$Main$FolderOpened = function (a) {
 	return {$: 'FolderOpened', a: a};
+};
+var $author$project$Main$GotDesktopEvent = function (a) {
+	return {$: 'GotDesktopEvent', a: a};
 };
 var $author$project$Main$GotNewWindowDimensions = F2(
 	function (a, b) {
@@ -5677,13 +5736,114 @@ var $author$project$Main$LinkedFileClicked = function (a) {
 	return {$: 'LinkedFileClicked', a: a};
 };
 var $author$project$Main$StopDrag = {$: 'StopDrag'};
+var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
+	});
+var $author$project$Main$DesktopCloseRequested = function (a) {
+	return {$: 'DesktopCloseRequested', a: a};
+};
+var $author$project$Main$DesktopCreated = function (a) {
+	return {$: 'DesktopCreated', a: a};
+};
+var $author$project$Main$DesktopError = function (a) {
+	return {$: 'DesktopError', a: a};
+};
+var $author$project$Main$DesktopFolderChosen = function (a) {
+	return {$: 'DesktopFolderChosen', a: a};
+};
+var $author$project$Main$DesktopOpened = F2(
+	function (a, b) {
+		return {$: 'DesktopOpened', a: a, b: b};
+	});
+var $author$project$Main$DesktopSaved = function (a) {
+	return {$: 'DesktopSaved', a: a};
+};
+var $author$project$Main$DesktopSavedAs = F2(
+	function (a, b) {
+		return {$: 'DesktopSavedAs', a: a, b: b};
+	});
+var $author$project$Main$FileLocation = F4(
+	function (path, name, folder, folderName) {
+		return {folder: folder, folderName: folderName, name: name, path: path};
+	});
+var $elm$json$Json$Decode$map4 = _Json_map4;
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var $author$project$Main$desktopEventDecoder = function () {
+	var tokenField = $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2($elm$json$Json$Decode$field, 'token', $elm$json$Json$Decode$int),
+				$elm$json$Json$Decode$succeed(-1)
+			]));
+	var location = A5(
+		$elm$json$Json$Decode$map4,
+		$author$project$Main$FileLocation,
+		A2($elm$json$Json$Decode$field, 'path', $elm$json$Json$Decode$string),
+		A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string),
+		A2($elm$json$Json$Decode$field, 'folder', $elm$json$Json$Decode$string),
+		A2($elm$json$Json$Decode$field, 'folderName', $elm$json$Json$Decode$string));
+	return A2(
+		$elm$json$Json$Decode$andThen,
+		function (kind) {
+			switch (kind) {
+				case 'opened':
+					return A3(
+						$elm$json$Json$Decode$map2,
+						$author$project$Main$DesktopOpened,
+						location,
+						A2($elm$json$Json$Decode$field, 'content', $elm$json$Json$Decode$string));
+				case 'saved':
+					return A3(
+						$elm$json$Json$Decode$map2,
+						F2(
+							function (path, token) {
+								return $author$project$Main$DesktopSaved(
+									{path: path, token: token});
+							}),
+						A2($elm$json$Json$Decode$field, 'path', $elm$json$Json$Decode$string),
+						tokenField);
+				case 'savedAs':
+					return A3($elm$json$Json$Decode$map2, $author$project$Main$DesktopSavedAs, location, tokenField);
+				case 'closeRequested':
+					return A2(
+						$elm$json$Json$Decode$map,
+						$author$project$Main$DesktopCloseRequested,
+						A2($elm$json$Json$Decode$field, 'then', $elm$json$Json$Decode$string));
+				case 'created':
+					return A2($elm$json$Json$Decode$map, $author$project$Main$DesktopCreated, location);
+				case 'folder':
+					return A3(
+						$elm$json$Json$Decode$map2,
+						F2(
+							function (folder, folderName) {
+								return $author$project$Main$DesktopFolderChosen(
+									{folder: folder, folderName: folderName});
+							}),
+						A2($elm$json$Json$Decode$field, 'folder', $elm$json$Json$Decode$string),
+						A2($elm$json$Json$Decode$field, 'folderName', $elm$json$Json$Decode$string));
+				case 'error':
+					return A2(
+						$elm$json$Json$Decode$map,
+						$author$project$Main$DesktopError,
+						A2($elm$json$Json$Decode$field, 'message', $elm$json$Json$Decode$string));
+				default:
+					return $elm$json$Json$Decode$succeed($author$project$Main$DesktopCancelled);
+			}
+		},
+		A2($elm$json$Json$Decode$field, 'kind', $elm$json$Json$Decode$string));
+}();
+var $elm$json$Json$Decode$value = _Json_decodeValue;
+var $author$project$Ports$desktopResponse = _Platform_incomingPort('desktopResponse', $elm$json$Json$Decode$value);
 var $elm$json$Json$Decode$fail = _Json_fail;
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
-var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Ports$folderOpened = _Platform_incomingPort('folderOpened', $elm$json$Json$Decode$string);
 var $elm$json$Json$Decode$null = _Json_decodeNull;
-var $elm$json$Json$Decode$oneOf = _Json_oneOf;
 var $author$project$Ports$linkedFile = _Platform_incomingPort(
 	'linkedFile',
 	A2(
@@ -6145,6 +6305,14 @@ var $author$project$Main$subscriptions = function (model) {
 				$elm$browser$Browser$Events$onResize($author$project$Main$GotNewWindowDimensions),
 				$author$project$Ports$lrSyncRequest($author$project$Main$LRSync),
 				$author$project$Ports$folderOpened($author$project$Main$FolderOpened),
+				$author$project$Ports$desktopResponse(
+				A2(
+					$elm$core$Basics$composeR,
+					$elm$json$Json$Decode$decodeValue($author$project$Main$desktopEventDecoder),
+					A2(
+						$elm$core$Basics$composeR,
+						$elm$core$Result$withDefault($author$project$Main$DesktopCancelled),
+						$author$project$Main$GotDesktopEvent))),
 				$author$project$Ports$linkedFile($author$project$Main$LinkedFileClicked),
 				function () {
 				var _v0 = model.dragging;
@@ -6182,7 +6350,80 @@ var $author$project$Main$FileSelected = function (a) {
 };
 var $author$project$Main$NewFileDialog = {$: 'NewFileDialog'};
 var $author$project$Main$SaveAsDialog = {$: 'SaveAsDialog'};
+var $author$project$Main$atLocation = F2(
+	function (location, model) {
+		return _Utils_update(
+			model,
+			{
+				fileName: location.name,
+				filePath: $elm$core$Maybe$Just(location.path),
+				folderName: $elm$core$Maybe$Just(location.folderName),
+				folderPath: $elm$core$Maybe$Just(location.folder)
+			});
+	});
+var $author$project$Main$autoSaves = function (model) {
+	return _Utils_eq(model.platform, $author$project$Main$Desktop) && (!_Utils_eq(model.filePath, $elm$core$Maybe$Nothing));
+};
+var $author$project$Ports$desktopRequest = _Platform_outgoingPort('desktopRequest', $elm$core$Basics$identity);
+var $elm$json$Json$Encode$object = function (pairs) {
+	return _Json_wrap(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v0, obj) {
+					var k = _v0.a;
+					var v = _v0.b;
+					return A3(_Json_addField, k, v, obj);
+				}),
+			_Json_emptyObject(_Utils_Tuple0),
+			pairs));
+};
+var $author$project$Main$desktopRequest = F2(
+	function (op, args) {
+		return $author$project$Ports$desktopRequest(
+			$elm$json$Json$Encode$object(
+				A2(
+					$elm$core$List$cons,
+					_Utils_Tuple2(
+						'op',
+						$elm$json$Json$Encode$string(op)),
+					args)));
+	});
+var $elm$json$Json$Encode$int = _Json_wrap;
+var $author$project$Main$desktopSave = F3(
+	function (path, model, extra) {
+		return A2(
+			$author$project$Main$desktopRequest,
+			'save',
+			_Utils_ap(
+				_List_fromArray(
+					[
+						_Utils_Tuple2(
+						'path',
+						$elm$json$Json$Encode$string(path)),
+						_Utils_Tuple2(
+						'content',
+						$elm$json$Json$Encode$string(model.sourceText)),
+						_Utils_Tuple2(
+						'token',
+						$elm$json$Json$Encode$int(model.editVersion))
+					]),
+				extra));
+	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$Main$autoSave = function (model) {
+	var _v0 = _Utils_Tuple3(
+		$author$project$Main$autoSaves(model),
+		model.dirty,
+		model.filePath);
+	if ((_v0.a && _v0.b) && (_v0.c.$ === 'Just')) {
+		var path = _v0.c.a;
+		return A3($author$project$Main$desktopSave, path, model, _List_Nil);
+	} else {
+		return $elm$core$Platform$Cmd$none;
+	}
+};
 var $elm$core$Basics$clamp = F3(
 	function (low, high, number) {
 		return (_Utils_cmp(number, low) < 0) ? low : ((_Utils_cmp(number, high) > 0) ? high : number);
@@ -6237,6 +6478,49 @@ var $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme = {
 	offsetBackground: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray900,
 	offsetText: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray400,
 	text: $jxxcarlson$xmarkdown_compiler$Render$NewColor$gray200
+};
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
+var $elm$json$Json$Encode$null = _Json_encodeNull;
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var $author$project$Main$desktopSaveAs = function (model) {
+	return A2(
+		$author$project$Main$desktopRequest,
+		'saveAs',
+		_List_fromArray(
+			[
+				_Utils_Tuple2(
+				'folder',
+				A2(
+					$elm$core$Maybe$withDefault,
+					$elm$json$Json$Encode$null,
+					A2($elm$core$Maybe$map, $elm$json$Json$Encode$string, model.folderPath))),
+				_Utils_Tuple2(
+				'name',
+				$elm$json$Json$Encode$string(model.fileName)),
+				_Utils_Tuple2(
+				'content',
+				$elm$json$Json$Encode$string(model.sourceText)),
+				_Utils_Tuple2(
+				'token',
+				$elm$json$Json$Encode$int(model.editVersion))
+			]));
 };
 var $elm$core$List$drop = F2(
 	function (n, list) {
@@ -6422,21 +6706,20 @@ var $author$project$Main$loadDocument = F2(
 	function (content, model) {
 		return _Utils_update(
 			model,
-			{count: model.count + 1, initialText: content, notice: $elm$core$Maybe$Nothing, sourceText: content, syncHighlight: $elm$core$Maybe$Nothing});
-	});
-var $elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return $elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
+			{count: model.count + 1, dirty: false, docVersion: model.docVersion + 1, initialText: content, notice: $elm$core$Maybe$Nothing, sourceText: content, syncHighlight: $elm$core$Maybe$Nothing});
 	});
 var $elm$core$Basics$modBy = _Basics_modBy;
 var $elm$file$File$name = _File_name;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$Main$newDocument = F2(
+	function (name, model) {
+		return $author$project$Main$clampWidths(
+			A2(
+				$author$project$Main$loadDocument,
+				'',
+				_Utils_update(
+					model,
+					{editorOpen: true, fileName: name})));
+	});
 var $elm$core$Basics$not = _Basics_not;
 var $author$project$Main$dialogInputId = 'dialog-file-name';
 var $elm$browser$Browser$Dom$focus = _Browser_call('focus');
@@ -6456,7 +6739,6 @@ var $author$project$Main$openDialog = F3(
 				},
 				$elm$browser$Browser$Dom$focus($author$project$Main$dialogInputId)));
 	});
-var $elm$json$Json$Encode$null = _Json_encodeNull;
 var $author$project$Ports$openFolder = _Platform_outgoingPort(
 	'openFolder',
 	function ($) {
@@ -6472,6 +6754,19 @@ var $elm$file$File$Download$string = F3(
 	});
 var $author$project$Main$saveFile = function (model) {
 	return A3($elm$file$File$Download$string, model.fileName, 'text/markdown', model.sourceText);
+};
+var $author$project$Main$AutoSaveDue = function (a) {
+	return {$: 'AutoSaveDue', a: a};
+};
+var $author$project$Main$autoSaveDelay = 1000;
+var $elm$core$Process$sleep = _Process_sleep;
+var $author$project$Main$scheduleAutoSave = function (model) {
+	return $author$project$Main$autoSaves(model) ? A2(
+		$elm$core$Task$perform,
+		function (_v0) {
+			return $author$project$Main$AutoSaveDue(model.editVersion);
+		},
+		$elm$core$Process$sleep($author$project$Main$autoSaveDelay)) : $elm$core$Platform$Cmd$none;
 };
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
@@ -6592,11 +6887,6 @@ var $maca$elm_rose_tree$RoseTree$Tree$branch = F2(
 			$maca$elm_rose_tree$RoseTree$Tree$Tree,
 			a,
 			$elm$core$Array$fromList(ns));
-	});
-var $elm$core$Basics$composeR = F3(
-	function (f, g, x) {
-		return g(
-			f(x));
 	});
 var $maca$elm_rose_tree$RoseTree$Tree$leaf = function (a) {
 	return A2($maca$elm_rose_tree$RoseTree$Tree$Tree, a, $elm$core$Array$empty);
@@ -7316,9 +7606,6 @@ var $elm$parser$Parser$Advanced$Good = F3(
 		return {$: 'Good', a: a, b: b, c: c};
 	});
 var $elm$parser$Parser$Advanced$isSubChar = _Parser_isSubChar;
-var $elm$core$Basics$negate = function (n) {
-	return -n;
-};
 var $elm$parser$Parser$Advanced$chompWhileHelp = F5(
 	function (isGood, offset, row, col, s0) {
 		chompWhileHelp:
@@ -7729,15 +8016,6 @@ var $elm$regex$Regex$fromString = function (string) {
 		string);
 };
 var $elm$regex$Regex$never = _Regex_never;
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$sectionRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
@@ -12257,19 +12535,6 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$searchBlocksContainingText
 				allBlocks));
 	});
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$searchBlocksContainingText = $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$searchBlocksContainingText;
-var $elm$json$Json$Encode$object = function (pairs) {
-	return _Json_wrap(
-		A3(
-			$elm$core$List$foldl,
-			F2(
-				function (_v0, obj) {
-					var k = _v0.a;
-					var v = _v0.b;
-					return A3(_Json_addField, k, v, obj);
-				}),
-			_Json_emptyObject(_Utils_Tuple0),
-			pairs));
-};
 var $author$project$Ports$setThemeColors = _Platform_outgoingPort(
 	'setThemeColors',
 	function ($) {
@@ -12397,19 +12662,32 @@ var $author$project$Main$update = F2(
 						$elm$core$Platform$Cmd$none);
 				case 'InputText':
 					var str = msg.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{count: model.count + 1, sourceText: str}),
-						$elm$core$Platform$Cmd$none);
-				case 'OpenFileRequested':
-					return _Utils_Tuple2(
+					var edited = _Utils_update(
 						model,
-						A2(
-							$elm$file$File$Select$file,
-							_List_fromArray(
-								['text/markdown', 'text/plain', '.md']),
-							$author$project$Main$FileSelected));
+						{count: model.count + 1, dirty: true, editVersion: model.editVersion + 1, sourceText: str});
+					return _Utils_Tuple2(
+						edited,
+						$author$project$Main$scheduleAutoSave(edited));
+				case 'AutoSaveDue':
+					var version = msg.a;
+					return _Utils_eq(version, model.editVersion) ? _Utils_Tuple2(
+						model,
+						$author$project$Main$autoSave(model)) : _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				case 'OpenFileRequested':
+					var _v4 = model.platform;
+					if (_v4.$ === 'Desktop') {
+						return _Utils_Tuple2(
+							model,
+							A2($author$project$Main$desktopRequest, 'open', _List_Nil));
+					} else {
+						return _Utils_Tuple2(
+							model,
+							A2(
+								$elm$file$File$Select$file,
+								_List_fromArray(
+									['text/markdown', 'text/plain', '.md']),
+								$author$project$Main$FileSelected));
+					}
 				case 'FileSelected':
 					var file = msg.a;
 					return _Utils_Tuple2(
@@ -12428,9 +12706,16 @@ var $author$project$Main$update = F2(
 						A2($author$project$Main$loadDocument, content, model),
 						$elm$core$Platform$Cmd$none);
 				case 'OpenFolderRequested':
-					return _Utils_Tuple2(
-						model,
-						$author$project$Ports$openFolder(_Utils_Tuple0));
+					var _v5 = model.platform;
+					if (_v5.$ === 'Desktop') {
+						return _Utils_Tuple2(
+							model,
+							A2($author$project$Main$desktopRequest, 'openFolder', _List_Nil));
+					} else {
+						return _Utils_Tuple2(
+							model,
+							$author$project$Ports$openFolder(_Utils_Tuple0));
+					}
 				case 'FolderOpened':
 					var name = msg.a;
 					return _Utils_Tuple2(
@@ -12445,21 +12730,21 @@ var $author$project$Main$update = F2(
 					var folder = msg.a.folder;
 					var content = msg.a.content;
 					var name = msg.a.name;
-					var _v4 = _Utils_Tuple2(content, folder);
-					if (_v4.a.$ === 'Just') {
-						var fileText = _v4.a.a;
+					var _v6 = _Utils_Tuple2(content, folder);
+					if (_v6.a.$ === 'Just') {
+						var fileText = _v6.a.a;
 						return _Utils_Tuple2(
 							A2(
 								$author$project$Main$loadDocument,
 								fileText,
 								_Utils_update(
 									model,
-									{fileName: name})),
+									{fileName: name, filePath: $elm$core$Maybe$Nothing})),
 							$elm$core$Platform$Cmd$none);
 					} else {
-						if (_v4.b.$ === 'Nothing') {
-							var _v5 = _v4.a;
-							var _v6 = _v4.b;
+						if (_v6.b.$ === 'Nothing') {
+							var _v7 = _v6.a;
+							var _v8 = _v6.b;
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
@@ -12468,8 +12753,8 @@ var $author$project$Main$update = F2(
 									}),
 								$elm$core$Platform$Cmd$none);
 						} else {
-							var _v7 = _v4.a;
-							var folderName = _v4.b.a;
+							var _v9 = _v6.a;
+							var folderName = _v6.b.a;
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
@@ -12480,13 +12765,152 @@ var $author$project$Main$update = F2(
 						}
 					}
 				case 'SaveRequested':
-					return _Utils_Tuple2(
-						model,
-						$author$project$Main$saveFile(model));
+					var _v10 = _Utils_Tuple2(model.platform, model.filePath);
+					if (_v10.a.$ === 'Desktop') {
+						if (_v10.b.$ === 'Just') {
+							var _v11 = _v10.a;
+							var path = _v10.b.a;
+							return _Utils_Tuple2(
+								model,
+								A3($author$project$Main$desktopSave, path, model, _List_Nil));
+						} else {
+							var _v12 = _v10.a;
+							var _v13 = _v10.b;
+							return _Utils_Tuple2(
+								model,
+								$author$project$Main$desktopSaveAs(model));
+						}
+					} else {
+						var _v14 = _v10.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{dirty: false}),
+							$author$project$Main$saveFile(model));
+					}
 				case 'NewRequested':
 					return A3($author$project$Main$openDialog, $author$project$Main$NewFileDialog, 'untitled.md', model);
 				case 'SaveAsRequested':
-					return A3($author$project$Main$openDialog, $author$project$Main$SaveAsDialog, model.fileName, model);
+					var _v15 = model.platform;
+					if (_v15.$ === 'Desktop') {
+						return _Utils_Tuple2(
+							model,
+							$author$project$Main$desktopSaveAs(model));
+					} else {
+						return A3($author$project$Main$openDialog, $author$project$Main$SaveAsDialog, model.fileName, model);
+					}
+				case 'GotDesktopEvent':
+					var event = msg.a;
+					switch (event.$) {
+						case 'DesktopOpened':
+							var location = event.a;
+							var content = event.b;
+							return _Utils_Tuple2(
+								A2(
+									$author$project$Main$loadDocument,
+									content,
+									A2($author$project$Main$atLocation, location, model)),
+								$author$project$Main$autoSave(model));
+						case 'DesktopCreated':
+							var location = event.a;
+							return _Utils_Tuple2(
+								A2(
+									$author$project$Main$newDocument,
+									location.name,
+									A2($author$project$Main$atLocation, location, model)),
+								$author$project$Main$autoSave(model));
+						case 'DesktopSaved':
+							var token = event.a.token;
+							var path = event.a.path;
+							return _Utils_eq(
+								$elm$core$Maybe$Just(path),
+								model.filePath) ? _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										dirty: !_Utils_eq(token, model.editVersion),
+										notice: $elm$core$Maybe$Nothing
+									}),
+								$elm$core$Platform$Cmd$none) : _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+						case 'DesktopSavedAs':
+							var location = event.a;
+							var token = event.b;
+							return _Utils_Tuple2(
+								A2(
+									$author$project$Main$atLocation,
+									location,
+									_Utils_update(
+										model,
+										{
+											dirty: !_Utils_eq(token, model.editVersion),
+											notice: $elm$core$Maybe$Nothing
+										})),
+								$elm$core$Platform$Cmd$none);
+						case 'DesktopCloseRequested':
+							var andThen = event.a;
+							var andThenArg = _Utils_Tuple2(
+								'then',
+								$elm$json$Json$Encode$string(andThen));
+							var _v17 = _Utils_Tuple2(model.dirty, model.filePath);
+							if (_v17.a) {
+								if (_v17.b.$ === 'Just') {
+									var path = _v17.b.a;
+									return _Utils_Tuple2(
+										model,
+										A3(
+											$author$project$Main$desktopSave,
+											path,
+											model,
+											_List_fromArray(
+												[andThenArg])));
+								} else {
+									var _v18 = _v17.b;
+									return _Utils_Tuple2(
+										model,
+										A2(
+											$author$project$Main$desktopRequest,
+											'confirmDiscard',
+											_List_fromArray(
+												[
+													_Utils_Tuple2(
+													'name',
+													$elm$json$Json$Encode$string(model.fileName)),
+													andThenArg
+												])));
+								}
+							} else {
+								return _Utils_Tuple2(
+									model,
+									A2(
+										$author$project$Main$desktopRequest,
+										'finish',
+										_List_fromArray(
+											[andThenArg])));
+							}
+						case 'DesktopFolderChosen':
+							var folderName = event.a.folderName;
+							var folder = event.a.folder;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										folderName: $elm$core$Maybe$Just(folderName),
+										folderPath: $elm$core$Maybe$Just(folder),
+										notice: $elm$core$Maybe$Nothing
+									}),
+								$elm$core$Platform$Cmd$none);
+						case 'DesktopError':
+							var message = event.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										notice: $elm$core$Maybe$Just(message)
+									}),
+								$elm$core$Platform$Cmd$none);
+						default:
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					}
 				case 'ToggleFileMenu':
 					return _Utils_Tuple2(
 						_Utils_update(
@@ -12531,25 +12955,52 @@ var $author$project$Main$update = F2(
 							{dialog: $elm$core$Maybe$Nothing}),
 						$elm$core$Platform$Cmd$none);
 				case 'DialogConfirmed':
-					var _v8 = model.dialog;
-					if (_v8.$ === 'Just') {
-						var name = _v8.a.name;
-						var purpose = _v8.a.purpose;
+					var _v19 = model.dialog;
+					if (_v19.$ === 'Just') {
+						var name = _v19.a.name;
+						var purpose = _v19.a.purpose;
 						var fileName = $elm$core$String$trim(name);
 						if ($elm$core$String$isEmpty(fileName)) {
 							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 						} else {
-							if (purpose.$ === 'NewFileDialog') {
-								return _Utils_Tuple2(
-									$author$project$Main$clampWidths(
+							var _v20 = _Utils_Tuple3(purpose, model.platform, model.folderPath);
+							if (_v20.a.$ === 'NewFileDialog') {
+								if ((_v20.b.$ === 'Desktop') && (_v20.c.$ === 'Just')) {
+									var _v21 = _v20.a;
+									var _v22 = _v20.b;
+									var folder = _v20.c.a;
+									return _Utils_Tuple2(
 										_Utils_update(
 											model,
-											{count: model.count + 1, dialog: $elm$core$Maybe$Nothing, editorOpen: true, fileName: fileName, initialText: '', notice: $elm$core$Maybe$Nothing, sourceText: '', syncHighlight: $elm$core$Maybe$Nothing})),
-									$elm$core$Platform$Cmd$none);
+											{dialog: $elm$core$Maybe$Nothing}),
+										A2(
+											$author$project$Main$desktopRequest,
+											'create',
+											_List_fromArray(
+												[
+													_Utils_Tuple2(
+													'folder',
+													$elm$json$Json$Encode$string(folder)),
+													_Utils_Tuple2(
+													'name',
+													$elm$json$Json$Encode$string(fileName))
+												])));
+								} else {
+									var _v23 = _v20.a;
+									return _Utils_Tuple2(
+										A2(
+											$author$project$Main$newDocument,
+											fileName,
+											_Utils_update(
+												model,
+												{dialog: $elm$core$Maybe$Nothing, filePath: $elm$core$Maybe$Nothing})),
+										$author$project$Main$autoSave(model));
+								}
 							} else {
+								var _v24 = _v20.a;
 								var renamed = _Utils_update(
 									model,
-									{dialog: $elm$core$Maybe$Nothing, fileName: fileName});
+									{dialog: $elm$core$Maybe$Nothing, dirty: false, fileName: fileName});
 								return _Utils_Tuple2(
 									renamed,
 									$author$project$Main$saveFile(renamed));
@@ -12567,8 +13018,8 @@ var $author$project$Main$update = F2(
 						$elm$core$Platform$Cmd$none);
 				case 'ToggleNumberSections':
 					var oldCompilerParameters = model.compilerParameters;
-					var _v10 = model.numberedSections;
-					if (!_v10) {
+					var _v25 = model.numberedSections;
+					if (!_v25) {
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -12594,8 +13045,8 @@ var $author$project$Main$update = F2(
 				case 'ToggleTheme':
 					var params = model.compilerParameters;
 					var newTheme = function () {
-						var _v12 = model.theme;
-						if (_v12.$ === 'Light') {
+						var _v27 = model.theme;
+						if (_v27.$ === 'Light') {
 							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
 						} else {
 							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
@@ -12668,9 +13119,9 @@ var $author$project$Main$update = F2(
 					}
 				default:
 					var msg_ = msg.a;
-					var _v14 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
-					if (_v14.$ === 'Just') {
-						var h = _v14.a;
+					var _v29 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+					if (_v29.$ === 'Just') {
+						var h = _v29.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -17054,7 +17505,6 @@ var $author$project$Main$dividerView = F3(
 var $author$project$Main$InputText = function (a) {
 	return {$: 'InputText', a: a};
 };
-var $elm$json$Json$Encode$int = _Json_wrap;
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Sync$encode = function (h) {
 	return A2(
 		$elm$json$Json$Encode$encode,
@@ -17361,6 +17811,11 @@ var $author$project$Main$fileNameDialogView = function (dialog) {
 };
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
+var $elm$virtual_dom$VirtualDom$keyedNode = function (tag) {
+	return _VirtualDom_keyedNode(
+		_VirtualDom_noScript(tag));
+};
+var $elm$html$Html$Keyed$node = $elm$virtual_dom$VirtualDom$keyedNode;
 var $author$project$Main$px = function (n) {
 	return $elm$core$String$fromInt(n) + 'px';
 };
@@ -17492,7 +17947,11 @@ var $author$project$Main$view = function (model) {
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$class('header-item'),
-								$elm$html$Html$Attributes$id('fileName')
+								$elm$html$Html$Attributes$id('fileName'),
+								$elm$html$Html$Attributes$title(
+								_Utils_ap(
+									A2($elm$core$Maybe$withDefault, model.fileName, model.filePath),
+									$author$project$Main$autoSaves(model) ? ' (saved automatically)' : ''))
 							]),
 						_List_fromArray(
 							[
@@ -17506,7 +17965,18 @@ var $author$project$Main$view = function (model) {
 									[
 										$elm$html$Html$text('File ')
 									])),
-								$elm$html$Html$text(model.fileName)
+								$elm$html$Html$text(model.fileName),
+								model.dirty ? A2(
+								$elm$html$Html$span,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('dirty'),
+										$elm$html$Html$Attributes$title('Unsaved changes')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(' •')
+									])) : $elm$html$Html$text('')
 							])),
 						A2(
 						$elm$html$Html$button,
@@ -17592,7 +18062,19 @@ var $author$project$Main$view = function (model) {
 							]),
 						_List_fromArray(
 							[
-								$author$project$Main$editorView(model)
+								A3(
+								$elm$html$Html$Keyed$node,
+								'div',
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'height', '100%')
+									]),
+								_List_fromArray(
+									[
+										_Utils_Tuple2(
+										$elm$core$String$fromInt(model.docVersion),
+										$author$project$Main$editorView(model))
+									]))
 							])),
 						A3($author$project$Main$dividerView, model, $author$project$Main$EditorDivider, model.editorOpen),
 						A2(
@@ -17662,25 +18144,4 @@ var $author$project$Main$view = function (model) {
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
 	{init: $author$project$Main$init, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});
-_Platform_export({'Main':{'init':$author$project$Main$main(
-	A2(
-		$elm$json$Json$Decode$andThen,
-		function (window) {
-			return $elm$json$Json$Decode$succeed(
-				{window: window});
-		},
-		A2(
-			$elm$json$Json$Decode$field,
-			'window',
-			A2(
-				$elm$json$Json$Decode$andThen,
-				function (windowWidth) {
-					return A2(
-						$elm$json$Json$Decode$andThen,
-						function (windowHeight) {
-							return $elm$json$Json$Decode$succeed(
-								{windowHeight: windowHeight, windowWidth: windowWidth});
-						},
-						A2($elm$json$Json$Decode$field, 'windowHeight', $elm$json$Json$Decode$int));
-				},
-				A2($elm$json$Json$Decode$field, 'windowWidth', $elm$json$Json$Decode$int)))))(0)}});}(this));
+_Platform_export({'Main':{'init':$author$project$Main$main($elm$json$Json$Decode$value)(0)}});}(this));

@@ -1,0 +1,40 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "XMarkdown",
+  "version": "0.1.0",
+  "identifier": "com.jxxcarlson.xmarkdown",
+  "build": {
+    "frontendDist": "../../assets",
+    "beforeDevCommand": "npm run elm",
+    "beforeBuildCommand": "npm run elm"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "XMarkdown",
+        "width": 1400,
+        "height": 900,
+        "minWidth": 800,
+        "minHeight": 500,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app"],
+    "category": "Productivity",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

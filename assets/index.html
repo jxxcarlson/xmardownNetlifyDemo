@@ -15,6 +15,7 @@
 
     <script src="main.js"></script>
     <script src="file-links.js"></script>
+    <script src="desktop.js"></script>
 
 </head>
 
@@ -31,11 +32,13 @@
             window: {
                 windowWidth: window.innerWidth,
                 windowHeight: window.innerHeight
-            }
+            },
+            platform: window.__TAURI__ ? "desktop" : "web"
         }
     });
     init(app);
     initFileLinks(app);
+    initDesktop(app);
 
     // Listen for LR sync events from the editor
     document.addEventListener('lr-sync', (e) => {

@@ -5634,9 +5634,11 @@ var $author$project$Main$init = function (flags) {
 			compilerParameters: params,
 			count: 0,
 			currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light,
+			dialog: $elm$core$Maybe$Nothing,
 			dragging: $elm$core$Maybe$Nothing,
 			editorOpen: false,
 			editorWidth: A2($elm$core$Basics$max, $author$project$Main$minEditorW, ((((flags.window.windowWidth - $author$project$Main$initialTocW) - (2 * $author$project$Main$pagePad)) - (2 * $author$project$Main$dividerW)) / 2) | 0),
+			fileMenuOpen: false,
 			fileName: 'untitled.md',
 			folderName: $elm$core$Maybe$Nothing,
 			initialText: $author$project$Data$XMarkdown$text,
@@ -5660,6 +5662,7 @@ var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $author$project$Main$DragMove = function (a) {
 	return {$: 'DragMove', a: a};
 };
+var $author$project$Main$EscapePressed = {$: 'EscapePressed'};
 var $author$project$Main$FolderOpened = function (a) {
 	return {$: 'FolderOpened', a: a};
 };
@@ -5675,6 +5678,7 @@ var $author$project$Main$LinkedFileClicked = function (a) {
 };
 var $author$project$Main$StopDrag = {$: 'StopDrag'};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $elm$json$Json$Decode$fail = _Json_fail;
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $elm$json$Json$Decode$string = _Json_decodeString;
 var $author$project$Ports$folderOpened = _Platform_incomingPort('folderOpened', $elm$json$Json$Decode$string);
@@ -5716,6 +5720,7 @@ var $author$project$Ports$linkedFile = _Platform_incomingPort(
 		},
 		A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string)));
 var $author$project$Ports$lrSyncRequest = _Platform_incomingPort('lrSyncRequest', $elm$json$Json$Decode$string);
+var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $elm$browser$Browser$Events$Document = {$: 'Document'};
 var $elm$browser$Browser$Events$MySub = F3(
@@ -6115,6 +6120,7 @@ var $elm$browser$Browser$Events$on = F3(
 		return $elm$browser$Browser$Events$subscription(
 			A3($elm$browser$Browser$Events$MySub, node, name, decoder));
 	});
+var $elm$browser$Browser$Events$onKeyDown = A2($elm$browser$Browser$Events$on, $elm$browser$Browser$Events$Document, 'keydown');
 var $elm$browser$Browser$Events$onMouseMove = A2($elm$browser$Browser$Events$on, $elm$browser$Browser$Events$Document, 'mousemove');
 var $elm$browser$Browser$Events$onMouseUp = A2($elm$browser$Browser$Events$on, $elm$browser$Browser$Events$Document, 'mouseup');
 var $elm$browser$Browser$Events$Window = {$: 'Window'};
@@ -6157,7 +6163,14 @@ var $author$project$Main$subscriptions = function (model) {
 				} else {
 					return $elm$core$Platform$Sub$none;
 				}
-			}()
+			}(),
+				(model.fileMenuOpen || (!_Utils_eq(model.dialog, $elm$core$Maybe$Nothing))) ? $elm$browser$Browser$Events$onKeyDown(
+				A2(
+					$elm$json$Json$Decode$andThen,
+					function (key) {
+						return (key === 'Escape') ? $elm$json$Json$Decode$succeed($author$project$Main$EscapePressed) : $elm$json$Json$Decode$fail('not Escape');
+					},
+					A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string))) : $elm$core$Platform$Sub$none
 			]));
 };
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark = {$: 'Dark'};
@@ -6167,6 +6180,8 @@ var $author$project$Main$FileLoaded = function (a) {
 var $author$project$Main$FileSelected = function (a) {
 	return {$: 'FileSelected', a: a};
 };
+var $author$project$Main$NewFileDialog = {$: 'NewFileDialog'};
+var $author$project$Main$SaveAsDialog = {$: 'SaveAsDialog'};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Basics$clamp = F3(
 	function (low, high, number) {
@@ -6409,10 +6424,38 @@ var $author$project$Main$loadDocument = F2(
 			model,
 			{count: model.count + 1, initialText: content, notice: $elm$core$Maybe$Nothing, sourceText: content, syncHighlight: $elm$core$Maybe$Nothing});
 	});
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
 var $elm$core$Basics$modBy = _Basics_modBy;
 var $elm$file$File$name = _File_name;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Basics$not = _Basics_not;
+var $author$project$Main$dialogInputId = 'dialog-file-name';
+var $elm$browser$Browser$Dom$focus = _Browser_call('focus');
+var $author$project$Main$openDialog = F3(
+	function (purpose, name, model) {
+		return _Utils_Tuple2(
+			_Utils_update(
+				model,
+				{
+					dialog: $elm$core$Maybe$Just(
+						{name: name, purpose: purpose})
+				}),
+			A2(
+				$elm$core$Task$attempt,
+				function (_v0) {
+					return $author$project$Main$NoOp;
+				},
+				$elm$browser$Browser$Dom$focus($author$project$Main$dialogInputId)));
+	});
 var $elm$json$Json$Encode$null = _Json_encodeNull;
 var $author$project$Ports$openFolder = _Platform_outgoingPort(
 	'openFolder',
@@ -6420,6 +6463,16 @@ var $author$project$Ports$openFolder = _Platform_outgoingPort(
 		return $elm$json$Json$Encode$null;
 	});
 var $elm$core$Basics$round = _Basics_round;
+var $elm$file$File$Download$string = F3(
+	function (name, mime, content) {
+		return A2(
+			$elm$core$Task$perform,
+			$elm$core$Basics$never,
+			A3(_File_download, name, mime, content));
+	});
+var $author$project$Main$saveFile = function (model) {
+	return A3($elm$file$File$Download$string, model.fileName, 'text/markdown', model.sourceText);
+};
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
 		return A3(
@@ -6548,16 +6601,6 @@ var $elm$core$Basics$composeR = F3(
 var $maca$elm_rose_tree$RoseTree$Tree$leaf = function (a) {
 	return A2($maca$elm_rose_tree$RoseTree$Tree$Tree, a, $elm$core$Array$empty);
 };
-var $elm$core$Maybe$map = F2(
-	function (f, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return $elm$core$Maybe$Just(
-				f(value));
-		} else {
-			return $elm$core$Maybe$Nothing;
-		}
-	});
 var $elm$core$Maybe$map2 = F3(
 	function (func, ma, mb) {
 		if (ma.$ === 'Nothing') {
@@ -7384,7 +7427,6 @@ var $elm$parser$Parser$Advanced$keeper = F2(
 		return A3($elm$parser$Parser$Advanced$map2, $elm$core$Basics$apL, parseFunc, parseArg);
 	});
 var $elm$parser$Parser$keeper = $elm$parser$Parser$Advanced$keeper;
-var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$parser$Parser$Advanced$succeed = function (a) {
 	return $elm$parser$Parser$Advanced$Parser(
 		function (s) {
@@ -12245,13 +12287,6 @@ var $author$project$Ports$setThemeColors = _Platform_outgoingPort(
 					$elm$json$Json$Encode$string($.indentGuide))
 				]));
 	});
-var $elm$file$File$Download$string = F3(
-	function (name, mime, content) {
-		return A2(
-			$elm$core$Task$perform,
-			$elm$core$Basics$never,
-			A3(_File_download, name, mime, content));
-	});
 var $elm$core$String$concat = function (strings) {
 	return A2($elm$core$String$join, '', strings);
 };
@@ -12288,335 +12323,393 @@ var $avh4$elm_color$Color$toCssString = function (_v0) {
 var $elm$file$File$toString = _File_toString;
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		switch (msg.$) {
-			case 'NoOp':
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-			case 'GotNewWindowDimensions':
-				var width = msg.a;
-				var height = msg.b;
-				return _Utils_Tuple2(
-					$author$project$Main$clampWidths(
-						_Utils_update(
-							model,
-							{windowHeight: height, windowWidth: width})),
-					$elm$core$Platform$Cmd$none);
-			case 'StartDrag':
-				var divider = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							dragging: $elm$core$Maybe$Just(divider)
-						}),
-					$elm$core$Platform$Cmd$none);
-			case 'DragMove':
-				var x = msg.a;
-				var _v1 = model.dragging;
-				if (_v1.$ === 'Just') {
-					if (_v1.a.$ === 'EditorDivider') {
-						var _v2 = _v1.a;
-						var maxEditor = A2(
-							$elm$core$Basics$max,
-							$author$project$Main$minEditorW,
-							($author$project$Main$panelSpace(model) - model.tocWidth) - $author$project$Main$minRenderedW);
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{
-									editorWidth: A3(
-										$elm$core$Basics$clamp,
-										$author$project$Main$minEditorW,
-										maxEditor,
-										($elm$core$Basics$round(x) - $author$project$Main$pagePad) - (($author$project$Main$dividerW / 2) | 0))
-								}),
-							$elm$core$Platform$Cmd$none);
-					} else {
-						var _v3 = _v1.a;
-						var editorW = model.editorOpen ? model.editorWidth : 0;
-						var maxToc = A2(
-							$elm$core$Basics$max,
-							$author$project$Main$minTocW,
-							($author$project$Main$panelSpace(model) - editorW) - $author$project$Main$minRenderedW);
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{
-									tocWidth: A3(
-										$elm$core$Basics$clamp,
-										$author$project$Main$minTocW,
-										maxToc,
-										((model.windowWidth - $author$project$Main$pagePad) - (($author$project$Main$dividerW / 2) | 0)) - $elm$core$Basics$round(x))
-								}),
-							$elm$core$Platform$Cmd$none);
-					}
-				} else {
+		update:
+		while (true) {
+			switch (msg.$) {
+				case 'NoOp':
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-				}
-			case 'StopDrag':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{dragging: $elm$core$Maybe$Nothing}),
-					$elm$core$Platform$Cmd$none);
-			case 'InputText':
-				var str = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{count: model.count + 1, sourceText: str}),
-					$elm$core$Platform$Cmd$none);
-			case 'OpenFileRequested':
-				return _Utils_Tuple2(
-					model,
-					A2(
-						$elm$file$File$Select$file,
-						_List_fromArray(
-							['text/markdown', 'text/plain', '.md']),
-						$author$project$Main$FileSelected));
-			case 'FileSelected':
-				var file = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							fileName: $elm$file$File$name(file)
-						}),
-					A2(
-						$elm$core$Task$perform,
-						$author$project$Main$FileLoaded,
-						$elm$file$File$toString(file)));
-			case 'FileLoaded':
-				var content = msg.a;
-				return _Utils_Tuple2(
-					A2($author$project$Main$loadDocument, content, model),
-					$elm$core$Platform$Cmd$none);
-			case 'OpenFolderRequested':
-				return _Utils_Tuple2(
-					model,
-					$author$project$Ports$openFolder(_Utils_Tuple0));
-			case 'FolderOpened':
-				var name = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							folderName: $elm$core$Maybe$Just(name),
-							notice: $elm$core$Maybe$Nothing
-						}),
-					$elm$core$Platform$Cmd$none);
-			case 'LinkedFileClicked':
-				var folder = msg.a.folder;
-				var content = msg.a.content;
-				var name = msg.a.name;
-				var _v4 = _Utils_Tuple2(content, folder);
-				if (_v4.a.$ === 'Just') {
-					var fileText = _v4.a.a;
+				case 'GotNewWindowDimensions':
+					var width = msg.a;
+					var height = msg.b;
 					return _Utils_Tuple2(
-						A2(
-							$author$project$Main$loadDocument,
-							fileText,
+						$author$project$Main$clampWidths(
 							_Utils_update(
 								model,
-								{fileName: name})),
+								{windowHeight: height, windowWidth: width})),
 						$elm$core$Platform$Cmd$none);
-				} else {
-					if (_v4.b.$ === 'Nothing') {
-						var _v5 = _v4.a;
-						var _v6 = _v4.b;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{
-									notice: $elm$core$Maybe$Just('To follow links to files such as ' + (name + ', first use Open Folder.'))
-								}),
-							$elm$core$Platform$Cmd$none);
-					} else {
-						var _v7 = _v4.a;
-						var folderName = _v4.b.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{
-									notice: $elm$core$Maybe$Just(name + (' was not found in ' + (folderName + '.')))
-								}),
-							$elm$core$Platform$Cmd$none);
-					}
-				}
-			case 'SaveFileRequested':
-				return _Utils_Tuple2(
-					model,
-					A3($elm$file$File$Download$string, model.fileName, 'text/markdown', model.sourceText));
-			case 'NewFileRequested':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{count: model.count + 1, editorOpen: true, fileName: 'untitled.md', initialText: '', sourceText: '', syncHighlight: $elm$core$Maybe$Nothing}),
-					$elm$core$Platform$Cmd$none);
-			case 'ToggleEditor':
-				return _Utils_Tuple2(
-					$author$project$Main$clampWidths(
-						_Utils_update(
-							model,
-							{editorOpen: !model.editorOpen})),
-					$elm$core$Platform$Cmd$none);
-			case 'FileNameChanged':
-				var newFileName = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{fileName: newFileName}),
-					$elm$core$Platform$Cmd$none);
-			case 'ToggleNumberSections':
-				var oldCompilerParameters = model.compilerParameters;
-				var _v8 = model.numberedSections;
-				if (!_v8) {
+				case 'StartDrag':
+					var divider = msg.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								compilerParameters: _Utils_update(
-									oldCompilerParameters,
-									{numberToLevel: 3}),
-								numberedSections: true
+								dragging: $elm$core$Maybe$Just(divider)
 							}),
 						$elm$core$Platform$Cmd$none);
-				} else {
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								compilerParameters: _Utils_update(
-									oldCompilerParameters,
-									{numberToLevel: 0}),
-								numberedSections: false
-							}),
-						$elm$core$Platform$Cmd$none);
-				}
-			case 'ToggleTheme':
-				var params = model.compilerParameters;
-				var newTheme = function () {
-					var _v10 = model.theme;
-					if (_v10.$ === 'Light') {
-						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
-					} else {
-						return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
-					}
-				}();
-				var newParams = _Utils_update(
-					params,
-					{theme: newTheme});
-				var currentTheme = function () {
-					if (newTheme.$ === 'Light') {
-						return $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme;
-					} else {
-						return $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme;
-					}
-				}();
-				var themeCmd = $author$project$Ports$setThemeColors(
-					{
-						bg: $avh4$elm_color$Color$toCssString(currentTheme.background),
-						fg: $avh4$elm_color$Color$toCssString(currentTheme.text),
-						indentGuide: $avh4$elm_color$Color$toCssString(currentTheme.indentGuide)
-					});
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{compilerParameters: newParams, theme: newTheme}),
-					themeCmd);
-			case 'LRSync':
-				var searchText = msg.a;
-				var params = _Utils_update(
-					$jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters,
-					{
-						docWidth: $author$project$Main$geometry(model).docWidth,
-						editCount: model.count,
-						interBlockSpacing: 0,
-						numberToLevel: 0,
-						paddingAboveHeadings: 18,
-						selectedId: 'selectedId'
-					});
-				var matches = A3(
-					$jxxcarlson$xmarkdown_compiler$XMarkdown$API$searchBlocksContainingText,
-					params,
-					$elm$core$String$lines(model.sourceText),
-					searchText);
-				var newIndex = (_Utils_eq(searchText, model.lrSyncText) && (!$elm$core$List$isEmpty(matches))) ? A2(
-					$elm$core$Basics$modBy,
-					$elm$core$List$length(matches),
-					model.lrSyncIndex + 1) : 0;
-				var currentMatch = $elm$core$List$head(
-					A2($elm$core$List$drop, newIndex, matches));
-				if (currentMatch.$ === 'Just') {
-					var match = currentMatch.a;
-					var lineNumberStr = $elm$core$String$fromInt(match.lineNumber);
-					var css = '[data-line-number=\u0022' + (lineNumberStr + ('\u0022] { background-color: ' + (params.highlightColor + (' !important; }\u000A' + ('[data-line-number=\u0022' + (lineNumberStr + ('\u0022] * { background-color: ' + (params.highlightColor + ' !important; }'))))))));
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{lrSyncIndex: newIndex, lrSyncMatches: matches, lrSyncText: searchText, selectId: lineNumberStr}),
-						$elm$core$Platform$Cmd$batch(
-							_List_fromArray(
-								[
-									A2($author$project$Main$jumpToTopOfWithLineNumber, match.id, match.lineNumber),
-									$author$project$Ports$injectHighlightCSS(css)
-								])));
-				} else {
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{lrSyncIndex: newIndex, lrSyncMatches: matches, lrSyncText: searchText}),
-						$elm$core$Platform$Cmd$none);
-				}
-			default:
-				var msg_ = msg.a;
-				var _v12 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
-				if (_v12.$ === 'Just') {
-					var h = _v12.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								syncHighlight: $elm$core$Maybe$Just(h),
-								tick: model.tick + 1
-							}),
-						$elm$core$Platform$Cmd$none);
-				} else {
-					if (msg_.$ === 'SelectId') {
-						var selId = msg_.a;
-						var lineNum = A2(
-							$elm$core$Maybe$withDefault,
-							0,
-							$elm$core$String$toInt(
-								A2(
-									$elm$core$String$dropLeft,
-									2,
-									A2(
-										$elm$core$Maybe$withDefault,
-										'0',
-										$elm$core$List$head(
-											A2($elm$core$String$split, '.', selId))))));
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{selectId: selId}),
-							A2($author$project$Main$jumpToTopOfWithLineNumber, selId, lineNum));
+				case 'DragMove':
+					var x = msg.a;
+					var _v1 = model.dragging;
+					if (_v1.$ === 'Just') {
+						if (_v1.a.$ === 'EditorDivider') {
+							var _v2 = _v1.a;
+							var maxEditor = A2(
+								$elm$core$Basics$max,
+								$author$project$Main$minEditorW,
+								($author$project$Main$panelSpace(model) - model.tocWidth) - $author$project$Main$minRenderedW);
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										editorWidth: A3(
+											$elm$core$Basics$clamp,
+											$author$project$Main$minEditorW,
+											maxEditor,
+											($elm$core$Basics$round(x) - $author$project$Main$pagePad) - (($author$project$Main$dividerW / 2) | 0))
+									}),
+								$elm$core$Platform$Cmd$none);
+						} else {
+							var _v3 = _v1.a;
+							var editorW = model.editorOpen ? model.editorWidth : 0;
+							var maxToc = A2(
+								$elm$core$Basics$max,
+								$author$project$Main$minTocW,
+								($author$project$Main$panelSpace(model) - editorW) - $author$project$Main$minRenderedW);
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										tocWidth: A3(
+											$elm$core$Basics$clamp,
+											$author$project$Main$minTocW,
+											maxToc,
+											((model.windowWidth - $author$project$Main$pagePad) - (($author$project$Main$dividerW / 2) | 0)) - $elm$core$Basics$round(x))
+									}),
+								$elm$core$Platform$Cmd$none);
+						}
 					} else {
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 					}
-				}
+				case 'StopDrag':
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{dragging: $elm$core$Maybe$Nothing}),
+						$elm$core$Platform$Cmd$none);
+				case 'InputText':
+					var str = msg.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{count: model.count + 1, sourceText: str}),
+						$elm$core$Platform$Cmd$none);
+				case 'OpenFileRequested':
+					return _Utils_Tuple2(
+						model,
+						A2(
+							$elm$file$File$Select$file,
+							_List_fromArray(
+								['text/markdown', 'text/plain', '.md']),
+							$author$project$Main$FileSelected));
+				case 'FileSelected':
+					var file = msg.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								fileName: $elm$file$File$name(file)
+							}),
+						A2(
+							$elm$core$Task$perform,
+							$author$project$Main$FileLoaded,
+							$elm$file$File$toString(file)));
+				case 'FileLoaded':
+					var content = msg.a;
+					return _Utils_Tuple2(
+						A2($author$project$Main$loadDocument, content, model),
+						$elm$core$Platform$Cmd$none);
+				case 'OpenFolderRequested':
+					return _Utils_Tuple2(
+						model,
+						$author$project$Ports$openFolder(_Utils_Tuple0));
+				case 'FolderOpened':
+					var name = msg.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								folderName: $elm$core$Maybe$Just(name),
+								notice: $elm$core$Maybe$Nothing
+							}),
+						$elm$core$Platform$Cmd$none);
+				case 'LinkedFileClicked':
+					var folder = msg.a.folder;
+					var content = msg.a.content;
+					var name = msg.a.name;
+					var _v4 = _Utils_Tuple2(content, folder);
+					if (_v4.a.$ === 'Just') {
+						var fileText = _v4.a.a;
+						return _Utils_Tuple2(
+							A2(
+								$author$project$Main$loadDocument,
+								fileText,
+								_Utils_update(
+									model,
+									{fileName: name})),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						if (_v4.b.$ === 'Nothing') {
+							var _v5 = _v4.a;
+							var _v6 = _v4.b;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										notice: $elm$core$Maybe$Just('To follow links to files such as ' + (name + ', first use Open Folder.'))
+									}),
+								$elm$core$Platform$Cmd$none);
+						} else {
+							var _v7 = _v4.a;
+							var folderName = _v4.b.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										notice: $elm$core$Maybe$Just(name + (' was not found in ' + (folderName + '.')))
+									}),
+								$elm$core$Platform$Cmd$none);
+						}
+					}
+				case 'SaveRequested':
+					return _Utils_Tuple2(
+						model,
+						$author$project$Main$saveFile(model));
+				case 'NewRequested':
+					return A3($author$project$Main$openDialog, $author$project$Main$NewFileDialog, 'untitled.md', model);
+				case 'SaveAsRequested':
+					return A3($author$project$Main$openDialog, $author$project$Main$SaveAsDialog, model.fileName, model);
+				case 'ToggleFileMenu':
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{fileMenuOpen: !model.fileMenuOpen}),
+						$elm$core$Platform$Cmd$none);
+				case 'FileMenuChose':
+					var itemMsg = msg.a;
+					var $temp$msg = itemMsg,
+						$temp$model = _Utils_update(
+						model,
+						{fileMenuOpen: false});
+					msg = $temp$msg;
+					model = $temp$model;
+					continue update;
+				case 'EscapePressed':
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{dialog: $elm$core$Maybe$Nothing, fileMenuOpen: false}),
+						$elm$core$Platform$Cmd$none);
+				case 'DialogNameChanged':
+					var name = msg.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								dialog: A2(
+									$elm$core$Maybe$map,
+									function (d) {
+										return _Utils_update(
+											d,
+											{name: name});
+									},
+									model.dialog)
+							}),
+						$elm$core$Platform$Cmd$none);
+				case 'DialogCancelled':
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{dialog: $elm$core$Maybe$Nothing}),
+						$elm$core$Platform$Cmd$none);
+				case 'DialogConfirmed':
+					var _v8 = model.dialog;
+					if (_v8.$ === 'Just') {
+						var name = _v8.a.name;
+						var purpose = _v8.a.purpose;
+						var fileName = $elm$core$String$trim(name);
+						if ($elm$core$String$isEmpty(fileName)) {
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+						} else {
+							if (purpose.$ === 'NewFileDialog') {
+								return _Utils_Tuple2(
+									$author$project$Main$clampWidths(
+										_Utils_update(
+											model,
+											{count: model.count + 1, dialog: $elm$core$Maybe$Nothing, editorOpen: true, fileName: fileName, initialText: '', notice: $elm$core$Maybe$Nothing, sourceText: '', syncHighlight: $elm$core$Maybe$Nothing})),
+									$elm$core$Platform$Cmd$none);
+							} else {
+								var renamed = _Utils_update(
+									model,
+									{dialog: $elm$core$Maybe$Nothing, fileName: fileName});
+								return _Utils_Tuple2(
+									renamed,
+									$author$project$Main$saveFile(renamed));
+							}
+						}
+					} else {
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					}
+				case 'ToggleEditor':
+					return _Utils_Tuple2(
+						$author$project$Main$clampWidths(
+							_Utils_update(
+								model,
+								{editorOpen: !model.editorOpen})),
+						$elm$core$Platform$Cmd$none);
+				case 'ToggleNumberSections':
+					var oldCompilerParameters = model.compilerParameters;
+					var _v10 = model.numberedSections;
+					if (!_v10) {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									compilerParameters: _Utils_update(
+										oldCompilerParameters,
+										{numberToLevel: 3}),
+									numberedSections: true
+								}),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									compilerParameters: _Utils_update(
+										oldCompilerParameters,
+										{numberToLevel: 0}),
+									numberedSections: false
+								}),
+							$elm$core$Platform$Cmd$none);
+					}
+				case 'ToggleTheme':
+					var params = model.compilerParameters;
+					var newTheme = function () {
+						var _v12 = model.theme;
+						if (_v12.$ === 'Light') {
+							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
+						} else {
+							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
+						}
+					}();
+					var newParams = _Utils_update(
+						params,
+						{theme: newTheme});
+					var currentTheme = function () {
+						if (newTheme.$ === 'Light') {
+							return $jxxcarlson$xmarkdown_compiler$Render$Theme$lightTheme;
+						} else {
+							return $jxxcarlson$xmarkdown_compiler$Render$Theme$darkTheme;
+						}
+					}();
+					var themeCmd = $author$project$Ports$setThemeColors(
+						{
+							bg: $avh4$elm_color$Color$toCssString(currentTheme.background),
+							fg: $avh4$elm_color$Color$toCssString(currentTheme.text),
+							indentGuide: $avh4$elm_color$Color$toCssString(currentTheme.indentGuide)
+						});
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{compilerParameters: newParams, theme: newTheme}),
+						themeCmd);
+				case 'LRSync':
+					var searchText = msg.a;
+					var params = _Utils_update(
+						$jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters,
+						{
+							docWidth: $author$project$Main$geometry(model).docWidth,
+							editCount: model.count,
+							interBlockSpacing: 0,
+							numberToLevel: 0,
+							paddingAboveHeadings: 18,
+							selectedId: 'selectedId'
+						});
+					var matches = A3(
+						$jxxcarlson$xmarkdown_compiler$XMarkdown$API$searchBlocksContainingText,
+						params,
+						$elm$core$String$lines(model.sourceText),
+						searchText);
+					var newIndex = (_Utils_eq(searchText, model.lrSyncText) && (!$elm$core$List$isEmpty(matches))) ? A2(
+						$elm$core$Basics$modBy,
+						$elm$core$List$length(matches),
+						model.lrSyncIndex + 1) : 0;
+					var currentMatch = $elm$core$List$head(
+						A2($elm$core$List$drop, newIndex, matches));
+					if (currentMatch.$ === 'Just') {
+						var match = currentMatch.a;
+						var lineNumberStr = $elm$core$String$fromInt(match.lineNumber);
+						var css = '[data-line-number=\u0022' + (lineNumberStr + ('\u0022] { background-color: ' + (params.highlightColor + (' !important; }\u000A' + ('[data-line-number=\u0022' + (lineNumberStr + ('\u0022] * { background-color: ' + (params.highlightColor + ' !important; }'))))))));
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{lrSyncIndex: newIndex, lrSyncMatches: matches, lrSyncText: searchText, selectId: lineNumberStr}),
+							$elm$core$Platform$Cmd$batch(
+								_List_fromArray(
+									[
+										A2($author$project$Main$jumpToTopOfWithLineNumber, match.id, match.lineNumber),
+										$author$project$Ports$injectHighlightCSS(css)
+									])));
+					} else {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{lrSyncIndex: newIndex, lrSyncMatches: matches, lrSyncText: searchText}),
+							$elm$core$Platform$Cmd$none);
+					}
+				default:
+					var msg_ = msg.a;
+					var _v14 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+					if (_v14.$ === 'Just') {
+						var h = _v14.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									syncHighlight: $elm$core$Maybe$Just(h),
+									tick: model.tick + 1
+								}),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						if (msg_.$ === 'SelectId') {
+							var selId = msg_.a;
+							var lineNum = A2(
+								$elm$core$Maybe$withDefault,
+								0,
+								$elm$core$String$toInt(
+									A2(
+										$elm$core$String$dropLeft,
+										2,
+										A2(
+											$elm$core$Maybe$withDefault,
+											'0',
+											$elm$core$List$head(
+												A2($elm$core$String$split, '.', selId))))));
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{selectId: selId}),
+								A2($author$project$Main$jumpToTopOfWithLineNumber, selId, lineNum));
+						} else {
+							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+						}
+					}
+			}
 		}
 	});
 var $author$project$Main$EditorDivider = {$: 'EditorDivider'};
-var $author$project$Main$FileNameChanged = function (a) {
-	return {$: 'FileNameChanged', a: a};
-};
-var $author$project$Main$NewFileRequested = {$: 'NewFileRequested'};
-var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
-var $author$project$Main$OpenFolderRequested = {$: 'OpenFolderRequested'};
 var $author$project$Main$Render = function (a) {
 	return {$: 'Render', a: a};
 };
-var $author$project$Main$SaveFileRequested = {$: 'SaveFileRequested'};
 var $author$project$Main$TocDivider = {$: 'TocDivider'};
 var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
 var $author$project$Main$ToggleNumberSections = {$: 'ToggleNumberSections'};
@@ -17029,9 +17122,109 @@ var $author$project$Main$editorView = function (model) {
 	return $jxxcarlson$xmarkdown_compiler$XMarkdown$API$viewEditor(
 		{attrs: _List_Nil, highlight: model.syncHighlight, onInput: $author$project$Main$InputText, source: model.initialText});
 };
+var $author$project$Main$FileMenuChose = function (a) {
+	return {$: 'FileMenuChose', a: a};
+};
+var $author$project$Main$NewRequested = {$: 'NewRequested'};
+var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
+var $author$project$Main$OpenFolderRequested = {$: 'OpenFolderRequested'};
+var $author$project$Main$SaveAsRequested = {$: 'SaveAsRequested'};
+var $author$project$Main$SaveRequested = {$: 'SaveRequested'};
+var $author$project$Main$ToggleFileMenu = {$: 'ToggleFileMenu'};
+var $author$project$Main$fileMenu = function (model) {
+	var item = F2(
+		function (label, msg) {
+			return A2(
+				$elm$html$Html$button,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('menu-item'),
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$FileMenuChose(msg))
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text(label)
+					]));
+		});
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('menu')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$button,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('toolbar-button'),
+						$elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2('open', model.fileMenuOpen)
+							])),
+						$elm$html$Html$Events$onClick($author$project$Main$ToggleFileMenu)
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('File ▾')
+					])),
+				model.fileMenuOpen ? A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('menu-backdrop'),
+								$elm$html$Html$Events$onClick($author$project$Main$ToggleFileMenu)
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('menu-list')
+							]),
+						_List_fromArray(
+							[
+								A2(item, 'New…', $author$project$Main$NewRequested),
+								A2(item, 'Open…', $author$project$Main$OpenFileRequested),
+								A2(item, 'Open Folder…', $author$project$Main$OpenFolderRequested),
+								A2(item, 'Save', $author$project$Main$SaveRequested),
+								A2(item, 'Save As…', $author$project$Main$SaveAsRequested)
+							]))
+					])) : $elm$html$Html$text('')
+			]));
+};
+var $author$project$Main$DialogCancelled = {$: 'DialogCancelled'};
+var $author$project$Main$DialogConfirmed = {$: 'DialogConfirmed'};
+var $author$project$Main$DialogNameChanged = function (a) {
+	return {$: 'DialogNameChanged', a: a};
+};
+var $elm$html$Html$Attributes$autocomplete = function (bool) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'autocomplete',
+		bool ? 'on' : 'off');
+};
+var $elm$json$Json$Encode$bool = _Json_wrap;
+var $elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$bool(bool));
+	});
+var $elm$html$Html$Attributes$disabled = $elm$html$Html$Attributes$boolProperty('disabled');
+var $elm$html$Html$Attributes$for = $elm$html$Html$Attributes$stringProperty('htmlFor');
+var $elm$html$Html$form = _VirtualDom_node('form');
 var $elm$html$Html$input = _VirtualDom_node('input');
-var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
-var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
+var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
@@ -17059,7 +17252,115 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 			$elm$html$Html$Events$alwaysStop,
 			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
 };
+var $elm$html$Html$Events$alwaysPreventDefault = function (msg) {
+	return _Utils_Tuple2(msg, true);
+};
+var $elm$html$Html$Events$onSubmit = function (msg) {
+	return A2(
+		$elm$html$Html$Events$preventDefaultOn,
+		'submit',
+		A2(
+			$elm$json$Json$Decode$map,
+			$elm$html$Html$Events$alwaysPreventDefault,
+			$elm$json$Json$Decode$succeed(msg)));
+};
 var $elm$html$Html$Attributes$placeholder = $elm$html$Html$Attributes$stringProperty('placeholder');
+var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
+var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
+var $author$project$Main$fileNameDialogView = function (dialog) {
+	var title = function () {
+		var _v0 = dialog.purpose;
+		if (_v0.$ === 'NewFileDialog') {
+			return 'New File';
+		} else {
+			return 'Save As';
+		}
+	}();
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('dialog-backdrop')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$form,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('dialog'),
+						$elm$html$Html$Events$onSubmit($author$project$Main$DialogConfirmed)
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$h2,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(title)
+							])),
+						A2(
+						$elm$html$Html$label,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$for($author$project$Main$dialogInputId)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('File name')
+							])),
+						A2(
+						$elm$html$Html$input,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$id($author$project$Main$dialogInputId),
+								$elm$html$Html$Attributes$value(dialog.name),
+								$elm$html$Html$Events$onInput($author$project$Main$DialogNameChanged),
+								$elm$html$Html$Attributes$placeholder('name.md'),
+								$elm$html$Html$Attributes$autocomplete(false)
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('dialog-buttons')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('toolbar-button'),
+										$elm$html$Html$Attributes$type_('button'),
+										$elm$html$Html$Events$onClick($author$project$Main$DialogCancelled)
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Cancel')
+									])),
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('toolbar-button primary'),
+										$elm$html$Html$Attributes$type_('submit'),
+										$elm$html$Html$Attributes$disabled(
+										$elm$core$String$isEmpty(
+											$elm$core$String$trim(dialog.name)))
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Do it')
+									]))
+							]))
+					]))
+			]));
+};
+var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
+var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $author$project$Main$px = function (n) {
 	return $elm$core$String$fromInt(n) + 'px';
 };
@@ -17104,7 +17405,6 @@ var $author$project$Main$renderPanel = F2(
 				]),
 			elements);
 	});
-var $elm$html$Html$Attributes$value = $elm$html$Html$Attributes$stringProperty('value');
 var $author$project$Main$view = function (model) {
 	var g = $author$project$Main$geometry(model);
 	var compilerParameters = model.compilerParameters;
@@ -17139,144 +17439,116 @@ var $author$project$Main$view = function (model) {
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('toolbar')
+								$elm$html$Html$Attributes$class('app-label')
 							]),
 						_List_fromArray(
 							[
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('toolbar-button'),
-										$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text(
-										model.editorOpen ? 'Close Editor' : 'Open Editor')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('toolbar-button'),
-										$elm$html$Html$Events$onClick($author$project$Main$OpenFileRequested)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Open File')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('toolbar-button'),
-										$elm$html$Html$Events$onClick($author$project$Main$OpenFolderRequested),
-										$elm$html$Html$Attributes$title('Choose the folder that file:// links in the document refer to')
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Open Folder')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('toolbar-button'),
-										$elm$html$Html$Events$onClick($author$project$Main$SaveFileRequested)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('Save File As')
-									])),
-								A2(
-								$elm$html$Html$input,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$id('fileName'),
-										A2($elm$html$Html$Attributes$style, 'margin-left', '8px'),
-										A2($elm$html$Html$Attributes$style, 'padding', '6px'),
-										A2($elm$html$Html$Attributes$style, 'border', '1px solid #ccc'),
-										A2($elm$html$Html$Attributes$style, 'border-radius', '4px'),
-										A2($elm$html$Html$Attributes$style, 'font-size', '14px'),
-										$elm$html$Html$Attributes$value(model.fileName),
-										$elm$html$Html$Events$onInput($author$project$Main$FileNameChanged),
-										$elm$html$Html$Attributes$placeholder('File name...')
-									]),
-								_List_Nil),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('toolbar-button'),
-										$elm$html$Html$Events$onClick($author$project$Main$NewFileRequested)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text('New File')
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('toolbar-button theme-toggle'),
-										$elm$html$Html$Events$onClick($author$project$Main$ToggleTheme),
-										$elm$html$Html$Attributes$title(
-										function () {
-											var _v0 = model.theme;
-											if (_v0.$ === 'Light') {
-												return 'Switch to Dark Mode';
-											} else {
-												return 'Switch to Light Mode';
-											}
-										}()),
-										A2($elm$html$Html$Attributes$style, 'background-color', 'black'),
-										A2($elm$html$Html$Attributes$style, 'margin-left', 'auto')
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text(
-										function () {
-											var _v1 = model.theme;
-											if (_v1.$ === 'Light') {
-												return '🌙';
-											} else {
-												return '☀️';
-											}
-										}())
-									])),
-								A2(
-								$elm$html$Html$button,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('toolbar-button'),
-										$elm$html$Html$Events$onClick($author$project$Main$ToggleNumberSections)
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text(
-										model.numberedSections ? 'Section numbering: Yes' : 'Section numbering: No')
-									]))
+								$elm$html$Html$text('XMarkdown')
 							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('toolbar-button'),
+								$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								model.editorOpen ? 'Close Editor' : 'Open Editor')
+							])),
+						$author$project$Main$fileMenu(model),
 						function () {
-						var _v2 = model.folderName;
-						if (_v2.$ === 'Just') {
-							var name = _v2.a;
+						var _v0 = model.folderName;
+						if (_v0.$ === 'Just') {
+							var name = _v0.a;
 							return A2(
 								$elm$html$Html$div,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$class('folder-name'),
+										$elm$html$Html$Attributes$class('header-item'),
 										$elm$html$Html$Attributes$title('file:// links are opened from this folder')
 									]),
 								_List_fromArray(
 									[
-										$elm$html$Html$text('Folder: ' + name)
+										A2(
+										$elm$html$Html$span,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('header-key')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('Folder ')
+											])),
+										$elm$html$Html$text(name)
 									]));
 						} else {
 							return $elm$html$Html$text('');
 						}
 					}(),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('header-item'),
+								$elm$html$Html$Attributes$id('fileName')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$span,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('header-key')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('File ')
+									])),
+								$elm$html$Html$text(model.fileName)
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('toolbar-button theme-toggle'),
+								$elm$html$Html$Events$onClick($author$project$Main$ToggleTheme),
+								$elm$html$Html$Attributes$title(
+								function () {
+									var _v1 = model.theme;
+									if (_v1.$ === 'Light') {
+										return 'Switch to Dark Mode';
+									} else {
+										return 'Switch to Light Mode';
+									}
+								}()),
+								A2($elm$html$Html$Attributes$style, 'background-color', 'black')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								function () {
+									var _v2 = model.theme;
+									if (_v2.$ === 'Light') {
+										return '🌙';
+									} else {
+										return '☀️';
+									}
+								}())
+							])),
+						A2(
+						$elm$html$Html$button,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('toolbar-button'),
+								$elm$html$Html$Events$onClick($author$project$Main$ToggleNumberSections)
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								model.numberedSections ? 'Section numbering: Yes' : 'Section numbering: No')
+							])),
 						function () {
 						var _v3 = model.notice;
 						if (_v3.$ === 'Just') {
@@ -17294,17 +17566,7 @@ var $author$project$Main$view = function (model) {
 						} else {
 							return $elm$html$Html$text('');
 						}
-					}(),
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('app-title')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('XMarkdown TOC+Sync Demo')
-							]))
+					}()
 					])),
 				A2(
 				$elm$html$Html$div,
@@ -17386,7 +17648,16 @@ var $author$project$Main$view = function (model) {
 								$author$project$Main$Render,
 								A2($author$project$Main$renderPanel, model.compilerParameters, compilerOutput.toc))
 							]))
-					]))
+					])),
+				function () {
+				var _v4 = model.dialog;
+				if (_v4.$ === 'Just') {
+					var dialog = _v4.a;
+					return $author$project$Main$fileNameDialogView(dialog);
+				} else {
+					return $elm$html$Html$text('');
+				}
+			}()
 			]));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(

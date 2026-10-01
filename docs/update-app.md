@@ -34,8 +34,10 @@ regenerated `assets/main.js`).
    S=../xmarkdown/DemoTOC+Sync
    cp $S/src/Main.elm src/
    cp $S/src/Data/XMarkdown.elm src/Data/
-   cp $S/assets/editor.js assets/
+   cp $S/assets/editor.js $S/assets/file-links.js assets/
    ```
+   `file-links.js` is loaded by `index.html` in this repo, and by
+   `index.html` + `app.js` (`initFileLinks(app)`) in DemoTOC+Sync.
    The source `editor.js` imports CodeMirror from `../node_modules/...`; rewrite
    those imports to the esm.sh CDN URLs (`https://esm.sh/codemirror@6.0.1`,
    `https://esm.sh/@codemirror/state@6`, `https://esm.sh/@codemirror/view@6`)

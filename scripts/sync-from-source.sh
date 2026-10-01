@@ -43,7 +43,7 @@ trap 'rm -rf "$STAGE"' EXIT
 
 mkdir -p "$STAGE/src" "$STAGE/assets"
 cp -R "$SRC/src/." "$STAGE/src/"
-for f in katex.js style.css; do
+for f in katex.js style.css file-links.js; do
     cp "$SRC/assets/$f" "$STAGE/assets/$f"
 done
 
@@ -73,19 +73,21 @@ if leftover:
 open(dst, "w").write(text)
 PY
 
-# --- 2. Check ports against assets/index.html -----------------------------
+# --- 2. Check ports against this app's JS --------------------------------
+# Wiring lives in index.html's inline script and in assets/*.js helpers
+# (e.g. file-links.js); main.js is the compiled Elm and doesn't count.
 
-python3 - "$STAGE/src/Ports.elm" "assets/index.html" <<'PY'
+python3 - "$STAGE/src/Ports.elm" "assets/index.html" "$STAGE/assets/file-links.js" <<'PY'
 import re, sys
 ports = open(sys.argv[1]).read()
-html = open(sys.argv[2]).read()
+html = "".join(open(f).read() for f in sys.argv[2:])
 missing = []
 for name, sig in re.findall(r'^port\s+(\w+)\s*:\s*(.+)$', ports, re.M):
     method = "send" if sig.strip().endswith("Sub msg") else "subscribe"
     if f"app.ports.{name}.{method}" not in html:
         missing.append(f"app.ports.{name}.{method}")
 if missing:
-    sys.exit("assets/index.html is missing port wiring: " + ", ".join(missing))
+    sys.exit("assets/index.html / file-links.js are missing port wiring: " + ", ".join(missing))
 print("    ports OK")
 PY
 
@@ -115,7 +117,7 @@ PY
 
 # --- 4. Report / apply ----------------------------------------------------
 
-FILES=(elm.json assets/editor.js assets/katex.js assets/style.css)
+FILES=(elm.json assets/editor.js assets/katex.js assets/style.css assets/file-links.js)
 while IFS= read -r f; do FILES+=("${f#$STAGE/}"); done < <(find "$STAGE/src" -type f -name '*.elm')
 
 CHANGED=()

@@ -5626,7 +5626,7 @@ var $author$project$Data$XMarkdown$text = '\n\n\n# Sample Document\n\nXMarkdown 
 var $author$project$Main$init = function (flags) {
 	var params = $jxxcarlson$xmarkdown_compiler$XMarkdown$API$defaultCompilerParameters;
 	return _Utils_Tuple2(
-		{compilerParameters: params, count: 0, currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, fileName: 'untitled.md', initialText: $author$project$Data$XMarkdown$text, lrSyncIndex: 0, lrSyncMatches: _List_Nil, lrSyncText: '', numberedSections: false, selectId: '@InitID', sourceText: $author$project$Data$XMarkdown$text, syncHighlight: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, tick: 0, windowHeight: flags.window.windowHeight, windowWidth: flags.window.windowWidth},
+		{compilerParameters: params, count: 0, currentTheme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, editorOpen: false, fileName: 'untitled.md', initialText: $author$project$Data$XMarkdown$text, lrSyncIndex: 0, lrSyncMatches: _List_Nil, lrSyncText: '', numberedSections: false, selectId: '@InitID', sourceText: $author$project$Data$XMarkdown$text, syncHighlight: $elm$core$Maybe$Nothing, theme: $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light, tick: 0, windowHeight: flags.window.windowHeight, windowWidth: flags.window.windowWidth},
 		$author$project$Ports$setEditorHighlightColor(params.highlightColor));
 };
 var $elm$json$Json$Decode$int = _Json_decodeInt;
@@ -6144,13 +6144,23 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Sync$fromMsg = F2(
 		}
 	});
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight = $jxxcarlson$xmarkdown_compiler$XMarkdown$Sync$fromMsg;
+var $elm$core$Basics$min = F2(
+	function (x, y) {
+		return (_Utils_cmp(x, y) < 0) ? x : y;
+	});
 var $author$project$Main$geometry = function (model) {
 	var tocW = 200;
 	var pad = 24;
 	var gap = 16;
 	var avail = (model.windowWidth - tocW) - (4 * gap);
 	var half = A2($elm$core$Basics$max, 240, (avail / 2) | 0);
-	return {docWidth: half - (2 * pad), editorW: half, renderedW: half, tocW: tocW};
+	var renderedW = model.editorOpen ? half : A2($elm$core$Basics$max, 240, avail + gap);
+	return {
+		docWidth: A2($elm$core$Basics$min, 800, renderedW - (2 * pad)),
+		editorW: half,
+		renderedW: renderedW,
+		tocW: tocW
+	};
 };
 var $elm$core$List$head = function (list) {
 	if (list.b) {
@@ -8814,10 +8824,6 @@ var $elm$core$List$maximum = function (list) {
 		return $elm$core$Maybe$Nothing;
 	}
 };
-var $elm$core$Basics$min = F2(
-	function (x, y) {
-		return (_Utils_cmp(x, y) < 0) ? x : y;
-	});
 var $elm$core$List$minimum = function (list) {
 	if (list.b) {
 		var x = list.a;
@@ -12196,7 +12202,13 @@ var $author$project$Main$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{count: model.count + 1, fileName: 'untitled.md', initialText: '', sourceText: '', syncHighlight: $elm$core$Maybe$Nothing}),
+						{count: model.count + 1, editorOpen: true, fileName: 'untitled.md', initialText: '', sourceText: '', syncHighlight: $elm$core$Maybe$Nothing}),
+					$elm$core$Platform$Cmd$none);
+			case 'ToggleEditor':
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{editorOpen: !model.editorOpen}),
 					$elm$core$Platform$Cmd$none);
 			case 'FileNameChanged':
 				var newFileName = msg.a;
@@ -12354,6 +12366,7 @@ var $author$project$Main$Render = function (a) {
 	return {$: 'Render', a: a};
 };
 var $author$project$Main$SaveFileRequested = {$: 'SaveFileRequested'};
+var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
 var $author$project$Main$ToggleNumberSections = {$: 'ToggleNumberSections'};
 var $author$project$Main$ToggleTheme = {$: 'ToggleTheme'};
 var $elm$html$Html$button = _VirtualDom_node('button');
@@ -16770,6 +16783,11 @@ var $author$project$Main$renderPanel = F2(
 					A2($elm$html$Html$Attributes$style, 'width', '100%'),
 					A2(
 					$elm$html$Html$Attributes$style,
+					'max-width',
+					$author$project$Main$px(params.docWidth)),
+					A2($elm$html$Html$Attributes$style, 'margin', '0 auto'),
+					A2(
+					$elm$html$Html$Attributes$style,
 					'background-color',
 					A2(
 						$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
@@ -16796,7 +16814,7 @@ var $author$project$Main$view = function (model) {
 	var compilerParameters = model.compilerParameters;
 	var params = _Utils_update(
 		compilerParameters,
-		{docWidth: g.docWidth, editCount: model.count, selectedId: model.selectId, theme: model.theme});
+		{docWidth: g.docWidth, editCount: model.count, selectedId: model.selectId, theme: model.theme, windowWidth: g.docWidth});
 	var compilerOutput = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$compileOutput, params, model.sourceText);
 	return A2(
 		$elm$html$Html$div,
@@ -16822,6 +16840,18 @@ var $author$project$Main$view = function (model) {
 							]),
 						_List_fromArray(
 							[
+								A2(
+								$elm$html$Html$button,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('toolbar-button'),
+										$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor)
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										model.editorOpen ? 'Close Editor' : 'Open Editor')
+									])),
 								A2(
 								$elm$html$Html$button,
 								_List_fromArray(
@@ -16940,7 +16970,11 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$Attributes$style,
 								'width',
-								$author$project$Main$px(g.editorW))
+								$author$project$Main$px(g.editorW)),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'display',
+								model.editorOpen ? 'block' : 'none')
 							]),
 						_List_fromArray(
 							[
@@ -16971,7 +17005,7 @@ var $author$project$Main$view = function (model) {
 								A2(
 								$elm$html$Html$map,
 								$author$project$Main$Render,
-								A2($author$project$Main$renderPanel, model.compilerParameters, compilerOutput.body))
+								A2($author$project$Main$renderPanel, params, compilerOutput.body))
 							])),
 						A2(
 						$elm$html$Html$div,

@@ -9232,6 +9232,7 @@ var $jxxcarlson$xmarkdown_compiler$LaTeX$Block$compactList = F2(
 			return $jxxcarlson$xmarkdown_compiler$LaTeX$Escape$text(str);
 		}
 	});
+var $jxxcarlson$xmarkdown_compiler$LaTeX$Block$horizontalRule = '\u005Cnoindent\u005Crule{\u005Clinewidth}{0.4pt}';
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Block$inlineBody = function (block) {
 	var _v0 = block.body;
 	if (_v0.$ === 'Right') {
@@ -9496,6 +9497,15 @@ var $jxxcarlson$xmarkdown_compiler$LaTeX$Block$exportBlock = function (block) {
 			switch (_v0.a) {
 				case 'titleBlock':
 					return '';
+				case 'hrule':
+					var _v1 = $elm$core$String$trim(
+						$jxxcarlson$xmarkdown_compiler$LaTeX$Block$inlineBody(block));
+					if (_v1 === '') {
+						return $jxxcarlson$xmarkdown_compiler$LaTeX$Block$horizontalRule;
+					} else {
+						var rest = _v1;
+						return $jxxcarlson$xmarkdown_compiler$LaTeX$Block$horizontalRule + ('\u000A\u000A' + rest);
+					}
 				case 'section':
 					return $jxxcarlson$xmarkdown_compiler$LaTeX$Block$section(block);
 				case 'quotation':
@@ -9538,9 +9548,9 @@ var $jxxcarlson$xmarkdown_compiler$LaTeX$Block$exportBlock = function (block) {
 						'\u000A\u005C]',
 						$jxxcarlson$xmarkdown_compiler$LaTeX$Block$mathSource(block));
 				case 'code':
-					var _v1 = block.body;
-					if (_v1.$ === 'Left') {
-						var str = _v1.a;
+					var _v2 = block.body;
+					if (_v2.$ === 'Left') {
+						var str = _v2.a;
 						return A2($jxxcarlson$xmarkdown_compiler$LaTeX$Block$environment, 'verbatim', str);
 					} else {
 						return A2($jxxcarlson$xmarkdown_compiler$LaTeX$Block$environment, 'verbatim', '');
@@ -10772,7 +10782,9 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix
 				A2($elm$regex$Regex$find, $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$sectionRegex, string))));
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$fixMarkdownTitleBlock = function (block) {
-	var _v0 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix(block.firstLine);
+	var _v0 = _Utils_eq(
+		block.heading,
+		$jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('hrule')) ? $elm$core$Maybe$Nothing : $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix(block.firstLine);
 	if (_v0.$ === 'Nothing') {
 		return block;
 	} else {
@@ -11438,6 +11450,16 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findTitlePrefix =
 				A2($elm$regex$Regex$find, $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$titleRegex, string))));
 };
 var $elm$regex$Regex$contains = _Regex_contains;
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$horizontalRuleRegex = A2(
+	$elm$core$Maybe$withDefault,
+	$elm$regex$Regex$never,
+	$elm$regex$Regex$fromString('^(-[ \u005Ct]*){3,}$|^(\u005C*[ \u005Ct]*){3,}$|^(_[ \u005Ct]*){3,}$'));
+var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isHorizontalRule = function (line) {
+	return A2(
+		$elm$regex$Regex$contains,
+		$jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$horizontalRuleRegex,
+		$elm$core$String$trim(line));
+};
 var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItemPrefixRegex = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
@@ -11484,23 +11506,17 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = 
 				properties: $elm$core$Dict$empty
 			});
 	} else {
-		var _v1 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix(line);
-		if (_v1.$ === 'Just') {
-			var prefix = _v1.a;
+		if ($jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isHorizontalRule(line)) {
 			return $elm$core$Result$Ok(
 				{
-					args: _List_fromArray(
-						[
-							$elm$core$String$fromInt(
-							$elm$core$String$length(prefix))
-						]),
-					heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('section'),
-					properties: A2($elm$core$Dict$singleton, 'section-type', 'markdown')
+					args: _List_Nil,
+					heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('hrule'),
+					properties: $elm$core$Dict$empty
 				});
 		} else {
-			var _v2 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findTitlePrefix(line);
-			if (_v2.$ === 'Just') {
-				var prefix = _v2.a;
+			var _v1 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findSectionPrefix(line);
+			if (_v1.$ === 'Just') {
+				var prefix = _v1.a;
 				return $elm$core$Result$Ok(
 					{
 						args: _List_fromArray(
@@ -11508,89 +11524,104 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$getHeadingData = 
 								$elm$core$String$fromInt(
 								$elm$core$String$length(prefix))
 							]),
-						heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('title'),
+						heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('section'),
 						properties: A2($elm$core$Dict$singleton, 'section-type', 'markdown')
 					});
 			} else {
-				if (!args1.b) {
+				var _v2 = $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$findTitlePrefix(line);
+				if (_v2.$ === 'Just') {
+					var prefix = _v2.a;
 					return $elm$core$Result$Ok(
-						{args: _List_Nil, heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph, properties: $elm$core$Dict$empty});
+						{
+							args: _List_fromArray(
+								[
+									$elm$core$String$fromInt(
+									$elm$core$String$length(prefix))
+								]),
+							heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('title'),
+							properties: A2($elm$core$Dict$singleton, 'section-type', 'markdown')
+						});
 				} else {
-					var prefix = args1.a;
-					var args = args1.b;
-					switch (prefix) {
-						case '>':
-							var reducedLine = $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingGreaterThanSign(
-								$elm$core$String$trim(line));
-							return $elm$core$String$isEmpty(reducedLine) ? $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent) : $elm$core$Result$Ok(
-								{
-									args: _List_Nil,
-									heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('quotation'),
-									properties: A2($elm$core$Dict$singleton, 'firstLine', reducedLine)
-								});
-						case '|':
-							if (!args.b) {
-								return $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HEMissingName);
-							} else {
-								var name = args.a;
-								var args2 = args.b;
+					if (!args1.b) {
+						return $elm$core$Result$Ok(
+							{args: _List_Nil, heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph, properties: $elm$core$Dict$empty});
+					} else {
+						var prefix = args1.a;
+						var args = args1.b;
+						switch (prefix) {
+							case '>':
+								var reducedLine = $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingGreaterThanSign(
+									$elm$core$String$trim(line));
+								return $elm$core$String$isEmpty(reducedLine) ? $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent) : $elm$core$Result$Ok(
+									{
+										args: _List_Nil,
+										heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('quotation'),
+										properties: A2($elm$core$Dict$singleton, 'firstLine', reducedLine)
+									});
+							case '|':
+								if (!args.b) {
+									return $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HEMissingName);
+								} else {
+									var name = args.a;
+									var args2 = args.b;
+									return $elm$core$Result$Ok(
+										{
+											args: args2,
+											heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary(name),
+											properties: properties
+										});
+								}
+							case '!!':
+								var reducedLine = A3($elm$core$String$replace, '!! ', '', line);
+								return $elm$core$String$isEmpty(reducedLine) ? $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent) : $elm$core$Result$Ok(
+									{
+										args: _List_Nil,
+										heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('title'),
+										properties: $elm$core$Dict$fromList(
+											_List_fromArray(
+												[
+													_Utils_Tuple2(
+													'firstLine',
+													A3($elm$core$String$replace, '!! ', '', line)),
+													_Utils_Tuple2('section-type', 'markdown')
+												]))
+									});
+							case '-':
+								var reducedLine = $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDashSpace(
+									$elm$core$String$trim(line));
+								return $elm$core$String$isEmpty(reducedLine) ? $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent) : $elm$core$Result$Ok(
+									{
+										args: _List_Nil,
+										heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('item'),
+										properties: A2($elm$core$Dict$singleton, 'firstLine', reducedLine)
+									});
+							case '.':
+								return $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItem(
+									$jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker(line));
+							case '$$':
 								return $elm$core$Result$Ok(
 									{
-										args: args2,
-										heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary(name),
-										properties: properties
+										args: _List_Nil,
+										heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
+										properties: $elm$core$Dict$empty
 									});
-							}
-						case '!!':
-							var reducedLine = A3($elm$core$String$replace, '!! ', '', line);
-							return $elm$core$String$isEmpty(reducedLine) ? $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent) : $elm$core$Result$Ok(
-								{
-									args: _List_Nil,
-									heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('title'),
-									properties: $elm$core$Dict$fromList(
-										_List_fromArray(
-											[
-												_Utils_Tuple2(
-												'firstLine',
-												A3($elm$core$String$replace, '!! ', '', line)),
-												_Utils_Tuple2('section-type', 'markdown')
-											]))
-								});
-						case '-':
-							var reducedLine = $jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingDashSpace(
-								$elm$core$String$trim(line));
-							return $elm$core$String$isEmpty(reducedLine) ? $elm$core$Result$Err($jxxcarlson$xmarkdown_compiler$Parser$Block$Line$HENoContent) : $elm$core$Result$Ok(
-								{
-									args: _List_Nil,
-									heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('item'),
-									properties: A2($elm$core$Dict$singleton, 'firstLine', reducedLine)
-								});
-						case '.':
-							return $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItem(
-								$jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker(line));
-						case '$$':
-							return $elm$core$Result$Ok(
-								{
-									args: _List_Nil,
-									heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
-									properties: $elm$core$Dict$empty
-								});
-						case '\u005C[':
-							return $elm$core$Result$Ok(
-								{
-									args: _List_Nil,
-									heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
-									properties: $elm$core$Dict$empty
-								});
-						default:
-							return A2($elm$core$String$startsWith, '```', prefix) ? $elm$core$Result$Ok(
-								{
-									args: $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$codeFenceArgs(prefix),
-									heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('code'),
-									properties: $elm$core$Dict$empty
-								}) : ($jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isNumberedItemPrefix(prefix) ? $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItem(
-								$jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker(line)) : $elm$core$Result$Ok(
-								{args: _List_Nil, heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph, properties: $elm$core$Dict$empty}));
+							case '\u005C[':
+								return $elm$core$Result$Ok(
+									{
+										args: _List_Nil,
+										heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('math'),
+										properties: $elm$core$Dict$empty
+									});
+							default:
+								return A2($elm$core$String$startsWith, '```', prefix) ? $elm$core$Result$Ok(
+									{
+										args: $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$codeFenceArgs(prefix),
+										heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Verbatim('code'),
+										properties: $elm$core$Dict$empty
+									}) : ($jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$isNumberedItemPrefix(prefix) ? $jxxcarlson$xmarkdown_compiler$Parser$Block$PrimitiveBlock$numberedItem(
+									$jxxcarlson$xmarkdown_compiler$Tools$Utility$replaceLeadingNumberedMarker(line)) : $elm$core$Result$Ok(
+									{args: _List_Nil, heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Paragraph, properties: $elm$core$Dict$empty}));
+						}
 					}
 				}
 			}
@@ -18694,6 +18725,57 @@ var $jxxcarlson$xmarkdown_compiler$Render$GHTable$render = F6(
 					]));
 		}
 	});
+var $elm$html$Html$hr = _VirtualDom_node('hr');
+var $jxxcarlson$xmarkdown_compiler$Render$HorizontalRule$render = F6(
+	function (count, _v0, depth, settings, _v1, block) {
+		var rest = function () {
+			var _v2 = block.body;
+			if (_v2.$ === 'Right') {
+				if (!_v2.a.b) {
+					return _List_Nil;
+				} else {
+					var exprs = _v2.a;
+					return _List_fromArray(
+						[
+							A2(
+							$elm$html$Html$p,
+							_List_Nil,
+							A2(
+								$elm$core$List$map,
+								A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, settings.theme, depth, _List_Nil),
+								exprs))
+						]);
+				}
+			} else {
+				return _List_Nil;
+			}
+		}();
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$id(
+					'e-' + ($elm$core$String$fromInt(block.meta.lineNumber) + ('.' + $elm$core$String$fromInt(count)))),
+					A2(
+					$elm$html$Html$Attributes$attribute,
+					'data-line-number',
+					$elm$core$String$fromInt(block.meta.lineNumber)),
+					A2($elm$html$Html$Attributes$style, 'width', '100%')
+				]),
+			A2(
+				$elm$core$List$cons,
+				A2(
+					$elm$html$Html$hr,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'border', 'none'),
+							A2($elm$html$Html$Attributes$style, 'border-top', '1px solid currentColor'),
+							A2($elm$html$Html$Attributes$style, 'opacity', '0.35'),
+							A2($elm$html$Html$Attributes$style, 'margin', '1.25em 0')
+						]),
+					_List_Nil),
+				rest));
+	});
 var $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$em = function (x) {
 	return $elm$core$String$fromFloat(x) + 'em';
 };
@@ -18800,7 +18882,8 @@ var $jxxcarlson$xmarkdown_compiler$Render$OrdinaryBlock$initRegistry = A2(
 			_Utils_Tuple2('aligned', $jxxcarlson$xmarkdown_compiler$Render$Math$aligned),
 			_Utils_Tuple2('array', $jxxcarlson$xmarkdown_compiler$Render$Math$array),
 			_Utils_Tuple2('chem', $jxxcarlson$xmarkdown_compiler$Render$Math$chem),
-			_Utils_Tuple2('titleBlock', $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$render)
+			_Utils_Tuple2('titleBlock', $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$render),
+			_Utils_Tuple2('hrule', $jxxcarlson$xmarkdown_compiler$Render$HorizontalRule$render)
 		]),
 	$jxxcarlson$xmarkdown_compiler$Render$Blocks$Document$registerRenderers(
 		$jxxcarlson$xmarkdown_compiler$Render$Blocks$Container$registerRenderers(

@@ -8,6 +8,7 @@
 //! answers, a second close/quit goes through regardless.
 
 mod pdf;
+mod print;
 
 use std::fs;
 use std::path::Path;
@@ -61,6 +62,20 @@ async fn export_pdf(app: AppHandle, tex: String, images: Vec<(String, String)>, 
     Ok(ExportResult { image_errors })
 }
 
+/// File > Print while a PDF is shown: print it (see print.rs). AppKit needs
+/// the main thread; the command returns once the print panel is dismissed.
+#[tauri::command]
+async fn print_pdf(app: AppHandle, path: String) -> Result<(), String> {
+    let (done, result) = std::sync::mpsc::channel();
+    app.run_on_main_thread(move || {
+        let _ = done.send(print::print_pdf(&path));
+    })
+    .map_err(|e| e.to_string())?;
+    tauri::async_runtime::spawn_blocking(move || result.recv().map_err(|e| e.to_string()))
+        .await
+        .map_err(|e| e.to_string())??
+}
+
 /// The page has saved (or the user chose to discard): close or quit now.
 #[tauri::command]
 fn finish_close(app: AppHandle, then: String) {
@@ -103,6 +118,7 @@ pub fn run() {
             write_file,
             file_exists,
             export_pdf,
+            print_pdf,
             finish_close,
             cancel_close
         ])

@@ -77,10 +77,13 @@ calls `finish_close`.
   exists, else `"web"`) picks the desktop or web behaviour for each File menu
   item.
 - `desktop/src-tauri/src/lib.rs` — Rust commands `read_file`, `write_file`,
-  `file_exists`, `export_pdf` (see `pdf.rs`); registers `tauri-plugin-dialog`
+  `file_exists`, `export_pdf` (see `pdf.rs`), `print_pdf` (see `print.rs`:
+  PDFKit and the macOS print panel); registers `tauri-plugin-dialog`
   and `tauri-plugin-opener`.
 - `assets/pdf-export.js` — File > Export PDF: the desktop path above, or (in
-  DemoTOC+Sync) a POST to its local `serve.py`.
+  DemoTOC+Sync) a POST to its local `serve.py`. The exported PDF is shown
+  below the header. File > Print prints it, or, when none is shown, first
+  generates one in the temp folder ("Generating PDF…" window).
 - `desktop/src-tauri/capabilities/default.json` — permissions for those plugins.
 
 The editor (esm.sh), KaTeX and fonts still load from CDNs, so the app needs a

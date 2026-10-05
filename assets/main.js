@@ -5712,7 +5712,9 @@ var $author$project$Main$init = function (flagsValue) {
 			notice: $elm$core$Maybe$Nothing,
 			numberedSections: false,
 			pdfExport: flags.pdfExport,
+			pdfShown: $elm$core$Maybe$Nothing,
 			platform: flags.platform,
+			printStatus: $elm$core$Maybe$Nothing,
 			selectId: '@InitID',
 			sourceText: $author$project$Data$XMarkdown$text,
 			syncHighlight: $elm$core$Maybe$Nothing,
@@ -5772,6 +5774,13 @@ var $author$project$Main$DesktopOpened = F2(
 	function (a, b) {
 		return {$: 'DesktopOpened', a: a, b: b};
 	});
+var $author$project$Main$DesktopPdfGenerated = {$: 'DesktopPdfGenerated'};
+var $author$project$Main$DesktopPdfShown = function (a) {
+	return {$: 'DesktopPdfShown', a: a};
+};
+var $author$project$Main$DesktopPrintFailed = function (a) {
+	return {$: 'DesktopPrintFailed', a: a};
+};
 var $author$project$Main$DesktopSaved = function (a) {
 	return {$: 'DesktopSaved', a: a};
 };
@@ -5786,6 +5795,15 @@ var $author$project$Main$FileLocation = F4(
 var $elm$json$Json$Decode$map4 = _Json_map4;
 var $elm$core$Basics$negate = function (n) {
 	return -n;
+};
+var $elm$json$Json$Decode$null = _Json_decodeNull;
+var $elm$json$Json$Decode$nullable = function (decoder) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				$elm$json$Json$Decode$null($elm$core$Maybe$Nothing),
+				A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, decoder)
+			]));
 };
 var $author$project$Main$desktopEventDecoder = function () {
 	var tokenField = $elm$json$Json$Decode$oneOf(
@@ -5840,6 +5858,21 @@ var $author$project$Main$desktopEventDecoder = function () {
 							}),
 						A2($elm$json$Json$Decode$field, 'folder', $elm$json$Json$Decode$string),
 						A2($elm$json$Json$Decode$field, 'folderName', $elm$json$Json$Decode$string));
+				case 'pdfGenerated':
+					return $elm$json$Json$Decode$succeed($author$project$Main$DesktopPdfGenerated);
+				case 'printFailed':
+					return A2(
+						$elm$json$Json$Decode$map,
+						$author$project$Main$DesktopPrintFailed,
+						A2($elm$json$Json$Decode$field, 'message', $elm$json$Json$Decode$string));
+				case 'pdfShown':
+					return A2(
+						$elm$json$Json$Decode$map,
+						$author$project$Main$DesktopPdfShown,
+						A2(
+							$elm$json$Json$Decode$field,
+							'path',
+							$elm$json$Json$Decode$nullable($elm$json$Json$Decode$string)));
 				case 'error':
 					return A2(
 						$elm$json$Json$Decode$map,
@@ -5856,7 +5889,6 @@ var $author$project$Ports$desktopResponse = _Platform_incomingPort('desktopRespo
 var $elm$json$Json$Decode$fail = _Json_fail;
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $author$project$Ports$folderOpened = _Platform_incomingPort('folderOpened', $elm$json$Json$Decode$string);
-var $elm$json$Json$Decode$null = _Json_decodeNull;
 var $author$project$Ports$linkedFile = _Platform_incomingPort(
 	'linkedFile',
 	A2(
@@ -6354,7 +6386,7 @@ var $author$project$Main$subscriptions = function (model) {
 					return $elm$core$Platform$Sub$none;
 				}
 			}(),
-				(model.fileMenuOpen || (!_Utils_eq(model.dialog, $elm$core$Maybe$Nothing))) ? $elm$browser$Browser$Events$onKeyDown(
+				(model.fileMenuOpen || ((!_Utils_eq(model.dialog, $elm$core$Maybe$Nothing)) || (!_Utils_eq(model.printStatus, $elm$core$Maybe$Nothing)))) ? $elm$browser$Browser$Events$onKeyDown(
 				A2(
 					$elm$json$Json$Decode$andThen,
 					function (key) {
@@ -6370,7 +6402,11 @@ var $author$project$Main$FileLoaded = function (a) {
 var $author$project$Main$FileSelected = function (a) {
 	return {$: 'FileSelected', a: a};
 };
+var $author$project$Main$GeneratingPdf = {$: 'GeneratingPdf'};
 var $author$project$Main$NewFileDialog = {$: 'NewFileDialog'};
+var $author$project$Main$PrintFailed = function (a) {
+	return {$: 'PrintFailed', a: a};
+};
 var $author$project$Main$SaveAsDialog = {$: 'SaveAsDialog'};
 var $author$project$Main$atLocation = F2(
 	function (location, model) {
@@ -15798,6 +15834,66 @@ var $author$project$Main$update = F2(
 									{authors: _List_Nil, date: '', title: ''},
 									model.sourceText)
 							}));
+				case 'PrintRequested':
+					var _v5 = model.pdfShown;
+					if (_v5.$ === 'Just') {
+						var path = _v5.a;
+						return _Utils_Tuple2(
+							model,
+							A2(
+								$author$project$Main$desktopRequest,
+								'printPdf',
+								_List_fromArray(
+									[
+										_Utils_Tuple2(
+										'path',
+										$elm$json$Json$Encode$string(path))
+									])));
+					} else {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									printStatus: $elm$core$Maybe$Just($author$project$Main$GeneratingPdf)
+								}),
+							A2(
+								$author$project$Main$desktopRequest,
+								'printDocument',
+								_List_fromArray(
+									[
+										_Utils_Tuple2(
+										'name',
+										$elm$json$Json$Encode$string(
+											$author$project$Main$pdfName(model.fileName))),
+										_Utils_Tuple2(
+										'tex',
+										$elm$json$Json$Encode$string(
+											A2(
+												$jxxcarlson$xmarkdown_compiler$LaTeX$Export$exportDocument,
+												{authors: _List_Nil, date: '', title: ''},
+												model.sourceText))),
+										_Utils_Tuple2(
+										'images',
+										A2(
+											$elm$json$Json$Encode$list,
+											function (_v6) {
+												var url = _v6.a;
+												var localPath = _v6.b;
+												return A2(
+													$elm$json$Json$Encode$list,
+													$elm$json$Json$Encode$string,
+													_List_fromArray(
+														[url, localPath]));
+											},
+											$jxxcarlson$xmarkdown_compiler$LaTeX$Export$imageUrls(model.sourceText)))
+									])));
+					}
+				case 'PrintMessageDismissed':
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{printStatus: $elm$core$Maybe$Nothing}),
+						$elm$core$Platform$Cmd$none);
 				case 'PdfExported':
 					var result = msg.a;
 					return _Utils_Tuple2(
@@ -15806,8 +15902,8 @@ var $author$project$Main$update = F2(
 							{notice: result}),
 						$elm$core$Platform$Cmd$none);
 				case 'OpenFolderRequested':
-					var _v5 = model.platform;
-					if (_v5.$ === 'Desktop') {
+					var _v7 = model.platform;
+					if (_v7.$ === 'Desktop') {
 						return _Utils_Tuple2(
 							model,
 							A2($author$project$Main$desktopRequest, 'openFolder', _List_Nil));
@@ -15830,9 +15926,9 @@ var $author$project$Main$update = F2(
 					var folder = msg.a.folder;
 					var content = msg.a.content;
 					var name = msg.a.name;
-					var _v6 = _Utils_Tuple2(content, folder);
-					if (_v6.a.$ === 'Just') {
-						var fileText = _v6.a.a;
+					var _v8 = _Utils_Tuple2(content, folder);
+					if (_v8.a.$ === 'Just') {
+						var fileText = _v8.a.a;
 						return _Utils_Tuple2(
 							A2(
 								$author$project$Main$loadDocument,
@@ -15842,9 +15938,9 @@ var $author$project$Main$update = F2(
 									{fileName: name, filePath: $elm$core$Maybe$Nothing})),
 							$elm$core$Platform$Cmd$none);
 					} else {
-						if (_v6.b.$ === 'Nothing') {
-							var _v7 = _v6.a;
-							var _v8 = _v6.b;
+						if (_v8.b.$ === 'Nothing') {
+							var _v9 = _v8.a;
+							var _v10 = _v8.b;
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
@@ -15853,8 +15949,8 @@ var $author$project$Main$update = F2(
 									}),
 								$elm$core$Platform$Cmd$none);
 						} else {
-							var _v9 = _v6.a;
-							var folderName = _v6.b.a;
+							var _v11 = _v8.a;
+							var folderName = _v8.b.a;
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
@@ -15865,23 +15961,23 @@ var $author$project$Main$update = F2(
 						}
 					}
 				case 'SaveRequested':
-					var _v10 = _Utils_Tuple2(model.platform, model.filePath);
-					if (_v10.a.$ === 'Desktop') {
-						if (_v10.b.$ === 'Just') {
-							var _v11 = _v10.a;
-							var path = _v10.b.a;
+					var _v12 = _Utils_Tuple2(model.platform, model.filePath);
+					if (_v12.a.$ === 'Desktop') {
+						if (_v12.b.$ === 'Just') {
+							var _v13 = _v12.a;
+							var path = _v12.b.a;
 							return _Utils_Tuple2(
 								model,
 								A3($author$project$Main$desktopSave, path, model, _List_Nil));
 						} else {
-							var _v12 = _v10.a;
-							var _v13 = _v10.b;
+							var _v14 = _v12.a;
+							var _v15 = _v12.b;
 							return _Utils_Tuple2(
 								model,
 								$author$project$Main$desktopSaveAs(model));
 						}
 					} else {
-						var _v14 = _v10.a;
+						var _v16 = _v12.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -15891,8 +15987,8 @@ var $author$project$Main$update = F2(
 				case 'NewRequested':
 					return A3($author$project$Main$openDialog, $author$project$Main$NewFileDialog, 'untitled.md', model);
 				case 'SaveAsRequested':
-					var _v15 = model.platform;
-					if (_v15.$ === 'Desktop') {
+					var _v17 = model.platform;
+					if (_v17.$ === 'Desktop') {
 						return _Utils_Tuple2(
 							model,
 							$author$project$Main$desktopSaveAs(model));
@@ -15951,10 +16047,10 @@ var $author$project$Main$update = F2(
 							var andThenArg = _Utils_Tuple2(
 								'then',
 								$elm$json$Json$Encode$string(andThen));
-							var _v17 = _Utils_Tuple2(model.dirty, model.filePath);
-							if (_v17.a) {
-								if (_v17.b.$ === 'Just') {
-									var path = _v17.b.a;
+							var _v19 = _Utils_Tuple2(model.dirty, model.filePath);
+							if (_v19.a) {
+								if (_v19.b.$ === 'Just') {
+									var path = _v19.b.a;
 									return _Utils_Tuple2(
 										model,
 										A3(
@@ -15964,7 +16060,7 @@ var $author$project$Main$update = F2(
 											_List_fromArray(
 												[andThenArg])));
 								} else {
-									var _v18 = _v17.b;
+									var _v20 = _v19.b;
 									return _Utils_Tuple2(
 										model,
 										A2(
@@ -15999,6 +16095,29 @@ var $author$project$Main$update = F2(
 										notice: $elm$core$Maybe$Nothing
 									}),
 								$elm$core$Platform$Cmd$none);
+						case 'DesktopPdfShown':
+							var path = event.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{pdfShown: path}),
+								$elm$core$Platform$Cmd$none);
+						case 'DesktopPdfGenerated':
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{printStatus: $elm$core$Maybe$Nothing}),
+								$elm$core$Platform$Cmd$none);
+						case 'DesktopPrintFailed':
+							var message = event.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										printStatus: $elm$core$Maybe$Just(
+											$author$project$Main$PrintFailed(message))
+									}),
+								$elm$core$Platform$Cmd$none);
 						case 'DesktopError':
 							var message = event.a;
 							return _Utils_Tuple2(
@@ -16030,7 +16149,7 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{dialog: $elm$core$Maybe$Nothing, fileMenuOpen: false}),
+							{dialog: $elm$core$Maybe$Nothing, fileMenuOpen: false, printStatus: $elm$core$Maybe$Nothing}),
 						$elm$core$Platform$Cmd$none);
 				case 'DialogNameChanged':
 					var name = msg.a;
@@ -16055,20 +16174,20 @@ var $author$project$Main$update = F2(
 							{dialog: $elm$core$Maybe$Nothing}),
 						$elm$core$Platform$Cmd$none);
 				case 'DialogConfirmed':
-					var _v19 = model.dialog;
-					if (_v19.$ === 'Just') {
-						var name = _v19.a.name;
-						var purpose = _v19.a.purpose;
+					var _v21 = model.dialog;
+					if (_v21.$ === 'Just') {
+						var name = _v21.a.name;
+						var purpose = _v21.a.purpose;
 						var fileName = $elm$core$String$trim(name);
 						if ($elm$core$String$isEmpty(fileName)) {
 							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 						} else {
-							var _v20 = _Utils_Tuple3(purpose, model.platform, model.folderPath);
-							if (_v20.a.$ === 'NewFileDialog') {
-								if ((_v20.b.$ === 'Desktop') && (_v20.c.$ === 'Just')) {
-									var _v21 = _v20.a;
-									var _v22 = _v20.b;
-									var folder = _v20.c.a;
+							var _v22 = _Utils_Tuple3(purpose, model.platform, model.folderPath);
+							if (_v22.a.$ === 'NewFileDialog') {
+								if ((_v22.b.$ === 'Desktop') && (_v22.c.$ === 'Just')) {
+									var _v23 = _v22.a;
+									var _v24 = _v22.b;
+									var folder = _v22.c.a;
 									return _Utils_Tuple2(
 										_Utils_update(
 											model,
@@ -16086,7 +16205,7 @@ var $author$project$Main$update = F2(
 													$elm$json$Json$Encode$string(fileName))
 												])));
 								} else {
-									var _v23 = _v20.a;
+									var _v25 = _v22.a;
 									return _Utils_Tuple2(
 										A2(
 											$author$project$Main$newDocument,
@@ -16097,7 +16216,7 @@ var $author$project$Main$update = F2(
 										$author$project$Main$autoSave(model));
 								}
 							} else {
-								var _v24 = _v20.a;
+								var _v26 = _v22.a;
 								var renamed = _Utils_update(
 									model,
 									{dialog: $elm$core$Maybe$Nothing, dirty: false, fileName: fileName});
@@ -16118,8 +16237,8 @@ var $author$project$Main$update = F2(
 						$elm$core$Platform$Cmd$none);
 				case 'ToggleNumberSections':
 					var oldCompilerParameters = model.compilerParameters;
-					var _v25 = model.numberedSections;
-					if (!_v25) {
+					var _v27 = model.numberedSections;
+					if (!_v27) {
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -16145,8 +16264,8 @@ var $author$project$Main$update = F2(
 				case 'ToggleTheme':
 					var params = model.compilerParameters;
 					var newTheme = function () {
-						var _v27 = model.theme;
-						if (_v27.$ === 'Light') {
+						var _v29 = model.theme;
+						if (_v29.$ === 'Light') {
 							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
 						} else {
 							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
@@ -16219,9 +16338,9 @@ var $author$project$Main$update = F2(
 					}
 				default:
 					var msg_ = msg.a;
-					var _v29 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
-					if (_v29.$ === 'Just') {
-						var h = _v29.a;
+					var _v31 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+					if (_v31.$ === 'Just') {
+						var h = _v31.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -19442,6 +19561,7 @@ var $author$project$Main$FileMenuChose = function (a) {
 var $author$project$Main$NewRequested = {$: 'NewRequested'};
 var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
 var $author$project$Main$OpenFolderRequested = {$: 'OpenFolderRequested'};
+var $author$project$Main$PrintRequested = {$: 'PrintRequested'};
 var $author$project$Main$SaveAsRequested = {$: 'SaveAsRequested'};
 var $author$project$Main$SaveRequested = {$: 'SaveRequested'};
 var $author$project$Main$ToggleFileMenu = {$: 'ToggleFileMenu'};
@@ -19513,10 +19633,15 @@ var $author$project$Main$fileMenu = function (model) {
 									A2(item, 'Save', $author$project$Main$SaveRequested),
 									A2(item, 'Save As…', $author$project$Main$SaveAsRequested)
 								]),
-							model.pdfExport ? _List_fromArray(
-								[
-									A2(item, 'Export PDF', $author$project$Main$ExportPdfRequested)
-								]) : _List_Nil))
+							_Utils_ap(
+								model.pdfExport ? _List_fromArray(
+									[
+										A2(item, 'Export PDF', $author$project$Main$ExportPdfRequested)
+									]) : _List_Nil,
+								_Utils_eq(model.platform, $author$project$Main$Desktop) ? _List_fromArray(
+									[
+										A2(item, 'Print', $author$project$Main$PrintRequested)
+									]) : _List_Nil)))
 					])) : $elm$html$Html$text('')
 			]));
 };
@@ -19702,6 +19827,84 @@ var $elm$virtual_dom$VirtualDom$keyedNode = function (tag) {
 		_VirtualDom_noScript(tag));
 };
 var $elm$html$Html$Keyed$node = $elm$virtual_dom$VirtualDom$keyedNode;
+var $author$project$Main$PrintMessageDismissed = {$: 'PrintMessageDismissed'};
+var $author$project$Main$printStatusView = function (status) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('dialog-backdrop')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('dialog')
+					]),
+				function () {
+					if (status.$ === 'GeneratingPdf') {
+						return _List_fromArray(
+							[
+								A2(
+								$elm$html$Html$h2,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Print')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Generating PDF…')
+									]))
+							]);
+					} else {
+						var message = status.a;
+						return _List_fromArray(
+							[
+								A2(
+								$elm$html$Html$h2,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Print')
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text('The PDF could not be generated: ' + message)
+									])),
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('dialog-buttons')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$button,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('toolbar-button primary'),
+												$elm$html$Html$Events$onClick($author$project$Main$PrintMessageDismissed)
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('OK')
+											]))
+									]))
+							]);
+					}
+				}())
+			]));
+};
 var $author$project$Main$px = function (n) {
 	return $elm$core$String$fromInt(n) + 'px';
 };
@@ -20051,6 +20254,15 @@ var $author$project$Main$view = function (model) {
 				if (_v4.$ === 'Just') {
 					var dialog = _v4.a;
 					return $author$project$Main$fileNameDialogView(dialog);
+				} else {
+					return $elm$html$Html$text('');
+				}
+			}(),
+				function () {
+				var _v5 = model.printStatus;
+				if (_v5.$ === 'Just') {
+					var status = _v5.a;
+					return $author$project$Main$printStatusView(status);
 				} else {
 					return $elm$html$Html$text('');
 				}

@@ -16,6 +16,7 @@
     <script src="main.js"></script>
     <script src="file-links.js"></script>
     <script src="desktop.js"></script>
+    <script src="pdf-export.js"></script>
 
 </head>
 
@@ -33,12 +34,15 @@
                 windowWidth: window.innerWidth,
                 windowHeight: window.innerHeight
             },
-            platform: window.__TAURI__ ? "desktop" : "web"
+            platform: window.__TAURI__ ? "desktop" : "web",
+            // Export PDF needs pdflatex: only the desktop app has it, not Netlify.
+            pdfExport: !!window.__TAURI__
         }
     });
     init(app);
     initFileLinks(app);
     initDesktop(app);
+    initPdfExport(app);
 
     // Listen for LR sync events from the editor
     document.addEventListener('lr-sync', (e) => {

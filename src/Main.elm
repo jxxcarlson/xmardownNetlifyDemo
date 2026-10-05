@@ -14,6 +14,7 @@ import Html.Events
 import Html.Keyed
 import Json.Decode as Decode
 import Json.Encode as Encode
+import LaTeX.Export
 import Ports
 import Process
 import Render.Theme exposing (ThemedStyles, darkTheme, lightTheme)
@@ -40,6 +41,7 @@ subscriptions model =
         , Ports.folderOpened FolderOpened
         , Ports.desktopResponse (Decode.decodeValue desktopEventDecoder >> Result.withDefault DesktopCancelled >> GotDesktopEvent)
         , Ports.linkedFile LinkedFileClicked
+        , Ports.pdfExported PdfExported
         , case model.dragging of
             Just _ ->
                 Sub.batch
@@ -98,6 +100,7 @@ type alias Model =
     , dirty : Bool
     , docVersion : Int
     , editVersion : Int
+    , pdfExport : Bool
     }
 
 
@@ -156,6 +159,8 @@ type Msg
     | SaveRequested
     | NewRequested
     | SaveAsRequested
+    | ExportPdfRequested
+    | PdfExported (Maybe String)
     | ToggleFileMenu
     | FileMenuChose Msg
     | EscapePressed
@@ -176,16 +181,20 @@ type Msg
     | AutoSaveDue Int
 
 
-{-| Flags are decoded by hand so that `platform` is optional: pages that
-predate the desktop app (e.g. DemoTOC+Sync's app.js) omit it.
+{-| Flags are decoded by hand so that `platform` and `pdfExport` are optional:
+pages that predate them (e.g. DemoTOC+Sync's app.js) omit them.
+
+`pdfExport`: whether File > Export PDF is offered. It needs pdflatex, via
+DemoTOC+Sync's local serve.py or the desktop app; the Netlify site has neither
+and passes false. Defaults to true.
 -}
 type alias Flags =
-    { window : { windowWidth : Int, windowHeight : Int }, platform : Platform }
+    { window : { windowWidth : Int, windowHeight : Int }, platform : Platform, pdfExport : Bool }
 
 
 flagsDecoder : Decode.Decoder Flags
 flagsDecoder =
-    Decode.map2 Flags
+    Decode.map3 Flags
         (Decode.field "window"
             (Decode.map2 (\w h -> { windowWidth = w, windowHeight = h })
                 (Decode.field "windowWidth" Decode.int)
@@ -205,6 +214,7 @@ flagsDecoder =
             , Decode.succeed Web
             ]
         )
+        (Decode.oneOf [ Decode.field "pdfExport" Decode.bool, Decode.succeed True ])
 
 
 init : Decode.Value -> ( Model, Cmd Msg )
@@ -212,7 +222,7 @@ init flagsValue =
     let
         flags =
             Decode.decodeValue flagsDecoder flagsValue
-                |> Result.withDefault { window = { windowWidth = 1200, windowHeight = 800 }, platform = Web }
+                |> Result.withDefault { window = { windowWidth = 1200, windowHeight = 800 }, platform = Web, pdfExport = True }
 
         -- set initial compiler parameters here by
         -- modifying the defaultCompilerParameters, e.g.,
@@ -250,6 +260,7 @@ init flagsValue =
       , dirty = False
       , docVersion = 0
       , editVersion = 0
+      , pdfExport = flags.pdfExport
       }
     , Ports.setEditorHighlightColor params.highlightColor
     )
@@ -326,6 +337,18 @@ update msg model =
 
         FileLoaded content ->
             ( loadDocument content model, Cmd.none )
+
+        ExportPdfRequested ->
+            ( { model | notice = Just "Exporting PDF…" }
+            , Ports.exportPdf
+                { name = pdfName model.fileName
+                , tex = LaTeX.Export.exportDocument { title = "", authors = [], date = "" } model.sourceText
+                , images = LaTeX.Export.imageUrls model.sourceText
+                }
+            )
+
+        PdfExported result ->
+            ( { model | notice = result }, Cmd.none )
 
         OpenFolderRequested ->
             case model.platform of
@@ -1047,6 +1070,19 @@ view model =
 --renderPanel settings elements
 
 
+{-| "notes.md" -> "notes.pdf"
+-}
+pdfName : String -> String
+pdfName fileName =
+    (if String.endsWith ".md" fileName then
+        String.dropRight 3 fileName
+
+     else
+        fileName
+    )
+        ++ ".pdf"
+
+
 fileMenu : Model -> Html Msg
 fileMenu model =
     let
@@ -1065,12 +1101,19 @@ fileMenu model =
             div []
                 [ div [ class "menu-backdrop", Html.Events.onClick ToggleFileMenu ] []
                 , div [ class "menu-list" ]
-                    [ item "New…" NewRequested
+                    ([ item "New…" NewRequested
                     , item "Open…" OpenFileRequested
                     , item "Open Folder…" OpenFolderRequested
                     , item "Save" SaveRequested
                     , item "Save As…" SaveAsRequested
                     ]
+                        ++ (if model.pdfExport then
+                                [ item "Export PDF" ExportPdfRequested ]
+
+                            else
+                                []
+                           )
+                    )
                 ]
 
           else

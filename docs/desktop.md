@@ -22,6 +22,17 @@ To install, drag `XMarkdown.app` into `/Applications`. The app isn't signed,
 so the first time macOS may refuse to open it: right-click → Open.
 
 Requirements: Rust (1.85+), Node, Xcode command-line tools, Elm 0.19.2.
+Export PDF also needs `pdflatex` (MacTeX); the app looks in `PATH`,
+`/Library/TeX/texbin`, `/opt/homebrew/bin` and `/usr/local/bin`.
+
+## Export PDF
+
+The same job as DemoTOC+Sync's `serve.py`, done in Rust (`src-tauri/src/pdf.rs`):
+the images the LaTeX needs are downloaded into a temporary folder (any that
+fail become a framed "image not available"), `pdflatex` runs there (60 s
+limit), and the PDF is copied to the chosen path. A LaTeX error shows its first
+`!` line in the header. Tests that need pdflatex and the network:
+`cargo test -- --ignored` in `desktop/src-tauri`.
 
 ## How it differs from the web app
 
@@ -34,6 +45,7 @@ Requirements: Rust (1.85+), Node, Xcode command-line tools, Elm 0.19.2.
 | Current folder | chosen with Open Folder | folder of the open file (Open Folder changes it) |
 | `file://` links | looked up in the chosen folder | resolved against the current folder; `sub/x.md` and `../x.md` work |
 | `http(s)` links | open in the page | open in the default browser |
+| Export PDF | hidden (Netlify has no pdflatex) | macOS save dialog; LaTeX via `LaTeX.Export`, images downloaded, `pdflatex` run locally |
 
 A `•` after the file name marks unsaved changes. Hovering the file name shows
 its full path.
@@ -65,7 +77,10 @@ calls `finish_close`.
   exists, else `"web"`) picks the desktop or web behaviour for each File menu
   item.
 - `desktop/src-tauri/src/lib.rs` — Rust commands `read_file`, `write_file`,
-  `file_exists`; registers `tauri-plugin-dialog` and `tauri-plugin-opener`.
+  `file_exists`, `export_pdf` (see `pdf.rs`); registers `tauri-plugin-dialog`
+  and `tauri-plugin-opener`.
+- `assets/pdf-export.js` — File > Export PDF: the desktop path above, or (in
+  DemoTOC+Sync) a POST to its local `serve.py`.
 - `desktop/src-tauri/capabilities/default.json` — permissions for those plugins.
 
 The editor (esm.sh), KaTeX and fonts still load from CDNs, so the app needs a

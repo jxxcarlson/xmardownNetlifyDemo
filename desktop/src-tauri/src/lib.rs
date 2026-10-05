@@ -7,6 +7,8 @@
 //! the page saves or asks, then calls `finish_close`. If the page never
 //! answers, a second close/quit goes through regardless.
 
+mod pdf;
+
 use std::fs;
 use std::path::Path;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -34,6 +36,29 @@ fn write_file(path: String, contents: String) -> Result<(), String> {
 #[tauri::command]
 fn file_exists(path: String) -> bool {
     Path::new(&path).is_file()
+}
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+struct ExportResult {
+    image_errors: Vec<String>,
+}
+
+/// File > Export PDF: run pdflatex on `tex` (with its `images`, as
+/// `[url, localPath]` pairs) and write the PDF to `output`. See pdf.rs.
+/// The page then shows the PDF in the app (assets/pdf-export.js), through the
+/// asset protocol, whose scope starts empty: only this one file is allowed.
+#[tauri::command]
+async fn export_pdf(app: AppHandle, tex: String, images: Vec<(String, String)>, output: String) -> Result<ExportResult, String> {
+    let pdf_path = output.clone();
+    // Downloads and pdflatex take seconds: keep them off the main thread.
+    let image_errors = tauri::async_runtime::spawn_blocking(move || pdf::export(tex, images, output))
+        .await
+        .map_err(|e| e.to_string())??;
+    app.asset_protocol_scope()
+        .allow_file(&pdf_path)
+        .map_err(|e| e.to_string())?;
+    Ok(ExportResult { image_errors })
 }
 
 /// The page has saved (or the user chose to discard): close or quit now.
@@ -77,6 +102,7 @@ pub fn run() {
             read_file,
             write_file,
             file_exists,
+            export_pdf,
             finish_close,
             cancel_close
         ])

@@ -17384,6 +17384,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$Expression$buildImageAttributes = func
 			[widthAttr, heightAttr]));
 };
 var $elm$html$Html$code = _VirtualDom_node('code');
+var $jxxcarlson$xmarkdown_compiler$Render$Helper$codeFont = A2($elm$html$Html$Attributes$style, 'font-family', 'ui-monospace, SFMono-Regular, Menlo, Consolas, \u0022Liberation Mono\u0022, monospace');
 var $elm$html$Html$em = _VirtualDom_node('em');
 var $jxxcarlson$xmarkdown_compiler$Render$Expression$extractImageData = function (exprs) {
 	var combined = $elm$core$String$trim(
@@ -17589,7 +17590,11 @@ var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F4(
 					if (name === 'code') {
 						return A2(
 							$elm$html$Html$code,
-							_List_Nil,
+							_List_fromArray(
+								[
+									$jxxcarlson$xmarkdown_compiler$Render$Helper$codeFont,
+									A2($elm$html$Html$Attributes$style, 'font-size', '0.9em')
+								]),
 							_List_fromArray(
 								[
 									$elm$html$Html$text(content)
@@ -17632,7 +17637,11 @@ var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F4(
 					if (name === 'code') {
 						return A2(
 							$elm$html$Html$code,
-							_List_Nil,
+							_List_fromArray(
+								[
+									$jxxcarlson$xmarkdown_compiler$Render$Helper$codeFont,
+									A2($elm$html$Html$Attributes$style, 'font-size', '0.9em')
+								]),
 							A2(
 								$elm$core$List$map,
 								A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
@@ -18566,6 +18575,35 @@ var $jxxcarlson$xmarkdown_compiler$Render$GHTable$render = F6(
 					]));
 		}
 	});
+var $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$em = function (x) {
+	return $elm$core$String$fromFloat(x) + 'em';
+};
+var $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$joinAuthors = function (authors) {
+	var _v0 = $elm$core$List$reverse(authors);
+	if (!_v0.b) {
+		return '';
+	} else {
+		if (!_v0.b.b) {
+			var only = _v0.a;
+			return only;
+		} else {
+			if (!_v0.b.b.b) {
+				var second = _v0.a;
+				var _v1 = _v0.b;
+				var first = _v1.a;
+				return first + (' and ' + second);
+			} else {
+				var last = _v0.a;
+				var rest = _v0.b;
+				return A2(
+					$elm$core$String$join,
+					', ',
+					$elm$core$List$reverse(rest)) + (', and ' + last);
+			}
+		}
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$lineGap = 1.4625;
 var $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$nonEmpty = F2(
 	function (size, text) {
 		return $elm$core$String$isEmpty(text) ? _List_Nil : _List_fromArray(
@@ -18584,12 +18622,12 @@ var $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$render = F6(
 			var lines = $elm$core$List$concat(
 				_List_fromArray(
 					[
-						A2($jxxcarlson$xmarkdown_compiler$Render$TitleBlock$nonEmpty, '2em', info.title),
+						A2($jxxcarlson$xmarkdown_compiler$Render$TitleBlock$nonEmpty, 2, info.title),
 						A2(
-						$elm$core$List$concatMap,
-						$jxxcarlson$xmarkdown_compiler$Render$TitleBlock$nonEmpty('1.5em'),
-						info.authors),
-						A2($jxxcarlson$xmarkdown_compiler$Render$TitleBlock$nonEmpty, '1.5em', info.date)
+						$jxxcarlson$xmarkdown_compiler$Render$TitleBlock$nonEmpty,
+						1.5,
+						$jxxcarlson$xmarkdown_compiler$Render$TitleBlock$joinAuthors(info.authors)),
+						A2($jxxcarlson$xmarkdown_compiler$Render$TitleBlock$nonEmpty, 1.5, info.date)
 					]));
 			var count_ = $elm$core$List$length(lines);
 			var line = F2(
@@ -18601,11 +18639,14 @@ var $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$render = F6(
 						_List_fromArray(
 							[
 								A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
-								A2($elm$html$Html$Attributes$style, 'font-size', size),
+								A2(
+								$elm$html$Html$Attributes$style,
+								'font-size',
+								$jxxcarlson$xmarkdown_compiler$Render$TitleBlock$em(size)),
 								A2(
 								$elm$html$Html$Attributes$style,
 								'margin-bottom',
-								_Utils_eq(index, count_ - 1) ? '3em' : '1.5em'),
+								_Utils_eq(index, count_ - 1) ? '3em' : $jxxcarlson$xmarkdown_compiler$Render$TitleBlock$em($jxxcarlson$xmarkdown_compiler$Render$TitleBlock$lineGap / size)),
 								A2($elm$html$Html$Attributes$attribute, 'data-title-block', 'true')
 							]),
 						_List_fromArray(
@@ -18698,10 +18739,6 @@ var $jxxcarlson$xmarkdown_compiler$Render$Math$displayedMath = F3(
 				_Utils_ap($jxxcarlson$xmarkdown_compiler$Render$Math$displayLayout, attrs)));
 	});
 var $elm$html$Html$pre = _VirtualDom_node('pre');
-var $jxxcarlson$xmarkdown_compiler$Render$Theme$scaleFont = F2(
-	function (settings, designSize) {
-		return $elm$core$Basics$round((settings.fontSize * designSize) / $jxxcarlson$xmarkdown_compiler$Render$Theme$referenceFontSize);
-	});
 var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$render = F4(
 	function (count, settings, attrs, block) {
 		var _v0 = block.body;
@@ -18745,18 +18782,16 @@ var $jxxcarlson$xmarkdown_compiler$Render$VerbatimBlock$render = F4(
 											$elm$core$String$fromInt(block.meta.lineNumber)),
 											A2($elm$html$Html$Attributes$style, 'padding-left', '0'),
 											A2($elm$html$Html$Attributes$style, 'overflow-x', 'auto'),
-											A2(
-											$elm$html$Html$Attributes$style,
-											'font-size',
-											$elm$core$String$fromInt(
-												A2($jxxcarlson$xmarkdown_compiler$Render$Theme$scaleFont, settings, 16)) + 'px')
+											A2($elm$html$Html$Attributes$style, 'font-size', '0.9em'),
+											$jxxcarlson$xmarkdown_compiler$Render$Helper$codeFont
 										]),
 									attrs),
 								_List_fromArray(
 									[
 										A2(
 										$elm$html$Html$code,
-										_List_Nil,
+										_List_fromArray(
+											[$jxxcarlson$xmarkdown_compiler$Render$Helper$codeFont]),
 										_List_fromArray(
 											[
 												$elm$html$Html$text(str)
@@ -19643,6 +19678,23 @@ var $author$project$Main$fileNameDialogView = function (dialog) {
 					]))
 			]));
 };
+var $author$project$Main$formatCount = function (n) {
+	var group = function (digits) {
+		return ($elm$core$String$length(digits) <= 3) ? _List_fromArray(
+			[digits]) : _Utils_ap(
+			group(
+				A2($elm$core$String$dropRight, 3, digits)),
+			_List_fromArray(
+				[
+					A2($elm$core$String$right, 3, digits)
+				]));
+	};
+	return A2(
+		$elm$core$String$join,
+		',',
+		group(
+			$elm$core$String$fromInt(n)));
+};
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $elm$virtual_dom$VirtualDom$keyedNode = function (tag) {
@@ -19694,6 +19746,13 @@ var $author$project$Main$renderPanel = F2(
 				]),
 			elements);
 	});
+var $author$project$Main$wordCount = function (source) {
+	return $elm$core$List$length(
+		A2(
+			$elm$core$List$filter,
+			$elm$core$String$any($elm$core$Char$isAlphaNum),
+			$elm$core$String$words(source)));
+};
 var $author$project$Main$view = function (model) {
 	var g = $author$project$Main$geometry(model);
 	var compilerParameters = model.compilerParameters;
@@ -19870,7 +19929,29 @@ var $author$project$Main$view = function (model) {
 						} else {
 							return $elm$html$Html$text('');
 						}
-					}()
+					}(),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('header-item word-count')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								$author$project$Main$formatCount(
+									$author$project$Main$wordCount(model.sourceText))),
+								A2(
+								$elm$html$Html$span,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('header-key')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(' words')
+									]))
+							]))
 					])),
 				A2(
 				$elm$html$Html$div,

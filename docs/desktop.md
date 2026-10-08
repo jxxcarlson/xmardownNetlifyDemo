@@ -22,17 +22,21 @@ To install, drag `XMarkdown.app` into `/Applications`. The app isn't signed,
 so the first time macOS may refuse to open it: right-click → Open.
 
 Requirements: Rust (1.85+), Node, Xcode command-line tools, Elm 0.19.2.
-Export PDF also needs `pdflatex` (MacTeX); the app looks in `PATH`,
+Export PDF also needs `lualatex` (MacTeX); the app looks in `PATH`,
 `/Library/TeX/texbin`, `/opt/homebrew/bin` and `/usr/local/bin`.
 
 ## Export PDF
 
 The same job as DemoTOC+Sync's `serve.py`, done in Rust (`src-tauri/src/pdf.rs`):
 the images the LaTeX needs are downloaded into a temporary folder (any that
-fail become a framed "image not available"), `pdflatex` runs there (60 s
+fail become a framed "image not available"), `lualatex` runs there (60 s
 limit), and the PDF is copied to the chosen path. A LaTeX error shows its first
-`!` line in the header. Tests that need pdflatex and the network:
+`!` line in the header. Tests that need lualatex and the network:
 `cargo test -- --ignored` in `desktop/src-tauri`.
+
+Any Unicode character is accepted: LuaLaTeX reads UTF-8, and characters
+Latin Modern lacks come from fallback fonts (see xmarkdown-compiler's `LaTeX.Preamble`); one
+that no font has is left out with a warning in the log, never an error.
 
 ## How it differs from the web app
 
@@ -45,7 +49,7 @@ limit), and the PDF is copied to the chosen path. A LaTeX error shows its first
 | Current folder | chosen with Open Folder | folder of the open file (Open Folder changes it) |
 | `file://` links | looked up in the chosen folder | resolved against the current folder; `sub/x.md` and `../x.md` work |
 | `http(s)` links | open in the page | open in the default browser |
-| Export PDF | hidden (Netlify has no pdflatex) | macOS save dialog; LaTeX via `LaTeX.Export`, images downloaded, `pdflatex` run locally |
+| Export PDF | hidden (Netlify has no lualatex) | macOS save dialog; LaTeX via `LaTeX.Export`, images downloaded, `lualatex` run locally |
 
 A `•` after the file name marks unsaved changes. Hovering the file name shows
 its full path.

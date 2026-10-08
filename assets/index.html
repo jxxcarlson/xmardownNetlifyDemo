@@ -35,7 +35,7 @@
                 windowHeight: window.innerHeight
             },
             platform: window.__TAURI__ ? "desktop" : "web",
-            // Export PDF needs pdflatex: only the desktop app has it, not Netlify.
+            // Export PDF needs lualatex: only the desktop app has it, not Netlify.
             pdfExport: !!window.__TAURI__
         }
     });

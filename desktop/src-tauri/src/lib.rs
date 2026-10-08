@@ -45,14 +45,14 @@ struct ExportResult {
     image_errors: Vec<String>,
 }
 
-/// File > Export PDF: run pdflatex on `tex` (with its `images`, as
+/// File > Export PDF: run lualatex on `tex` (with its `images`, as
 /// `[url, localPath]` pairs) and write the PDF to `output`. See pdf.rs.
 /// The page then shows the PDF in the app (assets/pdf-export.js), through the
 /// asset protocol, whose scope starts empty: only this one file is allowed.
 #[tauri::command]
 async fn export_pdf(app: AppHandle, tex: String, images: Vec<(String, String)>, output: String) -> Result<ExportResult, String> {
     let pdf_path = output.clone();
-    // Downloads and pdflatex take seconds: keep them off the main thread.
+    // Downloads and lualatex take seconds: keep them off the main thread.
     let image_errors = tauri::async_runtime::spawn_blocking(move || pdf::export(tex, images, output))
         .await
         .map_err(|e| e.to_string())??;

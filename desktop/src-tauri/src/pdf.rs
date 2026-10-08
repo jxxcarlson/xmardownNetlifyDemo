@@ -1,7 +1,7 @@
 //! File > Export PDF in the desktop app: the same job as DemoTOC+Sync's
 //! serve.py (`POST /export-pdf`). The page sends the LaTeX made by
 //! LaTeX.Export plus the images it needs (`[url, localPath]` pairs); we
-//! download the images next to the .tex in a temporary folder, run pdflatex,
+//! download the images next to the .tex in a temporary folder, run lualatex,
 //! and copy the PDF to the path the user chose. Images that can't be fetched
 //! become a framed "image not available" note so the rest still comes out.
 
@@ -9,10 +9,11 @@ use std::fs;
 use std::io::Read;
 use std::path::{Component, Path, PathBuf};
 use std::process::{Command, Stdio};
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::thread;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
-const PDFLATEX_TIMEOUT: Duration = Duration::from_secs(60);
+const LATEX_TIMEOUT: Duration = Duration::from_secs(60);
 const LOG_TAIL_LINES: usize = 40;
 const MAX_IMAGE_BYTES: u64 = 50 * 1024 * 1024;
 // Some image hosts refuse a default/empty User-Agent (HTTP 406/403).
@@ -22,8 +23,8 @@ const ACCEPT: &str = "image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*
 /// Build the PDF and write it to `output`. Ok holds the images that could not
 /// be downloaded; Err is a message (for a LaTeX error, the tail of its log).
 pub fn export(tex: String, images: Vec<(String, String)>, output: String) -> Result<Vec<String>, String> {
-    let pdflatex = find_pdflatex()
-        .ok_or("pdflatex not found: install MacTeX (https://tug.org/mactex/)")?;
+    let lualatex = find_lualatex()
+        .ok_or("lualatex not found: install MacTeX (https://tug.org/mactex/)")?;
     let build = BuildDir::new()?;
 
     let mut tex = tex;
@@ -36,15 +37,15 @@ pub fn export(tex: String, images: Vec<(String, String)>, output: String) -> Res
     }
 
     fs::write(build.path().join("document.tex"), &tex).map_err(|e| format!("Could not write the LaTeX file: {e}"))?;
-    run_pdflatex(&pdflatex, build.path())?;
+    run_lualatex(&lualatex, build.path())?;
 
     fs::copy(build.path().join("document.pdf"), &output).map_err(|e| format!("Could not write {output}: {e}"))?;
     Ok(image_errors)
 }
 
 /// Apps started from the Finder don't get the shell's PATH, so also look
-/// where MacTeX and Homebrew put pdflatex.
-fn find_pdflatex() -> Option<PathBuf> {
+/// where MacTeX and Homebrew put lualatex.
+fn find_lualatex() -> Option<PathBuf> {
     let from_path = std::env::var_os("PATH")
         .map(|paths| std::env::split_paths(&paths).collect::<Vec<_>>())
         .unwrap_or_default();
@@ -52,30 +53,30 @@ fn find_pdflatex() -> Option<PathBuf> {
     from_path
         .into_iter()
         .chain(usual)
-        .map(|dir| dir.join("pdflatex"))
+        .map(|dir| dir.join("lualatex"))
         .find(|candidate| candidate.is_file())
 }
 
-fn run_pdflatex(pdflatex: &Path, dir: &Path) -> Result<(), String> {
+fn run_lualatex(lualatex: &Path, dir: &Path) -> Result<(), String> {
     // Output goes to document.log anyway; not piping it avoids a full pipe
-    // blocking pdflatex.
-    let mut child = Command::new(pdflatex)
+    // blocking lualatex.
+    let mut child = Command::new(lualatex)
         .args(["-interaction=nonstopmode", "-halt-on-error", "document.tex"])
         .current_dir(dir)
         .stdin(Stdio::null())
         .stdout(Stdio::null())
         .stderr(Stdio::null())
         .spawn()
-        .map_err(|e| format!("Could not start pdflatex: {e}"))?;
+        .map_err(|e| format!("Could not start lualatex: {e}"))?;
 
     let started = Instant::now();
     let status = loop {
         match child.try_wait().map_err(|e| e.to_string())? {
             Some(status) => break status,
-            None if started.elapsed() > PDFLATEX_TIMEOUT => {
+            None if started.elapsed() > LATEX_TIMEOUT => {
                 let _ = child.kill();
                 let _ = child.wait();
-                return Err(format!("pdflatex took longer than {}s", PDFLATEX_TIMEOUT.as_secs()));
+                return Err(format!("lualatex took longer than {}s", LATEX_TIMEOUT.as_secs()));
             }
             None => thread::sleep(Duration::from_millis(100)),
         }
@@ -87,7 +88,7 @@ fn run_pdflatex(pdflatex: &Path, dir: &Path) -> Result<(), String> {
         let log = fs::read_to_string(dir.join("document.log")).unwrap_or_default();
         let lines: Vec<&str> = log.lines().collect();
         let tail = lines[lines.len().saturating_sub(LOG_TAIL_LINES)..].join("\n");
-        Err(if tail.is_empty() { "pdflatex failed".to_string() } else { tail })
+        Err(if tail.is_empty() { "lualatex failed".to_string() } else { tail })
     }
 }
 
@@ -107,7 +108,7 @@ fn fetch_image(url: &str, local_path: &str, dir: &Path) -> Result<(), String> {
         .map_err(|e| e.to_string())?;
 
     // A 200 that isn't an image (a login or error page) would be a fatal
-    // "not a JPEG/PNG" error in pdflatex; treat it as a failed download.
+    // "not a JPEG/PNG" error in lualatex; treat it as a failed download.
     let content_type = response.content_type().to_string();
     if !(content_type.starts_with("image/") || content_type == "application/pdf") {
         return Err(format!("got {content_type}, not an image"));
@@ -146,7 +147,7 @@ fn extension_for(content_type: &str) -> Option<&'static str> {
     }
 }
 
-/// A missing image file is a fatal pdflatex error; put a framed note in its
+/// A missing image file is a fatal lualatex error; put a framed note in its
 /// place so the rest of the document still comes out.
 fn replace_with_placeholder(tex: &str, local_path: &str) -> String {
     let pattern = format!(r"\\includegraphics(\[[^\]]*\])?\{{{}\}}", regex::escape(local_path));
@@ -163,8 +164,13 @@ struct BuildDir(PathBuf);
 
 impl BuildDir {
     fn new() -> Result<Self, String> {
+        // The clock alone isn't unique: macOS times have microsecond
+        // resolution, so two exports started together (e.g. Print while an
+        // Export runs) could share, and overwrite, one folder.
+        static COUNT: AtomicU64 = AtomicU64::new(0);
+        let n = COUNT.fetch_add(1, Ordering::SeqCst);
         let nanos = SystemTime::now().duration_since(UNIX_EPOCH).map(|d| d.as_nanos()).unwrap_or(0);
-        let dir = std::env::temp_dir().join(format!("xmarkdown-pdf-{}-{nanos}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("xmarkdown-pdf-{}-{nanos}-{n}", std::process::id()));
         fs::create_dir_all(&dir).map_err(|e| format!("Could not create a temporary folder: {e}"))?;
         Ok(BuildDir(dir))
     }
@@ -191,7 +197,7 @@ mod tests {
         assert_eq!(out, r"\fbox{\texttt{image not available}} and \includegraphics{img/other.png}");
     }
 
-    // Need pdflatex (and the network): cargo test -- --ignored
+    // Need lualatex (and the network): cargo test -- --ignored
     // XM_EXPORT_REQUEST may name a JSON file {tex, images} captured from the page.
 
     fn out_dir() -> PathBuf {
@@ -233,6 +239,7 @@ mod tests {
     fn latex_error_returns_the_log_tail() {
         let tex = "\\documentclass{article}\\begin{document}\\nosuchcommand\\end{document}";
         let output = out_dir().join("broken.pdf");
+        let _ = fs::remove_file(&output); // left over from an earlier failed run
         let error = export(tex.to_string(), vec![], output.to_string_lossy().into()).unwrap_err();
         assert!(error.contains("! Undefined control sequence"), "{error}");
         assert!(!output.exists());

@@ -6696,210 +6696,6 @@ var $jxxcarlson$xmarkdown_compiler$LaTeX$Inline$escapePercent = function (str) {
 				str).a));
 };
 var $elm$core$Basics$not = _Basics_not;
-var $elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1.$) {
-					case 'LT':
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 'EQ':
-						return $elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
-		}
-	});
-var $elm$core$Tuple$mapSecond = F2(
-	function (func, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			x,
-			func(y));
-	});
-var $jxxcarlson$xmarkdown_compiler$LaTeX$Escape$greek = function () {
-	var symbol = function (name) {
-		return '\u005Censuremath{\u005C' + (name + '}');
-	};
-	return A2(
-		$elm$core$Dict$union,
-		$elm$core$Dict$fromList(
-			_List_fromArray(
-				[
-					_Utils_Tuple2(
-					_Utils_chr('Α'),
-					'A'),
-					_Utils_Tuple2(
-					_Utils_chr('Β'),
-					'B'),
-					_Utils_Tuple2(
-					_Utils_chr('Ε'),
-					'E'),
-					_Utils_Tuple2(
-					_Utils_chr('Ζ'),
-					'Z'),
-					_Utils_Tuple2(
-					_Utils_chr('Η'),
-					'H'),
-					_Utils_Tuple2(
-					_Utils_chr('Ι'),
-					'I'),
-					_Utils_Tuple2(
-					_Utils_chr('Κ'),
-					'K'),
-					_Utils_Tuple2(
-					_Utils_chr('Μ'),
-					'M'),
-					_Utils_Tuple2(
-					_Utils_chr('Ν'),
-					'N'),
-					_Utils_Tuple2(
-					_Utils_chr('Ο'),
-					'O'),
-					_Utils_Tuple2(
-					_Utils_chr('ο'),
-					'o'),
-					_Utils_Tuple2(
-					_Utils_chr('Ρ'),
-					'P'),
-					_Utils_Tuple2(
-					_Utils_chr('Τ'),
-					'T'),
-					_Utils_Tuple2(
-					_Utils_chr('Χ'),
-					'X')
-				])),
-		$elm$core$Dict$fromList(
-			A2(
-				$elm$core$List$map,
-				$elm$core$Tuple$mapSecond(symbol),
-				_List_fromArray(
-					[
-						_Utils_Tuple2(
-						_Utils_chr('α'),
-						'alpha'),
-						_Utils_Tuple2(
-						_Utils_chr('β'),
-						'beta'),
-						_Utils_Tuple2(
-						_Utils_chr('γ'),
-						'gamma'),
-						_Utils_Tuple2(
-						_Utils_chr('δ'),
-						'delta'),
-						_Utils_Tuple2(
-						_Utils_chr('ε'),
-						'epsilon'),
-						_Utils_Tuple2(
-						_Utils_chr('ζ'),
-						'zeta'),
-						_Utils_Tuple2(
-						_Utils_chr('η'),
-						'eta'),
-						_Utils_Tuple2(
-						_Utils_chr('θ'),
-						'theta'),
-						_Utils_Tuple2(
-						_Utils_chr('ι'),
-						'iota'),
-						_Utils_Tuple2(
-						_Utils_chr('κ'),
-						'kappa'),
-						_Utils_Tuple2(
-						_Utils_chr('λ'),
-						'lambda'),
-						_Utils_Tuple2(
-						_Utils_chr('μ'),
-						'mu'),
-						_Utils_Tuple2(
-						_Utils_chr('ν'),
-						'nu'),
-						_Utils_Tuple2(
-						_Utils_chr('ξ'),
-						'xi'),
-						_Utils_Tuple2(
-						_Utils_chr('π'),
-						'pi'),
-						_Utils_Tuple2(
-						_Utils_chr('ρ'),
-						'rho'),
-						_Utils_Tuple2(
-						_Utils_chr('ς'),
-						'varsigma'),
-						_Utils_Tuple2(
-						_Utils_chr('σ'),
-						'sigma'),
-						_Utils_Tuple2(
-						_Utils_chr('τ'),
-						'tau'),
-						_Utils_Tuple2(
-						_Utils_chr('υ'),
-						'upsilon'),
-						_Utils_Tuple2(
-						_Utils_chr('φ'),
-						'phi'),
-						_Utils_Tuple2(
-						_Utils_chr('χ'),
-						'chi'),
-						_Utils_Tuple2(
-						_Utils_chr('ψ'),
-						'psi'),
-						_Utils_Tuple2(
-						_Utils_chr('ω'),
-						'omega'),
-						_Utils_Tuple2(
-						_Utils_chr('Γ'),
-						'Gamma'),
-						_Utils_Tuple2(
-						_Utils_chr('Δ'),
-						'Delta'),
-						_Utils_Tuple2(
-						_Utils_chr('Θ'),
-						'Theta'),
-						_Utils_Tuple2(
-						_Utils_chr('Λ'),
-						'Lambda'),
-						_Utils_Tuple2(
-						_Utils_chr('Ξ'),
-						'Xi'),
-						_Utils_Tuple2(
-						_Utils_chr('Π'),
-						'Pi'),
-						_Utils_Tuple2(
-						_Utils_chr('Σ'),
-						'Sigma'),
-						_Utils_Tuple2(
-						_Utils_chr('Υ'),
-						'Upsilon'),
-						_Utils_Tuple2(
-						_Utils_chr('Φ'),
-						'Phi'),
-						_Utils_Tuple2(
-						_Utils_chr('Ψ'),
-						'Psi'),
-						_Utils_Tuple2(
-						_Utils_chr('Ω'),
-						'Omega')
-					]))));
-}();
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Escape$escapeChar = function (c) {
 	switch (c.valueOf()) {
 		case '\\':
@@ -6923,13 +6719,7 @@ var $jxxcarlson$xmarkdown_compiler$LaTeX$Escape$escapeChar = function (c) {
 		case '^':
 			return '\u005Ctextasciicircum{}';
 		default:
-			var _v1 = A2($elm$core$Dict$get, c, $jxxcarlson$xmarkdown_compiler$LaTeX$Escape$greek);
-			if (_v1.$ === 'Just') {
-				var latex = _v1.a;
-				return latex;
-			} else {
-				return $elm$core$String$fromChar(c);
-			}
+			return $elm$core$String$fromChar(c);
 	}
 };
 var $elm$core$String$foldr = _String_foldr;
@@ -7350,6 +7140,37 @@ var $jxxcarlson$etex$ETeX$KaTeX$katexCommands = $elm$core$Set$fromList(
 	$elm$core$List$concat(
 		_List_fromArray(
 			[$jxxcarlson$etex$ETeX$KaTeX$greekLetters, $jxxcarlson$etex$ETeX$KaTeX$binaryOperators, $jxxcarlson$etex$ETeX$KaTeX$relationSymbols, $jxxcarlson$etex$ETeX$KaTeX$arrows, $jxxcarlson$etex$ETeX$KaTeX$delimiters, $jxxcarlson$etex$ETeX$KaTeX$bigOperators, $jxxcarlson$etex$ETeX$KaTeX$mathFunctions, $jxxcarlson$etex$ETeX$KaTeX$accents, $jxxcarlson$etex$ETeX$KaTeX$fonts, $jxxcarlson$etex$ETeX$KaTeX$spacing, $jxxcarlson$etex$ETeX$KaTeX$logicAndSetTheory, $jxxcarlson$etex$ETeX$KaTeX$miscSymbols, $jxxcarlson$etex$ETeX$KaTeX$fractions, $jxxcarlson$etex$ETeX$KaTeX$binomials, $jxxcarlson$etex$ETeX$KaTeX$roots, $jxxcarlson$etex$ETeX$KaTeX$textOperators])));
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === 'RBEmpty_elm_builtin') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1.$) {
+					case 'LT':
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 'EQ':
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
 var $elm$core$Dict$member = F2(
 	function (key, dict) {
 		var _v0 = A2($elm$core$Dict$get, key, dict);
@@ -15153,6 +14974,23 @@ var $jxxcarlson$xmarkdown_compiler$LaTeX$Export$exportBody = function (source) {
 			$jxxcarlson$xmarkdown_compiler$LaTeX$Block$normalizeSectionLevels(
 				$jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parseFromString(source))));
 };
+var $jxxcarlson$xmarkdown_compiler$LaTeX$Preamble$fallbackFonts = _List_fromArray(
+	['FreeSerif.otf', 'DejaVuSans.ttf', 'Hiragino Sans', 'FandolSong-Regular.otf', 'Apple Symbols']);
+var $jxxcarlson$xmarkdown_compiler$LaTeX$Preamble$luaotfloadName = function (font) {
+	return (A2($elm$core$String$endsWith, '.otf', font) || A2($elm$core$String$endsWith, '.ttf', font)) ? ('file:' + font) : font;
+};
+var $jxxcarlson$xmarkdown_compiler$LaTeX$Preamble$fonts = _Utils_ap(
+	_List_fromArray(
+		['\u005Cusepackage{fontspec}', '\u005Cdef\u005Cxmfallbacks{}']),
+	_Utils_ap(
+		A2(
+			$elm$core$List$map,
+			function (font) {
+				return '\u005CIfFontExistsTF{' + (font + ('}{\u005Cedef\u005Cxmfallbacks{\u005Cxmfallbacks\u005Cdetokenize{\u0022' + ($jxxcarlson$xmarkdown_compiler$LaTeX$Preamble$luaotfloadName(font) + ':mode=node;\u0022,}}}{}')));
+			},
+			$jxxcarlson$xmarkdown_compiler$LaTeX$Preamble$fallbackFonts),
+		_List_fromArray(
+			['\u005Cdirectlua{luaotfload.add_fallback(\u0022xmfallback\u0022, {\u005Cxmfallbacks})}', '\u005Csetmainfont{Latin Modern Roman}[RawFeature={fallback=xmfallback}]', '\u005Csetsansfont{Latin Modern Sans}[RawFeature={fallback=xmfallback}]', '\u005Csetmonofont{Latin Modern Mono}[RawFeature={fallback=xmfallback}]'])));
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Preamble$make = function (body) {
 	var uses = function (str) {
 		return A2($elm$core$String$contains, str, body);
@@ -15169,7 +15007,10 @@ var $jxxcarlson$xmarkdown_compiler$LaTeX$Preamble$make = function (body) {
 			_List_fromArray(
 				[
 					_List_fromArray(
-					['\u005Cdocumentclass[11pt]{article}', '\u005Cusepackage[utf8]{inputenc}', '\u005Cusepackage[T1]{fontenc}', '\u005Cusepackage{stmaryrd}']),
+					['\u005Cdocumentclass[11pt]{article}']),
+					$jxxcarlson$xmarkdown_compiler$LaTeX$Preamble$fonts,
+					_List_fromArray(
+					['\u005Cusepackage{stmaryrd}']),
 					A2(
 					optional,
 					usesMath,

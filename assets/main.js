@@ -7080,126 +7080,6 @@ var $jxxcarlson$etex$ETeX$Transform$alphaNumParser_ = A2(
 				$elm$parser$Parser$Advanced$chompWhile($elm$core$Char$isAlphaNum))),
 		$elm$parser$Parser$Advanced$getOffset),
 	$elm$parser$Parser$Advanced$getSource);
-var $jxxcarlson$etex$ETeX$KaTeX$accents = _List_fromArray(
-	['hat', 'widehat', 'check', 'widecheck', 'tilde', 'widetilde', 'acute', 'grave', 'dot', 'ddot', 'breve', 'bar', 'vec', 'mathring', 'overline', 'underline', 'overleftarrow', 'overrightarrow', 'overleftrightarrow', 'underleftarrow', 'underrightarrow', 'underleftrightarrow', 'overgroup', 'undergroup', 'overbrace', 'underbrace', 'overparen', 'underparen', 'overrightleftharpoons', 'boxed', 'underlinesegment', 'overlinesegment']);
-var $jxxcarlson$etex$ETeX$KaTeX$arrows = _List_fromArray(
-	['leftarrow', 'gets', 'rightarrow', 'to', 'leftrightarrow', 'Leftarrow', 'Rightarrow', 'Leftrightarrow', 'iff', 'uparrow', 'downarrow', 'updownarrow', 'Uparrow', 'Downarrow', 'Updownarrow', 'mapsto', 'hookleftarrow', 'hookrightarrow', 'leftharpoonup', 'rightharpoonup', 'leftharpoondown', 'rightharpoondown', 'rightleftharpoons', 'longleftarrow', 'longrightarrow', 'longleftrightarrow', 'Longleftarrow', 'impliedby', 'Longrightarrow', 'implies', 'Longleftrightarrow', 'longmapsto', 'nearrow', 'searrow', 'swarrow', 'nwarrow', 'dashleftarrow', 'dashrightarrow', 'leftleftarrows', 'rightrightarrows', 'leftrightarrows', 'rightleftarrows', 'Lleftarrow', 'Rrightarrow', 'twoheadleftarrow', 'twoheadrightarrow', 'leftarrowtail', 'rightarrowtail', 'looparrowleft', 'looparrowright', 'curvearrowleft', 'curvearrowright', 'circlearrowleft', 'circlearrowright', 'multimap', 'leftrightsquigarrow', 'rightsquigarrow', 'leadsto', 'restriction']);
-var $jxxcarlson$etex$ETeX$KaTeX$bigOperators = _List_fromArray(
-	['sum', 'prod', 'coprod', 'bigcup', 'bigcap', 'bigvee', 'bigwedge', 'bigoplus', 'bigotimes', 'bigodot', 'biguplus', 'bigsqcup', 'int', 'oint', 'iint', 'iiint', 'iiiint', 'intop', 'smallint']);
-var $jxxcarlson$etex$ETeX$KaTeX$binaryOperators = _List_fromArray(
-	['pm', 'mp', 'times', 'div', 'cdot', 'ast', 'star', 'circ', 'bullet', 'oplus', 'ominus', 'otimes', 'oslash', 'odot', 'dagger', 'ddagger', 'vee', 'lor', 'wedge', 'land', 'cap', 'cup', 'setminus', 'smallsetminus', 'triangleleft', 'triangleright', 'bigtriangleup', 'bigtriangledown', 'lhd', 'rhd', 'unlhd', 'unrhd', 'amalg', 'uplus', 'sqcap', 'sqcup', 'boxplus', 'boxminus', 'boxtimes', 'boxdot', 'leftthreetimes', 'rightthreetimes', 'curlyvee', 'curlywedge', 'dotplus', 'divideontimes', 'doublebarwedge']);
-var $jxxcarlson$etex$ETeX$KaTeX$binomials = _List_fromArray(
-	['binom', 'dbinom', 'tbinom', 'brace', 'brack']);
-var $elm$core$List$append = F2(
-	function (xs, ys) {
-		if (!ys.b) {
-			return xs;
-		} else {
-			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
-		}
-	});
-var $elm$core$List$concat = function (lists) {
-	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
-};
-var $jxxcarlson$etex$ETeX$KaTeX$delimiters = _List_fromArray(
-	['lbrace', 'rbrace', 'lbrack', 'rbrack', 'langle', 'rangle', 'vert', 'Vert', 'lvert', 'rvert', 'lVert', 'rVert', 'lfloor', 'rfloor', 'lceil', 'rceil', 'lgroup', 'rgroup', 'lmoustache', 'rmoustache', 'ulcorner', 'urcorner', 'llcorner', 'lrcorner']);
-var $jxxcarlson$etex$ETeX$KaTeX$fonts = _List_fromArray(
-	['mathrm', 'mathit', 'mathbf', 'boldsymbol', 'pmb', 'mathbb', 'Bbb', 'mathcal', 'cal', 'mathscr', 'scr', 'mathfrak', 'frak', 'mathsf', 'sf', 'mathtt', 'tt', 'mathnormal', 'text', 'textbf', 'textit', 'textrm', 'textsf', 'texttt', 'textnormal', 'textup', 'operatorname', 'operatorname*']);
-var $jxxcarlson$etex$ETeX$KaTeX$fractions = _List_fromArray(
-	['frac', 'dfrac', 'tfrac', 'cfrac', 'genfrac', 'over', 'atop', 'choose']);
-var $elm$core$Set$Set_elm_builtin = function (a) {
-	return {$: 'Set_elm_builtin', a: a};
-};
-var $elm$core$Set$empty = $elm$core$Set$Set_elm_builtin($elm$core$Dict$empty);
-var $elm$core$Set$insert = F2(
-	function (key, _v0) {
-		var dict = _v0.a;
-		return $elm$core$Set$Set_elm_builtin(
-			A3($elm$core$Dict$insert, key, _Utils_Tuple0, dict));
-	});
-var $elm$core$Set$fromList = function (list) {
-	return A3($elm$core$List$foldl, $elm$core$Set$insert, $elm$core$Set$empty, list);
-};
-var $jxxcarlson$etex$ETeX$KaTeX$greekLetters = _List_fromArray(
-	['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'varepsilon', 'zeta', 'eta', 'theta', 'vartheta', 'iota', 'kappa', 'varkappa', 'lambda', 'mu', 'nu', 'xi', 'pi', 'varpi', 'rho', 'varrho', 'sigma', 'varsigma', 'tau', 'upsilon', 'phi', 'varphi', 'chi', 'psi', 'omega', 'Gamma', 'Delta', 'Theta', 'Lambda', 'Xi', 'Pi', 'Sigma', 'Upsilon', 'Phi', 'Psi', 'Omega', 'digamma', 'varGamma', 'varDelta', 'varTheta', 'varLambda', 'varXi', 'varPi', 'varSigma', 'varUpsilon', 'varPhi', 'varPsi', 'varOmega']);
-var $jxxcarlson$etex$ETeX$KaTeX$logicAndSetTheory = _List_fromArray(
-	['forall', 'exists', 'nexists', 'complement', 'subset', 'supset', 'mid', 'nmid', 'notsubset', 'nsubset', 'nsupset', 'nsupseteq', 'nsubseteq', 'subsetneq', 'supsetneq', 'subsetneqq', 'supsetneqq', 'varsubsetneq', 'varsupsetneq', 'varsubsetneqq', 'varsupsetneqq', 'isin', 'notin', 'notni', 'niton', 'in', 'ni', 'emptyset', 'varnothing', 'setminus', 'smallsetminus', 'complement', 'neg', 'lnot']);
-var $jxxcarlson$etex$ETeX$KaTeX$mathFunctions = _List_fromArray(
-	['sin', 'cos', 'tan', 'cot', 'sec', 'csc', 'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch', 'arcsin', 'arccos', 'arctan', 'arctg', 'arcctg', 'ln', 'log', 'lg', 'exp', 'deg', 'det', 'dim', 'hom', 'ker', 'lim', 'liminf', 'limsup', 'max', 'min', 'sup', 'inf', 'Pr', 'gcd', 'lcm', 'arg', 'mod', 'bmod', 'pmod', 'pod']);
-var $jxxcarlson$etex$ETeX$KaTeX$miscSymbols = _List_fromArray(
-	['infty', 'aleph', 'beth', 'gimel', 'daleth', 'eth', 'hbar', 'hslash', 'Finv', 'Game', 'ell', 'wp', 'Re', 'Im', 'partial', 'nabla', 'Box', 'square', 'blacksquare', 'blacklozenge', 'lozenge', 'Diamond', 'triangle', 'triangledown', 'angle', 'measuredangle', 'sphericalangle', 'prime', 'backprime', 'degree', 'flat', 'natural', 'sharp', 'surd', 'top', 'bot', 'emptyset', 'varnothing', 'clubsuit', 'diamondsuit', 'heartsuit', 'spadesuit', 'blacktriangleright', 'blacktriangleleft', 'blacktriangledown', 'blacktriangle', 'bigstar', 'maltese', 'checkmark', 'diagup', 'diagdown', 'ddag', 'dag', 'copyright', 'circledR', 'pounds', 'yen', 'euro', 'cent', 'maltese']);
-var $jxxcarlson$etex$ETeX$KaTeX$relationSymbols = _List_fromArray(
-	['leq', 'le', 'geq', 'ge', 'neq', 'ne', 'sim', 'simeq', 'approx', 'cong', 'equiv', 'prec', 'succ', 'preceq', 'succeq', 'll', 'gg', 'subset', 'supset', 'subseteq', 'supseteq', 'nsubseteq', 'nsupseteq', 'sqsubset', 'sqsupset', 'sqsubseteq', 'sqsupseteq', 'in', 'ni', 'notin', 'notni', 'propto', 'varpropto', 'perp', 'parallel', 'nparallel', 'smile', 'frown', 'doteq', 'fallingdotseq', 'risingdotseq', 'coloneq', 'eqcirc', 'circeq', 'triangleq', 'bumpeq', 'Bumpeq', 'doteqdot', 'thicksim', 'thickapprox', 'approxeq', 'backsim', 'backsimeq', 'preccurlyeq', 'succcurlyeq', 'curlyeqprec', 'curlyeqsucc', 'precsim', 'succsim', 'precapprox', 'succapprox', 'vartriangleleft', 'vartriangleright', 'trianglelefteq', 'trianglerighteq', 'between', 'pitchfork', 'shortmid', 'shortparallel', 'therefore', 'because', 'eqcolon', 'simcolon', 'approxcolon', 'colonapprox', 'colonsim', 'Colon', 'ratio']);
-var $jxxcarlson$etex$ETeX$KaTeX$roots = _List_fromArray(
-	['sqrt', 'sqrtsign']);
-var $jxxcarlson$etex$ETeX$KaTeX$spacing = _List_fromArray(
-	['quad', 'qquad', 'space', 'thinspace', 'medspace', 'thickspace', 'enspace', 'negspace', 'negmedspace', 'negthickspace', 'negthinspace', 'mkern', 'mskip', 'hskip', 'hspace', 'hspace*', 'kern', 'phantom', 'hphantom', 'vphantom', 'mathstrut', 'strut', '!', ':', ';', ',']);
-var $jxxcarlson$etex$ETeX$KaTeX$textOperators = _List_fromArray(
-	['not', 'cancel', 'bcancel', 'xcancel', 'cancelto', 'sout', 'overline', 'underline', 'overset', 'underset', 'stackrel', 'atop', 'substack', 'sideset']);
-var $jxxcarlson$etex$ETeX$KaTeX$katexCommands = $elm$core$Set$fromList(
-	$elm$core$List$concat(
-		_List_fromArray(
-			[$jxxcarlson$etex$ETeX$KaTeX$greekLetters, $jxxcarlson$etex$ETeX$KaTeX$binaryOperators, $jxxcarlson$etex$ETeX$KaTeX$relationSymbols, $jxxcarlson$etex$ETeX$KaTeX$arrows, $jxxcarlson$etex$ETeX$KaTeX$delimiters, $jxxcarlson$etex$ETeX$KaTeX$bigOperators, $jxxcarlson$etex$ETeX$KaTeX$mathFunctions, $jxxcarlson$etex$ETeX$KaTeX$accents, $jxxcarlson$etex$ETeX$KaTeX$fonts, $jxxcarlson$etex$ETeX$KaTeX$spacing, $jxxcarlson$etex$ETeX$KaTeX$logicAndSetTheory, $jxxcarlson$etex$ETeX$KaTeX$miscSymbols, $jxxcarlson$etex$ETeX$KaTeX$fractions, $jxxcarlson$etex$ETeX$KaTeX$binomials, $jxxcarlson$etex$ETeX$KaTeX$roots, $jxxcarlson$etex$ETeX$KaTeX$textOperators])));
-var $elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === 'RBEmpty_elm_builtin') {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1.$) {
-					case 'LT':
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 'EQ':
-						return $elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
-		}
-	});
-var $elm$core$Dict$member = F2(
-	function (key, dict) {
-		var _v0 = A2($elm$core$Dict$get, key, dict);
-		if (_v0.$ === 'Just') {
-			return true;
-		} else {
-			return false;
-		}
-	});
-var $elm$core$Set$member = F2(
-	function (key, _v0) {
-		var dict = _v0.a;
-		return A2($elm$core$Dict$member, key, dict);
-	});
-var $jxxcarlson$etex$ETeX$KaTeX$isKaTeX = function (command) {
-	return A2($elm$core$Set$member, command, $jxxcarlson$etex$ETeX$KaTeX$katexCommands);
-};
-var $jxxcarlson$etex$ETeX$Transform$isUserDefinedMacro = F2(
-	function (dict, name) {
-		return A2($elm$core$Dict$member, name, dict);
-	});
-var $jxxcarlson$etex$ETeX$Transform$alphaNumOrMacroParser = function (userMacroDict) {
-	return A2(
-		$elm$parser$Parser$Advanced$map,
-		function (name) {
-			return ($jxxcarlson$etex$ETeX$KaTeX$isKaTeX(name) || A2($jxxcarlson$etex$ETeX$Transform$isUserDefinedMacro, userMacroDict, name)) ? A2($jxxcarlson$etex$ETeX$Transform$Macro, name, _List_Nil) : $jxxcarlson$etex$ETeX$Transform$AlphaNum(name);
-		},
-		$jxxcarlson$etex$ETeX$Transform$alphaNumParser_);
-};
 var $elm$parser$Parser$Advanced$andThen = F2(
 	function (callback, _v0) {
 		var parseA = _v0.a;
@@ -7295,6 +7175,8 @@ var $jxxcarlson$etex$ETeX$Transform$f0Parser = A2(
 			A2($elm$parser$Parser$Advanced$Token, '\u005C', $jxxcarlson$etex$ETeX$Transform$ExpectingBackslash)),
 		$jxxcarlson$etex$ETeX$Transform$alphaNumParser_));
 var $jxxcarlson$etex$ETeX$Transform$ExpectingGreekLetter = {$: 'ExpectingGreekLetter'};
+var $jxxcarlson$etex$ETeX$KaTeX$greekLetters = _List_fromArray(
+	['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'varepsilon', 'zeta', 'eta', 'theta', 'vartheta', 'iota', 'kappa', 'varkappa', 'lambda', 'mu', 'nu', 'xi', 'pi', 'varpi', 'rho', 'varrho', 'sigma', 'varsigma', 'tau', 'upsilon', 'phi', 'varphi', 'chi', 'psi', 'omega', 'Gamma', 'Delta', 'Theta', 'Lambda', 'Xi', 'Pi', 'Sigma', 'Upsilon', 'Phi', 'Psi', 'Omega', 'digamma', 'varGamma', 'varDelta', 'varTheta', 'varLambda', 'varXi', 'varPi', 'varSigma', 'varUpsilon', 'varPhi', 'varPsi', 'varOmega']);
 var $elm$core$List$any = F2(
 	function (isOkay, list) {
 		any:
@@ -7344,6 +7226,116 @@ var $jxxcarlson$etex$ETeX$Transform$greekSymbolParser = A2(
 		$elm$parser$Parser$Advanced$keeper,
 		$elm$parser$Parser$Advanced$succeed($elm$core$Basics$identity),
 		$jxxcarlson$etex$ETeX$Transform$alphaNumParser_));
+var $jxxcarlson$etex$ETeX$KaTeX$accents = _List_fromArray(
+	['hat', 'widehat', 'check', 'widecheck', 'tilde', 'widetilde', 'acute', 'grave', 'dot', 'ddot', 'breve', 'bar', 'vec', 'mathring', 'overline', 'underline', 'overleftarrow', 'overrightarrow', 'overleftrightarrow', 'underleftarrow', 'underrightarrow', 'underleftrightarrow', 'overgroup', 'undergroup', 'overbrace', 'underbrace', 'overparen', 'underparen', 'overrightleftharpoons', 'boxed', 'underlinesegment', 'overlinesegment']);
+var $jxxcarlson$etex$ETeX$KaTeX$arrows = _List_fromArray(
+	['leftarrow', 'gets', 'rightarrow', 'to', 'leftrightarrow', 'Leftarrow', 'Rightarrow', 'Leftrightarrow', 'iff', 'uparrow', 'downarrow', 'updownarrow', 'Uparrow', 'Downarrow', 'Updownarrow', 'mapsto', 'hookleftarrow', 'hookrightarrow', 'leftharpoonup', 'rightharpoonup', 'leftharpoondown', 'rightharpoondown', 'rightleftharpoons', 'longleftarrow', 'longrightarrow', 'longleftrightarrow', 'Longleftarrow', 'impliedby', 'Longrightarrow', 'implies', 'Longleftrightarrow', 'longmapsto', 'nearrow', 'searrow', 'swarrow', 'nwarrow', 'dashleftarrow', 'dashrightarrow', 'leftleftarrows', 'rightrightarrows', 'leftrightarrows', 'rightleftarrows', 'Lleftarrow', 'Rrightarrow', 'twoheadleftarrow', 'twoheadrightarrow', 'leftarrowtail', 'rightarrowtail', 'looparrowleft', 'looparrowright', 'curvearrowleft', 'curvearrowright', 'circlearrowleft', 'circlearrowright', 'multimap', 'leftrightsquigarrow', 'rightsquigarrow', 'leadsto', 'restriction']);
+var $jxxcarlson$etex$ETeX$KaTeX$bigOperators = _List_fromArray(
+	['sum', 'prod', 'coprod', 'bigcup', 'bigcap', 'bigvee', 'bigwedge', 'bigoplus', 'bigotimes', 'bigodot', 'biguplus', 'bigsqcup', 'int', 'oint', 'iint', 'iiint', 'iiiint', 'intop', 'smallint']);
+var $jxxcarlson$etex$ETeX$KaTeX$binaryOperators = _List_fromArray(
+	['pm', 'mp', 'times', 'div', 'cdot', 'ast', 'star', 'circ', 'bullet', 'oplus', 'ominus', 'otimes', 'oslash', 'odot', 'dagger', 'ddagger', 'vee', 'lor', 'wedge', 'land', 'cap', 'cup', 'setminus', 'smallsetminus', 'triangleleft', 'triangleright', 'bigtriangleup', 'bigtriangledown', 'lhd', 'rhd', 'unlhd', 'unrhd', 'amalg', 'uplus', 'sqcap', 'sqcup', 'boxplus', 'boxminus', 'boxtimes', 'boxdot', 'leftthreetimes', 'rightthreetimes', 'curlyvee', 'curlywedge', 'dotplus', 'divideontimes', 'doublebarwedge']);
+var $jxxcarlson$etex$ETeX$KaTeX$binomials = _List_fromArray(
+	['binom', 'dbinom', 'tbinom', 'brace', 'brack']);
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
+		}
+	});
+var $elm$core$List$concat = function (lists) {
+	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
+};
+var $jxxcarlson$etex$ETeX$KaTeX$delimiters = _List_fromArray(
+	['lbrace', 'rbrace', 'lbrack', 'rbrack', 'langle', 'rangle', 'vert', 'Vert', 'lvert', 'rvert', 'lVert', 'rVert', 'lfloor', 'rfloor', 'lceil', 'rceil', 'lgroup', 'rgroup', 'lmoustache', 'rmoustache', 'ulcorner', 'urcorner', 'llcorner', 'lrcorner']);
+var $jxxcarlson$etex$ETeX$KaTeX$fonts = _List_fromArray(
+	['mathrm', 'mathit', 'mathbf', 'boldsymbol', 'pmb', 'mathbb', 'Bbb', 'mathcal', 'cal', 'mathscr', 'scr', 'mathfrak', 'frak', 'mathsf', 'sf', 'mathtt', 'tt', 'mathnormal', 'text', 'textbf', 'textit', 'textrm', 'textsf', 'texttt', 'textnormal', 'textup', 'operatorname', 'operatorname*']);
+var $jxxcarlson$etex$ETeX$KaTeX$fractions = _List_fromArray(
+	['frac', 'dfrac', 'tfrac', 'cfrac', 'genfrac', 'over', 'atop', 'choose']);
+var $elm$core$Set$Set_elm_builtin = function (a) {
+	return {$: 'Set_elm_builtin', a: a};
+};
+var $elm$core$Set$empty = $elm$core$Set$Set_elm_builtin($elm$core$Dict$empty);
+var $elm$core$Set$insert = F2(
+	function (key, _v0) {
+		var dict = _v0.a;
+		return $elm$core$Set$Set_elm_builtin(
+			A3($elm$core$Dict$insert, key, _Utils_Tuple0, dict));
+	});
+var $elm$core$Set$fromList = function (list) {
+	return A3($elm$core$List$foldl, $elm$core$Set$insert, $elm$core$Set$empty, list);
+};
+var $jxxcarlson$etex$ETeX$KaTeX$logicAndSetTheory = _List_fromArray(
+	['forall', 'exists', 'nexists', 'complement', 'subset', 'supset', 'mid', 'nmid', 'notsubset', 'nsubset', 'nsupset', 'nsupseteq', 'nsubseteq', 'subsetneq', 'supsetneq', 'subsetneqq', 'supsetneqq', 'varsubsetneq', 'varsupsetneq', 'varsubsetneqq', 'varsupsetneqq', 'isin', 'notin', 'notni', 'niton', 'in', 'ni', 'emptyset', 'varnothing', 'setminus', 'smallsetminus', 'complement', 'neg', 'lnot']);
+var $jxxcarlson$etex$ETeX$KaTeX$mathFunctions = _List_fromArray(
+	['sin', 'cos', 'tan', 'cot', 'sec', 'csc', 'sinh', 'cosh', 'tanh', 'coth', 'sech', 'csch', 'arcsin', 'arccos', 'arctan', 'arctg', 'arcctg', 'ln', 'log', 'lg', 'exp', 'deg', 'det', 'dim', 'hom', 'ker', 'lim', 'liminf', 'limsup', 'max', 'min', 'sup', 'inf', 'Pr', 'gcd', 'lcm', 'arg', 'mod', 'bmod', 'pmod', 'pod']);
+var $jxxcarlson$etex$ETeX$KaTeX$miscSymbols = _List_fromArray(
+	['infty', 'aleph', 'beth', 'gimel', 'daleth', 'eth', 'hbar', 'hslash', 'Finv', 'Game', 'ell', 'wp', 'Re', 'Im', 'partial', 'nabla', 'Box', 'square', 'blacksquare', 'blacklozenge', 'lozenge', 'Diamond', 'triangle', 'triangledown', 'angle', 'measuredangle', 'sphericalangle', 'prime', 'backprime', 'degree', 'flat', 'natural', 'sharp', 'surd', 'top', 'bot', 'emptyset', 'varnothing', 'clubsuit', 'diamondsuit', 'heartsuit', 'spadesuit', 'blacktriangleright', 'blacktriangleleft', 'blacktriangledown', 'blacktriangle', 'bigstar', 'maltese', 'checkmark', 'diagup', 'diagdown', 'ddag', 'dag', 'copyright', 'circledR', 'pounds', 'yen', 'euro', 'cent', 'maltese']);
+var $jxxcarlson$etex$ETeX$KaTeX$relationSymbols = _List_fromArray(
+	['leq', 'le', 'geq', 'ge', 'neq', 'ne', 'sim', 'simeq', 'approx', 'cong', 'equiv', 'prec', 'succ', 'preceq', 'succeq', 'll', 'gg', 'subset', 'supset', 'subseteq', 'supseteq', 'nsubseteq', 'nsupseteq', 'sqsubset', 'sqsupset', 'sqsubseteq', 'sqsupseteq', 'in', 'ni', 'notin', 'notni', 'propto', 'varpropto', 'perp', 'parallel', 'nparallel', 'smile', 'frown', 'doteq', 'fallingdotseq', 'risingdotseq', 'coloneq', 'eqcirc', 'circeq', 'triangleq', 'bumpeq', 'Bumpeq', 'doteqdot', 'thicksim', 'thickapprox', 'approxeq', 'backsim', 'backsimeq', 'preccurlyeq', 'succcurlyeq', 'curlyeqprec', 'curlyeqsucc', 'precsim', 'succsim', 'precapprox', 'succapprox', 'vartriangleleft', 'vartriangleright', 'trianglelefteq', 'trianglerighteq', 'between', 'pitchfork', 'shortmid', 'shortparallel', 'therefore', 'because', 'eqcolon', 'simcolon', 'approxcolon', 'colonapprox', 'colonsim', 'Colon', 'ratio']);
+var $jxxcarlson$etex$ETeX$KaTeX$roots = _List_fromArray(
+	['sqrt', 'sqrtsign']);
+var $jxxcarlson$etex$ETeX$KaTeX$spacing = _List_fromArray(
+	['quad', 'qquad', 'space', 'thinspace', 'medspace', 'thickspace', 'enspace', 'negspace', 'negmedspace', 'negthickspace', 'negthinspace', 'mkern', 'mskip', 'hskip', 'hspace', 'hspace*', 'kern', 'phantom', 'hphantom', 'vphantom', 'mathstrut', 'strut', '!', ':', ';', ',']);
+var $jxxcarlson$etex$ETeX$KaTeX$textOperators = _List_fromArray(
+	['not', 'cancel', 'bcancel', 'xcancel', 'cancelto', 'sout', 'overline', 'underline', 'overset', 'underset', 'stackrel', 'atop', 'substack', 'sideset']);
+var $jxxcarlson$etex$ETeX$KaTeX$katexCommands = $elm$core$Set$fromList(
+	$elm$core$List$concat(
+		_List_fromArray(
+			[$jxxcarlson$etex$ETeX$KaTeX$greekLetters, $jxxcarlson$etex$ETeX$KaTeX$binaryOperators, $jxxcarlson$etex$ETeX$KaTeX$relationSymbols, $jxxcarlson$etex$ETeX$KaTeX$arrows, $jxxcarlson$etex$ETeX$KaTeX$delimiters, $jxxcarlson$etex$ETeX$KaTeX$bigOperators, $jxxcarlson$etex$ETeX$KaTeX$mathFunctions, $jxxcarlson$etex$ETeX$KaTeX$accents, $jxxcarlson$etex$ETeX$KaTeX$fonts, $jxxcarlson$etex$ETeX$KaTeX$spacing, $jxxcarlson$etex$ETeX$KaTeX$logicAndSetTheory, $jxxcarlson$etex$ETeX$KaTeX$miscSymbols, $jxxcarlson$etex$ETeX$KaTeX$fractions, $jxxcarlson$etex$ETeX$KaTeX$binomials, $jxxcarlson$etex$ETeX$KaTeX$roots, $jxxcarlson$etex$ETeX$KaTeX$textOperators])));
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === 'RBEmpty_elm_builtin') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1.$) {
+					case 'LT':
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 'EQ':
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
+var $elm$core$Dict$member = F2(
+	function (key, dict) {
+		var _v0 = A2($elm$core$Dict$get, key, dict);
+		if (_v0.$ === 'Just') {
+			return true;
+		} else {
+			return false;
+		}
+	});
+var $elm$core$Set$member = F2(
+	function (key, _v0) {
+		var dict = _v0.a;
+		return A2($elm$core$Dict$member, key, dict);
+	});
+var $jxxcarlson$etex$ETeX$KaTeX$isKaTeX = function (command) {
+	return A2($elm$core$Set$member, command, $jxxcarlson$etex$ETeX$KaTeX$katexCommands);
+};
+var $jxxcarlson$etex$ETeX$Transform$isUserDefinedMacro = F2(
+	function (dict, name) {
+		return A2($elm$core$Dict$member, name, dict);
+	});
 var $elm$parser$Parser$Advanced$lazy = function (thunk) {
 	return $elm$parser$Parser$Advanced$Parser(
 		function (s) {
@@ -7997,7 +7989,7 @@ var $jxxcarlson$etex$ETeX$Transform$argParser = function (userMacroDict) {
 					$elm$parser$Parser$Advanced$symbol(
 						A2($elm$parser$Parser$Advanced$Token, '{', $jxxcarlson$etex$ETeX$Transform$ExpectingLeftBrace))),
 				$elm$parser$Parser$Advanced$lazy(
-					function (_v7) {
+					function (_v8) {
 						return $jxxcarlson$etex$ETeX$Transform$many(
 							$jxxcarlson$etex$ETeX$Transform$mathExprParser(userMacroDict));
 					})),
@@ -8013,7 +8005,7 @@ var $jxxcarlson$etex$ETeX$Transform$decoParser = function (userMacroDict) {
 				$elm$parser$Parser$Advanced$map,
 				$jxxcarlson$etex$ETeX$Transform$DecoM,
 				$elm$parser$Parser$Advanced$lazy(
-					function (_v6) {
+					function (_v7) {
 						return $jxxcarlson$etex$ETeX$Transform$mathExprParser(userMacroDict);
 					}))
 			]));
@@ -8029,14 +8021,17 @@ var $jxxcarlson$etex$ETeX$Transform$functionArgListParser = function (userMacroD
 				$jxxcarlson$etex$ETeX$Transform$leftBraceParser,
 				$jxxcarlson$etex$ETeX$Transform$rightBraceParser,
 				$jxxcarlson$etex$ETeX$Transform$macroParser(userMacroDict),
-				$jxxcarlson$etex$ETeX$Transform$alphaNumOrMacroParser(userMacroDict),
-				$jxxcarlson$etex$ETeX$Transform$mathSymbolsParser,
 				$elm$parser$Parser$Advanced$lazy(
 				function (_v4) {
+					return $jxxcarlson$etex$ETeX$Transform$alphaNumWithLookaheadParser(userMacroDict);
+				}),
+				$jxxcarlson$etex$ETeX$Transform$mathSymbolsParser,
+				$elm$parser$Parser$Advanced$lazy(
+				function (_v5) {
 					return $jxxcarlson$etex$ETeX$Transform$argParser(userMacroDict);
 				}),
 				$elm$parser$Parser$Advanced$lazy(
-				function (_v5) {
+				function (_v6) {
 					return $jxxcarlson$etex$ETeX$Transform$standaloneParenthExprParser(userMacroDict);
 				}),
 				$jxxcarlson$etex$ETeX$Transform$paramParser,

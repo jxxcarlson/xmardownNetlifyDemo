@@ -15610,50 +15610,6 @@ var $author$project$Main$geometry = function (model) {
 		tocW: model.tocWidth
 	};
 };
-var $author$project$Normalize$isFence = function (line) {
-	var trimmed = $elm$core$String$trimLeft(line);
-	return A2($elm$core$String$startsWith, '```', trimmed) || A2($elm$core$String$startsWith, '~~~', trimmed);
-};
-var $author$project$Normalize$numberedHeading = A2(
-	$elm$core$Maybe$withDefault,
-	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^(#{1,6} +)(?:\u005Cd+\u005C.)+\u005Cd*(?: +|$)'));
-var $author$project$Normalize$step = F2(
-	function (line, _v0) {
-		var inFence = _v0.a;
-		var acc = _v0.b;
-		return $author$project$Normalize$isFence(line) ? _Utils_Tuple2(
-			!inFence,
-			A2($elm$core$List$cons, line, acc)) : (inFence ? _Utils_Tuple2(
-			inFence,
-			A2($elm$core$List$cons, line, acc)) : _Utils_Tuple2(
-			inFence,
-			A2(
-				$elm$core$List$cons,
-				A3(
-					$elm$regex$Regex$replace,
-					$author$project$Normalize$numberedHeading,
-					function (m) {
-						return $elm$core$String$concat(
-							A2(
-								$elm$core$List$map,
-								$elm$core$Maybe$withDefault(''),
-								m.submatches));
-					},
-					line),
-				acc)));
-	});
-var $author$project$Normalize$headings = function (source) {
-	return A2(
-		$elm$core$String$join,
-		'\u000A',
-		$elm$core$List$reverse(
-			A3(
-				$elm$core$List$foldl,
-				$author$project$Normalize$step,
-				_Utils_Tuple2(false, _List_Nil),
-				$elm$core$String$lines(source)).b));
-};
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Export$exprImages = function (expr) {
 	switch (expr.$) {
 		case 'Fun':
@@ -15843,6 +15799,111 @@ var $author$project$Main$newDocument = F2(
 					model,
 					{editorOpen: true, fileName: name})));
 	});
+var $author$project$Normalize$blankBefore = function (lines) {
+	if (lines.b) {
+		var previous = lines.a;
+		return ($elm$core$String$trim(previous) === '') ? lines : A2($elm$core$List$cons, '', lines);
+	} else {
+		return lines;
+	}
+};
+var $author$project$Normalize$closesMath = function (trimmed) {
+	return A2($elm$core$String$endsWith, '\u005C]', trimmed);
+};
+var $author$project$Normalize$isFence = function (trimmed) {
+	return A2($elm$core$String$startsWith, '```', trimmed) || A2($elm$core$String$startsWith, '~~~', trimmed);
+};
+var $author$project$Normalize$numberedHeading = A2(
+	$elm$core$Maybe$withDefault,
+	$elm$regex$Regex$never,
+	$elm$regex$Regex$fromString('^(#{1,6} +)(?:\u005Cd+\u005C.)+\u005Cd*(?: +|$)'));
+var $author$project$Normalize$stripNumber = function (line) {
+	return A3(
+		$elm$regex$Regex$replace,
+		$author$project$Normalize$numberedHeading,
+		function (m) {
+			return $elm$core$String$concat(
+				A2(
+					$elm$core$List$map,
+					$elm$core$Maybe$withDefault(''),
+					m.submatches));
+		},
+		line);
+};
+var $author$project$Normalize$step = F2(
+	function (line, state) {
+		var trimmed = $elm$core$String$trim(line);
+		var st = (state.mathJustEnded && (trimmed !== '')) ? _Utils_update(
+			state,
+			{
+				lines: A2($elm$core$List$cons, '', state.lines),
+				mathJustEnded: false
+			}) : _Utils_update(
+			state,
+			{mathJustEnded: false});
+		if (st.inFence) {
+			return _Utils_update(
+				st,
+				{
+					inFence: !$author$project$Normalize$isFence(trimmed),
+					lines: A2($elm$core$List$cons, line, st.lines)
+				});
+		} else {
+			if (st.inMath) {
+				return _Utils_update(
+					st,
+					{
+						inMath: !$author$project$Normalize$closesMath(trimmed),
+						lines: A2($elm$core$List$cons, line, st.lines),
+						mathJustEnded: $author$project$Normalize$closesMath(trimmed)
+					});
+			} else {
+				if ($author$project$Normalize$isFence(trimmed)) {
+					return _Utils_update(
+						st,
+						{
+							inFence: true,
+							lines: A2($elm$core$List$cons, line, st.lines)
+						});
+				} else {
+					if (A2($elm$core$String$startsWith, '\u005C[', trimmed)) {
+						var closed = $author$project$Normalize$closesMath(
+							A2($elm$core$String$dropLeft, 2, trimmed));
+						return _Utils_update(
+							st,
+							{
+								inMath: !closed,
+								lines: A2(
+									$elm$core$List$cons,
+									line,
+									$author$project$Normalize$blankBefore(st.lines)),
+								mathJustEnded: closed
+							});
+					} else {
+						return _Utils_update(
+							st,
+							{
+								lines: A2(
+									$elm$core$List$cons,
+									$author$project$Normalize$stripNumber(line),
+									st.lines)
+							});
+					}
+				}
+			}
+		}
+	});
+var $author$project$Normalize$normalize = function (source) {
+	return A2(
+		$elm$core$String$join,
+		'\u000A',
+		$elm$core$List$reverse(
+			A3(
+				$elm$core$List$foldl,
+				$author$project$Normalize$step,
+				{inFence: false, inMath: false, lines: _List_Nil, mathJustEnded: false},
+				$elm$core$String$lines(source)).lines));
+};
 var $author$project$Main$dialogInputId = 'dialog-file-name';
 var $elm$browser$Browser$Dom$focus = _Browser_call('focus');
 var $author$project$Main$openDialog = F3(
@@ -16262,13 +16323,13 @@ var $author$project$Main$update = F2(
 							$author$project$Main$saveFile(model));
 					}
 				case 'NormalizeRequested':
-					var normalized = $author$project$Normalize$headings(model.sourceText);
+					var normalized = $author$project$Normalize$normalize(model.sourceText);
 					if (_Utils_eq(normalized, model.sourceText)) {
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
 								{
-									notice: $elm$core$Maybe$Just('No numbered headings to normalize.')
+									notice: $elm$core$Maybe$Just('Nothing to normalize.')
 								}),
 							$elm$core$Platform$Cmd$none);
 					} else {

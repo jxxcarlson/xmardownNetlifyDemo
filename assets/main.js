@@ -5730,7 +5730,6 @@ var $author$project$Main$DesktopCancelled = {$: 'DesktopCancelled'};
 var $author$project$Main$DragMove = function (a) {
 	return {$: 'DragMove', a: a};
 };
-var $author$project$Main$EscapePressed = {$: 'EscapePressed'};
 var $author$project$Main$FolderOpened = function (a) {
 	return {$: 'FolderOpened', a: a};
 };
@@ -5751,7 +5750,6 @@ var $author$project$Main$PdfExported = function (a) {
 	return {$: 'PdfExported', a: a};
 };
 var $author$project$Main$StopDrag = {$: 'StopDrag'};
-var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Basics$composeR = F3(
 	function (f, g, x) {
@@ -5792,6 +5790,7 @@ var $author$project$Main$FileLocation = F4(
 	function (path, name, folder, folderName) {
 		return {folder: folder, folderName: folderName, name: name, path: path};
 	});
+var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$json$Json$Decode$map4 = _Json_map4;
 var $elm$core$Basics$negate = function (n) {
 	return -n;
@@ -5886,9 +5885,83 @@ var $author$project$Main$desktopEventDecoder = function () {
 }();
 var $elm$json$Json$Decode$value = _Json_decodeValue;
 var $author$project$Ports$desktopResponse = _Platform_incomingPort('desktopResponse', $elm$json$Json$Decode$value);
-var $elm$json$Json$Decode$fail = _Json_fail;
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $author$project$Ports$folderOpened = _Platform_incomingPort('folderOpened', $elm$json$Json$Decode$string);
+var $author$project$Main$EscapePressed = {$: 'EscapePressed'};
+var $author$project$Main$FileMenuChose = function (a) {
+	return {$: 'FileMenuChose', a: a};
+};
+var $author$project$Main$NewRequested = {$: 'NewRequested'};
+var $author$project$Main$PrintRequested = {$: 'PrintRequested'};
+var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
+var $elm$json$Json$Decode$fail = _Json_fail;
+var $elm$core$Basics$neq = _Utils_notEqual;
+var $elm$core$Basics$not = _Basics_not;
+var $elm$core$String$toLower = _String_toLower;
+var $author$project$Main$keyDecoder = function (model) {
+	return A2(
+		$elm$json$Json$Decode$andThen,
+		function (event) {
+			var somethingOpen = model.fileMenuOpen || ((!_Utils_eq(model.dialog, $elm$core$Maybe$Nothing)) || (!_Utils_eq(model.printStatus, $elm$core$Maybe$Nothing)));
+			var shortcutsAllowed = event.command && ((!event.otherModifier) && ((!event.repeat) && (_Utils_eq(model.dialog, $elm$core$Maybe$Nothing) && _Utils_eq(model.printStatus, $elm$core$Maybe$Nothing))));
+			if ((event.key === 'Escape') && somethingOpen) {
+				return $elm$json$Json$Decode$succeed($author$project$Main$EscapePressed);
+			} else {
+				if (shortcutsAllowed) {
+					var _v0 = _Utils_Tuple2(
+						$elm$core$String$toLower(event.key),
+						model.platform);
+					_v0$3:
+					while (true) {
+						switch (_v0.a) {
+							case 'e':
+								return $elm$json$Json$Decode$succeed(
+									$author$project$Main$FileMenuChose($author$project$Main$ToggleEditor));
+							case 'n':
+								if (_v0.b.$ === 'Desktop') {
+									var _v1 = _v0.b;
+									return $elm$json$Json$Decode$succeed(
+										$author$project$Main$FileMenuChose($author$project$Main$NewRequested));
+								} else {
+									break _v0$3;
+								}
+							case 'p':
+								if (_v0.b.$ === 'Desktop') {
+									var _v2 = _v0.b;
+									return $elm$json$Json$Decode$succeed(
+										$author$project$Main$FileMenuChose($author$project$Main$PrintRequested));
+								} else {
+									break _v0$3;
+								}
+							default:
+								break _v0$3;
+						}
+					}
+					return $elm$json$Json$Decode$fail('not a shortcut');
+				} else {
+					return $elm$json$Json$Decode$fail('not a shortcut');
+				}
+			}
+		},
+		A5(
+			$elm$json$Json$Decode$map4,
+			F4(
+				function (key, command, otherModifier, repeat) {
+					return {command: command, key: key, otherModifier: otherModifier, repeat: repeat};
+				}),
+			A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string),
+			A2($elm$json$Json$Decode$field, 'metaKey', $elm$json$Json$Decode$bool),
+			A4(
+				$elm$json$Json$Decode$map3,
+				F3(
+					function (shift, alt, ctrl) {
+						return shift || (alt || ctrl);
+					}),
+				A2($elm$json$Json$Decode$field, 'shiftKey', $elm$json$Json$Decode$bool),
+				A2($elm$json$Json$Decode$field, 'altKey', $elm$json$Json$Decode$bool),
+				A2($elm$json$Json$Decode$field, 'ctrlKey', $elm$json$Json$Decode$bool)),
+			A2($elm$json$Json$Decode$field, 'repeat', $elm$json$Json$Decode$bool)));
+};
 var $author$project$Ports$linkedFile = _Platform_incomingPort(
 	'linkedFile',
 	A2(
@@ -5925,7 +5998,6 @@ var $author$project$Ports$linkedFile = _Platform_incomingPort(
 		},
 		A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string)));
 var $author$project$Ports$lrSyncRequest = _Platform_incomingPort('lrSyncRequest', $elm$json$Json$Decode$string);
-var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $elm$browser$Browser$Events$Document = {$: 'Document'};
 var $elm$browser$Browser$Events$MySub = F3(
@@ -6386,13 +6458,8 @@ var $author$project$Main$subscriptions = function (model) {
 					return $elm$core$Platform$Sub$none;
 				}
 			}(),
-				(model.fileMenuOpen || ((!_Utils_eq(model.dialog, $elm$core$Maybe$Nothing)) || (!_Utils_eq(model.printStatus, $elm$core$Maybe$Nothing)))) ? $elm$browser$Browser$Events$onKeyDown(
-				A2(
-					$elm$json$Json$Decode$andThen,
-					function (key) {
-						return (key === 'Escape') ? $elm$json$Json$Decode$succeed($author$project$Main$EscapePressed) : $elm$json$Json$Decode$fail('not Escape');
-					},
-					A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string))) : $elm$core$Platform$Sub$none
+				$elm$browser$Browser$Events$onKeyDown(
+				$author$project$Main$keyDecoder(model))
 			]));
 };
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark = {$: 'Dark'};
@@ -6695,7 +6762,6 @@ var $jxxcarlson$xmarkdown_compiler$LaTeX$Inline$escapePercent = function (str) {
 				_Utils_Tuple2(_List_Nil, false),
 				str).a));
 };
-var $elm$core$Basics$not = _Basics_not;
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Escape$escapeChar = function (c) {
 	switch (c.valueOf()) {
 		case '\\':
@@ -15792,7 +15858,6 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$treeToBlockList = function
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$forestToBlockList = function (forest) {
 	return A2($elm$core$List$concatMap, $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$treeToBlockList, forest);
 };
-var $elm$core$String$toLower = _String_toLower;
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$searchBlocksContainingText = F3(
 	function (params, lines, searchQuery) {
 		var searchLower = $elm$core$String$toLower(searchQuery);
@@ -16152,10 +16217,31 @@ var $author$project$Main$update = F2(
 							$author$project$Main$saveFile(model));
 					}
 				case 'NewRequested':
-					return A3($author$project$Main$openDialog, $author$project$Main$NewFileDialog, 'untitled.md', model);
-				case 'SaveAsRequested':
 					var _v17 = model.platform;
 					if (_v17.$ === 'Desktop') {
+						return _Utils_Tuple2(
+							model,
+							A2(
+								$author$project$Main$desktopRequest,
+								'new',
+								_List_fromArray(
+									[
+										_Utils_Tuple2(
+										'folder',
+										A2(
+											$elm$core$Maybe$withDefault,
+											$elm$json$Json$Encode$null,
+											A2($elm$core$Maybe$map, $elm$json$Json$Encode$string, model.folderPath))),
+										_Utils_Tuple2(
+										'name',
+										$elm$json$Json$Encode$string('untitled.md'))
+									])));
+					} else {
+						return A3($author$project$Main$openDialog, $author$project$Main$NewFileDialog, 'untitled.md', model);
+					}
+				case 'SaveAsRequested':
+					var _v18 = model.platform;
+					if (_v18.$ === 'Desktop') {
 						return _Utils_Tuple2(
 							model,
 							$author$project$Main$desktopSaveAs(model));
@@ -16214,10 +16300,10 @@ var $author$project$Main$update = F2(
 							var andThenArg = _Utils_Tuple2(
 								'then',
 								$elm$json$Json$Encode$string(andThen));
-							var _v19 = _Utils_Tuple2(model.dirty, model.filePath);
-							if (_v19.a) {
-								if (_v19.b.$ === 'Just') {
-									var path = _v19.b.a;
+							var _v20 = _Utils_Tuple2(model.dirty, model.filePath);
+							if (_v20.a) {
+								if (_v20.b.$ === 'Just') {
+									var path = _v20.b.a;
 									return _Utils_Tuple2(
 										model,
 										A3(
@@ -16227,7 +16313,7 @@ var $author$project$Main$update = F2(
 											_List_fromArray(
 												[andThenArg])));
 								} else {
-									var _v20 = _v19.b;
+									var _v21 = _v20.b;
 									return _Utils_Tuple2(
 										model,
 										A2(
@@ -16341,49 +16427,24 @@ var $author$project$Main$update = F2(
 							{dialog: $elm$core$Maybe$Nothing}),
 						$elm$core$Platform$Cmd$none);
 				case 'DialogConfirmed':
-					var _v21 = model.dialog;
-					if (_v21.$ === 'Just') {
-						var name = _v21.a.name;
-						var purpose = _v21.a.purpose;
+					var _v22 = model.dialog;
+					if (_v22.$ === 'Just') {
+						var name = _v22.a.name;
+						var purpose = _v22.a.purpose;
 						var fileName = $elm$core$String$trim(name);
 						if ($elm$core$String$isEmpty(fileName)) {
 							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 						} else {
-							var _v22 = _Utils_Tuple3(purpose, model.platform, model.folderPath);
-							if (_v22.a.$ === 'NewFileDialog') {
-								if ((_v22.b.$ === 'Desktop') && (_v22.c.$ === 'Just')) {
-									var _v23 = _v22.a;
-									var _v24 = _v22.b;
-									var folder = _v22.c.a;
-									return _Utils_Tuple2(
+							if (purpose.$ === 'NewFileDialog') {
+								return _Utils_Tuple2(
+									A2(
+										$author$project$Main$newDocument,
+										fileName,
 										_Utils_update(
 											model,
-											{dialog: $elm$core$Maybe$Nothing}),
-										A2(
-											$author$project$Main$desktopRequest,
-											'create',
-											_List_fromArray(
-												[
-													_Utils_Tuple2(
-													'folder',
-													$elm$json$Json$Encode$string(folder)),
-													_Utils_Tuple2(
-													'name',
-													$elm$json$Json$Encode$string(fileName))
-												])));
-								} else {
-									var _v25 = _v22.a;
-									return _Utils_Tuple2(
-										A2(
-											$author$project$Main$newDocument,
-											fileName,
-											_Utils_update(
-												model,
-												{dialog: $elm$core$Maybe$Nothing, filePath: $elm$core$Maybe$Nothing})),
-										$author$project$Main$autoSave(model));
-								}
+											{dialog: $elm$core$Maybe$Nothing, filePath: $elm$core$Maybe$Nothing})),
+									$author$project$Main$autoSave(model));
 							} else {
-								var _v26 = _v22.a;
 								var renamed = _Utils_update(
 									model,
 									{dialog: $elm$core$Maybe$Nothing, dirty: false, fileName: fileName});
@@ -16404,8 +16465,8 @@ var $author$project$Main$update = F2(
 						$elm$core$Platform$Cmd$none);
 				case 'ToggleNumberSections':
 					var oldCompilerParameters = model.compilerParameters;
-					var _v27 = model.numberedSections;
-					if (!_v27) {
+					var _v24 = model.numberedSections;
+					if (!_v24) {
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -16431,8 +16492,8 @@ var $author$project$Main$update = F2(
 				case 'ToggleTheme':
 					var params = model.compilerParameters;
 					var newTheme = function () {
-						var _v29 = model.theme;
-						if (_v29.$ === 'Light') {
+						var _v26 = model.theme;
+						if (_v26.$ === 'Light') {
 							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
 						} else {
 							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
@@ -16505,9 +16566,9 @@ var $author$project$Main$update = F2(
 					}
 				default:
 					var msg_ = msg.a;
-					var _v31 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
-					if (_v31.$ === 'Just') {
-						var h = _v31.a;
+					var _v28 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+					if (_v28.$ === 'Just') {
+						var h = _v28.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -16548,7 +16609,6 @@ var $author$project$Main$Render = function (a) {
 	return {$: 'Render', a: a};
 };
 var $author$project$Main$TocDivider = {$: 'TocDivider'};
-var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
 var $author$project$Main$ToggleNumberSections = {$: 'ToggleNumberSections'};
 var $author$project$Main$ToggleTheme = {$: 'ToggleTheme'};
 var $elm$html$Html$button = _VirtualDom_node('button');
@@ -19774,19 +19834,14 @@ var $author$project$Main$editorView = function (model) {
 		{attrs: _List_Nil, highlight: model.syncHighlight, onInput: $author$project$Main$InputText, source: model.initialText});
 };
 var $author$project$Main$ExportPdfRequested = {$: 'ExportPdfRequested'};
-var $author$project$Main$FileMenuChose = function (a) {
-	return {$: 'FileMenuChose', a: a};
-};
-var $author$project$Main$NewRequested = {$: 'NewRequested'};
 var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
 var $author$project$Main$OpenFolderRequested = {$: 'OpenFolderRequested'};
-var $author$project$Main$PrintRequested = {$: 'PrintRequested'};
 var $author$project$Main$SaveAsRequested = {$: 'SaveAsRequested'};
 var $author$project$Main$SaveRequested = {$: 'SaveRequested'};
 var $author$project$Main$ToggleFileMenu = {$: 'ToggleFileMenu'};
 var $author$project$Main$fileMenu = function (model) {
-	var item = F2(
-		function (label, msg) {
+	var itemWithShortcut = F3(
+		function (label, shortcut, msg) {
 			return A2(
 				$elm$html$Html$button,
 				_List_fromArray(
@@ -19797,9 +19852,32 @@ var $author$project$Main$fileMenu = function (model) {
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text(label)
+						A2(
+						$elm$html$Html$span,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text(label)
+							])),
+						A2(
+						$elm$html$Html$span,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('menu-shortcut')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(shortcut)
+							]))
 					]));
 		});
+	var item = F2(
+		function (label, msg) {
+			return A3(itemWithShortcut, label, '', msg);
+		});
+	var desktopShortcut = function (shortcut) {
+		return _Utils_eq(model.platform, $author$project$Main$Desktop) ? shortcut : '';
+	};
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -19846,7 +19924,11 @@ var $author$project$Main$fileMenu = function (model) {
 						_Utils_ap(
 							_List_fromArray(
 								[
-									A2(item, 'New…', $author$project$Main$NewRequested),
+									A3(
+									itemWithShortcut,
+									'New…',
+									desktopShortcut('⌘N'),
+									$author$project$Main$NewRequested),
 									A2(item, 'Open…', $author$project$Main$OpenFileRequested),
 									A2(item, 'Open Folder…', $author$project$Main$OpenFolderRequested),
 									A2(item, 'Save', $author$project$Main$SaveRequested),
@@ -19859,7 +19941,7 @@ var $author$project$Main$fileMenu = function (model) {
 									]) : _List_Nil,
 								_Utils_eq(model.platform, $author$project$Main$Desktop) ? _List_fromArray(
 									[
-										A2(item, 'Print', $author$project$Main$PrintRequested)
+										A3(itemWithShortcut, 'Print', '⌘P', $author$project$Main$PrintRequested)
 									]) : _List_Nil)))
 					])) : $elm$html$Html$text('')
 			]));
@@ -20220,6 +20302,7 @@ var $author$project$Main$view = function (model) {
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$class('toolbar-button'),
+								$elm$html$Html$Attributes$title('⌘E'),
 								$elm$html$Html$Events$onClick($author$project$Main$ToggleEditor)
 							]),
 						_List_fromArray(

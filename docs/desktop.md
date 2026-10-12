@@ -45,7 +45,8 @@ that no font has is left out with a warning in the log, never an error.
 | Open… | browser file picker | macOS open dialog |
 | Save | downloads a copy | writes the file in place |
 | Save As… | small name window, downloads | macOS save dialog |
-| New… | name window, empty document | name window; creates the file in the current folder (never overwrites) |
+| New… | name window, empty document | macOS save dialog (starting in the current folder); creates the empty file there |
+| Keyboard shortcuts | ⌘E Open/Close Editor | ⌘N New, ⌘P Print, ⌘E Open/Close Editor (shown in the File menu and on the editor button) |
 | Current folder | chosen with Open Folder | folder of the open file (Open Folder changes it) |
 | `file://` links | looked up in the chosen folder | resolved against the current folder; `sub/x.md` and `../x.md` work |
 | `http(s)` links | open in the page | open in the default browser |

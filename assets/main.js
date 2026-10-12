@@ -4824,6 +4824,52 @@ function _File_toUrl(blob)
 	});
 }
 
+
+
+
+function _Time_now(millisToPosix)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(millisToPosix(Date.now())));
+	});
+}
+
+var _Time_setInterval = F2(function(interval, task)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var id = setInterval(function() { _Scheduler_rawSpawn(task); }, interval);
+		return function() { clearInterval(id); };
+	});
+});
+
+function _Time_here()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(
+			A2($elm$time$Time$customZone, -(new Date().getTimezoneOffset()), _List_Nil)
+		));
+	});
+}
+
+
+function _Time_getZoneName()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		try
+		{
+			var name = $elm$time$Time$Name(Intl.DateTimeFormat().resolvedOptions().timeZone);
+		}
+		catch (e)
+		{
+			var name = $elm$time$Time$Offset(new Date().getTimezoneOffset());
+		}
+		callback(_Scheduler_succeed(name));
+	});
+}
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -5892,6 +5938,7 @@ var $author$project$Main$FileMenuChose = function (a) {
 	return {$: 'FileMenuChose', a: a};
 };
 var $author$project$Main$NewRequested = {$: 'NewRequested'};
+var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
 var $author$project$Main$PrintRequested = {$: 'PrintRequested'};
 var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
 var $elm$json$Json$Decode$fail = _Json_fail;
@@ -5911,7 +5958,7 @@ var $author$project$Main$keyDecoder = function (model) {
 					var _v0 = _Utils_Tuple2(
 						$elm$core$String$toLower(event.key),
 						model.platform);
-					_v0$3:
+					_v0$4:
 					while (true) {
 						switch (_v0.a) {
 							case 'e':
@@ -5923,18 +5970,26 @@ var $author$project$Main$keyDecoder = function (model) {
 									return $elm$json$Json$Decode$succeed(
 										$author$project$Main$FileMenuChose($author$project$Main$NewRequested));
 								} else {
-									break _v0$3;
+									break _v0$4;
 								}
-							case 'p':
+							case 'o':
 								if (_v0.b.$ === 'Desktop') {
 									var _v2 = _v0.b;
 									return $elm$json$Json$Decode$succeed(
+										$author$project$Main$FileMenuChose($author$project$Main$OpenFileRequested));
+								} else {
+									break _v0$4;
+								}
+							case 'p':
+								if (_v0.b.$ === 'Desktop') {
+									var _v3 = _v0.b;
+									return $elm$json$Json$Decode$succeed(
 										$author$project$Main$FileMenuChose($author$project$Main$PrintRequested));
 								} else {
-									break _v0$3;
+									break _v0$4;
 								}
 							default:
-								break _v0$3;
+								break _v0$4;
 						}
 					}
 					return $elm$json$Json$Decode$fail('not a shortcut');
@@ -6470,6 +6525,9 @@ var $author$project$Main$FileSelected = function (a) {
 	return {$: 'FileSelected', a: a};
 };
 var $author$project$Main$GeneratingPdf = {$: 'GeneratingPdf'};
+var $author$project$Main$GotHeaderDate = function (a) {
+	return {$: 'GotHeaderDate', a: a};
+};
 var $author$project$Main$NewFileDialog = {$: 'NewFileDialog'};
 var $author$project$Main$PrintFailed = function (a) {
 	return {$: 'PrintFailed', a: a};
@@ -15610,6 +15668,808 @@ var $author$project$Main$geometry = function (model) {
 		tocW: model.tocWidth
 	};
 };
+var $author$project$Main$hasHeader = function (source) {
+	var _v0 = A2(
+		$elm$core$List$filter,
+		$elm$core$Basics$neq(''),
+		A2(
+			$elm$core$List$map,
+			$elm$core$String$trim,
+			$elm$core$String$lines(source)));
+	if (_v0.b) {
+		var first = _v0.a;
+		return A2($elm$core$String$startsWith, '%', first) && (!A2($elm$core$String$startsWith, '% ', first));
+	} else {
+		return false;
+	}
+};
+var $elm$time$Time$Jan = {$: 'Jan'};
+var $justinmimbs$date$Date$RD = function (a) {
+	return {$: 'RD', a: a};
+};
+var $justinmimbs$date$Date$isLeapYear = function (y) {
+	return ((!A2($elm$core$Basics$modBy, 4, y)) && (!(!A2($elm$core$Basics$modBy, 100, y)))) || (!A2($elm$core$Basics$modBy, 400, y));
+};
+var $justinmimbs$date$Date$daysInMonth = F2(
+	function (y, m) {
+		switch (m.$) {
+			case 'Jan':
+				return 31;
+			case 'Feb':
+				return $justinmimbs$date$Date$isLeapYear(y) ? 29 : 28;
+			case 'Mar':
+				return 31;
+			case 'Apr':
+				return 30;
+			case 'May':
+				return 31;
+			case 'Jun':
+				return 30;
+			case 'Jul':
+				return 31;
+			case 'Aug':
+				return 31;
+			case 'Sep':
+				return 30;
+			case 'Oct':
+				return 31;
+			case 'Nov':
+				return 30;
+			default:
+				return 31;
+		}
+	});
+var $justinmimbs$date$Date$monthToNumber = function (m) {
+	switch (m.$) {
+		case 'Jan':
+			return 1;
+		case 'Feb':
+			return 2;
+		case 'Mar':
+			return 3;
+		case 'Apr':
+			return 4;
+		case 'May':
+			return 5;
+		case 'Jun':
+			return 6;
+		case 'Jul':
+			return 7;
+		case 'Aug':
+			return 8;
+		case 'Sep':
+			return 9;
+		case 'Oct':
+			return 10;
+		case 'Nov':
+			return 11;
+		default:
+			return 12;
+	}
+};
+var $elm$time$Time$Apr = {$: 'Apr'};
+var $elm$time$Time$Aug = {$: 'Aug'};
+var $elm$time$Time$Dec = {$: 'Dec'};
+var $elm$time$Time$Feb = {$: 'Feb'};
+var $elm$time$Time$Jul = {$: 'Jul'};
+var $elm$time$Time$Jun = {$: 'Jun'};
+var $elm$time$Time$Mar = {$: 'Mar'};
+var $elm$time$Time$May = {$: 'May'};
+var $elm$time$Time$Nov = {$: 'Nov'};
+var $elm$time$Time$Oct = {$: 'Oct'};
+var $elm$time$Time$Sep = {$: 'Sep'};
+var $justinmimbs$date$Date$numberToMonth = function (mn) {
+	var _v0 = A2($elm$core$Basics$max, 1, mn);
+	switch (_v0) {
+		case 1:
+			return $elm$time$Time$Jan;
+		case 2:
+			return $elm$time$Time$Feb;
+		case 3:
+			return $elm$time$Time$Mar;
+		case 4:
+			return $elm$time$Time$Apr;
+		case 5:
+			return $elm$time$Time$May;
+		case 6:
+			return $elm$time$Time$Jun;
+		case 7:
+			return $elm$time$Time$Jul;
+		case 8:
+			return $elm$time$Time$Aug;
+		case 9:
+			return $elm$time$Time$Sep;
+		case 10:
+			return $elm$time$Time$Oct;
+		case 11:
+			return $elm$time$Time$Nov;
+		default:
+			return $elm$time$Time$Dec;
+	}
+};
+var $justinmimbs$date$Date$toCalendarDateHelp = F3(
+	function (y, m, d) {
+		toCalendarDateHelp:
+		while (true) {
+			var monthDays = A2($justinmimbs$date$Date$daysInMonth, y, m);
+			var mn = $justinmimbs$date$Date$monthToNumber(m);
+			if ((mn < 12) && (_Utils_cmp(d, monthDays) > 0)) {
+				var $temp$y = y,
+					$temp$m = $justinmimbs$date$Date$numberToMonth(mn + 1),
+					$temp$d = d - monthDays;
+				y = $temp$y;
+				m = $temp$m;
+				d = $temp$d;
+				continue toCalendarDateHelp;
+			} else {
+				return {day: d, month: m, year: y};
+			}
+		}
+	});
+var $justinmimbs$date$Date$floorDiv = F2(
+	function (a, b) {
+		return $elm$core$Basics$floor(a / b);
+	});
+var $justinmimbs$date$Date$daysBeforeYear = function (y1) {
+	var y = y1 - 1;
+	var leapYears = (A2($justinmimbs$date$Date$floorDiv, y, 4) - A2($justinmimbs$date$Date$floorDiv, y, 100)) + A2($justinmimbs$date$Date$floorDiv, y, 400);
+	return (365 * y) + leapYears;
+};
+var $justinmimbs$date$Date$divWithRemainder = F2(
+	function (a, b) {
+		return _Utils_Tuple2(
+			A2($justinmimbs$date$Date$floorDiv, a, b),
+			A2($elm$core$Basics$modBy, b, a));
+	});
+var $justinmimbs$date$Date$year = function (_v0) {
+	var rd = _v0.a;
+	var _v1 = A2($justinmimbs$date$Date$divWithRemainder, rd, 146097);
+	var n400 = _v1.a;
+	var r400 = _v1.b;
+	var _v2 = A2($justinmimbs$date$Date$divWithRemainder, r400, 36524);
+	var n100 = _v2.a;
+	var r100 = _v2.b;
+	var _v3 = A2($justinmimbs$date$Date$divWithRemainder, r100, 1461);
+	var n4 = _v3.a;
+	var r4 = _v3.b;
+	var _v4 = A2($justinmimbs$date$Date$divWithRemainder, r4, 365);
+	var n1 = _v4.a;
+	var r1 = _v4.b;
+	var n = (!r1) ? 0 : 1;
+	return ((((n400 * 400) + (n100 * 100)) + (n4 * 4)) + n1) + n;
+};
+var $justinmimbs$date$Date$toOrdinalDate = function (_v0) {
+	var rd = _v0.a;
+	var y = $justinmimbs$date$Date$year(
+		$justinmimbs$date$Date$RD(rd));
+	return {
+		ordinalDay: rd - $justinmimbs$date$Date$daysBeforeYear(y),
+		year: y
+	};
+};
+var $justinmimbs$date$Date$toCalendarDate = function (_v0) {
+	var rd = _v0.a;
+	var date = $justinmimbs$date$Date$toOrdinalDate(
+		$justinmimbs$date$Date$RD(rd));
+	return A3($justinmimbs$date$Date$toCalendarDateHelp, date.year, $elm$time$Time$Jan, date.ordinalDay);
+};
+var $justinmimbs$date$Date$day = A2(
+	$elm$core$Basics$composeR,
+	$justinmimbs$date$Date$toCalendarDate,
+	function ($) {
+		return $.day;
+	});
+var $justinmimbs$date$Date$month = A2(
+	$elm$core$Basics$composeR,
+	$justinmimbs$date$Date$toCalendarDate,
+	function ($) {
+		return $.month;
+	});
+var $justinmimbs$date$Date$monthNumber = A2($elm$core$Basics$composeR, $justinmimbs$date$Date$month, $justinmimbs$date$Date$monthToNumber);
+var $justinmimbs$date$Date$ordinalDay = A2(
+	$elm$core$Basics$composeR,
+	$justinmimbs$date$Date$toOrdinalDate,
+	function ($) {
+		return $.ordinalDay;
+	});
+var $elm$core$String$padLeft = F3(
+	function (n, _char, string) {
+		return _Utils_ap(
+			A2(
+				$elm$core$String$repeat,
+				n - $elm$core$String$length(string),
+				$elm$core$String$fromChar(_char)),
+			string);
+	});
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
+};
+var $justinmimbs$date$Date$padSignedInt = F2(
+	function (length, _int) {
+		return _Utils_ap(
+			(_int < 0) ? '-' : '',
+			A3(
+				$elm$core$String$padLeft,
+				length,
+				_Utils_chr('0'),
+				$elm$core$String$fromInt(
+					$elm$core$Basics$abs(_int))));
+	});
+var $justinmimbs$date$Date$monthToQuarter = function (m) {
+	return (($justinmimbs$date$Date$monthToNumber(m) + 2) / 3) | 0;
+};
+var $justinmimbs$date$Date$quarter = A2($elm$core$Basics$composeR, $justinmimbs$date$Date$month, $justinmimbs$date$Date$monthToQuarter);
+var $justinmimbs$date$Date$weekdayNumber = function (_v0) {
+	var rd = _v0.a;
+	var _v1 = A2($elm$core$Basics$modBy, 7, rd);
+	if (!_v1) {
+		return 7;
+	} else {
+		var n = _v1;
+		return n;
+	}
+};
+var $justinmimbs$date$Date$daysBeforeWeekYear = function (y) {
+	var jan4 = $justinmimbs$date$Date$daysBeforeYear(y) + 4;
+	return jan4 - $justinmimbs$date$Date$weekdayNumber(
+		$justinmimbs$date$Date$RD(jan4));
+};
+var $elm$time$Time$Fri = {$: 'Fri'};
+var $elm$time$Time$Mon = {$: 'Mon'};
+var $elm$time$Time$Sat = {$: 'Sat'};
+var $elm$time$Time$Sun = {$: 'Sun'};
+var $elm$time$Time$Thu = {$: 'Thu'};
+var $elm$time$Time$Tue = {$: 'Tue'};
+var $elm$time$Time$Wed = {$: 'Wed'};
+var $justinmimbs$date$Date$numberToWeekday = function (wdn) {
+	var _v0 = A2($elm$core$Basics$max, 1, wdn);
+	switch (_v0) {
+		case 1:
+			return $elm$time$Time$Mon;
+		case 2:
+			return $elm$time$Time$Tue;
+		case 3:
+			return $elm$time$Time$Wed;
+		case 4:
+			return $elm$time$Time$Thu;
+		case 5:
+			return $elm$time$Time$Fri;
+		case 6:
+			return $elm$time$Time$Sat;
+		default:
+			return $elm$time$Time$Sun;
+	}
+};
+var $justinmimbs$date$Date$toWeekDate = function (_v0) {
+	var rd = _v0.a;
+	var wdn = $justinmimbs$date$Date$weekdayNumber(
+		$justinmimbs$date$Date$RD(rd));
+	var wy = $justinmimbs$date$Date$year(
+		$justinmimbs$date$Date$RD(rd + (4 - wdn)));
+	var week1Day1 = $justinmimbs$date$Date$daysBeforeWeekYear(wy) + 1;
+	return {
+		weekNumber: 1 + (((rd - week1Day1) / 7) | 0),
+		weekYear: wy,
+		weekday: $justinmimbs$date$Date$numberToWeekday(wdn)
+	};
+};
+var $justinmimbs$date$Date$weekNumber = A2(
+	$elm$core$Basics$composeR,
+	$justinmimbs$date$Date$toWeekDate,
+	function ($) {
+		return $.weekNumber;
+	});
+var $justinmimbs$date$Date$weekYear = A2(
+	$elm$core$Basics$composeR,
+	$justinmimbs$date$Date$toWeekDate,
+	function ($) {
+		return $.weekYear;
+	});
+var $justinmimbs$date$Date$weekday = A2($elm$core$Basics$composeR, $justinmimbs$date$Date$weekdayNumber, $justinmimbs$date$Date$numberToWeekday);
+var $justinmimbs$date$Date$ordinalSuffix = function (n) {
+	var nn = A2($elm$core$Basics$modBy, 100, n);
+	var _v0 = A2(
+		$elm$core$Basics$min,
+		(nn < 20) ? nn : A2($elm$core$Basics$modBy, 10, nn),
+		4);
+	switch (_v0) {
+		case 1:
+			return 'st';
+		case 2:
+			return 'nd';
+		case 3:
+			return 'rd';
+		default:
+			return 'th';
+	}
+};
+var $justinmimbs$date$Date$withOrdinalSuffix = function (n) {
+	return _Utils_ap(
+		$elm$core$String$fromInt(n),
+		$justinmimbs$date$Date$ordinalSuffix(n));
+};
+var $justinmimbs$date$Date$formatField = F4(
+	function (language, _char, length, date) {
+		switch (_char.valueOf()) {
+			case 'y':
+				if (length === 2) {
+					return A2(
+						$elm$core$String$right,
+						2,
+						A3(
+							$elm$core$String$padLeft,
+							2,
+							_Utils_chr('0'),
+							$elm$core$String$fromInt(
+								$justinmimbs$date$Date$year(date))));
+				} else {
+					return A2(
+						$justinmimbs$date$Date$padSignedInt,
+						length,
+						$justinmimbs$date$Date$year(date));
+				}
+			case 'Y':
+				if (length === 2) {
+					return A2(
+						$elm$core$String$right,
+						2,
+						A3(
+							$elm$core$String$padLeft,
+							2,
+							_Utils_chr('0'),
+							$elm$core$String$fromInt(
+								$justinmimbs$date$Date$weekYear(date))));
+				} else {
+					return A2(
+						$justinmimbs$date$Date$padSignedInt,
+						length,
+						$justinmimbs$date$Date$weekYear(date));
+				}
+			case 'Q':
+				switch (length) {
+					case 1:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$quarter(date));
+					case 2:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$quarter(date));
+					case 3:
+						return 'Q' + $elm$core$String$fromInt(
+							$justinmimbs$date$Date$quarter(date));
+					case 4:
+						return $justinmimbs$date$Date$withOrdinalSuffix(
+							$justinmimbs$date$Date$quarter(date));
+					case 5:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$quarter(date));
+					default:
+						return '';
+				}
+			case 'M':
+				switch (length) {
+					case 1:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$monthNumber(date));
+					case 2:
+						return A3(
+							$elm$core$String$padLeft,
+							2,
+							_Utils_chr('0'),
+							$elm$core$String$fromInt(
+								$justinmimbs$date$Date$monthNumber(date)));
+					case 3:
+						return language.monthNameShort(
+							$justinmimbs$date$Date$month(date));
+					case 4:
+						return language.monthName(
+							$justinmimbs$date$Date$month(date));
+					case 5:
+						return A2(
+							$elm$core$String$left,
+							1,
+							language.monthNameShort(
+								$justinmimbs$date$Date$month(date)));
+					default:
+						return '';
+				}
+			case 'w':
+				switch (length) {
+					case 1:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$weekNumber(date));
+					case 2:
+						return A3(
+							$elm$core$String$padLeft,
+							2,
+							_Utils_chr('0'),
+							$elm$core$String$fromInt(
+								$justinmimbs$date$Date$weekNumber(date)));
+					default:
+						return '';
+				}
+			case 'd':
+				switch (length) {
+					case 1:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$day(date));
+					case 2:
+						return A3(
+							$elm$core$String$padLeft,
+							2,
+							_Utils_chr('0'),
+							$elm$core$String$fromInt(
+								$justinmimbs$date$Date$day(date)));
+					case 3:
+						return language.dayWithSuffix(
+							$justinmimbs$date$Date$day(date));
+					default:
+						return '';
+				}
+			case 'D':
+				switch (length) {
+					case 1:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$ordinalDay(date));
+					case 2:
+						return A3(
+							$elm$core$String$padLeft,
+							2,
+							_Utils_chr('0'),
+							$elm$core$String$fromInt(
+								$justinmimbs$date$Date$ordinalDay(date)));
+					case 3:
+						return A3(
+							$elm$core$String$padLeft,
+							3,
+							_Utils_chr('0'),
+							$elm$core$String$fromInt(
+								$justinmimbs$date$Date$ordinalDay(date)));
+					default:
+						return '';
+				}
+			case 'E':
+				switch (length) {
+					case 1:
+						return language.weekdayNameShort(
+							$justinmimbs$date$Date$weekday(date));
+					case 2:
+						return language.weekdayNameShort(
+							$justinmimbs$date$Date$weekday(date));
+					case 3:
+						return language.weekdayNameShort(
+							$justinmimbs$date$Date$weekday(date));
+					case 4:
+						return language.weekdayName(
+							$justinmimbs$date$Date$weekday(date));
+					case 5:
+						return A2(
+							$elm$core$String$left,
+							1,
+							language.weekdayNameShort(
+								$justinmimbs$date$Date$weekday(date)));
+					case 6:
+						return A2(
+							$elm$core$String$left,
+							2,
+							language.weekdayNameShort(
+								$justinmimbs$date$Date$weekday(date)));
+					default:
+						return '';
+				}
+			case 'e':
+				switch (length) {
+					case 1:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$weekdayNumber(date));
+					case 2:
+						return $elm$core$String$fromInt(
+							$justinmimbs$date$Date$weekdayNumber(date));
+					default:
+						return A4(
+							$justinmimbs$date$Date$formatField,
+							language,
+							_Utils_chr('E'),
+							length,
+							date);
+				}
+			default:
+				return '';
+		}
+	});
+var $justinmimbs$date$Date$formatWithTokens = F3(
+	function (language, tokens, date) {
+		return A3(
+			$elm$core$List$foldl,
+			F2(
+				function (token, formatted) {
+					if (token.$ === 'Field') {
+						var _char = token.a;
+						var length = token.b;
+						return _Utils_ap(
+							A4($justinmimbs$date$Date$formatField, language, _char, length, date),
+							formatted);
+					} else {
+						var str = token.a;
+						return _Utils_ap(str, formatted);
+					}
+				}),
+			'',
+			tokens);
+	});
+var $justinmimbs$date$Pattern$Literal = function (a) {
+	return {$: 'Literal', a: a};
+};
+var $elm$parser$Parser$andThen = $elm$parser$Parser$Advanced$andThen;
+var $elm$parser$Parser$Expecting = function (a) {
+	return {$: 'Expecting', a: a};
+};
+var $elm$parser$Parser$toToken = function (str) {
+	return A2(
+		$elm$parser$Parser$Advanced$Token,
+		str,
+		$elm$parser$Parser$Expecting(str));
+};
+var $elm$parser$Parser$token = function (str) {
+	return $elm$parser$Parser$Advanced$token(
+		$elm$parser$Parser$toToken(str));
+};
+var $justinmimbs$date$Pattern$escapedQuote = A2(
+	$elm$parser$Parser$ignorer,
+	$elm$parser$Parser$succeed(
+		$justinmimbs$date$Pattern$Literal('\u0027')),
+	$elm$parser$Parser$token('\u0027\u0027'));
+var $elm$parser$Parser$UnexpectedChar = {$: 'UnexpectedChar'};
+var $elm$parser$Parser$chompIf = function (isGood) {
+	return A2($elm$parser$Parser$Advanced$chompIf, isGood, $elm$parser$Parser$UnexpectedChar);
+};
+var $justinmimbs$date$Pattern$Field = F2(
+	function (a, b) {
+		return {$: 'Field', a: a, b: b};
+	});
+var $elm$parser$Parser$Problem = function (a) {
+	return {$: 'Problem', a: a};
+};
+var $elm$parser$Parser$problem = function (msg) {
+	return $elm$parser$Parser$Advanced$problem(
+		$elm$parser$Parser$Problem(msg));
+};
+var $justinmimbs$date$Pattern$fieldRepeats = function (str) {
+	var _v0 = $elm$core$String$toList(str);
+	if (_v0.b && (!_v0.b.b)) {
+		var _char = _v0.a;
+		return A2(
+			$elm$parser$Parser$keeper,
+			A2(
+				$elm$parser$Parser$keeper,
+				$elm$parser$Parser$succeed(
+					F2(
+						function (x, y) {
+							return A2($justinmimbs$date$Pattern$Field, _char, 1 + (y - x));
+						})),
+				A2(
+					$elm$parser$Parser$ignorer,
+					$elm$parser$Parser$getOffset,
+					$elm$parser$Parser$chompWhile(
+						$elm$core$Basics$eq(_char)))),
+			$elm$parser$Parser$getOffset);
+	} else {
+		return $elm$parser$Parser$problem('expected exactly one char');
+	}
+};
+var $elm$parser$Parser$getChompedString = $elm$parser$Parser$Advanced$getChompedString;
+var $justinmimbs$date$Pattern$field = A2(
+	$elm$parser$Parser$andThen,
+	$justinmimbs$date$Pattern$fieldRepeats,
+	$elm$parser$Parser$getChompedString(
+		$elm$parser$Parser$chompIf($elm$core$Char$isAlpha)));
+var $justinmimbs$date$Pattern$finalize = A2(
+	$elm$core$List$foldl,
+	F2(
+		function (token, tokens) {
+			var _v0 = _Utils_Tuple2(token, tokens);
+			if (((_v0.a.$ === 'Literal') && _v0.b.b) && (_v0.b.a.$ === 'Literal')) {
+				var x = _v0.a.a;
+				var _v1 = _v0.b;
+				var y = _v1.a.a;
+				var rest = _v1.b;
+				return A2(
+					$elm$core$List$cons,
+					$justinmimbs$date$Pattern$Literal(
+						_Utils_ap(x, y)),
+					rest);
+			} else {
+				return A2($elm$core$List$cons, token, tokens);
+			}
+		}),
+	_List_Nil);
+var $elm$parser$Parser$lazy = $elm$parser$Parser$Advanced$lazy;
+var $justinmimbs$date$Pattern$isLiteralChar = function (_char) {
+	return (!_Utils_eq(
+		_char,
+		_Utils_chr('\''))) && (!$elm$core$Char$isAlpha(_char));
+};
+var $elm$parser$Parser$map = $elm$parser$Parser$Advanced$map;
+var $justinmimbs$date$Pattern$literal = A2(
+	$elm$parser$Parser$map,
+	$justinmimbs$date$Pattern$Literal,
+	$elm$parser$Parser$getChompedString(
+		A2(
+			$elm$parser$Parser$ignorer,
+			A2(
+				$elm$parser$Parser$ignorer,
+				$elm$parser$Parser$succeed(_Utils_Tuple0),
+				$elm$parser$Parser$chompIf($justinmimbs$date$Pattern$isLiteralChar)),
+			$elm$parser$Parser$chompWhile($justinmimbs$date$Pattern$isLiteralChar))));
+var $elm$parser$Parser$oneOf = $elm$parser$Parser$Advanced$oneOf;
+var $elm$parser$Parser$ExpectingEnd = {$: 'ExpectingEnd'};
+var $elm$parser$Parser$end = $elm$parser$Parser$Advanced$end($elm$parser$Parser$ExpectingEnd);
+var $justinmimbs$date$Pattern$quotedHelp = function (result) {
+	return $elm$parser$Parser$oneOf(
+		_List_fromArray(
+			[
+				A2(
+				$elm$parser$Parser$andThen,
+				function (str) {
+					return $justinmimbs$date$Pattern$quotedHelp(
+						_Utils_ap(result, str));
+				},
+				$elm$parser$Parser$getChompedString(
+					A2(
+						$elm$parser$Parser$ignorer,
+						A2(
+							$elm$parser$Parser$ignorer,
+							$elm$parser$Parser$succeed(_Utils_Tuple0),
+							$elm$parser$Parser$chompIf(
+								$elm$core$Basics$neq(
+									_Utils_chr('\'')))),
+						$elm$parser$Parser$chompWhile(
+							$elm$core$Basics$neq(
+								_Utils_chr('\'')))))),
+				A2(
+				$elm$parser$Parser$andThen,
+				function (_v0) {
+					return $justinmimbs$date$Pattern$quotedHelp(result + '\u0027');
+				},
+				$elm$parser$Parser$token('\u0027\u0027')),
+				$elm$parser$Parser$succeed(result)
+			]));
+};
+var $justinmimbs$date$Pattern$quoted = A2(
+	$elm$parser$Parser$keeper,
+	A2(
+		$elm$parser$Parser$ignorer,
+		$elm$parser$Parser$succeed($justinmimbs$date$Pattern$Literal),
+		$elm$parser$Parser$chompIf(
+			$elm$core$Basics$eq(
+				_Utils_chr('\'')))),
+	A2(
+		$elm$parser$Parser$ignorer,
+		$justinmimbs$date$Pattern$quotedHelp(''),
+		$elm$parser$Parser$oneOf(
+			_List_fromArray(
+				[
+					$elm$parser$Parser$chompIf(
+					$elm$core$Basics$eq(
+						_Utils_chr('\''))),
+					$elm$parser$Parser$end
+				]))));
+var $justinmimbs$date$Pattern$patternHelp = function (tokens) {
+	return $elm$parser$Parser$oneOf(
+		_List_fromArray(
+			[
+				A2(
+				$elm$parser$Parser$andThen,
+				function (token) {
+					return $justinmimbs$date$Pattern$patternHelp(
+						A2($elm$core$List$cons, token, tokens));
+				},
+				$elm$parser$Parser$oneOf(
+					_List_fromArray(
+						[$justinmimbs$date$Pattern$field, $justinmimbs$date$Pattern$literal, $justinmimbs$date$Pattern$escapedQuote, $justinmimbs$date$Pattern$quoted]))),
+				$elm$parser$Parser$lazy(
+				function (_v0) {
+					return $elm$parser$Parser$succeed(
+						$justinmimbs$date$Pattern$finalize(tokens));
+				})
+			]));
+};
+var $justinmimbs$date$Pattern$fromString = function (str) {
+	return A2(
+		$elm$core$Result$withDefault,
+		_List_fromArray(
+			[
+				$justinmimbs$date$Pattern$Literal(str)
+			]),
+		A2(
+			$elm$parser$Parser$run,
+			$justinmimbs$date$Pattern$patternHelp(_List_Nil),
+			str));
+};
+var $justinmimbs$date$Date$formatWithLanguage = F2(
+	function (language, pattern) {
+		var tokens = $elm$core$List$reverse(
+			$justinmimbs$date$Pattern$fromString(pattern));
+		return A2($justinmimbs$date$Date$formatWithTokens, language, tokens);
+	});
+var $justinmimbs$date$Date$monthToName = function (m) {
+	switch (m.$) {
+		case 'Jan':
+			return 'January';
+		case 'Feb':
+			return 'February';
+		case 'Mar':
+			return 'March';
+		case 'Apr':
+			return 'April';
+		case 'May':
+			return 'May';
+		case 'Jun':
+			return 'June';
+		case 'Jul':
+			return 'July';
+		case 'Aug':
+			return 'August';
+		case 'Sep':
+			return 'September';
+		case 'Oct':
+			return 'October';
+		case 'Nov':
+			return 'November';
+		default:
+			return 'December';
+	}
+};
+var $justinmimbs$date$Date$weekdayToName = function (wd) {
+	switch (wd.$) {
+		case 'Mon':
+			return 'Monday';
+		case 'Tue':
+			return 'Tuesday';
+		case 'Wed':
+			return 'Wednesday';
+		case 'Thu':
+			return 'Thursday';
+		case 'Fri':
+			return 'Friday';
+		case 'Sat':
+			return 'Saturday';
+		default:
+			return 'Sunday';
+	}
+};
+var $justinmimbs$date$Date$language_en = {
+	dayWithSuffix: $justinmimbs$date$Date$withOrdinalSuffix,
+	monthName: $justinmimbs$date$Date$monthToName,
+	monthNameShort: A2(
+		$elm$core$Basics$composeR,
+		$justinmimbs$date$Date$monthToName,
+		$elm$core$String$left(3)),
+	weekdayName: $justinmimbs$date$Date$weekdayToName,
+	weekdayNameShort: A2(
+		$elm$core$Basics$composeR,
+		$justinmimbs$date$Date$weekdayToName,
+		$elm$core$String$left(3))
+};
+var $justinmimbs$date$Date$format = function (pattern) {
+	return A2($justinmimbs$date$Date$formatWithLanguage, $justinmimbs$date$Date$language_en, pattern);
+};
+var $author$project$Main$header = F2(
+	function (date, fileName) {
+		return A2(
+			$elm$core$String$join,
+			'\u000A',
+			_List_fromArray(
+				[
+					'%title ',
+					'%author ',
+					'%date ' + A2($justinmimbs$date$Date$format, 'MMMM d, y', date),
+					'%type ',
+					'%subject ',
+					'%source ' + fileName,
+					'',
+					''
+				]));
+	});
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Export$exprImages = function (expr) {
 	switch (expr.$) {
 		case 'Fun':
@@ -16037,6 +16897,167 @@ var $avh4$elm_color$Color$toCssString = function (_v0) {
 			]));
 };
 var $elm$file$File$toString = _File_toString;
+var $justinmimbs$date$Date$daysBeforeMonth = F2(
+	function (y, m) {
+		var leapDays = $justinmimbs$date$Date$isLeapYear(y) ? 1 : 0;
+		switch (m.$) {
+			case 'Jan':
+				return 0;
+			case 'Feb':
+				return 31;
+			case 'Mar':
+				return 59 + leapDays;
+			case 'Apr':
+				return 90 + leapDays;
+			case 'May':
+				return 120 + leapDays;
+			case 'Jun':
+				return 151 + leapDays;
+			case 'Jul':
+				return 181 + leapDays;
+			case 'Aug':
+				return 212 + leapDays;
+			case 'Sep':
+				return 243 + leapDays;
+			case 'Oct':
+				return 273 + leapDays;
+			case 'Nov':
+				return 304 + leapDays;
+			default:
+				return 334 + leapDays;
+		}
+	});
+var $justinmimbs$date$Date$fromCalendarDate = F3(
+	function (y, m, d) {
+		return $justinmimbs$date$Date$RD(
+			($justinmimbs$date$Date$daysBeforeYear(y) + A2($justinmimbs$date$Date$daysBeforeMonth, y, m)) + A3(
+				$elm$core$Basics$clamp,
+				1,
+				A2($justinmimbs$date$Date$daysInMonth, y, m),
+				d));
+	});
+var $elm$time$Time$flooredDiv = F2(
+	function (numerator, denominator) {
+		return $elm$core$Basics$floor(numerator / denominator);
+	});
+var $elm$time$Time$posixToMillis = function (_v0) {
+	var millis = _v0.a;
+	return millis;
+};
+var $elm$time$Time$toAdjustedMinutesHelp = F3(
+	function (defaultOffset, posixMinutes, eras) {
+		toAdjustedMinutesHelp:
+		while (true) {
+			if (!eras.b) {
+				return posixMinutes + defaultOffset;
+			} else {
+				var era = eras.a;
+				var olderEras = eras.b;
+				if (_Utils_cmp(era.start, posixMinutes) < 0) {
+					return posixMinutes + era.offset;
+				} else {
+					var $temp$defaultOffset = defaultOffset,
+						$temp$posixMinutes = posixMinutes,
+						$temp$eras = olderEras;
+					defaultOffset = $temp$defaultOffset;
+					posixMinutes = $temp$posixMinutes;
+					eras = $temp$eras;
+					continue toAdjustedMinutesHelp;
+				}
+			}
+		}
+	});
+var $elm$time$Time$toAdjustedMinutes = F2(
+	function (_v0, time) {
+		var defaultOffset = _v0.a;
+		var eras = _v0.b;
+		return A3(
+			$elm$time$Time$toAdjustedMinutesHelp,
+			defaultOffset,
+			A2(
+				$elm$time$Time$flooredDiv,
+				$elm$time$Time$posixToMillis(time),
+				60000),
+			eras);
+	});
+var $elm$time$Time$toCivil = function (minutes) {
+	var rawDay = A2($elm$time$Time$flooredDiv, minutes, 60 * 24) + 719468;
+	var era = (((rawDay >= 0) ? rawDay : (rawDay - 146096)) / 146097) | 0;
+	var dayOfEra = rawDay - (era * 146097);
+	var yearOfEra = ((((dayOfEra - ((dayOfEra / 1460) | 0)) + ((dayOfEra / 36524) | 0)) - ((dayOfEra / 146096) | 0)) / 365) | 0;
+	var dayOfYear = dayOfEra - (((365 * yearOfEra) + ((yearOfEra / 4) | 0)) - ((yearOfEra / 100) | 0));
+	var mp = (((5 * dayOfYear) + 2) / 153) | 0;
+	var month = mp + ((mp < 10) ? 3 : (-9));
+	var year = yearOfEra + (era * 400);
+	return {
+		day: (dayOfYear - ((((153 * mp) + 2) / 5) | 0)) + 1,
+		month: month,
+		year: year + ((month <= 2) ? 1 : 0)
+	};
+};
+var $elm$time$Time$toDay = F2(
+	function (zone, time) {
+		return $elm$time$Time$toCivil(
+			A2($elm$time$Time$toAdjustedMinutes, zone, time)).day;
+	});
+var $elm$time$Time$toMonth = F2(
+	function (zone, time) {
+		var _v0 = $elm$time$Time$toCivil(
+			A2($elm$time$Time$toAdjustedMinutes, zone, time)).month;
+		switch (_v0) {
+			case 1:
+				return $elm$time$Time$Jan;
+			case 2:
+				return $elm$time$Time$Feb;
+			case 3:
+				return $elm$time$Time$Mar;
+			case 4:
+				return $elm$time$Time$Apr;
+			case 5:
+				return $elm$time$Time$May;
+			case 6:
+				return $elm$time$Time$Jun;
+			case 7:
+				return $elm$time$Time$Jul;
+			case 8:
+				return $elm$time$Time$Aug;
+			case 9:
+				return $elm$time$Time$Sep;
+			case 10:
+				return $elm$time$Time$Oct;
+			case 11:
+				return $elm$time$Time$Nov;
+			default:
+				return $elm$time$Time$Dec;
+		}
+	});
+var $elm$time$Time$toYear = F2(
+	function (zone, time) {
+		return $elm$time$Time$toCivil(
+			A2($elm$time$Time$toAdjustedMinutes, zone, time)).year;
+	});
+var $justinmimbs$date$Date$fromPosix = F2(
+	function (zone, posix) {
+		return A3(
+			$justinmimbs$date$Date$fromCalendarDate,
+			A2($elm$time$Time$toYear, zone, posix),
+			A2($elm$time$Time$toMonth, zone, posix),
+			A2($elm$time$Time$toDay, zone, posix));
+	});
+var $elm$time$Time$Name = function (a) {
+	return {$: 'Name', a: a};
+};
+var $elm$time$Time$Offset = function (a) {
+	return {$: 'Offset', a: a};
+};
+var $elm$time$Time$Zone = F2(
+	function (a, b) {
+		return {$: 'Zone', a: a, b: b};
+	});
+var $elm$time$Time$customZone = $elm$time$Time$Zone;
+var $elm$time$Time$here = _Time_here(_Utils_Tuple0);
+var $elm$time$Time$now = _Time_now($elm$time$Time$millisToPosix);
+var $justinmimbs$date$Date$today = A3($elm$core$Task$map2, $justinmimbs$date$Date$fromPosix, $elm$time$Time$here, $elm$time$Time$now);
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		update:
@@ -16344,6 +17365,32 @@ var $author$project$Main$update = F2(
 						model = $temp$model;
 						continue update;
 					}
+				case 'MakeHeaderRequested':
+					return $author$project$Main$hasHeader(model.sourceText) ? _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								notice: $elm$core$Maybe$Just('The document already has a header.')
+							}),
+						$elm$core$Platform$Cmd$none) : _Utils_Tuple2(
+						model,
+						A2($elm$core$Task$perform, $author$project$Main$GotHeaderDate, $justinmimbs$date$Date$today));
+				case 'GotHeaderDate':
+					var date = msg.a;
+					var headed = function (m) {
+						return _Utils_update(
+							m,
+							{dirty: true, editVersion: m.editVersion + 1});
+					}(
+						A2(
+							$author$project$Main$loadDocument,
+							_Utils_ap(
+								A2($author$project$Main$header, date, model.fileName),
+								model.sourceText),
+							model));
+					return _Utils_Tuple2(
+						headed,
+						$author$project$Main$scheduleAutoSave(headed));
 				case 'NewRequested':
 					var _v17 = model.platform;
 					if (_v17.$ === 'Desktop') {
@@ -19962,8 +21009,8 @@ var $author$project$Main$editorView = function (model) {
 		{attrs: _List_Nil, highlight: model.syncHighlight, onInput: $author$project$Main$InputText, source: model.initialText});
 };
 var $author$project$Main$ExportPdfRequested = {$: 'ExportPdfRequested'};
+var $author$project$Main$MakeHeaderRequested = {$: 'MakeHeaderRequested'};
 var $author$project$Main$NormalizeRequested = {$: 'NormalizeRequested'};
-var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
 var $author$project$Main$OpenFolderRequested = {$: 'OpenFolderRequested'};
 var $author$project$Main$SaveAsRequested = {$: 'SaveAsRequested'};
 var $author$project$Main$ToggleFileMenu = {$: 'ToggleFileMenu'};
@@ -20057,7 +21104,11 @@ var $author$project$Main$fileMenu = function (model) {
 									'New…',
 									desktopShortcut('⌘N'),
 									$author$project$Main$NewRequested),
-									A2(item, 'Open…', $author$project$Main$OpenFileRequested),
+									A3(
+									itemWithShortcut,
+									'Open…',
+									desktopShortcut('⌘O'),
+									$author$project$Main$OpenFileRequested),
 									A2(item, 'Open Folder…', $author$project$Main$OpenFolderRequested),
 									A2(item, 'Save', $author$project$Main$SaveRequested),
 									A2(item, 'Save As…', $author$project$Main$SaveAsRequested)
@@ -20074,7 +21125,8 @@ var $author$project$Main$fileMenu = function (model) {
 										]) : _List_Nil,
 									_List_fromArray(
 										[
-											A2(item, 'Normalize', $author$project$Main$NormalizeRequested)
+											A2(item, 'Normalize', $author$project$Main$NormalizeRequested),
+											A2(item, 'Make header', $author$project$Main$MakeHeaderRequested)
 										])))))
 					])) : $elm$html$Html$text('')
 			]));

@@ -6475,6 +6475,7 @@ var $author$project$Main$PrintFailed = function (a) {
 	return {$: 'PrintFailed', a: a};
 };
 var $author$project$Main$SaveAsDialog = {$: 'SaveAsDialog'};
+var $author$project$Main$SaveRequested = {$: 'SaveRequested'};
 var $author$project$Main$atLocation = F2(
 	function (location, model) {
 		return _Utils_update(
@@ -15609,6 +15610,50 @@ var $author$project$Main$geometry = function (model) {
 		tocW: model.tocWidth
 	};
 };
+var $author$project$Normalize$isFence = function (line) {
+	var trimmed = $elm$core$String$trimLeft(line);
+	return A2($elm$core$String$startsWith, '```', trimmed) || A2($elm$core$String$startsWith, '~~~', trimmed);
+};
+var $author$project$Normalize$numberedHeading = A2(
+	$elm$core$Maybe$withDefault,
+	$elm$regex$Regex$never,
+	$elm$regex$Regex$fromString('^(#{1,6} +)(?:\u005Cd+\u005C.)+\u005Cd*(?: +|$)'));
+var $author$project$Normalize$step = F2(
+	function (line, _v0) {
+		var inFence = _v0.a;
+		var acc = _v0.b;
+		return $author$project$Normalize$isFence(line) ? _Utils_Tuple2(
+			!inFence,
+			A2($elm$core$List$cons, line, acc)) : (inFence ? _Utils_Tuple2(
+			inFence,
+			A2($elm$core$List$cons, line, acc)) : _Utils_Tuple2(
+			inFence,
+			A2(
+				$elm$core$List$cons,
+				A3(
+					$elm$regex$Regex$replace,
+					$author$project$Normalize$numberedHeading,
+					function (m) {
+						return $elm$core$String$concat(
+							A2(
+								$elm$core$List$map,
+								$elm$core$Maybe$withDefault(''),
+								m.submatches));
+					},
+					line),
+				acc)));
+	});
+var $author$project$Normalize$headings = function (source) {
+	return A2(
+		$elm$core$String$join,
+		'\u000A',
+		$elm$core$List$reverse(
+			A3(
+				$elm$core$List$foldl,
+				$author$project$Normalize$step,
+				_Utils_Tuple2(false, _List_Nil),
+				$elm$core$String$lines(source)).b));
+};
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Export$exprImages = function (expr) {
 	switch (expr.$) {
 		case 'Fun':
@@ -16215,6 +16260,28 @@ var $author$project$Main$update = F2(
 								model,
 								{dirty: false}),
 							$author$project$Main$saveFile(model));
+					}
+				case 'NormalizeRequested':
+					var normalized = $author$project$Normalize$headings(model.sourceText);
+					if (_Utils_eq(normalized, model.sourceText)) {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									notice: $elm$core$Maybe$Just('No numbered headings to normalize.')
+								}),
+							$elm$core$Platform$Cmd$none);
+					} else {
+						var $temp$msg = $author$project$Main$SaveRequested,
+							$temp$model = function (m) {
+							return _Utils_update(
+								m,
+								{dirty: true, editVersion: m.editVersion + 1});
+						}(
+							A2($author$project$Main$loadDocument, normalized, model));
+						msg = $temp$msg;
+						model = $temp$model;
+						continue update;
 					}
 				case 'NewRequested':
 					var _v17 = model.platform;
@@ -19834,10 +19901,10 @@ var $author$project$Main$editorView = function (model) {
 		{attrs: _List_Nil, highlight: model.syncHighlight, onInput: $author$project$Main$InputText, source: model.initialText});
 };
 var $author$project$Main$ExportPdfRequested = {$: 'ExportPdfRequested'};
+var $author$project$Main$NormalizeRequested = {$: 'NormalizeRequested'};
 var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
 var $author$project$Main$OpenFolderRequested = {$: 'OpenFolderRequested'};
 var $author$project$Main$SaveAsRequested = {$: 'SaveAsRequested'};
-var $author$project$Main$SaveRequested = {$: 'SaveRequested'};
 var $author$project$Main$ToggleFileMenu = {$: 'ToggleFileMenu'};
 var $author$project$Main$fileMenu = function (model) {
 	var itemWithShortcut = F3(
@@ -19939,10 +20006,15 @@ var $author$project$Main$fileMenu = function (model) {
 									[
 										A2(item, 'Export PDF', $author$project$Main$ExportPdfRequested)
 									]) : _List_Nil,
-								_Utils_eq(model.platform, $author$project$Main$Desktop) ? _List_fromArray(
-									[
-										A3(itemWithShortcut, 'Print', '⌘P', $author$project$Main$PrintRequested)
-									]) : _List_Nil)))
+								_Utils_ap(
+									_Utils_eq(model.platform, $author$project$Main$Desktop) ? _List_fromArray(
+										[
+											A3(itemWithShortcut, 'Print', '⌘P', $author$project$Main$PrintRequested)
+										]) : _List_Nil,
+									_List_fromArray(
+										[
+											A2(item, 'Normalize', $author$project$Main$NormalizeRequested)
+										])))))
 					])) : $elm$html$Html$text('')
 			]));
 };

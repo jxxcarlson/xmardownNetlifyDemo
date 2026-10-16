@@ -5973,16 +5973,14 @@ var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
 var $author$project$Main$PrintRequested = {$: 'PrintRequested'};
 var $author$project$Main$ToggleEditor = {$: 'ToggleEditor'};
 var $elm$json$Json$Decode$fail = _Json_fail;
-var $elm$core$Basics$neq = _Utils_notEqual;
 var $elm$core$Basics$not = _Basics_not;
 var $elm$core$String$toLower = _String_toLower;
 var $author$project$Main$keyDecoder = function (model) {
 	return A2(
 		$elm$json$Json$Decode$andThen,
 		function (event) {
-			var somethingOpen = (!_Utils_eq(model.openMenu, $elm$core$Maybe$Nothing)) || ((!_Utils_eq(model.dialog, $elm$core$Maybe$Nothing)) || (!_Utils_eq(model.printStatus, $elm$core$Maybe$Nothing)));
 			var shortcutsAllowed = event.command && ((!event.otherModifier) && ((!event.repeat) && (_Utils_eq(model.dialog, $elm$core$Maybe$Nothing) && _Utils_eq(model.printStatus, $elm$core$Maybe$Nothing))));
-			if ((event.key === 'Escape') && somethingOpen) {
+			if (event.key === 'Escape') {
 				return $elm$json$Json$Decode$succeed($author$project$Main$EscapePressed);
 			} else {
 				if (shortcutsAllowed) {
@@ -6576,6 +6574,7 @@ var $author$project$Main$atLocation = F2(
 				folderPath: $elm$core$Maybe$Just(location.folder)
 			});
 	});
+var $elm$core$Basics$neq = _Utils_notEqual;
 var $author$project$Main$autoSaves = function (model) {
 	return _Utils_eq(model.platform, $author$project$Main$Desktop) && (!_Utils_eq(model.filePath, $elm$core$Maybe$Nothing));
 };
@@ -17920,8 +17919,8 @@ var $author$project$Main$update = F2(
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{dialog: $elm$core$Maybe$Nothing, openMenu: $elm$core$Maybe$Nothing, printStatus: $elm$core$Maybe$Nothing}),
-						$elm$core$Platform$Cmd$none);
+							{dialog: $elm$core$Maybe$Nothing, openMenu: $elm$core$Maybe$Nothing, printStatus: $elm$core$Maybe$Nothing, selectId: '@InitID'}),
+						$author$project$Ports$injectHighlightCSS(''));
 				case 'DialogNameChanged':
 					var name = msg.a;
 					return _Utils_Tuple2(
@@ -21868,7 +21867,7 @@ var $author$project$Main$recentMenu = function (model) {
 							$elm$html$Html$text(
 							A2(
 								$author$project$Main$smartEllipsis,
-								24,
+								34,
 								A2($elm$core$Maybe$withDefault, name, title)))
 						])),
 					A2(

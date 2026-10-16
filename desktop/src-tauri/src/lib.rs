@@ -6,6 +6,11 @@
 //! saved the document (auto-save): we emit "xm-close" with "close" or "quit",
 //! the page saves or asks, then calls `finish_close`. If the page never
 //! answers, a second close/quit goes through regardless.
+//!
+//! Opening a Markdown file from the Finder (the app is registered for .md in
+//! tauri.conf.json) arrives as RunEvent::Opened. Before the page has loaded,
+//! the path is kept until the page asks for it (`take_opened_file`); after
+//! that, it is sent to the page as "xm-open".
 
 mod pdf;
 mod print;
@@ -13,6 +18,7 @@ mod print;
 use std::fs;
 use std::path::Path;
 use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Mutex;
 
 use tauri::{AppHandle, Emitter, Manager, RunEvent, WindowEvent};
 
@@ -20,6 +26,10 @@ use tauri::{AppHandle, Emitter, Manager, RunEvent, WindowEvent};
 static CLOSE_ALLOWED: AtomicBool = AtomicBool::new(false);
 /// Set while a close/quit is waiting for the page.
 static CLOSE_PENDING: AtomicBool = AtomicBool::new(false);
+/// A file opened from the Finder before the page was ready for it.
+static OPENED_FILE: Mutex<Option<String>> = Mutex::new(None);
+/// Set once the page listens for "xm-open" (see `take_opened_file`).
+static PAGE_READY: AtomicBool = AtomicBool::new(false);
 
 /// Read a UTF-8 text file.
 #[tauri::command]
@@ -88,6 +98,32 @@ fn finish_close(app: AppHandle, then: String) {
     }
 }
 
+/// Called by the page at startup, once it listens for "xm-open": the file
+/// the app was launched to open, if any.
+#[tauri::command]
+fn take_opened_file() -> Option<String> {
+    PAGE_READY.store(true, Ordering::SeqCst);
+    OPENED_FILE.lock().ok().and_then(|mut file| file.take())
+}
+
+/// A file opened from the Finder: hand it to the page, or keep it until the
+/// page asks for it.
+#[cfg(any(target_os = "macos", target_os = "ios"))]
+fn file_opened(app: &AppHandle, urls: &[tauri::Url]) {
+    let Some(path) = urls
+        .iter()
+        .find_map(|url| url.to_file_path().ok())
+        .map(|path| path.to_string_lossy().into_owned())
+    else {
+        return;
+    };
+    if PAGE_READY.load(Ordering::SeqCst) {
+        let _ = app.emit("xm-open", path);
+    } else if let Ok(mut file) = OPENED_FILE.lock() {
+        *file = Some(path);
+    }
+}
+
 /// The user cancelled (or the save failed): stay open.
 #[tauri::command]
 fn cancel_close() {
@@ -120,7 +156,8 @@ pub fn run() {
             export_pdf,
             print_pdf,
             finish_close,
-            cancel_close
+            cancel_close,
+            take_opened_file
         ])
         .on_window_event(|window, event| {
             if let WindowEvent::CloseRequested { api, .. } = event {
@@ -131,11 +168,14 @@ pub fn run() {
         })
         .build(tauri::generate_context!())
         .expect("error while building XMarkdown")
-        .run(|app, event| {
-            if let RunEvent::ExitRequested { api, .. } = event {
+        .run(|app, event| match event {
+            RunEvent::ExitRequested { api, .. } => {
                 if hold_for_save(app, "quit") {
                     api.prevent_exit();
                 }
             }
+            #[cfg(any(target_os = "macos", target_os = "ios"))]
+            RunEvent::Opened { urls } => file_opened(app, &urls),
+            _ => {}
         });
 }

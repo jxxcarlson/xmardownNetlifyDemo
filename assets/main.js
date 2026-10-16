@@ -5746,7 +5746,6 @@ var $author$project$Main$init = function (flagsValue) {
 			editVersion: 0,
 			editorOpen: false,
 			editorWidth: A2($elm$core$Basics$max, $author$project$Main$minEditorW, ((((flags.window.windowWidth - $author$project$Main$initialTocW) - (2 * $author$project$Main$pagePad)) - (2 * $author$project$Main$dividerW)) / 2) | 0),
-			fileMenuOpen: false,
 			fileName: 'untitled.md',
 			filePath: $elm$core$Maybe$Nothing,
 			folderName: $elm$core$Maybe$Nothing,
@@ -5757,10 +5756,12 @@ var $author$project$Main$init = function (flagsValue) {
 			lrSyncText: '',
 			notice: $elm$core$Maybe$Nothing,
 			numberedSections: false,
+			openMenu: $elm$core$Maybe$Nothing,
 			pdfExport: flags.pdfExport,
 			pdfShown: $elm$core$Maybe$Nothing,
 			platform: flags.platform,
 			printStatus: $elm$core$Maybe$Nothing,
+			recentFiles: _List_Nil,
 			selectId: '@InitID',
 			sourceText: $author$project$Data$XMarkdown$text,
 			syncHighlight: $elm$core$Maybe$Nothing,
@@ -5825,6 +5826,9 @@ var $author$project$Main$DesktopPdfShown = function (a) {
 var $author$project$Main$DesktopPrintFailed = function (a) {
 	return {$: 'DesktopPrintFailed', a: a};
 };
+var $author$project$Main$DesktopRecentFiles = function (a) {
+	return {$: 'DesktopRecentFiles', a: a};
+};
 var $author$project$Main$DesktopSaved = function (a) {
 	return {$: 'DesktopSaved', a: a};
 };
@@ -5836,8 +5840,21 @@ var $author$project$Main$FileLocation = F4(
 	function (path, name, folder, folderName) {
 		return {folder: folder, folderName: folderName, name: name, path: path};
 	});
+var $author$project$Main$RecentFile = F2(
+	function (path, title) {
+		return {path: path, title: title};
+	});
 var $elm$json$Json$Decode$andThen = _Json_andThen;
+var $elm$json$Json$Decode$list = _Json_decodeList;
 var $elm$json$Json$Decode$map4 = _Json_map4;
+var $elm$json$Json$Decode$maybe = function (decoder) {
+	return $elm$json$Json$Decode$oneOf(
+		_List_fromArray(
+			[
+				A2($elm$json$Json$Decode$map, $elm$core$Maybe$Just, decoder),
+				$elm$json$Json$Decode$succeed($elm$core$Maybe$Nothing)
+			]));
+};
 var $elm$core$Basics$negate = function (n) {
 	return -n;
 };
@@ -5903,6 +5920,20 @@ var $author$project$Main$desktopEventDecoder = function () {
 							}),
 						A2($elm$json$Json$Decode$field, 'folder', $elm$json$Json$Decode$string),
 						A2($elm$json$Json$Decode$field, 'folderName', $elm$json$Json$Decode$string));
+				case 'recent':
+					return A2(
+						$elm$json$Json$Decode$map,
+						$author$project$Main$DesktopRecentFiles,
+						A2(
+							$elm$json$Json$Decode$field,
+							'files',
+							$elm$json$Json$Decode$list(
+								A3(
+									$elm$json$Json$Decode$map2,
+									$author$project$Main$RecentFile,
+									A2($elm$json$Json$Decode$field, 'path', $elm$json$Json$Decode$string),
+									$elm$json$Json$Decode$maybe(
+										A2($elm$json$Json$Decode$field, 'title', $elm$json$Json$Decode$string))))));
 				case 'pdfGenerated':
 					return $elm$json$Json$Decode$succeed($author$project$Main$DesktopPdfGenerated);
 				case 'printFailed':
@@ -5934,8 +5965,8 @@ var $author$project$Ports$desktopResponse = _Platform_incomingPort('desktopRespo
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $author$project$Ports$folderOpened = _Platform_incomingPort('folderOpened', $elm$json$Json$Decode$string);
 var $author$project$Main$EscapePressed = {$: 'EscapePressed'};
-var $author$project$Main$FileMenuChose = function (a) {
-	return {$: 'FileMenuChose', a: a};
+var $author$project$Main$MenuChose = function (a) {
+	return {$: 'MenuChose', a: a};
 };
 var $author$project$Main$NewRequested = {$: 'NewRequested'};
 var $author$project$Main$OpenFileRequested = {$: 'OpenFileRequested'};
@@ -5949,7 +5980,7 @@ var $author$project$Main$keyDecoder = function (model) {
 	return A2(
 		$elm$json$Json$Decode$andThen,
 		function (event) {
-			var somethingOpen = model.fileMenuOpen || ((!_Utils_eq(model.dialog, $elm$core$Maybe$Nothing)) || (!_Utils_eq(model.printStatus, $elm$core$Maybe$Nothing)));
+			var somethingOpen = (!_Utils_eq(model.openMenu, $elm$core$Maybe$Nothing)) || ((!_Utils_eq(model.dialog, $elm$core$Maybe$Nothing)) || (!_Utils_eq(model.printStatus, $elm$core$Maybe$Nothing)));
 			var shortcutsAllowed = event.command && ((!event.otherModifier) && ((!event.repeat) && (_Utils_eq(model.dialog, $elm$core$Maybe$Nothing) && _Utils_eq(model.printStatus, $elm$core$Maybe$Nothing))));
 			if ((event.key === 'Escape') && somethingOpen) {
 				return $elm$json$Json$Decode$succeed($author$project$Main$EscapePressed);
@@ -5963,12 +5994,12 @@ var $author$project$Main$keyDecoder = function (model) {
 						switch (_v0.a) {
 							case 'e':
 								return $elm$json$Json$Decode$succeed(
-									$author$project$Main$FileMenuChose($author$project$Main$ToggleEditor));
+									$author$project$Main$MenuChose($author$project$Main$ToggleEditor));
 							case 'n':
 								if (_v0.b.$ === 'Desktop') {
 									var _v1 = _v0.b;
 									return $elm$json$Json$Decode$succeed(
-										$author$project$Main$FileMenuChose($author$project$Main$NewRequested));
+										$author$project$Main$MenuChose($author$project$Main$NewRequested));
 								} else {
 									break _v0$4;
 								}
@@ -5976,7 +6007,7 @@ var $author$project$Main$keyDecoder = function (model) {
 								if (_v0.b.$ === 'Desktop') {
 									var _v2 = _v0.b;
 									return $elm$json$Json$Decode$succeed(
-										$author$project$Main$FileMenuChose($author$project$Main$OpenFileRequested));
+										$author$project$Main$MenuChose($author$project$Main$OpenFileRequested));
 								} else {
 									break _v0$4;
 								}
@@ -5984,7 +6015,7 @@ var $author$project$Main$keyDecoder = function (model) {
 								if (_v0.b.$ === 'Desktop') {
 									var _v3 = _v0.b;
 									return $elm$json$Json$Decode$succeed(
-										$author$project$Main$FileMenuChose($author$project$Main$PrintRequested));
+										$author$project$Main$MenuChose($author$project$Main$PrintRequested));
 								} else {
 									break _v0$4;
 								}
@@ -16963,7 +16994,7 @@ var $author$project$Normalize$isFence = function (trimmed) {
 var $author$project$Normalize$numberedHeading = A2(
 	$elm$core$Maybe$withDefault,
 	$elm$regex$Regex$never,
-	$elm$regex$Regex$fromString('^(#{1,6} +)(?:\u005Cd+\u005C.)+\u005Cd*(?: +|$)'));
+	$elm$regex$Regex$fromString('^(#{1,6} +)(?:\u005Cd+\u005C\u005C?\u005C.)+\u005Cd*(?: +|$)'));
 var $author$project$Normalize$stripNumber = function (line) {
 	return A3(
 		$elm$regex$Regex$replace,
@@ -17810,6 +17841,13 @@ var $author$project$Main$update = F2(
 										notice: $elm$core$Maybe$Nothing
 									}),
 								$elm$core$Platform$Cmd$none);
+						case 'DesktopRecentFiles':
+							var files = event.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{recentFiles: files}),
+								$elm$core$Platform$Cmd$none);
 						case 'DesktopPdfShown':
 							var path = event.a;
 							return _Utils_Tuple2(
@@ -17845,26 +17883,44 @@ var $author$project$Main$update = F2(
 						default:
 							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 					}
-				case 'ToggleFileMenu':
+				case 'ToggleMenu':
+					var menu = msg.a;
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{fileMenuOpen: !model.fileMenuOpen}),
+							{
+								openMenu: _Utils_eq(
+									model.openMenu,
+									$elm$core$Maybe$Just(menu)) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(menu)
+							}),
 						$elm$core$Platform$Cmd$none);
-				case 'FileMenuChose':
+				case 'MenuChose':
 					var itemMsg = msg.a;
 					var $temp$msg = itemMsg,
 						$temp$model = _Utils_update(
 						model,
-						{fileMenuOpen: false});
+						{openMenu: $elm$core$Maybe$Nothing});
 					msg = $temp$msg;
 					model = $temp$model;
 					continue update;
+				case 'OpenRecentRequested':
+					var path = msg.a;
+					return _Utils_Tuple2(
+						model,
+						A2(
+							$author$project$Main$desktopRequest,
+							'openRecent',
+							_List_fromArray(
+								[
+									_Utils_Tuple2(
+									'path',
+									$elm$json$Json$Encode$string(path))
+								])));
 				case 'EscapePressed':
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{dialog: $elm$core$Maybe$Nothing, fileMenuOpen: false, printStatus: $elm$core$Maybe$Nothing}),
+							{dialog: $elm$core$Maybe$Nothing, openMenu: $elm$core$Maybe$Nothing, printStatus: $elm$core$Maybe$Nothing}),
 						$elm$core$Platform$Cmd$none);
 				case 'DialogNameChanged':
 					var name = msg.a;
@@ -21341,11 +21397,14 @@ var $author$project$Main$editorView = function (model) {
 		{attrs: _List_Nil, highlight: model.syncHighlight, onInput: $author$project$Main$InputText, source: model.initialText});
 };
 var $author$project$Main$ExportPdfRequested = {$: 'ExportPdfRequested'};
+var $author$project$Main$FileMenu = {$: 'FileMenu'};
 var $author$project$Main$MakeHeaderRequested = {$: 'MakeHeaderRequested'};
 var $author$project$Main$NormalizeRequested = {$: 'NormalizeRequested'};
 var $author$project$Main$OpenFolderRequested = {$: 'OpenFolderRequested'};
 var $author$project$Main$SaveAsRequested = {$: 'SaveAsRequested'};
-var $author$project$Main$ToggleFileMenu = {$: 'ToggleFileMenu'};
+var $author$project$Main$ToggleMenu = function (a) {
+	return {$: 'ToggleMenu', a: a};
+};
 var $author$project$Main$fileMenu = function (model) {
 	var itemWithShortcut = F3(
 		function (label, shortcut, msg) {
@@ -21355,7 +21414,7 @@ var $author$project$Main$fileMenu = function (model) {
 					[
 						$elm$html$Html$Attributes$class('menu-item'),
 						$elm$html$Html$Events$onClick(
-						$author$project$Main$FileMenuChose(msg))
+						$author$project$Main$MenuChose(msg))
 					]),
 				_List_fromArray(
 					[
@@ -21401,15 +21460,22 @@ var $author$project$Main$fileMenu = function (model) {
 						$elm$html$Html$Attributes$classList(
 						_List_fromArray(
 							[
-								_Utils_Tuple2('open', model.fileMenuOpen)
+								_Utils_Tuple2(
+								'open',
+								_Utils_eq(
+									model.openMenu,
+									$elm$core$Maybe$Just($author$project$Main$FileMenu)))
 							])),
-						$elm$html$Html$Events$onClick($author$project$Main$ToggleFileMenu)
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$ToggleMenu($author$project$Main$FileMenu))
 					]),
 				_List_fromArray(
 					[
 						$elm$html$Html$text('File ▾')
 					])),
-				model.fileMenuOpen ? A2(
+				_Utils_eq(
+				model.openMenu,
+				$elm$core$Maybe$Just($author$project$Main$FileMenu)) ? A2(
 				$elm$html$Html$div,
 				_List_Nil,
 				_List_fromArray(
@@ -21419,7 +21485,8 @@ var $author$project$Main$fileMenu = function (model) {
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$class('menu-backdrop'),
-								$elm$html$Html$Events$onClick($author$project$Main$ToggleFileMenu)
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$ToggleMenu($author$project$Main$FileMenu))
 							]),
 						_List_Nil),
 						A2(
@@ -21726,6 +21793,163 @@ var $author$project$Main$printStatusView = function (status) {
 var $author$project$Main$px = function (n) {
 	return $elm$core$String$fromInt(n) + 'px';
 };
+var $author$project$Main$OpenRecentRequested = function (a) {
+	return {$: 'OpenRecentRequested', a: a};
+};
+var $author$project$Main$RecentMenu = {$: 'RecentMenu'};
+var $author$project$Main$smartEllipsis = F2(
+	function (maxLength, name) {
+		if (_Utils_cmp(
+			$elm$core$String$length(name),
+			maxLength) < 1) {
+			return name;
+		} else {
+			var _v0 = function () {
+				var _v1 = $elm$core$List$head(
+					$elm$core$List$reverse(
+						A2($elm$core$String$indexes, '.', name)));
+				if (_v1.$ === 'Just') {
+					var i = _v1.a;
+					return ((i > 0) && (($elm$core$String$length(name) - i) <= 6)) ? _Utils_Tuple2(
+						A2($elm$core$String$left, i, name),
+						A2($elm$core$String$dropLeft, i, name)) : _Utils_Tuple2(name, '');
+				} else {
+					return _Utils_Tuple2(name, '');
+				}
+			}();
+			var stem = _v0.a;
+			var extension = _v0.b;
+			var room = A2(
+				$elm$core$Basics$max,
+				2,
+				(maxLength - 1) - $elm$core$String$length(extension));
+			var front = ((room + 1) / 2) | 0;
+			return A2($elm$core$String$left, front, stem) + ('…' + (A2($elm$core$String$right, room - front, stem) + extension));
+		}
+	});
+var $author$project$Main$recentMenu = function (model) {
+	var item = function (_v0) {
+		var title = _v0.title;
+		var path = _v0.path;
+		var parts = $elm$core$List$reverse(
+			A2(
+				$elm$core$List$filter,
+				A2($elm$core$Basics$composeL, $elm$core$Basics$not, $elm$core$String$isEmpty),
+				A2($elm$core$String$split, '/', path)));
+		var name = A2(
+			$elm$core$Maybe$withDefault,
+			path,
+			$elm$core$List$head(parts));
+		var folder = A2(
+			$elm$core$Maybe$withDefault,
+			'/',
+			$elm$core$List$head(
+				A2($elm$core$List$drop, 1, parts)));
+		return A2(
+			$elm$html$Html$button,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('menu-item'),
+					$elm$html$Html$Attributes$title(path),
+					$elm$html$Html$Events$onClick(
+					$author$project$Main$MenuChose(
+						$author$project$Main$OpenRecentRequested(path)))
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$span,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('recent-name')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text(
+							A2(
+								$author$project$Main$smartEllipsis,
+								24,
+								A2($elm$core$Maybe$withDefault, name, title)))
+						])),
+					A2(
+					$elm$html$Html$span,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('menu-shortcut recent-folder')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text(folder)
+						]))
+				]));
+	};
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('menu')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$button,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('toolbar-button'),
+						$elm$html$Html$Attributes$classList(
+						_List_fromArray(
+							[
+								_Utils_Tuple2(
+								'open',
+								_Utils_eq(
+									model.openMenu,
+									$elm$core$Maybe$Just($author$project$Main$RecentMenu)))
+							])),
+						$elm$html$Html$Events$onClick(
+						$author$project$Main$ToggleMenu($author$project$Main$RecentMenu))
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Recent ▾')
+					])),
+				_Utils_eq(
+				model.openMenu,
+				$elm$core$Maybe$Just($author$project$Main$RecentMenu)) ? A2(
+				$elm$html$Html$div,
+				_List_Nil,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('menu-backdrop'),
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$ToggleMenu($author$project$Main$RecentMenu))
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('menu-list recent-list')
+							]),
+						$elm$core$List$isEmpty(model.recentFiles) ? _List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('menu-empty')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('No recent files')
+									]))
+							]) : A2($elm$core$List$map, item, model.recentFiles))
+					])) : $elm$html$Html$text('')
+			]));
+};
 var $author$project$Main$renderPanel = F2(
 	function (params, elements) {
 		var settings = $jxxcarlson$xmarkdown_compiler$Render$Theme$makeSettings(params);
@@ -21828,6 +22052,7 @@ var $author$project$Main$view = function (model) {
 								model.editorOpen ? 'Close Editor' : 'Open Editor')
 							])),
 						$author$project$Main$fileMenu(model),
+						_Utils_eq(model.platform, $author$project$Main$Desktop) ? $author$project$Main$recentMenu(model) : $elm$html$Html$text(''),
 						function () {
 						var _v0 = model.folderName;
 						if (_v0.$ === 'Just') {

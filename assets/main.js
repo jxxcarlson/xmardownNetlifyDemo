@@ -15962,11 +15962,6 @@ var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$parse = function (source) {
 	return $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$AST(
 		$jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parseFromString(source));
 };
-var $jxxcarlson$xmarkdown_compiler$HTML$Style$defaultCss = A2(
-	$elm$core$String$join,
-	'\u000A',
-	_List_fromArray(
-		['body { margin: 0; padding: 2rem 1rem; background: #fff; color: #222; font-family: Georgia, \u0022Times New Roman\u0022, serif; font-size: 18px; line-height: 1.55; }', '.xm-document { max-width: 42rem; margin: 0 auto; }', '.xm-title-block { margin-bottom: 2rem; }', '.xm-title { margin-bottom: 0.25rem; }', '.xm-authors, .xm-date { margin: 0.25rem 0; color: #555; }', '.xm-toc { margin-bottom: 2rem; }', '.xm-toc ul { list-style: none; padding-left: 1.25rem; margin: 0.2rem 0; }', '.xm-toc > ul { padding-left: 0; }', '.xm-toc a { text-decoration: none; }', '.xm-section-number { margin-right: 0.25em; }', '.xm-quotation { margin: 1rem 0; padding-left: 1rem; border-left: 3px solid #ccc; color: #444; }', '.xm-verse { margin: 1rem 0 1rem 1.5rem; }', '.xm-verse-line { white-space: pre-wrap; }', '.xm-verse-blank { height: 1em; }', '.xm-figure { margin: 1.5rem 0; text-align: center; }', '.xm-figure img, img.xm-image { max-width: 100%; height: auto; }', '.xm-figure figcaption { font-size: 0.9em; color: #555; }', '.xm-table { border-collapse: collapse; margin: 1rem 0; }', '.xm-table th, .xm-table td { border: 1px solid #ccc; padding: 0.3rem 0.6rem; }', '.xm-code { background: #f5f5f5; padding: 0.75rem; overflow-x: auto; font-size: 0.85em; }', 'code { font-family: Menlo, Consolas, monospace; }', 'div.xm-math { overflow-x: auto; }', '.xm-block { margin: 1rem 0; }', '.xm-unsupported { color: #888; }', 'hr.xm-hrule { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }']));
 var $jxxcarlson$xmarkdown_compiler$HTML$Block$Items = F2(
 	function (a, b) {
 		return {$: 'Items', a: a, b: b};
@@ -16682,10 +16677,6 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Block$renderTree = function (tree) {
 			$maca$elm_rose_tree$RoseTree$Tree$value(tree)) + ('\u000A' + $jxxcarlson$xmarkdown_compiler$HTML$Block$forest(children));
 	}
 };
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$forest = function (_v0) {
-	var f = _v0.a;
-	return f;
-};
 var $jxxcarlson$xmarkdown_compiler$HTML$Export$header = function (titleBlock) {
 	if (titleBlock.$ === 'Nothing') {
 		return '';
@@ -16701,6 +16692,180 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Export$header = function (titleBlock) {
 			'xm-authors',
 			A2($elm$core$String$join, ', ', info.authors)) + (A3(part, 'p', 'xm-date', info.date) + '</header>')));
 	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$entry = function (block) {
+	var text = function () {
+		var _v1 = block.body;
+		if (_v1.$ === 'Right') {
+			var exprs = _v1.a;
+			return $elm$core$String$trim(
+				$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs));
+		} else {
+			var str = _v1.a;
+			return $jxxcarlson$xmarkdown_compiler$HTML$Escape$text(
+				$elm$core$String$trim(str));
+		}
+	}();
+	var number = function () {
+		var _v0 = A2($elm$core$Dict$get, 'label', block.properties);
+		if (_v0.$ === 'Just') {
+			var label = _v0.a;
+			return '<span class=\u0022xm-section-number\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(label) + '</span> ');
+		} else {
+			return '';
+		}
+	}();
+	var href = A2(
+		$elm$core$Maybe$withDefault,
+		'',
+		A2($elm$core$Dict$get, 'tag', block.properties));
+	return '<a href=\u0022#' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(href) + ('\u0022>' + (number + (text + '</a>'))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$level = function (block) {
+	return A2(
+		$elm$core$Maybe$withDefault,
+		1,
+		A2(
+			$elm$core$Maybe$andThen,
+			$elm$core$String$toInt,
+			A2($elm$core$Dict$get, 'level', block.properties)));
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Language$getName = function (block) {
+	return $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(block.heading);
+};
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2 = F3(
+	function (key, key2, block) {
+		return _Utils_eq(
+			$elm$core$Maybe$Just(key),
+			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block)) || _Utils_eq(
+			$elm$core$Maybe$Just(key2),
+			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName2 = F3(
+	function (name, name2, blocks) {
+		return A2(
+			$elm$core$List$filter,
+			A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2, name, name2),
+			blocks);
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents = function (ast) {
+	return A3(
+		$jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName2,
+		'section',
+		'chapter',
+		$elm$core$List$concat(
+			A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten, ast)));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile = F2(
+	function (pred, list) {
+		if (list.b) {
+			var x = list.a;
+			var xs = list.b;
+			return pred(x) ? A2(
+				$elm$core$List$cons,
+				x,
+				A2($jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile, pred, xs)) : _List_Nil;
+		} else {
+			return _List_Nil;
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems = F2(
+	function (base, entries) {
+		if (!entries.b) {
+			return _List_Nil;
+		} else {
+			var _v1 = entries.a;
+			var link = _v1.b;
+			var rest = entries.b;
+			var deeper = A2(
+				$jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile,
+				function (_v4) {
+					var l = _v4.a;
+					return _Utils_cmp(l, base) > 0;
+				},
+				rest);
+			var nested = function () {
+				if (!deeper.b) {
+					return '';
+				} else {
+					var _v3 = deeper.a;
+					var l = _v3.a;
+					return A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocList, l, deeper);
+				}
+			}();
+			var remaining = A2(
+				$elm$core$List$drop,
+				$elm$core$List$length(deeper),
+				rest);
+			return A2(
+				$elm$core$List$cons,
+				'<li>' + (link + (nested + '</li>')),
+				A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems, base, remaining));
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$tocList = F2(
+	function (base, entries) {
+		return '<ul>' + ($elm$core$String$concat(
+			A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems, base, entries)) + '</ul>');
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$tableOfContents = F2(
+	function (toc, forest) {
+		if (toc.$ === 'WithoutTOC') {
+			return '';
+		} else {
+			var _v1 = A2(
+				$elm$core$List$map,
+				function (b) {
+					return _Utils_Tuple2(
+						$jxxcarlson$xmarkdown_compiler$HTML$Export$level(b),
+						$jxxcarlson$xmarkdown_compiler$HTML$Export$entry(b));
+				},
+				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents(forest));
+			if (!_v1.b) {
+				return '';
+			} else {
+				var entries = _v1;
+				var _v2 = entries.a;
+				var base = _v2.a;
+				return '<nav class=\u0022xm-toc\u0022>' + (A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocList, base, entries) + '</nav>');
+			}
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$body = F3(
+	function (toc, titleBlock, forest) {
+		var article = A2(
+			$elm$core$String$join,
+			'\u000A',
+			A2(
+				$elm$core$List$filter,
+				A2($elm$core$Basics$composeL, $elm$core$Basics$not, $elm$core$String$isEmpty),
+				_List_fromArray(
+					[
+						'<article class=\u0022xm-document\u0022>',
+						$jxxcarlson$xmarkdown_compiler$HTML$Export$header(titleBlock),
+						$jxxcarlson$xmarkdown_compiler$HTML$Block$forest(forest),
+						'</article>'
+					])));
+		var _v0 = A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tableOfContents, toc, forest);
+		if (_v0 === '') {
+			return article;
+		} else {
+			var nav = _v0;
+			return A2(
+				$elm$core$String$join,
+				'\u000A',
+				_List_fromArray(
+					['<div class=\u0022xm-layout\u0022>', article, nav, '</div>']));
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Style$defaultCss = A2(
+	$elm$core$String$join,
+	'\u000A',
+	_List_fromArray(
+		['body { margin: 0; padding: 2rem 1rem; background: #fff; color: #222; font-family: Georgia, \u0022Times New Roman\u0022, serif; font-size: 18px; line-height: 1.55; }', '.xm-document { max-width: 42rem; margin: 0 auto; }', '.xm-title-block { margin-bottom: 2rem; }', '.xm-title { margin-bottom: 0.25rem; }', '.xm-authors, .xm-date { margin: 0.25rem 0; color: #555; }', '.xm-layout { display: grid; grid-template-columns: minmax(0, 42rem) 16rem; gap: 3rem; justify-content: center; align-items: start; }', '.xm-layout .xm-document { margin: 0; }', '.xm-toc { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; font-size: 0.9em; }', '@media (max-width: 900px) { .xm-layout { display: flex; flex-direction: column; gap: 0; } .xm-toc { order: -1; position: static; max-height: none; margin-bottom: 2rem; } }', '.xm-toc ul { list-style: none; padding-left: 1.25rem; margin: 0.2rem 0; }', '.xm-toc > ul { padding-left: 0; }', '.xm-toc a { text-decoration: none; }', '.xm-section-number { margin-right: 0.25em; }', '.xm-quotation { margin: 1rem 0; padding-left: 1rem; border-left: 3px solid #ccc; color: #444; }', '.xm-verse { margin: 1rem 0 1rem 1.5rem; }', '.xm-verse-line { white-space: pre-wrap; }', '.xm-verse-blank { height: 1em; }', '.xm-figure { margin: 1.5rem 0; text-align: center; }', '.xm-figure img, img.xm-image { max-width: 100%; height: auto; }', '.xm-figure figcaption { font-size: 0.9em; color: #555; }', '.xm-table { border-collapse: collapse; margin: 1rem 0; }', '.xm-table th, .xm-table td { border: 1px solid #ccc; padding: 0.3rem 0.6rem; }', '.xm-code { background: #f5f5f5; padding: 0.75rem; overflow-x: auto; font-size: 0.85em; }', 'code { font-family: Menlo, Consolas, monospace; }', 'div.xm-math { overflow-x: auto; }', '.xm-block { margin: 1rem 0; }', '.xm-unsupported { color: #888; }', 'hr.xm-hrule { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }']));
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$forest = function (_v0) {
+	var f = _v0.a;
+	return f;
 };
 var $jxxcarlson$xmarkdown_compiler$HTML$Style$katexVersion = '0.16.9';
 var $jxxcarlson$xmarkdown_compiler$HTML$Style$katexBase = 'https://cdn.jsdelivr.net/npm/katex@' + ($jxxcarlson$xmarkdown_compiler$HTML$Style$katexVersion + '/dist/');
@@ -16745,32 +16910,6 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Export$headingText = function (block) {
 		return $elm$core$String$trim(str);
 	}
 };
-var $jxxcarlson$xmarkdown_compiler$AST$Language$getName = function (block) {
-	return $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(block.heading);
-};
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2 = F3(
-	function (key, key2, block) {
-		return _Utils_eq(
-			$elm$core$Maybe$Just(key),
-			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block)) || _Utils_eq(
-			$elm$core$Maybe$Just(key2),
-			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName2 = F3(
-	function (name, name2, blocks) {
-		return A2(
-			$elm$core$List$filter,
-			A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2, name, name2),
-			blocks);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents = function (ast) {
-	return A3(
-		$jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName2,
-		'section',
-		'chapter',
-		$elm$core$List$concat(
-			A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten, ast)));
-};
 var $jxxcarlson$xmarkdown_compiler$HTML$Export$pageTitle = F2(
 	function (titleBlock, forest) {
 		var _v0 = A2(
@@ -16802,15 +16941,6 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Export$pageTitle = F2(
 			return title;
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$HTML$Export$level = function (block) {
-	return A2(
-		$elm$core$Maybe$withDefault,
-		1,
-		A2(
-			$elm$core$Maybe$andThen,
-			$elm$core$String$toInt,
-			A2($elm$core$Dict$get, 'level', block.properties)));
-};
 var $jxxcarlson$xmarkdown_compiler$HTML$Export$labelBlock = F2(
 	function (current, block) {
 		if (_Utils_eq(
@@ -17981,109 +18111,6 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Export$prepare = F2(
 				tagged);
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$HTML$Export$entry = function (block) {
-	var text = function () {
-		var _v1 = block.body;
-		if (_v1.$ === 'Right') {
-			var exprs = _v1.a;
-			return $elm$core$String$trim(
-				$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs));
-		} else {
-			var str = _v1.a;
-			return $jxxcarlson$xmarkdown_compiler$HTML$Escape$text(
-				$elm$core$String$trim(str));
-		}
-	}();
-	var number = function () {
-		var _v0 = A2($elm$core$Dict$get, 'label', block.properties);
-		if (_v0.$ === 'Just') {
-			var label = _v0.a;
-			return '<span class=\u0022xm-section-number\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(label) + '</span> ');
-		} else {
-			return '';
-		}
-	}();
-	var href = A2(
-		$elm$core$Maybe$withDefault,
-		'',
-		A2($elm$core$Dict$get, 'tag', block.properties));
-	return '<a href=\u0022#' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(href) + ('\u0022>' + (number + (text + '</a>'))));
-};
-var $jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile = F2(
-	function (pred, list) {
-		if (list.b) {
-			var x = list.a;
-			var xs = list.b;
-			return pred(x) ? A2(
-				$elm$core$List$cons,
-				x,
-				A2($jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile, pred, xs)) : _List_Nil;
-		} else {
-			return _List_Nil;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems = F2(
-	function (base, entries) {
-		if (!entries.b) {
-			return _List_Nil;
-		} else {
-			var _v1 = entries.a;
-			var link = _v1.b;
-			var rest = entries.b;
-			var deeper = A2(
-				$jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile,
-				function (_v4) {
-					var l = _v4.a;
-					return _Utils_cmp(l, base) > 0;
-				},
-				rest);
-			var nested = function () {
-				if (!deeper.b) {
-					return '';
-				} else {
-					var _v3 = deeper.a;
-					var l = _v3.a;
-					return A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocList, l, deeper);
-				}
-			}();
-			var remaining = A2(
-				$elm$core$List$drop,
-				$elm$core$List$length(deeper),
-				rest);
-			return A2(
-				$elm$core$List$cons,
-				'<li>' + (link + (nested + '</li>')),
-				A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems, base, remaining));
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$HTML$Export$tocList = F2(
-	function (base, entries) {
-		return '<ul>' + ($elm$core$String$concat(
-			A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems, base, entries)) + '</ul>');
-	});
-var $jxxcarlson$xmarkdown_compiler$HTML$Export$tableOfContents = F2(
-	function (toc, forest) {
-		if (toc.$ === 'WithoutTOC') {
-			return '';
-		} else {
-			var _v1 = A2(
-				$elm$core$List$map,
-				function (b) {
-					return _Utils_Tuple2(
-						$jxxcarlson$xmarkdown_compiler$HTML$Export$level(b),
-						$jxxcarlson$xmarkdown_compiler$HTML$Export$entry(b));
-				},
-				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents(forest));
-			if (!_v1.b) {
-				return '';
-			} else {
-				var entries = _v1;
-				var _v2 = entries.a;
-				var base = _v2.a;
-				return '<nav class=\u0022xm-toc\u0022>' + (A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocList, base, entries) + '</nav>');
-			}
-		}
-	});
 var $jxxcarlson$xmarkdown_compiler$HTML$Export$toTextHtml = F3(
 	function (toc, numbers, ast) {
 		var original = $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$forest(ast);
@@ -18113,11 +18140,7 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Export$toTextHtml = F3(
 							'</style>',
 							'</head>',
 							'<body>',
-							'<article class=\u0022xm-document\u0022>',
-							$jxxcarlson$xmarkdown_compiler$HTML$Export$header(titleBlock),
-							A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tableOfContents, toc, forest),
-							$jxxcarlson$xmarkdown_compiler$HTML$Block$forest(forest),
-							'</article>',
+							A3($jxxcarlson$xmarkdown_compiler$HTML$Export$body, toc, titleBlock, forest),
 							'</body>',
 							'</html>'
 						]))));

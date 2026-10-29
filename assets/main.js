@@ -5815,6 +5815,9 @@ var $author$project$Main$DesktopError = function (a) {
 var $author$project$Main$DesktopFolderChosen = function (a) {
 	return {$: 'DesktopFolderChosen', a: a};
 };
+var $author$project$Main$DesktopHtmlExported = function (a) {
+	return {$: 'DesktopHtmlExported', a: a};
+};
 var $author$project$Main$DesktopOpened = F2(
 	function (a, b) {
 		return {$: 'DesktopOpened', a: a, b: b};
@@ -5941,6 +5944,11 @@ var $author$project$Main$desktopEventDecoder = function () {
 						$elm$json$Json$Decode$map,
 						$author$project$Main$DesktopPrintFailed,
 						A2($elm$json$Json$Decode$field, 'message', $elm$json$Json$Decode$string));
+				case 'htmlExported':
+					return A2(
+						$elm$json$Json$Decode$map,
+						$author$project$Main$DesktopHtmlExported,
+						A2($elm$json$Json$Decode$field, 'name', $elm$json$Json$Decode$string));
 				case 'pdfShown':
 					return A2(
 						$elm$json$Json$Decode$map,
@@ -15944,6 +15952,2183 @@ var $author$project$Ports$exportPdf = _Platform_outgoingPort(
 					$elm$json$Json$Encode$string($.tex))
 				]));
 	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$WithSectionNumbers = {$: 'WithSectionNumbers'};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$WithTOC = {$: 'WithTOC'};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$WithoutSectionNumbers = {$: 'WithoutSectionNumbers'};
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$AST = function (a) {
+	return {$: 'AST', a: a};
+};
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$API$parse = function (source) {
+	return $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$AST(
+		$jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parseFromString(source));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Style$defaultCss = A2(
+	$elm$core$String$join,
+	'\u000A',
+	_List_fromArray(
+		['body { margin: 0; padding: 2rem 1rem; background: #fff; color: #222; font-family: Georgia, \u0022Times New Roman\u0022, serif; font-size: 18px; line-height: 1.55; }', '.xm-document { max-width: 42rem; margin: 0 auto; }', '.xm-title-block { margin-bottom: 2rem; }', '.xm-title { margin-bottom: 0.25rem; }', '.xm-authors, .xm-date { margin: 0.25rem 0; color: #555; }', '.xm-toc { margin-bottom: 2rem; }', '.xm-toc ul { list-style: none; padding-left: 1.25rem; margin: 0.2rem 0; }', '.xm-toc > ul { padding-left: 0; }', '.xm-toc a { text-decoration: none; }', '.xm-section-number { margin-right: 0.25em; }', '.xm-quotation { margin: 1rem 0; padding-left: 1rem; border-left: 3px solid #ccc; color: #444; }', '.xm-verse { margin: 1rem 0 1rem 1.5rem; }', '.xm-verse-line { white-space: pre-wrap; }', '.xm-verse-blank { height: 1em; }', '.xm-figure { margin: 1.5rem 0; text-align: center; }', '.xm-figure img, img.xm-image { max-width: 100%; height: auto; }', '.xm-figure figcaption { font-size: 0.9em; color: #555; }', '.xm-table { border-collapse: collapse; margin: 1rem 0; }', '.xm-table th, .xm-table td { border: 1px solid #ccc; padding: 0.3rem 0.6rem; }', '.xm-code { background: #f5f5f5; padding: 0.75rem; overflow-x: auto; font-size: 0.85em; }', 'code { font-family: Menlo, Consolas, monospace; }', 'div.xm-math { overflow-x: auto; }', '.xm-block { margin: 1rem 0; }', '.xm-unsupported { color: #888; }', 'hr.xm-hrule { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }']));
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$Items = F2(
+	function (a, b) {
+		return {$: 'Items', a: a, b: b};
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$Single = function (a) {
+	return {$: 'Single', a: a};
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$Bullets = {$: 'Bullets'};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$Numbers = {$: 'Numbers'};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$listKind = function (tree) {
+	var _v0 = $maca$elm_rose_tree$RoseTree$Tree$value(tree).heading;
+	_v0$2:
+	while (true) {
+		if (_v0.$ === 'Ordinary') {
+			switch (_v0.a) {
+				case 'item':
+					return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$HTML$Block$Bullets);
+				case 'numbered':
+					return $elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$HTML$Block$Numbers);
+				default:
+					break _v0$2;
+			}
+		} else {
+			break _v0$2;
+		}
+	}
+	return $elm$core$Maybe$Nothing;
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$group = function (trees) {
+	return A3(
+		$elm$core$List$foldr,
+		F2(
+			function (tree, acc) {
+				var _v0 = _Utils_Tuple2(
+					$jxxcarlson$xmarkdown_compiler$HTML$Block$listKind(tree),
+					acc);
+				if (_v0.a.$ === 'Just') {
+					if (_v0.b.b && (_v0.b.a.$ === 'Items')) {
+						var kind = _v0.a.a;
+						var _v1 = _v0.b;
+						var _v2 = _v1.a;
+						var kind2 = _v2.a;
+						var items = _v2.b;
+						var rest = _v1.b;
+						return _Utils_eq(kind, kind2) ? A2(
+							$elm$core$List$cons,
+							A2(
+								$jxxcarlson$xmarkdown_compiler$HTML$Block$Items,
+								kind,
+								A2($elm$core$List$cons, tree, items)),
+							rest) : A2(
+							$elm$core$List$cons,
+							A2(
+								$jxxcarlson$xmarkdown_compiler$HTML$Block$Items,
+								kind,
+								_List_fromArray(
+									[tree])),
+							acc);
+					} else {
+						var kind = _v0.a.a;
+						return A2(
+							$elm$core$List$cons,
+							A2(
+								$jxxcarlson$xmarkdown_compiler$HTML$Block$Items,
+								kind,
+								_List_fromArray(
+									[tree])),
+							acc);
+					}
+				} else {
+					var _v3 = _v0.a;
+					return A2(
+						$elm$core$List$cons,
+						$jxxcarlson$xmarkdown_compiler$HTML$Block$Single(tree),
+						acc);
+				}
+			}),
+		_List_Nil,
+		trees);
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Escape$text = function (str) {
+	return A3(
+		$elm$core$String$replace,
+		'\u0022',
+		'&quot;',
+		A3(
+			$elm$core$String$replace,
+			'>',
+			'&gt;',
+			A3(
+				$elm$core$String$replace,
+				'<',
+				'&lt;',
+				A3($elm$core$String$replace, '&', '&amp;', str))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute = function (str) {
+	return A3(
+		$elm$core$String$replace,
+		'\u0027',
+		'&#39;',
+		$jxxcarlson$xmarkdown_compiler$HTML$Escape$text(str));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$safeUrl = F2(
+	function (replacement, url) {
+		var beforeColon = A2(
+			$elm$core$Maybe$withDefault,
+			'',
+			$elm$core$List$head(
+				A2($elm$core$String$split, ':', url)));
+		var hasScheme = A2($elm$core$String$contains, ':', url) && (!(A2($elm$core$String$contains, '/', beforeColon) || (A2($elm$core$String$contains, '?', beforeColon) || A2($elm$core$String$contains, '#', beforeColon))));
+		return ((!hasScheme) || A2(
+			$elm$core$List$member,
+			$elm$core$String$toLower(
+				$elm$core$String$trim(beforeColon)),
+			_List_fromArray(
+				['http', 'https', 'mailto']))) ? url : replacement;
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$image = function (str) {
+	var img = $jxxcarlson$xmarkdown_compiler$LaTeX$Image$fromText(str);
+	var width = function () {
+		var _v0 = img.width;
+		if (_v0.$ === 'Just') {
+			var w = _v0.a;
+			return ' width=\u0022' + ($elm$core$String$fromInt(w) + '\u0022');
+		} else {
+			return '';
+		}
+	}();
+	return '<img class=\u0022xm-image\u0022 src=\u0022' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(
+		A2($jxxcarlson$xmarkdown_compiler$HTML$Inline$safeUrl, '', img.url)) + ('\u0022 alt=\u0022' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(img.caption) + ('\u0022' + (width + '>')))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$link = function (str) {
+	var _v0 = $elm$core$List$reverse(
+		$elm$core$String$words(str));
+	if (!_v0.b) {
+		return '';
+	} else {
+		var url = _v0.a;
+		var labelWords = _v0.b;
+		return '<a href=\u0022' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(
+			A2($jxxcarlson$xmarkdown_compiler$HTML$Inline$safeUrl, '#', url)) + ('\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(
+			A2(
+				$elm$core$String$join,
+				' ',
+				$elm$core$List$reverse(labelWords))) + '</a>')));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$unsupported = F2(
+	function (name, body) {
+		return '<span class=\u0022xm-unsupported\u0022 data-name=\u0022' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(name) + ('\u0022>' + (body + '</span>')));
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$InlineMath = {$: 'InlineMath'};
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$mathElement = F2(
+	function (mode, latex) {
+		if (mode.$ === 'InlineMath') {
+			return '<span class=\u0022xm-math\u0022 data-display=\u0022false\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(latex) + '</span>');
+		} else {
+			return '<div class=\u0022xm-math\u0022 data-display=\u0022true\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(latex) + '</div>');
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$math = F2(
+	function (mode, source) {
+		var trimmed = $elm$core$String$trim(source);
+		var latex = A2($jxxcarlson$etex$ETeX$Transform$transformETeX, $elm$core$Dict$empty, trimmed);
+		return A2($elm$core$String$startsWith, '[ETeX error]', latex) ? A2($jxxcarlson$xmarkdown_compiler$HTML$Inline$mathElement, mode, trimmed) : A2($jxxcarlson$xmarkdown_compiler$HTML$Inline$mathElement, mode, latex);
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$vfun = F2(
+	function (name, content) {
+		return (((name === 'math') || (name === 'm')) && ($elm$core$String$trim(content) === '')) ? '' : (((name === 'math') || (name === 'm')) ? A2($jxxcarlson$xmarkdown_compiler$HTML$Inline$math, $jxxcarlson$xmarkdown_compiler$HTML$Inline$InlineMath, content) : ((name === 'chem') ? A2(
+			$jxxcarlson$xmarkdown_compiler$HTML$Inline$mathElement,
+			$jxxcarlson$xmarkdown_compiler$HTML$Inline$InlineMath,
+			'\u005Cce{' + ($elm$core$String$trim(content) + '}')) : ((name === 'code') ? ('<code>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(content) + '</code>')) : A2(
+			$jxxcarlson$xmarkdown_compiler$HTML$Inline$unsupported,
+			name,
+			$jxxcarlson$xmarkdown_compiler$HTML$Escape$text(content)))));
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$expr = function (e) {
+	switch (e.$) {
+		case 'Text':
+			var str = e.a;
+			return $jxxcarlson$xmarkdown_compiler$HTML$Escape$text(str);
+		case 'Fun':
+			var name = e.a;
+			var args = e.b;
+			return A2($jxxcarlson$xmarkdown_compiler$HTML$Inline$fun, name, args);
+		case 'VFun':
+			var name = e.a;
+			var content = e.b;
+			return A2($jxxcarlson$xmarkdown_compiler$HTML$Inline$vfun, name, content);
+		default:
+			var list = e.b;
+			return $jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(list);
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs = function (list) {
+	return $elm$core$String$concat(
+		A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$HTML$Inline$expr, list));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$fun = F2(
+	function (name, args) {
+		return A2(
+			$elm$core$List$member,
+			name,
+			_List_fromArray(
+				['bold', 'b', 'strong'])) ? ('<strong>' + ($jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(args) + '</strong>')) : (A2(
+			$elm$core$List$member,
+			name,
+			_List_fromArray(
+				['italic', 'i', 'em'])) ? ('<em>' + ($jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(args) + '</em>')) : (((name === 'link') || (name === 'a')) ? $jxxcarlson$xmarkdown_compiler$HTML$Inline$link(
+			$jxxcarlson$xmarkdown_compiler$LaTeX$Inline$plainText(args)) : (((name === 'image') || (name === 'img')) ? $jxxcarlson$xmarkdown_compiler$HTML$Inline$image(
+			$jxxcarlson$xmarkdown_compiler$LaTeX$Inline$plainText(args)) : A2(
+			$jxxcarlson$xmarkdown_compiler$HTML$Inline$unsupported,
+			name,
+			$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(args)))));
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$inlineBody = function (block) {
+	var _v0 = block.body;
+	if (_v0.$ === 'Right') {
+		var exprs = _v0.a;
+		return $jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs);
+	} else {
+		var str = _v0.a;
+		return $jxxcarlson$xmarkdown_compiler$HTML$Escape$text(str);
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$list = F2(
+	function (kind, items) {
+		if (kind.$ === 'Bullets') {
+			return '<ul class=\u0022xm-list\u0022>' + (items + '</ul>');
+		} else {
+			return '<ol class=\u0022xm-list\u0022>' + (items + '</ol>');
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$DisplayMath = {$: 'DisplayMath'};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$array = function (block) {
+	var source = $jxxcarlson$xmarkdown_compiler$LaTeX$Block$mathSource(block);
+	var columns = $elm$core$List$isEmpty(block.args) ? function (n) {
+		return A2($elm$core$String$repeat, n + 1, 'c');
+	}(
+		$elm$core$List$length(
+			A2(
+				$elm$core$String$indexes,
+				'&',
+				A2(
+					$elm$core$Maybe$withDefault,
+					'',
+					$elm$core$List$head(
+						$elm$core$String$lines(source)))))) : $elm$core$String$concat(block.args);
+	return A2($jxxcarlson$xmarkdown_compiler$HTML$Inline$math, $jxxcarlson$xmarkdown_compiler$HTML$Inline$DisplayMath, '\u005Cbegin{array}{' + (columns + ('}\u000A' + (source + '\u000A\u005Cend{array}'))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$verbatimBody = function (block) {
+	var _v0 = block.body;
+	if (_v0.$ === 'Left') {
+		var str = _v0.a;
+		return $jxxcarlson$xmarkdown_compiler$HTML$Escape$text(str);
+	} else {
+		var exprs = _v0.a;
+		return $jxxcarlson$xmarkdown_compiler$HTML$Escape$text(
+			$jxxcarlson$xmarkdown_compiler$LaTeX$Inline$plainText(exprs));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$code = function (block) {
+	var language = function () {
+		var _v0 = block.args;
+		if (_v0.b) {
+			var lang = _v0.a;
+			return ' class=\u0022language-' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(lang) + '\u0022');
+		} else {
+			return '';
+		}
+	}();
+	return '<pre class=\u0022xm-code\u0022><code' + (language + ('>' + ($jxxcarlson$xmarkdown_compiler$HTML$Block$verbatimBody(block) + '</code></pre>')));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$itemsAtLevel = F3(
+	function (kind, base, items) {
+		if (!items.b) {
+			return _List_Nil;
+		} else {
+			var _v3 = items.a;
+			var text = _v3.b;
+			var rest = items.b;
+			var _v4 = A2(
+				$elmcraft$core_extra$List$Extra$span,
+				function (_v5) {
+					var indent = _v5.a;
+					return _Utils_cmp(indent, base) > 0;
+				},
+				rest);
+			var deeper = _v4.a;
+			var remaining = _v4.b;
+			return A2(
+				$elm$core$List$cons,
+				'<li>' + (text + (A2($jxxcarlson$xmarkdown_compiler$HTML$Block$nestItems, kind, deeper) + '</li>')),
+				A3($jxxcarlson$xmarkdown_compiler$HTML$Block$itemsAtLevel, kind, base, remaining));
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$nestItems = F2(
+	function (kind, items) {
+		if (!items.b) {
+			return '';
+		} else {
+			var _v1 = items.a;
+			var base = _v1.a;
+			return A2(
+				$jxxcarlson$xmarkdown_compiler$HTML$Block$list,
+				kind,
+				$elm$core$String$concat(
+					A3($jxxcarlson$xmarkdown_compiler$HTML$Block$itemsAtLevel, kind, base, items)));
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$toItem = function (expr) {
+	if (expr.$ === 'ExprList') {
+		var indent = expr.a;
+		var exprs = expr.b;
+		return $elm$core$Maybe$Just(
+			_Utils_Tuple2(
+				indent,
+				$elm$core$String$trim(
+					$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs))));
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$compactList = F2(
+	function (kind, block) {
+		var _v0 = block.body;
+		if (_v0.$ === 'Right') {
+			var exprs = _v0.a;
+			return A2(
+				$jxxcarlson$xmarkdown_compiler$HTML$Block$nestItems,
+				kind,
+				A2($elm$core$List$filterMap, $jxxcarlson$xmarkdown_compiler$HTML$Block$toItem, exprs));
+		} else {
+			var str = _v0.a;
+			return $jxxcarlson$xmarkdown_compiler$HTML$Escape$text(str);
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$figure = function (imageText) {
+	var caption = function () {
+		var _v0 = $jxxcarlson$xmarkdown_compiler$LaTeX$Image$fromText(imageText).caption;
+		if (_v0 === '') {
+			return '';
+		} else {
+			var c = _v0;
+			return '<figcaption>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(c) + '</figcaption>');
+		}
+	}();
+	return '<figure class=\u0022xm-figure\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Inline$image(imageText) + (caption + '</figure>'));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$isBlank = function (expr) {
+	if (expr.$ === 'Text') {
+		var str = expr.a;
+		return $elm$core$String$trim(str) === '';
+	} else {
+		return false;
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$paragraph = function (block) {
+	var _v0 = block.body;
+	if (_v0.$ === 'Right') {
+		var exprs = _v0.a;
+		var _v1 = A2(
+			$elm$core$List$filter,
+			A2($elm$core$Basics$composeL, $elm$core$Basics$not, $jxxcarlson$xmarkdown_compiler$HTML$Block$isBlank),
+			exprs);
+		if ((_v1.b && (_v1.a.$ === 'Fun')) && (!_v1.b.b)) {
+			var _v2 = _v1.a;
+			var name = _v2.a;
+			var args = _v2.b;
+			return ((name === 'image') || (name === 'img')) ? $jxxcarlson$xmarkdown_compiler$HTML$Block$figure(
+				$jxxcarlson$xmarkdown_compiler$LaTeX$Inline$plainText(args)) : ('<p class=\u0022xm-paragraph\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs) + '</p>'));
+		} else {
+			return '<p class=\u0022xm-paragraph\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs) + '</p>');
+		}
+	} else {
+		var str = _v0.a;
+		return '<p class=\u0022xm-paragraph\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(str) + '</p>');
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$quotation = function (block) {
+	var _v0 = block.body;
+	if (_v0.$ === 'Right') {
+		var exprs = _v0.a;
+		return $elm$core$String$concat(
+			A2(
+				$elm$core$List$map,
+				function (p) {
+					return '<p>' + (p + '</p>');
+				},
+				A2(
+					$elm$core$List$filter,
+					A2($elm$core$Basics$composeL, $elm$core$Basics$not, $elm$core$String$isEmpty),
+					A2(
+						$elm$core$List$map,
+						A2($elm$core$Basics$composeR, $jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs, $elm$core$String$trim),
+						function (_v3) {
+							var current = _v3.a;
+							var done = _v3.b;
+							return A2($elm$core$List$cons, current, done);
+						}(
+							A3(
+								$elm$core$List$foldr,
+								F2(
+									function (expr, _v1) {
+										var current = _v1.a;
+										var done = _v1.b;
+										if ((expr.$ === 'Text') && (expr.a === '>')) {
+											return _Utils_Tuple2(
+												_List_Nil,
+												A2($elm$core$List$cons, current, done));
+										} else {
+											return _Utils_Tuple2(
+												A2($elm$core$List$cons, expr, current),
+												done);
+										}
+									}),
+								_Utils_Tuple2(_List_Nil, _List_Nil),
+								exprs))))));
+	} else {
+		var str = _v0.a;
+		return '<p>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(str) + '</p>');
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$section = function (block) {
+	var number = function () {
+		var _v1 = A2($elm$core$Dict$get, 'label', block.properties);
+		if (_v1.$ === 'Just') {
+			var label = _v1.a;
+			return '<span class=\u0022xm-section-number\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(label) + '</span> ');
+		} else {
+			return '';
+		}
+	}();
+	var level = A2(
+		$elm$core$Maybe$withDefault,
+		1,
+		A2(
+			$elm$core$Maybe$andThen,
+			$elm$core$String$toInt,
+			A2($elm$core$Dict$get, 'level', block.properties)));
+	var tag = 'h' + $elm$core$String$fromInt(
+		A2($elm$core$Basics$min, 6, level + 1));
+	var id = function () {
+		var _v0 = A2($elm$core$Dict$get, 'tag', block.properties);
+		if (_v0.$ === 'Just') {
+			var t = _v0.a;
+			return ' id=\u0022' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(t) + '\u0022');
+		} else {
+			return '';
+		}
+	}();
+	return '<' + (tag + (' class=\u0022xm-section\u0022 data-level=\u0022' + ($elm$core$String$fromInt(level) + ('\u0022' + (id + ('>' + (number + ($elm$core$String$trim(
+		$jxxcarlson$xmarkdown_compiler$HTML$Block$inlineBody(block)) + ('</' + (tag + '>'))))))))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$table = function (block) {
+	var cell = function (expr) {
+		if ((expr.$ === 'Fun') && (expr.a === 'cell')) {
+			var exprs = expr.b;
+			return $elm$core$String$trim(
+				$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs));
+		} else {
+			var other = expr;
+			return $elm$core$String$trim(
+				$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(
+					_List_fromArray(
+						[other])));
+		}
+	};
+	var row = function (expr) {
+		if ((expr.$ === 'Fun') && (expr.a === 'row')) {
+			var cells = expr.b;
+			return $elm$core$Maybe$Just(
+				A2($elm$core$List$map, cell, cells));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	};
+	var rows = function () {
+		var _v2 = block.body;
+		if (((((_v2.$ === 'Right') && _v2.a.b) && (_v2.a.a.$ === 'Fun')) && (_v2.a.a.a === 'table')) && (!_v2.a.b.b)) {
+			var _v3 = _v2.a;
+			var _v4 = _v3.a;
+			var rowExprs = _v4.b;
+			return A2($elm$core$List$filterMap, row, rowExprs);
+		} else {
+			return _List_Nil;
+		}
+	}();
+	var alignments = A2(
+		$elm$core$Maybe$withDefault,
+		_List_Nil,
+		A2(
+			$elm$core$Maybe$map,
+			$elm$core$String$split(','),
+			A2($elm$core$Dict$get, 'alignments', block.properties)));
+	var alignment = function (i) {
+		var _v1 = A2($elmcraft$core_extra$List$Extra$getAt, i, alignments);
+		_v1$2:
+		while (true) {
+			if (_v1.$ === 'Just') {
+				switch (_v1.a) {
+					case 'c':
+						return 'center';
+					case 'r':
+						return 'right';
+					default:
+						break _v1$2;
+				}
+			} else {
+				break _v1$2;
+			}
+		}
+		return 'left';
+	};
+	var renderRow = F2(
+		function (cellTag, cells) {
+			return '<tr>' + ($elm$core$String$concat(
+				A2(
+					$elm$core$List$indexedMap,
+					F2(
+						function (i, c) {
+							return '<' + (cellTag + (' style=\u0022text-align:' + (alignment(i) + ('\u0022>' + (c + ('</' + (cellTag + '>')))))));
+						}),
+					cells)) + '</tr>');
+		});
+	if (!rows.b) {
+		return '';
+	} else {
+		var header = rows.a;
+		var body = rows.b;
+		return '<table class=\u0022xm-table\u0022><thead>' + (A2(renderRow, 'th', header) + ('</thead><tbody>' + ($elm$core$String$concat(
+			A2(
+				$elm$core$List$map,
+				renderRow('td'),
+				body)) + '</tbody></table>')));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$verse = function (block) {
+	var toLine = function (expr) {
+		if (expr.$ === 'ExprList') {
+			var indent = expr.a;
+			var exprs = expr.b;
+			var _v4 = $elm$core$String$trim(
+				$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs));
+			if (_v4 === '') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var text = _v4;
+				return $elm$core$Maybe$Just(
+					_Utils_Tuple2(indent, text));
+			}
+		} else {
+			return $elm$core$Maybe$Just(
+				_Utils_Tuple2(
+					0,
+					$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(
+						_List_fromArray(
+							[expr]))));
+		}
+	};
+	var render = function (line) {
+		if (line.$ === 'Just') {
+			var _v2 = line.a;
+			var indent = _v2.a;
+			var text = _v2.b;
+			return (indent > 0) ? ('<div class=\u0022xm-verse-line\u0022 style=\u0022padding-left:' + ($elm$core$String$fromFloat(indent / 2) + ('em\u0022>' + (text + '</div>')))) : ('<div class=\u0022xm-verse-line\u0022>' + (text + '</div>'));
+		} else {
+			return '<div class=\u0022xm-verse-blank\u0022></div>';
+		}
+	};
+	var lines = function () {
+		var _v0 = block.body;
+		if (_v0.$ === 'Right') {
+			var exprs = _v0.a;
+			return A2(
+				$elmcraft$core_extra$List$Extra$dropWhileRight,
+				$elm$core$Basics$eq($elm$core$Maybe$Nothing),
+				A2(
+					$elmcraft$core_extra$List$Extra$dropWhile,
+					$elm$core$Basics$eq($elm$core$Maybe$Nothing),
+					A2($elm$core$List$map, toLine, exprs)));
+		} else {
+			var str = _v0.a;
+			return _List_fromArray(
+				[
+					$elm$core$Maybe$Just(
+					_Utils_Tuple2(
+						0,
+						$jxxcarlson$xmarkdown_compiler$HTML$Escape$text(str)))
+				]);
+		}
+	}();
+	return $elm$core$String$concat(
+		A2($elm$core$List$map, render, lines));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$renderBlock = function (block) {
+	var _v0 = block.heading;
+	switch (_v0.$) {
+		case 'Paragraph':
+			return $jxxcarlson$xmarkdown_compiler$HTML$Block$paragraph(block);
+		case 'Ordinary':
+			switch (_v0.a) {
+				case 'titleBlock':
+					return '';
+				case 'setcounter':
+					return '';
+				case 'shiftandsetcounter':
+					return '';
+				case 'hrule':
+					var _v1 = $elm$core$String$trim(
+						$jxxcarlson$xmarkdown_compiler$HTML$Block$inlineBody(block));
+					if (_v1 === '') {
+						return '<hr class=\u0022xm-hrule\u0022>';
+					} else {
+						var rest = _v1;
+						return '<hr class=\u0022xm-hrule\u0022>\u000A<p class=\u0022xm-paragraph\u0022>' + (rest + '</p>');
+					}
+				case 'section':
+					return $jxxcarlson$xmarkdown_compiler$HTML$Block$section(block);
+				case 'quotation':
+					return '<blockquote class=\u0022xm-quotation\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Block$quotation(block) + '</blockquote>');
+				case 'verse':
+					return '<div class=\u0022xm-verse\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Block$verse(block) + '</div>');
+				case 'table':
+					return $jxxcarlson$xmarkdown_compiler$HTML$Block$table(block);
+				case 'equation':
+					return '<div class=\u0022xm-equation\u0022>' + (A2(
+						$jxxcarlson$xmarkdown_compiler$HTML$Inline$math,
+						$jxxcarlson$xmarkdown_compiler$HTML$Inline$DisplayMath,
+						$jxxcarlson$xmarkdown_compiler$LaTeX$Block$mathSource(block)) + '</div>');
+				case 'aligned':
+					return '<div class=\u0022xm-equation\u0022>' + (A2(
+						$jxxcarlson$xmarkdown_compiler$HTML$Inline$math,
+						$jxxcarlson$xmarkdown_compiler$HTML$Inline$DisplayMath,
+						'\u005Cbegin{aligned}\u000A' + ($jxxcarlson$xmarkdown_compiler$LaTeX$Block$mathSource(block) + '\u000A\u005Cend{aligned}')) + '</div>');
+				case 'array':
+					return $jxxcarlson$xmarkdown_compiler$HTML$Block$array(block);
+				case 'chem':
+					return '<div class=\u0022xm-math\u0022 data-display=\u0022true\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(
+						'\u005Cce{' + ($jxxcarlson$xmarkdown_compiler$LaTeX$Block$mathSource(block) + '}')) + '</div>');
+				case 'itemList':
+					return A2($jxxcarlson$xmarkdown_compiler$HTML$Block$compactList, $jxxcarlson$xmarkdown_compiler$HTML$Block$Bullets, block);
+				case 'numberedList':
+					return A2($jxxcarlson$xmarkdown_compiler$HTML$Block$compactList, $jxxcarlson$xmarkdown_compiler$HTML$Block$Numbers, block);
+				default:
+					var name = _v0.a;
+					return '<div class=\u0022xm-block xm-' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(name) + ('\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Block$inlineBody(block) + '</div>')));
+			}
+		default:
+			switch (_v0.a) {
+				case 'settings':
+					return '';
+				case 'math':
+					return A2(
+						$jxxcarlson$xmarkdown_compiler$HTML$Inline$math,
+						$jxxcarlson$xmarkdown_compiler$HTML$Inline$DisplayMath,
+						$jxxcarlson$xmarkdown_compiler$LaTeX$Block$mathSource(block));
+				case 'code':
+					return $jxxcarlson$xmarkdown_compiler$HTML$Block$code(block);
+				default:
+					var name = _v0.a;
+					return '<pre class=\u0022xm-block xm-' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(name) + ('\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Block$verbatimBody(block) + '</pre>')));
+			}
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$forest = function (trees) {
+	return A2(
+		$elm$core$String$join,
+		'\u000A',
+		A2(
+			$elm$core$List$filter,
+			A2($elm$core$Basics$composeL, $elm$core$Basics$not, $elm$core$String$isEmpty),
+			A2(
+				$elm$core$List$map,
+				$jxxcarlson$xmarkdown_compiler$HTML$Block$renderGroup,
+				$jxxcarlson$xmarkdown_compiler$HTML$Block$group(trees))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$renderGroup = function (g) {
+	if (g.$ === 'Single') {
+		var tree = g.a;
+		return $jxxcarlson$xmarkdown_compiler$HTML$Block$renderTree(tree);
+	} else {
+		var kind = g.a;
+		var trees = g.b;
+		return A2(
+			$jxxcarlson$xmarkdown_compiler$HTML$Block$list,
+			kind,
+			$elm$core$String$concat(
+				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$HTML$Block$renderItem, trees)));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$renderItem = function (tree) {
+	var children = function () {
+		var _v1 = $maca$elm_rose_tree$RoseTree$Tree$children(tree);
+		if (!_v1.b) {
+			return '';
+		} else {
+			var cs = _v1;
+			return $jxxcarlson$xmarkdown_compiler$HTML$Block$forest(cs);
+		}
+	}();
+	return '<li>' + ($jxxcarlson$xmarkdown_compiler$HTML$Block$inlineBody(
+		$maca$elm_rose_tree$RoseTree$Tree$value(tree)) + (children + '</li>'));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Block$renderTree = function (tree) {
+	var _v0 = $maca$elm_rose_tree$RoseTree$Tree$children(tree);
+	if (!_v0.b) {
+		return $jxxcarlson$xmarkdown_compiler$HTML$Block$renderBlock(
+			$maca$elm_rose_tree$RoseTree$Tree$value(tree));
+	} else {
+		var children = _v0;
+		return $jxxcarlson$xmarkdown_compiler$HTML$Block$renderBlock(
+			$maca$elm_rose_tree$RoseTree$Tree$value(tree)) + ('\u000A' + $jxxcarlson$xmarkdown_compiler$HTML$Block$forest(children));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$forest = function (_v0) {
+	var f = _v0.a;
+	return f;
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$header = function (titleBlock) {
+	if (titleBlock.$ === 'Nothing') {
+		return '';
+	} else {
+		var info = titleBlock.a;
+		var part = F3(
+			function (tag, _class, text) {
+				return (text === '') ? '' : ('<' + (tag + (' class=\u0022' + (_class + ('\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(text) + ('</' + (tag + '>'))))))));
+			});
+		return '<header class=\u0022xm-title-block\u0022>' + (A3(part, 'h1', 'xm-title', info.title) + (A3(
+			part,
+			'p',
+			'xm-authors',
+			A2($elm$core$String$join, ', ', info.authors)) + (A3(part, 'p', 'xm-date', info.date) + '</header>')));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Style$katexVersion = '0.16.9';
+var $jxxcarlson$xmarkdown_compiler$HTML$Style$katexBase = 'https://cdn.jsdelivr.net/npm/katex@' + ($jxxcarlson$xmarkdown_compiler$HTML$Style$katexVersion + '/dist/');
+var $jxxcarlson$xmarkdown_compiler$HTML$Style$katexHead = A2(
+	$elm$core$String$join,
+	'\u000A',
+	_List_fromArray(
+		['<link rel=\u0022stylesheet\u0022 href=\u0022' + ($jxxcarlson$xmarkdown_compiler$HTML$Style$katexBase + 'katex.min.css\u0022>'), '<script defer src=\u0022' + ($jxxcarlson$xmarkdown_compiler$HTML$Style$katexBase + 'katex.min.js\u0022></script>'), '<script defer src=\u0022' + ($jxxcarlson$xmarkdown_compiler$HTML$Style$katexBase + 'contrib/mhchem.min.js\u0022></script>'), '<script>', 'document.addEventListener(\u0022DOMContentLoaded\u0022, function () {', '  document.querySelectorAll(\u0022.xm-math\u0022).forEach(function (el) {', '    katex.render(el.textContent, el, { displayMode: el.dataset.display === \u0022true\u0022, throwOnError: false, trust: function (context) { return [\u0022http\u0022, \u0022https\u0022, \u0022_relative\u0022].includes(context.protocol); } });', '  });', '});', '</script>']));
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$plainTextOf = function (e) {
+	switch (e.$) {
+		case 'Text':
+			var str = e.a;
+			return str;
+		case 'Fun':
+			var args = e.b;
+			return $elm$core$String$concat(
+				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$HTML$Inline$plainTextOf, args));
+		case 'VFun':
+			var content = e.b;
+			return content;
+		default:
+			var list = e.b;
+			return ' ' + $elm$core$String$concat(
+				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$HTML$Inline$plainTextOf, list));
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Inline$plainText = function (list) {
+	return A2(
+		$elm$core$String$join,
+		' ',
+		$elm$core$String$words(
+			$elm$core$String$concat(
+				A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$HTML$Inline$plainTextOf, list))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$headingText = function (block) {
+	var _v0 = block.body;
+	if (_v0.$ === 'Right') {
+		var exprs = _v0.a;
+		return $jxxcarlson$xmarkdown_compiler$HTML$Inline$plainText(exprs);
+	} else {
+		var str = _v0.a;
+		return $elm$core$String$trim(str);
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Language$getName = function (block) {
+	return $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(block.heading);
+};
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2 = F3(
+	function (key, key2, block) {
+		return _Utils_eq(
+			$elm$core$Maybe$Just(key),
+			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block)) || _Utils_eq(
+			$elm$core$Maybe$Just(key2),
+			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName2 = F3(
+	function (name, name2, blocks) {
+		return A2(
+			$elm$core$List$filter,
+			A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2, name, name2),
+			blocks);
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents = function (ast) {
+	return A3(
+		$jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName2,
+		'section',
+		'chapter',
+		$elm$core$List$concat(
+			A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten, ast)));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$pageTitle = F2(
+	function (titleBlock, forest) {
+		var _v0 = A2(
+			$elm$core$Maybe$withDefault,
+			'',
+			A2(
+				$elm$core$Maybe$map,
+				function ($) {
+					return $.title;
+				},
+				titleBlock));
+		if (_v0 === '') {
+			var _v1 = $elm$core$List$head(
+				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents(forest));
+			if (_v1.$ === 'Just') {
+				var section = _v1.a;
+				var _v2 = $jxxcarlson$xmarkdown_compiler$HTML$Export$headingText(section);
+				if (_v2 === '') {
+					return 'Untitled';
+				} else {
+					var text = _v2;
+					return text;
+				}
+			} else {
+				return 'Untitled';
+			}
+		} else {
+			var title = _v0;
+			return title;
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$level = function (block) {
+	return A2(
+		$elm$core$Maybe$withDefault,
+		1,
+		A2(
+			$elm$core$Maybe$andThen,
+			$elm$core$String$toInt,
+			A2($elm$core$Dict$get, 'level', block.properties)));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$labelBlock = F2(
+	function (current, block) {
+		if (_Utils_eq(
+			block.heading,
+			$jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('section'))) {
+			var n = $jxxcarlson$xmarkdown_compiler$HTML$Export$level(block);
+			var prefix = A2(
+				$elm$core$List$take,
+				n - 1,
+				_Utils_ap(
+					current,
+					A2($elm$core$List$repeat, n, 0)));
+			var next = _Utils_ap(
+				prefix,
+				_List_fromArray(
+					[
+						A2(
+						$elm$core$Maybe$withDefault,
+						0,
+						$elm$core$List$head(
+							A2($elm$core$List$drop, n - 1, current))) + 1
+					]));
+			var label = A2(
+				$elm$core$String$join,
+				'.',
+				A2($elm$core$List$map, $elm$core$String$fromInt, next));
+			return _Utils_Tuple2(
+				next,
+				_Utils_update(
+					block,
+					{
+						properties: A3($elm$core$Dict$insert, 'label', label, block.properties)
+					}));
+		} else {
+			return _Utils_Tuple2(current, block);
+		}
+	});
+var $elm$core$Tuple$mapSecond = F2(
+	function (func, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			x,
+			func(y));
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$mapForestWithState = F3(
+	function (f, state, trees) {
+		return A2(
+			$elm$core$Tuple$mapSecond,
+			$elm$core$List$reverse,
+			A3(
+				$elm$core$List$foldl,
+				F2(
+					function (tree, _v0) {
+						var s = _v0.a;
+						var done = _v0.b;
+						var _v1 = A2(
+							f,
+							s,
+							$maca$elm_rose_tree$RoseTree$Tree$value(tree));
+						var s1 = _v1.a;
+						var value = _v1.b;
+						var _v2 = A3(
+							$jxxcarlson$xmarkdown_compiler$HTML$Export$mapForestWithState,
+							f,
+							s1,
+							$maca$elm_rose_tree$RoseTree$Tree$children(tree));
+						var s2 = _v2.a;
+						var children = _v2.b;
+						return _Utils_Tuple2(
+							s2,
+							A2(
+								$elm$core$List$cons,
+								A2($maca$elm_rose_tree$RoseTree$Tree$branch, value, children),
+								done));
+					}),
+				_Utils_Tuple2(state, _List_Nil),
+				trees));
+	});
+var $elm$core$Dict$getMin = function (dict) {
+	getMin:
+	while (true) {
+		if ((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) {
+			var left = dict.d;
+			var $temp$dict = left;
+			dict = $temp$dict;
+			continue getMin;
+		} else {
+			return dict;
+		}
+	}
+};
+var $elm$core$Dict$moveRedLeft = function (dict) {
+	if (((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) && (dict.e.$ === 'RBNode_elm_builtin')) {
+		if ((dict.e.d.$ === 'RBNode_elm_builtin') && (dict.e.d.a.$ === 'Red')) {
+			var clr = dict.a;
+			var k = dict.b;
+			var v = dict.c;
+			var _v1 = dict.d;
+			var lClr = _v1.a;
+			var lK = _v1.b;
+			var lV = _v1.c;
+			var lLeft = _v1.d;
+			var lRight = _v1.e;
+			var _v2 = dict.e;
+			var rClr = _v2.a;
+			var rK = _v2.b;
+			var rV = _v2.c;
+			var rLeft = _v2.d;
+			var _v3 = rLeft.a;
+			var rlK = rLeft.b;
+			var rlV = rLeft.c;
+			var rlL = rLeft.d;
+			var rlR = rLeft.e;
+			var rRight = _v2.e;
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				$elm$core$Dict$Red,
+				rlK,
+				rlV,
+				A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					rlL),
+				A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rlR, rRight));
+		} else {
+			var clr = dict.a;
+			var k = dict.b;
+			var v = dict.c;
+			var _v4 = dict.d;
+			var lClr = _v4.a;
+			var lK = _v4.b;
+			var lV = _v4.c;
+			var lLeft = _v4.d;
+			var lRight = _v4.e;
+			var _v5 = dict.e;
+			var rClr = _v5.a;
+			var rK = _v5.b;
+			var rV = _v5.c;
+			var rLeft = _v5.d;
+			var rRight = _v5.e;
+			if (clr.$ === 'Black') {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight));
+			}
+		}
+	} else {
+		return dict;
+	}
+};
+var $elm$core$Dict$moveRedRight = function (dict) {
+	if (((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) && (dict.e.$ === 'RBNode_elm_builtin')) {
+		if ((dict.d.d.$ === 'RBNode_elm_builtin') && (dict.d.d.a.$ === 'Red')) {
+			var clr = dict.a;
+			var k = dict.b;
+			var v = dict.c;
+			var _v1 = dict.d;
+			var lClr = _v1.a;
+			var lK = _v1.b;
+			var lV = _v1.c;
+			var _v2 = _v1.d;
+			var _v3 = _v2.a;
+			var llK = _v2.b;
+			var llV = _v2.c;
+			var llLeft = _v2.d;
+			var llRight = _v2.e;
+			var lRight = _v1.e;
+			var _v4 = dict.e;
+			var rClr = _v4.a;
+			var rK = _v4.b;
+			var rV = _v4.c;
+			var rLeft = _v4.d;
+			var rRight = _v4.e;
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				$elm$core$Dict$Red,
+				lK,
+				lV,
+				A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
+				A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					lRight,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight)));
+		} else {
+			var clr = dict.a;
+			var k = dict.b;
+			var v = dict.c;
+			var _v5 = dict.d;
+			var lClr = _v5.a;
+			var lK = _v5.b;
+			var lV = _v5.c;
+			var lLeft = _v5.d;
+			var lRight = _v5.e;
+			var _v6 = dict.e;
+			var rClr = _v6.a;
+			var rK = _v6.b;
+			var rV = _v6.c;
+			var rLeft = _v6.d;
+			var rRight = _v6.e;
+			if (clr.$ === 'Black') {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight));
+			}
+		}
+	} else {
+		return dict;
+	}
+};
+var $elm$core$Dict$removeHelpPrepEQGT = F7(
+	function (targetKey, dict, color, key, value, left, right) {
+		if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+			var _v1 = left.a;
+			var lK = left.b;
+			var lV = left.c;
+			var lLeft = left.d;
+			var lRight = left.e;
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				color,
+				lK,
+				lV,
+				lLeft,
+				A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, lRight, right));
+		} else {
+			_v2$2:
+			while (true) {
+				if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Black')) {
+					if (right.d.$ === 'RBNode_elm_builtin') {
+						if (right.d.a.$ === 'Black') {
+							var _v3 = right.a;
+							var _v4 = right.d;
+							var _v5 = _v4.a;
+							return $elm$core$Dict$moveRedRight(dict);
+						} else {
+							break _v2$2;
+						}
+					} else {
+						var _v6 = right.a;
+						var _v7 = right.d;
+						return $elm$core$Dict$moveRedRight(dict);
+					}
+				} else {
+					break _v2$2;
+				}
+			}
+			return dict;
+		}
+	});
+var $elm$core$Dict$removeMin = function (dict) {
+	if ((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) {
+		var color = dict.a;
+		var key = dict.b;
+		var value = dict.c;
+		var left = dict.d;
+		var lColor = left.a;
+		var lLeft = left.d;
+		var right = dict.e;
+		if (lColor.$ === 'Black') {
+			if ((lLeft.$ === 'RBNode_elm_builtin') && (lLeft.a.$ === 'Red')) {
+				var _v3 = lLeft.a;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					color,
+					key,
+					value,
+					$elm$core$Dict$removeMin(left),
+					right);
+			} else {
+				var _v4 = $elm$core$Dict$moveRedLeft(dict);
+				if (_v4.$ === 'RBNode_elm_builtin') {
+					var nColor = _v4.a;
+					var nKey = _v4.b;
+					var nValue = _v4.c;
+					var nLeft = _v4.d;
+					var nRight = _v4.e;
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						$elm$core$Dict$removeMin(nLeft),
+						nRight);
+				} else {
+					return $elm$core$Dict$RBEmpty_elm_builtin;
+				}
+			}
+		} else {
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				color,
+				key,
+				value,
+				$elm$core$Dict$removeMin(left),
+				right);
+		}
+	} else {
+		return $elm$core$Dict$RBEmpty_elm_builtin;
+	}
+};
+var $elm$core$Dict$removeHelp = F2(
+	function (targetKey, dict) {
+		if (dict.$ === 'RBEmpty_elm_builtin') {
+			return $elm$core$Dict$RBEmpty_elm_builtin;
+		} else {
+			var color = dict.a;
+			var key = dict.b;
+			var value = dict.c;
+			var left = dict.d;
+			var right = dict.e;
+			if (_Utils_cmp(targetKey, key) < 0) {
+				if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Black')) {
+					var _v4 = left.a;
+					var lLeft = left.d;
+					if ((lLeft.$ === 'RBNode_elm_builtin') && (lLeft.a.$ === 'Red')) {
+						var _v6 = lLeft.a;
+						return A5(
+							$elm$core$Dict$RBNode_elm_builtin,
+							color,
+							key,
+							value,
+							A2($elm$core$Dict$removeHelp, targetKey, left),
+							right);
+					} else {
+						var _v7 = $elm$core$Dict$moveRedLeft(dict);
+						if (_v7.$ === 'RBNode_elm_builtin') {
+							var nColor = _v7.a;
+							var nKey = _v7.b;
+							var nValue = _v7.c;
+							var nLeft = _v7.d;
+							var nRight = _v7.e;
+							return A5(
+								$elm$core$Dict$balance,
+								nColor,
+								nKey,
+								nValue,
+								A2($elm$core$Dict$removeHelp, targetKey, nLeft),
+								nRight);
+						} else {
+							return $elm$core$Dict$RBEmpty_elm_builtin;
+						}
+					}
+				} else {
+					return A5(
+						$elm$core$Dict$RBNode_elm_builtin,
+						color,
+						key,
+						value,
+						A2($elm$core$Dict$removeHelp, targetKey, left),
+						right);
+				}
+			} else {
+				return A2(
+					$elm$core$Dict$removeHelpEQGT,
+					targetKey,
+					A7($elm$core$Dict$removeHelpPrepEQGT, targetKey, dict, color, key, value, left, right));
+			}
+		}
+	});
+var $elm$core$Dict$removeHelpEQGT = F2(
+	function (targetKey, dict) {
+		if (dict.$ === 'RBNode_elm_builtin') {
+			var color = dict.a;
+			var key = dict.b;
+			var value = dict.c;
+			var left = dict.d;
+			var right = dict.e;
+			if (_Utils_eq(targetKey, key)) {
+				var _v1 = $elm$core$Dict$getMin(right);
+				if (_v1.$ === 'RBNode_elm_builtin') {
+					var minKey = _v1.b;
+					var minValue = _v1.c;
+					return A5(
+						$elm$core$Dict$balance,
+						color,
+						minKey,
+						minValue,
+						left,
+						$elm$core$Dict$removeMin(right));
+				} else {
+					return $elm$core$Dict$RBEmpty_elm_builtin;
+				}
+			} else {
+				return A5(
+					$elm$core$Dict$balance,
+					color,
+					key,
+					value,
+					left,
+					A2($elm$core$Dict$removeHelp, targetKey, right));
+			}
+		} else {
+			return $elm$core$Dict$RBEmpty_elm_builtin;
+		}
+	});
+var $elm$core$Dict$remove = F2(
+	function (key, dict) {
+		var _v0 = A2($elm$core$Dict$removeHelp, key, dict);
+		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
+			var _v1 = _v0.a;
+			var k = _v0.b;
+			var v = _v0.c;
+			var l = _v0.d;
+			var r = _v0.e;
+			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
+		} else {
+			var x = _v0;
+			return x;
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$Tools$String$userReplace = F3(
+	function (userRegex, replacer, string) {
+		var _v0 = $elm$regex$Regex$fromString(userRegex);
+		if (_v0.$ === 'Nothing') {
+			return string;
+		} else {
+			var regex = _v0.a;
+			return A3($elm$regex$Regex$replace, regex, replacer, string);
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$Tools$String$alphanumOnly = function (string) {
+	return A3(
+		$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
+		'[^a-z0-9 ]+',
+		function (_v0) {
+			return ' ';
+		},
+		string);
+};
+var $jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace = function (string) {
+	return $elm$core$String$trim(
+		A3(
+			$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
+			'\u005Cs\u005Cs+',
+			function (_v0) {
+				return ' ';
+			},
+			string));
+};
+var $jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug = function (str) {
+	return A3(
+		$elm$core$String$replace,
+		' ',
+		'-',
+		$jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace(
+			$jxxcarlson$xmarkdown_compiler$Tools$String$alphanumOnly(
+				$elm$core$String$toLower(str))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$tagBlock = F2(
+	function (used, block) {
+		if (_Utils_eq(
+			block.heading,
+			$jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('section'))) {
+			var slug = function () {
+				var _v0 = $jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug(
+					$jxxcarlson$xmarkdown_compiler$HTML$Export$headingText(block));
+				if (_v0 === '') {
+					return 'section';
+				} else {
+					var s = _v0;
+					return s;
+				}
+			}();
+			var free = function (n) {
+				free:
+				while (true) {
+					var candidate = slug + ('-' + $elm$core$String$fromInt(n));
+					if (A2($elm$core$Set$member, candidate, used)) {
+						var $temp$n = n + 1;
+						n = $temp$n;
+						continue free;
+					} else {
+						return candidate;
+					}
+				}
+			};
+			var tag = A2($elm$core$Set$member, slug, used) ? free(2) : slug;
+			return _Utils_Tuple2(
+				A2($elm$core$Set$insert, tag, used),
+				_Utils_update(
+					block,
+					{
+						properties: A3($elm$core$Dict$insert, 'tag', tag, block.properties)
+					}));
+		} else {
+			return _Utils_Tuple2(used, block);
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList = {$: 'SNotInList'};
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$init = function (k) {
+	return {
+		content: A2($elm$core$List$repeat, k, 0),
+		size: k
+	};
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames = _List_fromArray(
+	['q', 'axiom', 'box', 'theorem', 'definition', 'lemma', 'construction', 'principle', 'proposition', 'corollary', 'note', 'remark', 'exercise', 'question', 'problem', 'example', 'equation', 'aligned', 'quiver', 'image', 'iframe']);
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$init = {
+	blockCounter: 0,
+	counter: $elm$core$Dict$empty,
+	deltaLevel: 0,
+	headingIndex: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4),
+	inListState: $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList,
+	itemVector: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4),
+	keyValueDict: $elm$core$Dict$empty,
+	numberedBlockNames: $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames,
+	numberedItemDict: $elm$core$Dict$empty
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$mapper = F2(
+	function (ast_, _v0) {
+		var acc_ = _v0.a;
+		var tree_ = _v0.b;
+		return _Utils_Tuple2(
+			acc_,
+			A2($elm$core$List$cons, tree_, ast_));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$reverse = function (list) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (x, xs) {
+				return A2($elm$core$List$cons, x, xs);
+			}),
+		_List_Nil,
+		list);
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate = F3(
+	function (f, s, tree) {
+		var _v0 = A2(
+			f,
+			s,
+			$maca$elm_rose_tree$RoseTree$Tree$value(tree));
+		var s_ = _v0.a;
+		var value_ = _v0.b;
+		var _v1 = A3(
+			$elm$core$List$foldl,
+			F2(
+				function (child, _v2) {
+					var accState = _v2.a;
+					var accChildren = _v2.b;
+					var _v3 = A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, f, accState, child);
+					var newState = _v3.a;
+					var newChild = _v3.b;
+					return _Utils_Tuple2(
+						newState,
+						A2($elm$core$List$cons, newChild, accChildren));
+				}),
+			_Utils_Tuple2(s_, _List_Nil),
+			$maca$elm_rose_tree$RoseTree$Tree$children(tree));
+		var s__ = _v1.a;
+		var children_ = _v1.b;
+		return _Utils_Tuple2(
+			s__,
+			A2(
+				$maca$elm_rose_tree$RoseTree$Tree$branch,
+				value_,
+				$jxxcarlson$xmarkdown_compiler$AST$Acc$reverse(children_)));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString = F2(
+	function (name, dict) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			'',
+			A2(
+				$elm$core$Maybe$map,
+				$elm$core$String$fromInt,
+				A2($elm$core$Dict$get, name, dict)));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$toString = function (v) {
+	return A2(
+		$elm$core$String$join,
+		'.',
+		A2(
+			$elm$core$List$map,
+			$elm$core$String$fromInt,
+			A2(
+				$elm$core$List$filter,
+				function (x) {
+					return x > 0;
+				},
+				v.content)));
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber = function (acc) {
+	return ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) === '') ? A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter) : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) + ('.' + A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter)));
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$vectorPrefix = function (headingIndex) {
+	var prefix = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex);
+	return (prefix === '') ? '' : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex) + '.');
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock = F2(
+	function (acc, block) {
+		var _v0 = _Utils_Tuple2(block.heading, block.args);
+		_v0$4:
+		while (true) {
+			switch (_v0.a.$) {
+				case 'Ordinary':
+					switch (_v0.a.a) {
+						case 'section':
+							return _Utils_update(
+								block,
+								{
+									properties: A3(
+										$elm$core$Dict$insert,
+										'tag',
+										$jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug(block.firstLine),
+										A3(
+											$elm$core$Dict$insert,
+											'label',
+											$jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex),
+											block.properties))
+								});
+						case 'image':
+							return _Utils_update(
+								block,
+								{
+									properties: A3(
+										$elm$core$Dict$insert,
+										'figure',
+										A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'figure', acc.counter),
+										block.properties)
+								});
+						default:
+							break _v0$4;
+					}
+				case 'Verbatim':
+					switch (_v0.a.a) {
+						case 'equation':
+							return _Utils_update(
+								block,
+								{
+									properties: A3(
+										$elm$core$Dict$insert,
+										'equation-number',
+										$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
+										block.properties)
+								});
+						case 'aligned':
+							return _Utils_update(
+								block,
+								{
+									properties: A3(
+										$elm$core$Dict$insert,
+										'equation-number',
+										$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
+										block.properties)
+								});
+						default:
+							break _v0$4;
+					}
+				default:
+					break _v0$4;
+			}
+		}
+		var heading = _v0.a;
+		var _v1 = $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(heading);
+		if (_v1.$ === 'Nothing') {
+			return block;
+		} else {
+			var name = _v1.a;
+			return A2(
+				$elm$core$List$member,
+				name,
+				_List_fromArray(
+					['section'])) ? _Utils_update(
+				block,
+				{
+					properties: A3(
+						$elm$core$Dict$insert,
+						'label',
+						$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
+						block.properties)
+				}) : (A2($elm$core$List$member, name, $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames) ? _Utils_update(
+				block,
+				{
+					properties: A3(
+						$elm$core$Dict$insert,
+						'label',
+						_Utils_ap(
+							$jxxcarlson$xmarkdown_compiler$AST$Acc$vectorPrefix(acc.headingIndex),
+							$elm$core$String$fromInt(acc.blockCounter)),
+						block.properties)
+				}) : block);
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey = 'titleBlockId';
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList = {$: 'SInList'};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState = F2(
+	function (heading, state) {
+		var _v0 = _Utils_Tuple2(state, heading);
+		if (_v0.a.$ === 'SNotInList') {
+			if ((_v0.b.$ === 'Ordinary') && (_v0.b.a === 'numbered')) {
+				var _v1 = _v0.a;
+				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList;
+			} else {
+				var _v2 = _v0.a;
+				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList;
+			}
+		} else {
+			if ((_v0.b.$ === 'Ordinary') && (_v0.b.a === 'numbered')) {
+				var _v3 = _v0.a;
+				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList;
+			} else {
+				var _v4 = _v0.a;
+				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList;
+			}
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$get = F2(
+	function (k, v) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			0,
+			A2($elmcraft$core_extra$List$Extra$getAt, k, v.content));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName = function (block) {
+	var _v0 = block.heading;
+	switch (_v0.$) {
+		case 'Paragraph':
+			return $elm$core$Maybe$Nothing;
+		case 'Ordinary':
+			var name = _v0.a;
+			return $elm$core$Maybe$Just(name);
+		default:
+			var name = _v0.a;
+			return $elm$core$Maybe$Just(name);
+	}
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$resetFrom = F2(
+	function (k, v) {
+		var suffix = A2($elm$core$List$repeat, v.size - k, 0);
+		var prefix = A2($elm$core$List$take, k, v.content);
+		return {
+			content: _Utils_ap(prefix, suffix),
+			size: v.size
+		};
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$set = F3(
+	function (k, a, v) {
+		return _Utils_update(
+			v,
+			{
+				content: A3($elmcraft$core_extra$List$Extra$setAt, k, a, v.content)
+			});
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Vector$increment = F2(
+	function (k, v) {
+		return ((k < 0) || (_Utils_cmp(k, v.size) > -1)) ? v : A2(
+			$jxxcarlson$xmarkdown_compiler$AST$Vector$resetFrom,
+			k + 1,
+			A3(
+				$jxxcarlson$xmarkdown_compiler$AST$Vector$set,
+				k,
+				A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, k, v) + 1,
+				v));
+	});
+var $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum = 2;
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryBlock = F2(
+	function (block, accumulator) {
+		var _v0 = $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block);
+		if (_v0.$ === 'Just') {
+			switch (_v0.a) {
+				case 'setcounter':
+					var _v1 = block.body;
+					if (_v1.$ === 'Left') {
+						return accumulator;
+					} else {
+						var exprs = _v1.a;
+						var ctr = function () {
+							if ((exprs.b && (exprs.a.$ === 'Text')) && (!exprs.b.b)) {
+								var _v3 = exprs.a;
+								var val = _v3.a;
+								return A2(
+									$elm$core$Maybe$withDefault,
+									1,
+									$elm$core$String$toInt(val));
+							} else {
+								return 1;
+							}
+						}();
+						var headingIndex = A3(
+							$jxxcarlson$xmarkdown_compiler$AST$Vector$set,
+							0,
+							ctr - 1,
+							$jxxcarlson$xmarkdown_compiler$AST$Vector$init(accumulator.headingIndex.size));
+						return _Utils_update(
+							accumulator,
+							{headingIndex: headingIndex});
+					}
+				case 'numbered':
+					var level = (block.indent / $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum) | 0;
+					var itemVector = function () {
+						var _v4 = accumulator.inListState;
+						if (_v4.$ === 'SInList') {
+							return A2($jxxcarlson$xmarkdown_compiler$AST$Vector$increment, level, accumulator.itemVector);
+						} else {
+							return A2(
+								$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
+								0,
+								$jxxcarlson$xmarkdown_compiler$AST$Vector$init(4));
+						}
+					}();
+					var index = A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector);
+					var numberedItemDict = A3(
+						$elm$core$Dict$insert,
+						block.meta.id,
+						{index: index, level: level},
+						accumulator.numberedItemDict);
+					return _Utils_update(
+						accumulator,
+						{
+							inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState),
+							itemVector: itemVector,
+							numberedItemDict: numberedItemDict
+						});
+				case 'item':
+					return _Utils_update(
+						accumulator,
+						{
+							inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
+						});
+				default:
+					var name_ = _v0.a;
+					if (A2(
+						$elm$core$List$member,
+						name_,
+						_List_fromArray(
+							['title', 'contents', 'banner', 'a']))) {
+						return accumulator;
+					} else {
+						if (A2($elm$core$List$member, name_, $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames)) {
+							var level = (block.indent / $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum) | 0;
+							var itemVector = A2($jxxcarlson$xmarkdown_compiler$AST$Vector$increment, level, accumulator.itemVector);
+							var numberedItemDict = A3(
+								$elm$core$Dict$insert,
+								block.meta.id,
+								{
+									index: A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector),
+									level: level
+								},
+								accumulator.numberedItemDict);
+							return _Utils_update(
+								accumulator,
+								{
+									blockCounter: accumulator.blockCounter + 1,
+									inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState),
+									itemVector: itemVector,
+									numberedItemDict: numberedItemDict
+								});
+						} else {
+							return _Utils_update(
+								accumulator,
+								{
+									inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
+								});
+						}
+					}
+			}
+		} else {
+			return accumulator;
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock = F2(
+	function (accumulator, level) {
+		var delta = function () {
+			var _v0 = A2($elm$core$Dict$get, 'has-chapters', accumulator.keyValueDict);
+			if (_v0.$ === 'Nothing') {
+				return 0;
+			} else {
+				if (_v0.a === 'yes') {
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+		}();
+		var headingIndex = A2(
+			$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
+			function (x) {
+				return ((x - 1) + delta) + accumulator.deltaLevel;
+			}(
+				A2(
+					$elm$core$Maybe$withDefault,
+					1,
+					$elm$core$String$toInt(level))),
+			accumulator.headingIndex);
+		return _Utils_update(
+			accumulator,
+			{
+				blockCounter: 0,
+				counter: A3($elm$core$Dict$insert, 'equation', 0, accumulator.counter),
+				headingIndex: headingIndex
+			});
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter = F2(
+	function (name, dict) {
+		return A2(
+			$elm$core$Maybe$withDefault,
+			0,
+			A2($elm$core$Dict$get, name, dict));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$incrementCounter = F2(
+	function (name, dict) {
+		return A3(
+			$elm$core$Dict$insert,
+			name,
+			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter, name, dict) + 1,
+			dict);
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName = function (str) {
+	return A2(
+		$elm$core$List$member,
+		str,
+		_List_fromArray(
+			['equation', 'aligned'])) ? 'equation' : ((str === 'code') ? 'listing' : (A2(
+		$elm$core$List$member,
+		str,
+		_List_fromArray(
+			['quiver', 'image', 'table', 'svg', 'tikz'])) ? 'figure' : str));
+};
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock = F2(
+	function (block, accumulator) {
+		var _v0 = block.body;
+		if (_v0.$ === 'Right') {
+			return accumulator;
+		} else {
+			var name = A2(
+				$elm$core$Maybe$withDefault,
+				'',
+				$jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block));
+			var newCounter = (A2($elm$core$List$member, name, accumulator.numberedBlockNames) && A2($elm$core$List$member, 'numbered', block.args)) ? A2(
+				$jxxcarlson$xmarkdown_compiler$AST$Acc$incrementCounter,
+				$jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName(name),
+				accumulator.counter) : accumulator.counter;
+			return _Utils_update(
+				accumulator,
+				{
+					counter: newCounter,
+					inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
+				});
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator = F2(
+	function (block, accumulator) {
+		var properties = block.properties;
+		var args = block.args;
+		var heading = block.heading;
+		switch (heading.$) {
+			case 'Ordinary':
+				switch (heading.a) {
+					case 'set-key':
+						if (args.b && args.b.b) {
+							var key = args.a;
+							var _v2 = args.b;
+							var value = _v2.a;
+							return _Utils_update(
+								accumulator,
+								{
+									keyValueDict: A3($elm$core$Dict$insert, key, value, accumulator.keyValueDict)
+								});
+						} else {
+							return accumulator;
+						}
+					case 'list':
+						return _Utils_update(
+							accumulator,
+							{
+								itemVector: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4)
+							});
+					case 'section':
+						var level = A2(
+							$elm$core$Maybe$withDefault,
+							'1',
+							A2($elm$core$Dict$get, 'level', properties));
+						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock, accumulator, level);
+					case 'titleBlock':
+						return A2($elm$core$Dict$member, $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey, accumulator.keyValueDict) ? accumulator : _Utils_update(
+							accumulator,
+							{
+								keyValueDict: A3($elm$core$Dict$insert, $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey, block.meta.id, accumulator.keyValueDict)
+							});
+					case 'title':
+						if (accumulator.deltaLevel === 1) {
+							return accumulator;
+						} else {
+							var headingIndex = function () {
+								var _v3 = A2($elm$core$Dict$get, 'first-section', block.properties);
+								if (_v3.$ === 'Nothing') {
+									return {
+										content: _List_fromArray(
+											[0, 0, 0, 0]),
+										size: 4
+									};
+								} else {
+									var firstSection_ = _v3.a;
+									var _v4 = $elm$core$String$toInt(firstSection_);
+									if (_v4.$ === 'Just') {
+										var n = _v4.a;
+										return {
+											content: _List_fromArray(
+												[
+													A2($elm$core$Basics$max, n - 1, 0),
+													0,
+													0,
+													0
+												]),
+											size: 4
+										};
+									} else {
+										return {
+											content: _List_fromArray(
+												[0, 0, 0, 0]),
+											size: 4
+										};
+									}
+								}
+							}();
+							return _Utils_update(
+								accumulator,
+								{headingIndex: headingIndex});
+						}
+					case 'setcounter':
+						var n = A2(
+							$elm$core$Maybe$withDefault,
+							1,
+							A2(
+								$elm$core$Maybe$andThen,
+								$elm$core$String$toInt,
+								$elm$core$List$head(args)));
+						return _Utils_update(
+							accumulator,
+							{
+								headingIndex: {
+									content: _List_fromArray(
+										[n, 0, 0, 0]),
+									size: 4
+								}
+							});
+					case 'shiftandsetcounter':
+						var n = A2(
+							$elm$core$Maybe$withDefault,
+							1,
+							A2(
+								$elm$core$Maybe$andThen,
+								$elm$core$String$toInt,
+								$elm$core$List$head(args)));
+						return _Utils_update(
+							accumulator,
+							{
+								deltaLevel: 1,
+								headingIndex: {
+									content: _List_fromArray(
+										[n, 0, 0, 0]),
+									size: 4
+								}
+							});
+					default:
+						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryBlock, block, accumulator);
+				}
+			case 'Verbatim':
+				if (heading.a === 'settings') {
+					return _Utils_update(
+						accumulator,
+						{
+							keyValueDict: A2($elm$core$Dict$union, properties, accumulator.keyValueDict)
+						});
+				} else {
+					var _v5 = block.body;
+					if (_v5.$ === 'Left') {
+						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock, block, accumulator);
+					} else {
+						return accumulator;
+					}
+				}
+			default:
+				return _Utils_update(
+					accumulator,
+					{
+						inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
+					});
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock = F2(
+	function (acc_, block_) {
+		var newAcc = A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator, block_, acc_);
+		return _Utils_Tuple2(
+			newAcc,
+			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock, newAcc, block_));
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree = F2(
+	function (tree, acc) {
+		return A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock, acc, tree);
+	});
+var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate = function (forest) {
+	return function (_v1) {
+		var acc_ = _v1.a;
+		var ast_ = _v1.b;
+		return _Utils_Tuple2(
+			acc_,
+			$elm$core$List$reverse(ast_));
+	}(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (tree, _v0) {
+					var acc_ = _v0.a;
+					var ast_ = _v0.b;
+					return A2(
+						$jxxcarlson$xmarkdown_compiler$AST$Acc$mapper,
+						ast_,
+						A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree, tree, acc_));
+				}),
+			_Utils_Tuple2($jxxcarlson$xmarkdown_compiler$AST$Acc$init, _List_Nil),
+			forest));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$prepare = F2(
+	function (numbers, forest) {
+		var tagged = A3(
+			$jxxcarlson$xmarkdown_compiler$HTML$Export$mapForestWithState,
+			$jxxcarlson$xmarkdown_compiler$HTML$Export$tagBlock,
+			$elm$core$Set$empty,
+			$jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate(
+				$jxxcarlson$xmarkdown_compiler$LaTeX$Block$stripSectionNumbers(
+					$jxxcarlson$xmarkdown_compiler$LaTeX$Block$normalizeSectionLevels(forest))).b).b;
+		if (numbers.$ === 'WithSectionNumbers') {
+			return A3($jxxcarlson$xmarkdown_compiler$HTML$Export$mapForestWithState, $jxxcarlson$xmarkdown_compiler$HTML$Export$labelBlock, _List_Nil, tagged).b;
+		} else {
+			return A2(
+				$elm$core$List$map,
+				$maca$elm_rose_tree$RoseTree$Tree$mapValues(
+					function (block) {
+						return _Utils_update(
+							block,
+							{
+								properties: A2($elm$core$Dict$remove, 'label', block.properties)
+							});
+					}),
+				tagged);
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$entry = function (block) {
+	var text = function () {
+		var _v1 = block.body;
+		if (_v1.$ === 'Right') {
+			var exprs = _v1.a;
+			return $elm$core$String$trim(
+				$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(exprs));
+		} else {
+			var str = _v1.a;
+			return $jxxcarlson$xmarkdown_compiler$HTML$Escape$text(
+				$elm$core$String$trim(str));
+		}
+	}();
+	var number = function () {
+		var _v0 = A2($elm$core$Dict$get, 'label', block.properties);
+		if (_v0.$ === 'Just') {
+			var label = _v0.a;
+			return '<span class=\u0022xm-section-number\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(label) + '</span> ');
+		} else {
+			return '';
+		}
+	}();
+	var href = A2(
+		$elm$core$Maybe$withDefault,
+		'',
+		A2($elm$core$Dict$get, 'tag', block.properties));
+	return '<a href=\u0022#' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$attribute(href) + ('\u0022>' + (number + (text + '</a>'))));
+};
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile = F2(
+	function (pred, list) {
+		if (list.b) {
+			var x = list.a;
+			var xs = list.b;
+			return pred(x) ? A2(
+				$elm$core$List$cons,
+				x,
+				A2($jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile, pred, xs)) : _List_Nil;
+		} else {
+			return _List_Nil;
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems = F2(
+	function (base, entries) {
+		if (!entries.b) {
+			return _List_Nil;
+		} else {
+			var _v1 = entries.a;
+			var link = _v1.b;
+			var rest = entries.b;
+			var deeper = A2(
+				$jxxcarlson$xmarkdown_compiler$HTML$Export$takeWhile,
+				function (_v4) {
+					var l = _v4.a;
+					return _Utils_cmp(l, base) > 0;
+				},
+				rest);
+			var nested = function () {
+				if (!deeper.b) {
+					return '';
+				} else {
+					var _v3 = deeper.a;
+					var l = _v3.a;
+					return A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocList, l, deeper);
+				}
+			}();
+			var remaining = A2(
+				$elm$core$List$drop,
+				$elm$core$List$length(deeper),
+				rest);
+			return A2(
+				$elm$core$List$cons,
+				'<li>' + (link + (nested + '</li>')),
+				A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems, base, remaining));
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$tocList = F2(
+	function (base, entries) {
+		return '<ul>' + ($elm$core$String$concat(
+			A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocItems, base, entries)) + '</ul>');
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$tableOfContents = F2(
+	function (toc, forest) {
+		if (toc.$ === 'WithoutTOC') {
+			return '';
+		} else {
+			var _v1 = A2(
+				$elm$core$List$map,
+				function (b) {
+					return _Utils_Tuple2(
+						$jxxcarlson$xmarkdown_compiler$HTML$Export$level(b),
+						$jxxcarlson$xmarkdown_compiler$HTML$Export$entry(b));
+				},
+				$jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents(forest));
+			if (!_v1.b) {
+				return '';
+			} else {
+				var entries = _v1;
+				var _v2 = entries.a;
+				var base = _v2.a;
+				return '<nav class=\u0022xm-toc\u0022>' + (A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tocList, base, entries) + '</nav>');
+			}
+		}
+	});
+var $jxxcarlson$xmarkdown_compiler$HTML$Export$toTextHtml = F3(
+	function (toc, numbers, ast) {
+		var original = $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$forest(ast);
+		var titleBlock = $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$fromForest(original);
+		var forest = A2($jxxcarlson$xmarkdown_compiler$HTML$Export$prepare, numbers, original);
+		return function (html) {
+			return html + '\u000A';
+		}(
+			A2(
+				$elm$core$String$join,
+				'\u000A',
+				A2(
+					$elm$core$List$filter,
+					A2($elm$core$Basics$composeL, $elm$core$Basics$not, $elm$core$String$isEmpty),
+					_List_fromArray(
+						[
+							'<!doctype html>',
+							'<html lang=\u0022en\u0022>',
+							'<head>',
+							'<meta charset=\u0022utf-8\u0022>',
+							'<meta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1\u0022>',
+							'<title>' + ($jxxcarlson$xmarkdown_compiler$HTML$Escape$text(
+							A2($jxxcarlson$xmarkdown_compiler$HTML$Export$pageTitle, titleBlock, forest)) + '</title>'),
+							$jxxcarlson$xmarkdown_compiler$HTML$Style$katexHead,
+							'<style id=\u0022xm-default-style\u0022>',
+							$jxxcarlson$xmarkdown_compiler$HTML$Style$defaultCss,
+							'</style>',
+							'</head>',
+							'<body>',
+							'<article class=\u0022xm-document\u0022>',
+							$jxxcarlson$xmarkdown_compiler$HTML$Export$header(titleBlock),
+							A2($jxxcarlson$xmarkdown_compiler$HTML$Export$tableOfContents, toc, forest),
+							$jxxcarlson$xmarkdown_compiler$HTML$Block$forest(forest),
+							'</article>',
+							'</body>',
+							'</html>'
+						]))));
+	});
+var $author$project$Main$exportedHtml = function (model) {
+	return A3(
+		$jxxcarlson$xmarkdown_compiler$HTML$Export$toTextHtml,
+		$jxxcarlson$xmarkdown_compiler$HTML$Export$WithTOC,
+		(model.compilerParameters.numberToLevel > 0) ? $jxxcarlson$xmarkdown_compiler$HTML$Export$WithSectionNumbers : $jxxcarlson$xmarkdown_compiler$HTML$Export$WithoutSectionNumbers,
+		$jxxcarlson$xmarkdown_compiler$XMarkdown$API$parse(model.sourceText));
+};
 var $elm$time$Time$Posix = function (a) {
 	return {$: 'Posix', a: a};
 };
@@ -16787,6 +18972,13 @@ var $author$project$Main$header = F2(
 					''
 				]));
 	});
+var $author$project$Main$exportName = F2(
+	function (extension, fileName) {
+		return _Utils_ap(
+			A2($elm$core$String$endsWith, '.md', fileName) ? A2($elm$core$String$dropRight, 3, fileName) : fileName,
+			extension);
+	});
+var $author$project$Main$htmlName = $author$project$Main$exportName('.html');
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Export$exprImages = function (expr) {
 	switch (expr.$) {
 		case 'Fun':
@@ -17104,9 +19296,7 @@ var $author$project$Ports$openFolder = _Platform_outgoingPort(
 	function ($) {
 		return $elm$json$Json$Encode$null;
 	});
-var $author$project$Main$pdfName = function (fileName) {
-	return (A2($elm$core$String$endsWith, '.md', fileName) ? A2($elm$core$String$dropRight, 3, fileName) : fileName) + '.pdf';
-};
+var $author$project$Main$pdfName = $author$project$Main$exportName('.pdf');
 var $elm$file$File$Download$string = F3(
 	function (name, mime, content) {
 		return A2(
@@ -17510,10 +19700,44 @@ var $author$project$Main$update = F2(
 									{authors: _List_Nil, date: '', title: ''},
 									model.sourceText)
 							}));
+				case 'ExportHtmlRequested':
+					var _v5 = model.platform;
+					if (_v5.$ === 'Desktop') {
+						return _Utils_Tuple2(
+							model,
+							A2(
+								$author$project$Main$desktopRequest,
+								'exportHtml',
+								_List_fromArray(
+									[
+										_Utils_Tuple2(
+										'folder',
+										A2(
+											$elm$core$Maybe$withDefault,
+											$elm$json$Json$Encode$null,
+											A2($elm$core$Maybe$map, $elm$json$Json$Encode$string, model.folderPath))),
+										_Utils_Tuple2(
+										'name',
+										$elm$json$Json$Encode$string(
+											$author$project$Main$htmlName(model.fileName))),
+										_Utils_Tuple2(
+										'content',
+										$elm$json$Json$Encode$string(
+											$author$project$Main$exportedHtml(model)))
+									])));
+					} else {
+						return _Utils_Tuple2(
+							model,
+							A3(
+								$elm$file$File$Download$string,
+								$author$project$Main$htmlName(model.fileName),
+								'text/html',
+								$author$project$Main$exportedHtml(model)));
+					}
 				case 'PrintRequested':
-					var _v5 = model.pdfShown;
-					if (_v5.$ === 'Just') {
-						var path = _v5.a;
+					var _v6 = model.pdfShown;
+					if (_v6.$ === 'Just') {
+						var path = _v6.a;
 						return _Utils_Tuple2(
 							model,
 							A2(
@@ -17552,9 +19776,9 @@ var $author$project$Main$update = F2(
 										'images',
 										A2(
 											$elm$json$Json$Encode$list,
-											function (_v6) {
-												var url = _v6.a;
-												var localPath = _v6.b;
+											function (_v7) {
+												var url = _v7.a;
+												var localPath = _v7.b;
 												return A2(
 													$elm$json$Json$Encode$list,
 													$elm$json$Json$Encode$string,
@@ -17578,8 +19802,8 @@ var $author$project$Main$update = F2(
 							{notice: result}),
 						$elm$core$Platform$Cmd$none);
 				case 'OpenFolderRequested':
-					var _v7 = model.platform;
-					if (_v7.$ === 'Desktop') {
+					var _v8 = model.platform;
+					if (_v8.$ === 'Desktop') {
 						return _Utils_Tuple2(
 							model,
 							A2($author$project$Main$desktopRequest, 'openFolder', _List_Nil));
@@ -17602,9 +19826,9 @@ var $author$project$Main$update = F2(
 					var folder = msg.a.folder;
 					var content = msg.a.content;
 					var name = msg.a.name;
-					var _v8 = _Utils_Tuple2(content, folder);
-					if (_v8.a.$ === 'Just') {
-						var fileText = _v8.a.a;
+					var _v9 = _Utils_Tuple2(content, folder);
+					if (_v9.a.$ === 'Just') {
+						var fileText = _v9.a.a;
 						return _Utils_Tuple2(
 							A2(
 								$author$project$Main$loadDocument,
@@ -17614,9 +19838,9 @@ var $author$project$Main$update = F2(
 									{fileName: name, filePath: $elm$core$Maybe$Nothing})),
 							$elm$core$Platform$Cmd$none);
 					} else {
-						if (_v8.b.$ === 'Nothing') {
-							var _v9 = _v8.a;
-							var _v10 = _v8.b;
+						if (_v9.b.$ === 'Nothing') {
+							var _v10 = _v9.a;
+							var _v11 = _v9.b;
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
@@ -17625,8 +19849,8 @@ var $author$project$Main$update = F2(
 									}),
 								$elm$core$Platform$Cmd$none);
 						} else {
-							var _v11 = _v8.a;
-							var folderName = _v8.b.a;
+							var _v12 = _v9.a;
+							var folderName = _v9.b.a;
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
@@ -17637,23 +19861,23 @@ var $author$project$Main$update = F2(
 						}
 					}
 				case 'SaveRequested':
-					var _v12 = _Utils_Tuple2(model.platform, model.filePath);
-					if (_v12.a.$ === 'Desktop') {
-						if (_v12.b.$ === 'Just') {
-							var _v13 = _v12.a;
-							var path = _v12.b.a;
+					var _v13 = _Utils_Tuple2(model.platform, model.filePath);
+					if (_v13.a.$ === 'Desktop') {
+						if (_v13.b.$ === 'Just') {
+							var _v14 = _v13.a;
+							var path = _v13.b.a;
 							return _Utils_Tuple2(
 								model,
 								A3($author$project$Main$desktopSave, path, model, _List_Nil));
 						} else {
-							var _v14 = _v12.a;
-							var _v15 = _v12.b;
+							var _v15 = _v13.a;
+							var _v16 = _v13.b;
 							return _Utils_Tuple2(
 								model,
 								$author$project$Main$desktopSaveAs(model));
 						}
 					} else {
-						var _v16 = _v12.a;
+						var _v17 = _v13.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -17709,8 +19933,8 @@ var $author$project$Main$update = F2(
 						headed,
 						$author$project$Main$scheduleAutoSave(headed));
 				case 'NewRequested':
-					var _v17 = model.platform;
-					if (_v17.$ === 'Desktop') {
+					var _v18 = model.platform;
+					if (_v18.$ === 'Desktop') {
 						return _Utils_Tuple2(
 							model,
 							A2(
@@ -17732,8 +19956,8 @@ var $author$project$Main$update = F2(
 						return A3($author$project$Main$openDialog, $author$project$Main$NewFileDialog, 'untitled.md', model);
 					}
 				case 'SaveAsRequested':
-					var _v18 = model.platform;
-					if (_v18.$ === 'Desktop') {
+					var _v19 = model.platform;
+					if (_v19.$ === 'Desktop') {
 						return _Utils_Tuple2(
 							model,
 							$author$project$Main$desktopSaveAs(model));
@@ -17792,10 +20016,10 @@ var $author$project$Main$update = F2(
 							var andThenArg = _Utils_Tuple2(
 								'then',
 								$elm$json$Json$Encode$string(andThen));
-							var _v20 = _Utils_Tuple2(model.dirty, model.filePath);
-							if (_v20.a) {
-								if (_v20.b.$ === 'Just') {
-									var path = _v20.b.a;
+							var _v21 = _Utils_Tuple2(model.dirty, model.filePath);
+							if (_v21.a) {
+								if (_v21.b.$ === 'Just') {
+									var path = _v21.b.a;
 									return _Utils_Tuple2(
 										model,
 										A3(
@@ -17805,7 +20029,7 @@ var $author$project$Main$update = F2(
 											_List_fromArray(
 												[andThenArg])));
 								} else {
-									var _v21 = _v20.b;
+									var _v22 = _v21.b;
 									return _Utils_Tuple2(
 										model,
 										A2(
@@ -17859,6 +20083,15 @@ var $author$project$Main$update = F2(
 								_Utils_update(
 									model,
 									{printStatus: $elm$core$Maybe$Nothing}),
+								$elm$core$Platform$Cmd$none);
+						case 'DesktopHtmlExported':
+							var name = event.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										notice: $elm$core$Maybe$Just('Exported ' + (name + '.'))
+									}),
 								$elm$core$Platform$Cmd$none);
 						case 'DesktopPrintFailed':
 							var message = event.a;
@@ -17944,10 +20177,10 @@ var $author$project$Main$update = F2(
 							{dialog: $elm$core$Maybe$Nothing}),
 						$elm$core$Platform$Cmd$none);
 				case 'DialogConfirmed':
-					var _v22 = model.dialog;
-					if (_v22.$ === 'Just') {
-						var name = _v22.a.name;
-						var purpose = _v22.a.purpose;
+					var _v23 = model.dialog;
+					if (_v23.$ === 'Just') {
+						var name = _v23.a.name;
+						var purpose = _v23.a.purpose;
 						var fileName = $elm$core$String$trim(name);
 						if ($elm$core$String$isEmpty(fileName)) {
 							return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -17982,8 +20215,8 @@ var $author$project$Main$update = F2(
 						$elm$core$Platform$Cmd$none);
 				case 'ToggleNumberSections':
 					var oldCompilerParameters = model.compilerParameters;
-					var _v24 = model.numberedSections;
-					if (!_v24) {
+					var _v25 = model.numberedSections;
+					if (!_v25) {
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -18009,8 +20242,8 @@ var $author$project$Main$update = F2(
 				case 'ToggleTheme':
 					var params = model.compilerParameters;
 					var newTheme = function () {
-						var _v26 = model.theme;
-						if (_v26.$ === 'Light') {
+						var _v27 = model.theme;
+						if (_v27.$ === 'Light') {
 							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Dark;
 						} else {
 							return $jxxcarlson$xmarkdown_compiler$XMarkdown$Types$Light;
@@ -18083,9 +20316,9 @@ var $author$project$Main$update = F2(
 					}
 				default:
 					var msg_ = msg.a;
-					var _v28 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
-					if (_v28.$ === 'Just') {
-						var h = _v28.a;
+					var _v29 = A2($jxxcarlson$xmarkdown_compiler$XMarkdown$API$fromMsgToSyncHighlight, model.tick + 1, msg_);
+					if (_v29.$ === 'Just') {
+						var h = _v29.a;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -18147,670 +20380,6 @@ var $elm$html$Html$Attributes$classList = function (classes) {
 				$elm$core$Tuple$first,
 				A2($elm$core$List$filter, $elm$core$Tuple$second, classes))));
 };
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList = {$: 'SNotInList'};
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$init = function (k) {
-	return {
-		content: A2($elm$core$List$repeat, k, 0),
-		size: k
-	};
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames = _List_fromArray(
-	['q', 'axiom', 'box', 'theorem', 'definition', 'lemma', 'construction', 'principle', 'proposition', 'corollary', 'note', 'remark', 'exercise', 'question', 'problem', 'example', 'equation', 'aligned', 'quiver', 'image', 'iframe']);
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$init = {
-	blockCounter: 0,
-	counter: $elm$core$Dict$empty,
-	deltaLevel: 0,
-	headingIndex: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4),
-	inListState: $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList,
-	itemVector: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4),
-	keyValueDict: $elm$core$Dict$empty,
-	numberedBlockNames: $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames,
-	numberedItemDict: $elm$core$Dict$empty
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$mapper = F2(
-	function (ast_, _v0) {
-		var acc_ = _v0.a;
-		var tree_ = _v0.b;
-		return _Utils_Tuple2(
-			acc_,
-			A2($elm$core$List$cons, tree_, ast_));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$reverse = function (list) {
-	return A3(
-		$elm$core$List$foldl,
-		F2(
-			function (x, xs) {
-				return A2($elm$core$List$cons, x, xs);
-			}),
-		_List_Nil,
-		list);
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate = F3(
-	function (f, s, tree) {
-		var _v0 = A2(
-			f,
-			s,
-			$maca$elm_rose_tree$RoseTree$Tree$value(tree));
-		var s_ = _v0.a;
-		var value_ = _v0.b;
-		var _v1 = A3(
-			$elm$core$List$foldl,
-			F2(
-				function (child, _v2) {
-					var accState = _v2.a;
-					var accChildren = _v2.b;
-					var _v3 = A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, f, accState, child);
-					var newState = _v3.a;
-					var newChild = _v3.b;
-					return _Utils_Tuple2(
-						newState,
-						A2($elm$core$List$cons, newChild, accChildren));
-				}),
-			_Utils_Tuple2(s_, _List_Nil),
-			$maca$elm_rose_tree$RoseTree$Tree$children(tree));
-		var s__ = _v1.a;
-		var children_ = _v1.b;
-		return _Utils_Tuple2(
-			s__,
-			A2(
-				$maca$elm_rose_tree$RoseTree$Tree$branch,
-				value_,
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$reverse(children_)));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString = F2(
-	function (name, dict) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			'',
-			A2(
-				$elm$core$Maybe$map,
-				$elm$core$String$fromInt,
-				A2($elm$core$Dict$get, name, dict)));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$toString = function (v) {
-	return A2(
-		$elm$core$String$join,
-		'.',
-		A2(
-			$elm$core$List$map,
-			$elm$core$String$fromInt,
-			A2(
-				$elm$core$List$filter,
-				function (x) {
-					return x > 0;
-				},
-				v.content)));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber = function (acc) {
-	return ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) === '') ? A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter) : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex) + ('.' + A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'equation', acc.counter)));
-};
-var $jxxcarlson$xmarkdown_compiler$Tools$String$userReplace = F3(
-	function (userRegex, replacer, string) {
-		var _v0 = $elm$regex$Regex$fromString(userRegex);
-		if (_v0.$ === 'Nothing') {
-			return string;
-		} else {
-			var regex = _v0.a;
-			return A3($elm$regex$Regex$replace, regex, replacer, string);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$Tools$String$alphanumOnly = function (string) {
-	return A3(
-		$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
-		'[^a-z0-9 ]+',
-		function (_v0) {
-			return ' ';
-		},
-		string);
-};
-var $jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace = function (string) {
-	return $elm$core$String$trim(
-		A3(
-			$jxxcarlson$xmarkdown_compiler$Tools$String$userReplace,
-			'\u005Cs\u005Cs+',
-			function (_v0) {
-				return ' ';
-			},
-			string));
-};
-var $jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug = function (str) {
-	return A3(
-		$elm$core$String$replace,
-		' ',
-		'-',
-		$jxxcarlson$xmarkdown_compiler$Tools$String$compressWhitespace(
-			$jxxcarlson$xmarkdown_compiler$Tools$String$alphanumOnly(
-				$elm$core$String$toLower(str))));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$vectorPrefix = function (headingIndex) {
-	var prefix = $jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex);
-	return (prefix === '') ? '' : ($jxxcarlson$xmarkdown_compiler$AST$Vector$toString(headingIndex) + '.');
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock = F2(
-	function (acc, block) {
-		var _v0 = _Utils_Tuple2(block.heading, block.args);
-		_v0$4:
-		while (true) {
-			switch (_v0.a.$) {
-				case 'Ordinary':
-					switch (_v0.a.a) {
-						case 'section':
-							return _Utils_update(
-								block,
-								{
-									properties: A3(
-										$elm$core$Dict$insert,
-										'tag',
-										$jxxcarlson$xmarkdown_compiler$Tools$String$makeSlug(block.firstLine),
-										A3(
-											$elm$core$Dict$insert,
-											'label',
-											$jxxcarlson$xmarkdown_compiler$AST$Vector$toString(acc.headingIndex),
-											block.properties))
-								});
-						case 'image':
-							return _Utils_update(
-								block,
-								{
-									properties: A3(
-										$elm$core$Dict$insert,
-										'figure',
-										A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounterAsString, 'figure', acc.counter),
-										block.properties)
-								});
-						default:
-							break _v0$4;
-					}
-				case 'Verbatim':
-					switch (_v0.a.a) {
-						case 'equation':
-							return _Utils_update(
-								block,
-								{
-									properties: A3(
-										$elm$core$Dict$insert,
-										'equation-number',
-										$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
-										block.properties)
-								});
-						case 'aligned':
-							return _Utils_update(
-								block,
-								{
-									properties: A3(
-										$elm$core$Dict$insert,
-										'equation-number',
-										$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
-										block.properties)
-								});
-						default:
-							break _v0$4;
-					}
-				default:
-					break _v0$4;
-			}
-		}
-		var heading = _v0.a;
-		var _v1 = $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(heading);
-		if (_v1.$ === 'Nothing') {
-			return block;
-		} else {
-			var name = _v1.a;
-			return A2(
-				$elm$core$List$member,
-				name,
-				_List_fromArray(
-					['section'])) ? _Utils_update(
-				block,
-				{
-					properties: A3(
-						$elm$core$Dict$insert,
-						'label',
-						$jxxcarlson$xmarkdown_compiler$AST$Acc$equationNumber(acc),
-						block.properties)
-				}) : (A2($elm$core$List$member, name, $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames) ? _Utils_update(
-				block,
-				{
-					properties: A3(
-						$elm$core$Dict$insert,
-						'label',
-						_Utils_ap(
-							$jxxcarlson$xmarkdown_compiler$AST$Acc$vectorPrefix(acc.headingIndex),
-							$elm$core$String$fromInt(acc.blockCounter)),
-						block.properties)
-				}) : block);
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey = 'titleBlockId';
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList = {$: 'SInList'};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState = F2(
-	function (heading, state) {
-		var _v0 = _Utils_Tuple2(state, heading);
-		if (_v0.a.$ === 'SNotInList') {
-			if ((_v0.b.$ === 'Ordinary') && (_v0.b.a === 'numbered')) {
-				var _v1 = _v0.a;
-				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList;
-			} else {
-				var _v2 = _v0.a;
-				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList;
-			}
-		} else {
-			if ((_v0.b.$ === 'Ordinary') && (_v0.b.a === 'numbered')) {
-				var _v3 = _v0.a;
-				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList;
-			} else {
-				var _v4 = _v0.a;
-				return $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList;
-			}
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$get = F2(
-	function (k, v) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			0,
-			A2($elmcraft$core_extra$List$Extra$getAt, k, v.content));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName = function (block) {
-	var _v0 = block.heading;
-	switch (_v0.$) {
-		case 'Paragraph':
-			return $elm$core$Maybe$Nothing;
-		case 'Ordinary':
-			var name = _v0.a;
-			return $elm$core$Maybe$Just(name);
-		default:
-			var name = _v0.a;
-			return $elm$core$Maybe$Just(name);
-	}
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$resetFrom = F2(
-	function (k, v) {
-		var suffix = A2($elm$core$List$repeat, v.size - k, 0);
-		var prefix = A2($elm$core$List$take, k, v.content);
-		return {
-			content: _Utils_ap(prefix, suffix),
-			size: v.size
-		};
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$set = F3(
-	function (k, a, v) {
-		return _Utils_update(
-			v,
-			{
-				content: A3($elmcraft$core_extra$List$Extra$setAt, k, a, v.content)
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Vector$increment = F2(
-	function (k, v) {
-		return ((k < 0) || (_Utils_cmp(k, v.size) > -1)) ? v : A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Vector$resetFrom,
-			k + 1,
-			A3(
-				$jxxcarlson$xmarkdown_compiler$AST$Vector$set,
-				k,
-				A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, k, v) + 1,
-				v));
-	});
-var $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum = 2;
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryBlock = F2(
-	function (block, accumulator) {
-		var _v0 = $jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block);
-		if (_v0.$ === 'Just') {
-			switch (_v0.a) {
-				case 'setcounter':
-					var _v1 = block.body;
-					if (_v1.$ === 'Left') {
-						return accumulator;
-					} else {
-						var exprs = _v1.a;
-						var ctr = function () {
-							if ((exprs.b && (exprs.a.$ === 'Text')) && (!exprs.b.b)) {
-								var _v3 = exprs.a;
-								var val = _v3.a;
-								return A2(
-									$elm$core$Maybe$withDefault,
-									1,
-									$elm$core$String$toInt(val));
-							} else {
-								return 1;
-							}
-						}();
-						var headingIndex = A3(
-							$jxxcarlson$xmarkdown_compiler$AST$Vector$set,
-							0,
-							ctr - 1,
-							$jxxcarlson$xmarkdown_compiler$AST$Vector$init(accumulator.headingIndex.size));
-						return _Utils_update(
-							accumulator,
-							{headingIndex: headingIndex});
-					}
-				case 'numbered':
-					var level = (block.indent / $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum) | 0;
-					var itemVector = function () {
-						var _v4 = accumulator.inListState;
-						if (_v4.$ === 'SInList') {
-							return A2($jxxcarlson$xmarkdown_compiler$AST$Vector$increment, level, accumulator.itemVector);
-						} else {
-							return A2(
-								$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
-								0,
-								$jxxcarlson$xmarkdown_compiler$AST$Vector$init(4));
-						}
-					}();
-					var index = A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector);
-					var numberedItemDict = A3(
-						$elm$core$Dict$insert,
-						block.meta.id,
-						{index: index, level: level},
-						accumulator.numberedItemDict);
-					return _Utils_update(
-						accumulator,
-						{
-							inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState),
-							itemVector: itemVector,
-							numberedItemDict: numberedItemDict
-						});
-				case 'item':
-					return _Utils_update(
-						accumulator,
-						{
-							inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-						});
-				default:
-					var name_ = _v0.a;
-					if (A2(
-						$elm$core$List$member,
-						name_,
-						_List_fromArray(
-							['title', 'contents', 'banner', 'a']))) {
-						return accumulator;
-					} else {
-						if (A2($elm$core$List$member, name_, $jxxcarlson$xmarkdown_compiler$AST$Settings$numberedBlockNames)) {
-							var level = (block.indent / $jxxcarlson$xmarkdown_compiler$XMarkdown$Config$indentationQuantum) | 0;
-							var itemVector = A2($jxxcarlson$xmarkdown_compiler$AST$Vector$increment, level, accumulator.itemVector);
-							var numberedItemDict = A3(
-								$elm$core$Dict$insert,
-								block.meta.id,
-								{
-									index: A2($jxxcarlson$xmarkdown_compiler$AST$Vector$get, level, itemVector),
-									level: level
-								},
-								accumulator.numberedItemDict);
-							return _Utils_update(
-								accumulator,
-								{
-									blockCounter: accumulator.blockCounter + 1,
-									inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState),
-									itemVector: itemVector,
-									numberedItemDict: numberedItemDict
-								});
-						} else {
-							return _Utils_update(
-								accumulator,
-								{
-									inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-								});
-						}
-					}
-			}
-		} else {
-			return accumulator;
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock = F2(
-	function (accumulator, level) {
-		var delta = function () {
-			var _v0 = A2($elm$core$Dict$get, 'has-chapters', accumulator.keyValueDict);
-			if (_v0.$ === 'Nothing') {
-				return 0;
-			} else {
-				if (_v0.a === 'yes') {
-					return 1;
-				} else {
-					return 0;
-				}
-			}
-		}();
-		var headingIndex = A2(
-			$jxxcarlson$xmarkdown_compiler$AST$Vector$increment,
-			function (x) {
-				return ((x - 1) + delta) + accumulator.deltaLevel;
-			}(
-				A2(
-					$elm$core$Maybe$withDefault,
-					1,
-					$elm$core$String$toInt(level))),
-			accumulator.headingIndex);
-		return _Utils_update(
-			accumulator,
-			{
-				blockCounter: 0,
-				counter: A3($elm$core$Dict$insert, 'equation', 0, accumulator.counter),
-				headingIndex: headingIndex
-			});
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter = F2(
-	function (name, dict) {
-		return A2(
-			$elm$core$Maybe$withDefault,
-			0,
-			A2($elm$core$Dict$get, name, dict));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$incrementCounter = F2(
-	function (name, dict) {
-		return A3(
-			$elm$core$Dict$insert,
-			name,
-			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$getCounter, name, dict) + 1,
-			dict);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName = function (str) {
-	return A2(
-		$elm$core$List$member,
-		str,
-		_List_fromArray(
-			['equation', 'aligned'])) ? 'equation' : ((str === 'code') ? 'listing' : (A2(
-		$elm$core$List$member,
-		str,
-		_List_fromArray(
-			['quiver', 'image', 'table', 'svg', 'tikz'])) ? 'figure' : str));
-};
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock = F2(
-	function (block, accumulator) {
-		var _v0 = block.body;
-		if (_v0.$ === 'Right') {
-			return accumulator;
-		} else {
-			var name = A2(
-				$elm$core$Maybe$withDefault,
-				'',
-				$jxxcarlson$xmarkdown_compiler$AST$BlockUtilities$getExpressionBlockName(block));
-			var newCounter = (A2($elm$core$List$member, name, accumulator.numberedBlockNames) && A2($elm$core$List$member, 'numbered', block.args)) ? A2(
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$incrementCounter,
-				$jxxcarlson$xmarkdown_compiler$AST$Acc$reduceName(name),
-				accumulator.counter) : accumulator.counter;
-			return _Utils_update(
-				accumulator,
-				{
-					counter: newCounter,
-					inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-				});
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator = F2(
-	function (block, accumulator) {
-		var properties = block.properties;
-		var args = block.args;
-		var heading = block.heading;
-		switch (heading.$) {
-			case 'Ordinary':
-				switch (heading.a) {
-					case 'set-key':
-						if (args.b && args.b.b) {
-							var key = args.a;
-							var _v2 = args.b;
-							var value = _v2.a;
-							return _Utils_update(
-								accumulator,
-								{
-									keyValueDict: A3($elm$core$Dict$insert, key, value, accumulator.keyValueDict)
-								});
-						} else {
-							return accumulator;
-						}
-					case 'list':
-						return _Utils_update(
-							accumulator,
-							{
-								itemVector: $jxxcarlson$xmarkdown_compiler$AST$Vector$init(4)
-							});
-					case 'section':
-						var level = A2(
-							$elm$core$Maybe$withDefault,
-							'1',
-							A2($elm$core$Dict$get, 'level', properties));
-						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock, accumulator, level);
-					case 'titleBlock':
-						return A2($elm$core$Dict$member, $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey, accumulator.keyValueDict) ? accumulator : _Utils_update(
-							accumulator,
-							{
-								keyValueDict: A3($elm$core$Dict$insert, $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey, block.meta.id, accumulator.keyValueDict)
-							});
-					case 'title':
-						if (accumulator.deltaLevel === 1) {
-							return accumulator;
-						} else {
-							var headingIndex = function () {
-								var _v3 = A2($elm$core$Dict$get, 'first-section', block.properties);
-								if (_v3.$ === 'Nothing') {
-									return {
-										content: _List_fromArray(
-											[0, 0, 0, 0]),
-										size: 4
-									};
-								} else {
-									var firstSection_ = _v3.a;
-									var _v4 = $elm$core$String$toInt(firstSection_);
-									if (_v4.$ === 'Just') {
-										var n = _v4.a;
-										return {
-											content: _List_fromArray(
-												[
-													A2($elm$core$Basics$max, n - 1, 0),
-													0,
-													0,
-													0
-												]),
-											size: 4
-										};
-									} else {
-										return {
-											content: _List_fromArray(
-												[0, 0, 0, 0]),
-											size: 4
-										};
-									}
-								}
-							}();
-							return _Utils_update(
-								accumulator,
-								{headingIndex: headingIndex});
-						}
-					case 'setcounter':
-						var n = A2(
-							$elm$core$Maybe$withDefault,
-							1,
-							A2(
-								$elm$core$Maybe$andThen,
-								$elm$core$String$toInt,
-								$elm$core$List$head(args)));
-						return _Utils_update(
-							accumulator,
-							{
-								headingIndex: {
-									content: _List_fromArray(
-										[n, 0, 0, 0]),
-									size: 4
-								}
-							});
-					case 'shiftandsetcounter':
-						var n = A2(
-							$elm$core$Maybe$withDefault,
-							1,
-							A2(
-								$elm$core$Maybe$andThen,
-								$elm$core$String$toInt,
-								$elm$core$List$head(args)));
-						return _Utils_update(
-							accumulator,
-							{
-								deltaLevel: 1,
-								headingIndex: {
-									content: _List_fromArray(
-										[n, 0, 0, 0]),
-									size: 4
-								}
-							});
-					default:
-						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinaryBlock, block, accumulator);
-				}
-			case 'Verbatim':
-				if (heading.a === 'settings') {
-					return _Utils_update(
-						accumulator,
-						{
-							keyValueDict: A2($elm$core$Dict$union, properties, accumulator.keyValueDict)
-						});
-				} else {
-					var _v5 = block.body;
-					if (_v5.$ === 'Left') {
-						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithVerbatimBlock, block, accumulator);
-					} else {
-						return accumulator;
-					}
-				}
-			default:
-				return _Utils_update(
-					accumulator,
-					{
-						inListState: A2($jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState, block.heading, accumulator.inListState)
-					});
-		}
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock = F2(
-	function (acc_, block_) {
-		var newAcc = A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator, block_, acc_);
-		return _Utils_Tuple2(
-			newAcc,
-			A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock, newAcc, block_));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree = F2(
-	function (tree, acc) {
-		return A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock, acc, tree);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate = function (forest) {
-	return function (_v1) {
-		var acc_ = _v1.a;
-		var ast_ = _v1.b;
-		return _Utils_Tuple2(
-			acc_,
-			$elm$core$List$reverse(ast_));
-	}(
-		A3(
-			$elm$core$List$foldl,
-			F2(
-				function (tree, _v0) {
-					var acc_ = _v0.a;
-					var ast_ = _v0.b;
-					return A2(
-						$jxxcarlson$xmarkdown_compiler$AST$Acc$mapper,
-						ast_,
-						A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree, tree, acc_));
-				}),
-			_Utils_Tuple2($jxxcarlson$xmarkdown_compiler$AST$Acc$init, _List_Nil),
-			forest));
-};
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$Compiler$parseToForestWithAccumulator = F2(
 	function (params, lines) {
 		return $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate(
@@ -18826,9 +20395,6 @@ var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$changeName = F3(
 				heading: $jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary(newName)
 			}) : block;
 	});
-var $jxxcarlson$xmarkdown_compiler$AST$Language$getName = function (block) {
-	return $jxxcarlson$xmarkdown_compiler$AST$Language$getNameFromHeading(block.heading);
-};
 var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName = F2(
 	function (key, block) {
 		return _Utils_eq(
@@ -21189,29 +22755,6 @@ var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$renderTocItem = F4(
 						]))
 				]));
 	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2 = F3(
-	function (key, key2, block) {
-		return _Utils_eq(
-			$elm$core$Maybe$Just(key),
-			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block)) || _Utils_eq(
-			$elm$core$Maybe$Just(key2),
-			$jxxcarlson$xmarkdown_compiler$AST$Language$getName(block));
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName2 = F3(
-	function (name, name2, blocks) {
-		return A2(
-			$elm$core$List$filter,
-			A2($jxxcarlson$xmarkdown_compiler$AST$ASTTools$matchBlockName2, name, name2),
-			blocks);
-	});
-var $jxxcarlson$xmarkdown_compiler$AST$ASTTools$tableOfContents = function (ast) {
-	return A3(
-		$jxxcarlson$xmarkdown_compiler$AST$ASTTools$filterBlocksOnName2,
-		'section',
-		'chapter',
-		$elm$core$List$concat(
-			A2($elm$core$List$map, $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten, ast)));
-};
 var $elm$html$Html$ul = _VirtualDom_node('ul');
 var $jxxcarlson$xmarkdown_compiler$Render$TOCTree$view = F3(
 	function (theme, viewParameters, documentAst) {
@@ -21395,6 +22938,7 @@ var $author$project$Main$editorView = function (model) {
 	return $jxxcarlson$xmarkdown_compiler$XMarkdown$API$viewEditor(
 		{attrs: _List_Nil, highlight: model.syncHighlight, onInput: $author$project$Main$InputText, source: model.initialText});
 };
+var $author$project$Main$ExportHtmlRequested = {$: 'ExportHtmlRequested'};
 var $author$project$Main$ExportPdfRequested = {$: 'ExportPdfRequested'};
 var $author$project$Main$FileMenu = {$: 'FileMenu'};
 var $author$project$Main$MakeHeaderRequested = {$: 'MakeHeaderRequested'};
@@ -21517,15 +23061,20 @@ var $author$project$Main$fileMenu = function (model) {
 										A2(item, 'Export PDF', $author$project$Main$ExportPdfRequested)
 									]) : _List_Nil,
 								_Utils_ap(
-									_Utils_eq(model.platform, $author$project$Main$Desktop) ? _List_fromArray(
-										[
-											A3(itemWithShortcut, 'Print', '⌘P', $author$project$Main$PrintRequested)
-										]) : _List_Nil,
 									_List_fromArray(
 										[
-											A2(item, 'Normalize', $author$project$Main$NormalizeRequested),
-											A2(item, 'Make header', $author$project$Main$MakeHeaderRequested)
-										])))))
+											A2(item, 'Export HTML', $author$project$Main$ExportHtmlRequested)
+										]),
+									_Utils_ap(
+										_Utils_eq(model.platform, $author$project$Main$Desktop) ? _List_fromArray(
+											[
+												A3(itemWithShortcut, 'Print', '⌘P', $author$project$Main$PrintRequested)
+											]) : _List_Nil,
+										_List_fromArray(
+											[
+												A2(item, 'Normalize', $author$project$Main$NormalizeRequested),
+												A2(item, 'Make header', $author$project$Main$MakeHeaderRequested)
+											]))))))
 					])) : $elm$html$Html$text('')
 			]));
 };

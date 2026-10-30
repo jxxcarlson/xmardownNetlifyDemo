@@ -13476,14 +13476,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 										{
 											committed: A2(
 												$elm$core$List$cons,
-												A3(
-													$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
-													'pink',
-													_List_fromArray(
-														[
-															A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, '* ', $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$dummyLocWithId)
-														]),
-													$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$dummyLocWithId),
+												$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$errorMessage('* '),
 												A2(
 													$elm$core$List$cons,
 													A3(
@@ -13607,14 +13600,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$recoverFromError = f
 											{
 												committed: A2(
 													$elm$core$List$cons,
-													A3(
-														$jxxcarlson$xmarkdown_compiler$AST$Language$Fun,
-														'pink',
-														_List_fromArray(
-															[
-																A2($jxxcarlson$xmarkdown_compiler$AST$Language$Text, '* ', $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$dummyLocWithId)
-															]),
-														$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$dummyLocWithId),
+													$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$errorMessage('* '),
 													A2(
 														$elm$core$List$cons,
 														A3(
@@ -13941,11 +13927,11 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleBoldItalic = f
 };
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleBoldSymbol = F2(
 	function (symbols, state) {
-		if (_Utils_eq(
+		if (($elm$core$List$length(symbols) > 1) && (_Utils_eq(
 			$elm$core$List$head(symbols),
 			$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SBold)) && _Utils_eq(
 			$elmcraft$core_extra$List$Extra$last(symbols),
-			$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SBold))) {
+			$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SBold)))) {
 			var meta = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$stackSpan(state);
 			var innerExprs = A2(
 				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$parseTokens,
@@ -13964,11 +13950,11 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleBoldSymbol = F
 	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$handleItalicSymbol = F2(
 	function (symbols, state) {
-		if (_Utils_eq(
+		if (($elm$core$List$length(symbols) > 1) && (_Utils_eq(
 			$elm$core$List$head(symbols),
 			$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SItalic)) && _Utils_eq(
 			$elmcraft$core_extra$List$Extra$last(symbols),
-			$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SItalic))) {
+			$elm$core$Maybe$Just($jxxcarlson$xmarkdown_compiler$Parser$Inline$Symbol$SItalic)))) {
 			var meta = $jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$stackSpan(state);
 			var innerExprs = A2(
 				$jxxcarlson$xmarkdown_compiler$Parser$Inline$Expression$parseTokens,
@@ -16172,10 +16158,10 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Inline$fun = F2(
 			_List_fromArray(
 				['italic', 'i', 'em'])) ? ('<em>' + ($jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(args) + '</em>')) : (((name === 'link') || (name === 'a')) ? $jxxcarlson$xmarkdown_compiler$HTML$Inline$link(
 			$jxxcarlson$xmarkdown_compiler$LaTeX$Inline$plainText(args)) : (((name === 'image') || (name === 'img')) ? $jxxcarlson$xmarkdown_compiler$HTML$Inline$image(
-			$jxxcarlson$xmarkdown_compiler$LaTeX$Inline$plainText(args)) : A2(
+			$jxxcarlson$xmarkdown_compiler$LaTeX$Inline$plainText(args)) : ((name === 'red') ? ('<span class=\u0022xm-error\u0022>' + ($jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(args) + '</span>')) : A2(
 			$jxxcarlson$xmarkdown_compiler$HTML$Inline$unsupported,
 			name,
-			$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(args)))));
+			$jxxcarlson$xmarkdown_compiler$HTML$Inline$exprs(args))))));
 	});
 var $jxxcarlson$xmarkdown_compiler$HTML$Block$inlineBody = function (block) {
 	var _v0 = block.body;
@@ -16862,7 +16848,7 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Style$defaultCss = A2(
 	$elm$core$String$join,
 	'\u000A',
 	_List_fromArray(
-		['body { margin: 0; padding: 2rem 1rem; background: #fff; color: #222; font-family: Georgia, \u0022Times New Roman\u0022, serif; font-size: 18px; line-height: 1.55; }', '.xm-document { max-width: 42rem; margin: 0 auto; }', '.xm-title-block { margin-bottom: 2rem; }', '.xm-title { margin-bottom: 0.25rem; }', '.xm-authors, .xm-date { margin: 0.25rem 0; color: #555; }', '.xm-layout { display: grid; grid-template-columns: minmax(0, 42rem) 16rem; gap: 3rem; justify-content: center; align-items: start; }', '.xm-layout .xm-document { margin: 0; }', '.xm-toc { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; font-size: 0.9em; }', '@media (max-width: 900px) { .xm-layout { display: flex; flex-direction: column; gap: 0; } .xm-toc { order: -1; position: static; max-height: none; margin-bottom: 2rem; } }', '.xm-toc ul { list-style: none; padding-left: 0; margin: 0.2rem 0; }', '.xm-toc li { padding-left: 1.25rem; text-indent: -1.25rem; }', '.xm-toc a { text-decoration: none; }', '.xm-section-number { margin-right: 0.25em; }', '.xm-quotation { margin: 1rem 0; padding-left: 1rem; border-left: 3px solid #ccc; color: #444; }', '.xm-verse { margin: 1rem 0 1rem 1.5rem; }', '.xm-verse-line { white-space: pre-wrap; }', '.xm-verse-blank { height: 1em; }', '.xm-figure { margin: 1.5rem 0; text-align: center; }', '.xm-figure img, img.xm-image { max-width: 100%; height: auto; }', '.xm-figure figcaption { font-size: 0.9em; color: #555; }', '.xm-table { border-collapse: collapse; margin: 1rem 0; }', '.xm-table th, .xm-table td { border: 1px solid #ccc; padding: 0.3rem 0.6rem; }', '.xm-code { background: #f5f5f5; padding: 0.75rem; overflow-x: auto; font-size: 0.85em; }', 'code { font-family: Menlo, Consolas, monospace; }', 'div.xm-math { overflow-x: auto; }', '.xm-block { margin: 1rem 0; }', '.xm-unsupported { color: #888; }', 'hr.xm-hrule { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }']));
+		['body { margin: 0; padding: 2rem 1rem; background: #fff; color: #222; font-family: Georgia, \u0022Times New Roman\u0022, serif; font-size: 18px; line-height: 1.55; }', '.xm-document { max-width: 42rem; margin: 0 auto; }', '.xm-title-block { margin-bottom: 2rem; }', '.xm-title { margin-bottom: 0.25rem; }', '.xm-authors, .xm-date { margin: 0.25rem 0; color: #555; }', '.xm-layout { display: grid; grid-template-columns: minmax(0, 42rem) 16rem; gap: 3rem; justify-content: center; align-items: start; }', '.xm-layout .xm-document { margin: 0; }', '.xm-toc { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow-y: auto; font-size: 0.9em; }', '@media (max-width: 900px) { .xm-layout { display: flex; flex-direction: column; gap: 0; } .xm-toc { order: -1; position: static; max-height: none; margin-bottom: 2rem; } }', '.xm-toc ul { list-style: none; padding-left: 0; margin: 0.2rem 0; }', '.xm-toc li { padding-left: 1.25rem; text-indent: -1.25rem; }', '.xm-toc a { text-decoration: none; }', '.xm-section-number { margin-right: 0.25em; }', '.xm-quotation { margin: 1rem 0; padding-left: 1rem; border-left: 3px solid #ccc; color: #444; }', '.xm-verse { margin: 1rem 0 1rem 1.5rem; }', '.xm-verse-line { white-space: pre-wrap; }', '.xm-verse-blank { height: 1em; }', '.xm-figure { margin: 1.5rem 0; text-align: center; }', '.xm-figure img, img.xm-image { max-width: 100%; height: auto; }', '.xm-figure figcaption { font-size: 0.9em; color: #555; }', '.xm-table { border-collapse: collapse; margin: 1rem 0; }', '.xm-table th, .xm-table td { border: 1px solid #ccc; padding: 0.3rem 0.6rem; }', '.xm-code { background: #f5f5f5; padding: 0.75rem; overflow-x: auto; font-size: 0.85em; }', 'code { font-family: Menlo, Consolas, monospace; }', 'div.xm-math { overflow-x: auto; }', '.xm-block { margin: 1rem 0; }', '.xm-unsupported { color: #888; }', '.xm-error { color: #b30000; }', 'hr.xm-hrule { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }']));
 var $jxxcarlson$xmarkdown_compiler$XMarkdown$AST$forest = function (_v0) {
 	var f = _v0.a;
 	return f;
@@ -21113,99 +21099,112 @@ var $jxxcarlson$xmarkdown_compiler$Render$Expression$render = F4(
 										A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
 										exprList));
 							} else {
-								if ((name === 'a') || (name === 'link')) {
-									var _v1 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractLinkData(exprList);
-									var linkText = _v1.a;
-									var url = _v1.b;
+								if (name === 'red') {
 									return A2(
-										$elm$html$Html$a,
+										$elm$html$Html$span,
 										_List_fromArray(
 											[
-												$elm$html$Html$Attributes$href(url),
-												A2(
-												$elm$html$Html$Attributes$style,
-												'color',
-												A2(
-													$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
-													function ($) {
-														return $.link;
-													},
-													theme))
+												A2($elm$html$Html$Attributes$style, 'color', 'rgb(179, 0, 0)')
 											]),
-										_List_fromArray(
-											[
-												$elm$html$Html$text(linkText)
-											]));
+										A2(
+											$elm$core$List$map,
+											A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
+											exprList));
 								} else {
-									if ((name === 'image') || (name === 'img')) {
-										var _v2 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractImageData(exprList);
-										var url = _v2.a;
-										var altText = _v2.b;
-										var _v3 = $jxxcarlson$xmarkdown_compiler$Render$Expression$parseImageProperties(altText);
-										var caption = _v3.a;
-										var props = _v3.b;
-										var imgAttrs = $jxxcarlson$xmarkdown_compiler$Render$Expression$buildImageAttributes(props);
+									if ((name === 'a') || (name === 'link')) {
+										var _v1 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractLinkData(exprList);
+										var linkText = _v1.a;
+										var url = _v1.b;
 										return A2(
-											$elm$html$Html$figure,
+											$elm$html$Html$a,
 											_List_fromArray(
 												[
-													A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
-													A2($elm$html$Html$Attributes$style, 'margin', '1em 0')
+													$elm$html$Html$Attributes$href(url),
+													A2(
+													$elm$html$Html$Attributes$style,
+													'color',
+													A2(
+														$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+														function ($) {
+															return $.link;
+														},
+														theme))
 												]),
 											_List_fromArray(
 												[
-													A2(
-													$elm$html$Html$a,
-													_List_fromArray(
-														[
-															$elm$html$Html$Attributes$href(url),
-															$elm$html$Html$Attributes$target('_blank'),
-															$elm$html$Html$Attributes$rel('noopener noreferrer')
-														]),
-													_List_fromArray(
-														[
-															A2(
-															$elm$html$Html$img,
-															_Utils_ap(
-																_List_fromArray(
-																	[
-																		$elm$html$Html$Attributes$src(url),
-																		$elm$html$Html$Attributes$alt(caption),
-																		A2($elm$html$Html$Attributes$style, 'max-width', '100%'),
-																		A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
-																	]),
-																imgAttrs),
-															_List_Nil)
-														])),
-													$elm$core$String$isEmpty(caption) ? $elm$html$Html$text('') : A2(
-													$elm$html$Html$figcaption,
-													_List_fromArray(
-														[
-															A2($elm$html$Html$Attributes$style, 'font-size', '0.9em'),
-															A2(
-															$elm$html$Html$Attributes$style,
-															'color',
-															A2(
-																$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
-																function ($) {
-																	return $.offsetText;
-																},
-																theme)),
-															A2($elm$html$Html$Attributes$style, 'margin-top', '0.5em')
-														]),
-													_List_fromArray(
-														[
-															$elm$html$Html$text(caption)
-														]))
+													$elm$html$Html$text(linkText)
 												]));
 									} else {
-										return A2(
-											$elm$html$Html$span,
-											_List_Nil,
-											A2(
-												$elm$core$List$map,
-												A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
-												exprList));
+										if ((name === 'image') || (name === 'img')) {
+											var _v2 = $jxxcarlson$xmarkdown_compiler$Render$Expression$extractImageData(exprList);
+											var url = _v2.a;
+											var altText = _v2.b;
+											var _v3 = $jxxcarlson$xmarkdown_compiler$Render$Expression$parseImageProperties(altText);
+											var caption = _v3.a;
+											var props = _v3.b;
+											var imgAttrs = $jxxcarlson$xmarkdown_compiler$Render$Expression$buildImageAttributes(props);
+											return A2(
+												$elm$html$Html$figure,
+												_List_fromArray(
+													[
+														A2($elm$html$Html$Attributes$style, 'text-align', 'center'),
+														A2($elm$html$Html$Attributes$style, 'margin', '1em 0')
+													]),
+												_List_fromArray(
+													[
+														A2(
+														$elm$html$Html$a,
+														_List_fromArray(
+															[
+																$elm$html$Html$Attributes$href(url),
+																$elm$html$Html$Attributes$target('_blank'),
+																$elm$html$Html$Attributes$rel('noopener noreferrer')
+															]),
+														_List_fromArray(
+															[
+																A2(
+																$elm$html$Html$img,
+																_Utils_ap(
+																	_List_fromArray(
+																		[
+																			$elm$html$Html$Attributes$src(url),
+																			$elm$html$Html$Attributes$alt(caption),
+																			A2($elm$html$Html$Attributes$style, 'max-width', '100%'),
+																			A2($elm$html$Html$Attributes$style, 'cursor', 'pointer')
+																		]),
+																	imgAttrs),
+																_List_Nil)
+															])),
+														$elm$core$String$isEmpty(caption) ? $elm$html$Html$text('') : A2(
+														$elm$html$Html$figcaption,
+														_List_fromArray(
+															[
+																A2($elm$html$Html$Attributes$style, 'font-size', '0.9em'),
+																A2(
+																$elm$html$Html$Attributes$style,
+																'color',
+																A2(
+																	$jxxcarlson$xmarkdown_compiler$Render$Theme$themedColor,
+																	function ($) {
+																		return $.offsetText;
+																	},
+																	theme)),
+																A2($elm$html$Html$Attributes$style, 'margin-top', '0.5em')
+															]),
+														_List_fromArray(
+															[
+																$elm$html$Html$text(caption)
+															]))
+													]));
+										} else {
+											return A2(
+												$elm$html$Html$span,
+												_List_Nil,
+												A2(
+													$elm$core$List$map,
+													A3($jxxcarlson$xmarkdown_compiler$Render$Expression$render, theme, depth, attrs),
+													exprList));
+										}
 									}
 								}
 							}

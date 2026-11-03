@@ -14400,6 +14400,40 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$boldParser = F2(
 					'**',
 					$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('**'))));
 	});
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$isEscapable = function (c) {
+	return (!_Utils_eq(
+		c,
+		_Utils_chr('('))) && A2(
+		$elm$core$String$contains,
+		$elm$core$String$fromChar(c),
+		'!\u0022#$%&\u0027()*+,-./:;<=>?@[\u005C]^_`{|}~');
+};
+var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$escapeParser = F2(
+	function (start, index) {
+		return A2(
+			$elm$parser$Parser$Advanced$keeper,
+			A2(
+				$elm$parser$Parser$Advanced$ignorer,
+				$elm$parser$Parser$Advanced$succeed(
+					function (c) {
+						return A2(
+							$jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$S,
+							c,
+							{
+								begin: start,
+								end: start + 1,
+								id: A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$makeId, start, index),
+								index: index
+							});
+					}),
+				$elm$parser$Parser$Advanced$symbol(
+					A2(
+						$elm$parser$Parser$Advanced$Token,
+						'\u005C',
+						$jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingSymbol('\u005C')))),
+			$elm$parser$Parser$Advanced$getChompedString(
+				A2($elm$parser$Parser$Advanced$chompIf, $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$isEscapable, $jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingPrefix)));
+	});
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$ParserTools$ExpectingImageStart = {$: 'ExpectingImageStart'};
 var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$imageParser = F2(
 	function (start, index) {
@@ -14600,6 +14634,7 @@ var $jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$tokenParser_ = F2(
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$imageParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenLeftParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$mathTokenRightParser, start, index),
+					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$escapeParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$textParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$leftBracketParser, start, index),
 					A2($jxxcarlson$xmarkdown_compiler$Parser$Inline$Token$rightBracketParser, start, index),
@@ -15839,16 +15874,21 @@ var $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$isTitleBlock = function (block
 		block.heading,
 		$jxxcarlson$xmarkdown_compiler$AST$Language$Ordinary('titleBlock'));
 };
-var $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$fromForest = function (forest) {
+var $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$initial = function (forest) {
 	return A2(
-		$elm$core$Maybe$map,
-		$jxxcarlson$xmarkdown_compiler$AST$TitleBlock$fromBlock,
-		$elm$core$List$head(
-			A2(
-				$elm$core$List$filter,
-				$jxxcarlson$xmarkdown_compiler$AST$TitleBlock$isTitleBlock,
-				A2($elm$core$List$concatMap, $jxxcarlson$xmarkdown_compiler$Library$Tree$flatten, forest))));
+		$elm$core$Maybe$andThen,
+		function (block) {
+			return $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$isTitleBlock(block) ? $elm$core$Maybe$Just(block) : $elm$core$Maybe$Nothing;
+		},
+		A2(
+			$elm$core$Maybe$map,
+			$maca$elm_rose_tree$RoseTree$Tree$value,
+			$elm$core$List$head(forest)));
 };
+var $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$fromForest = A2(
+	$elm$core$Basics$composeR,
+	$jxxcarlson$xmarkdown_compiler$AST$TitleBlock$initial,
+	$elm$core$Maybe$map($jxxcarlson$xmarkdown_compiler$AST$TitleBlock$fromBlock));
 var $jxxcarlson$xmarkdown_compiler$LaTeX$Export$orElse = F2(
 	function (preferred, fallback) {
 		return $elm$core$String$isEmpty(preferred) ? fallback : preferred;
@@ -17446,6 +17486,7 @@ var $jxxcarlson$xmarkdown_compiler$HTML$Export$tagBlock = F2(
 			return _Utils_Tuple2(used, block);
 		}
 	});
+var $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey = 'titleBlockId';
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$SNotInList = {$: 'SNotInList'};
 var $jxxcarlson$xmarkdown_compiler$AST$Vector$init = function (k) {
 	return {
@@ -17642,7 +17683,6 @@ var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformBlock = F2(
 				}) : block);
 		}
 	});
-var $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey = 'titleBlockId';
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$SInList = {$: 'SInList'};
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$nextInListState = F2(
 	function (heading, state) {
@@ -17933,11 +17973,7 @@ var $jxxcarlson$xmarkdown_compiler$AST$Acc$updateAccumulator = F2(
 							A2($elm$core$Dict$get, 'level', properties));
 						return A2($jxxcarlson$xmarkdown_compiler$AST$Acc$updateWithOrdinarySectionBlock, accumulator, level);
 					case 'titleBlock':
-						return A2($elm$core$Dict$member, $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey, accumulator.keyValueDict) ? accumulator : _Utils_update(
-							accumulator,
-							{
-								keyValueDict: A3($elm$core$Dict$insert, $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey, block.meta.id, accumulator.keyValueDict)
-							});
+						return accumulator;
 					case 'title':
 						if (accumulator.deltaLevel === 1) {
 							return accumulator;
@@ -18051,6 +18087,19 @@ var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree = F2(
 		return A3($jxxcarlson$xmarkdown_compiler$AST$Acc$mapAccumulate, $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateBlock, acc, tree);
 	});
 var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate = function (forest) {
+	var init_ = function () {
+		var _v2 = $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$initial(forest);
+		if (_v2.$ === 'Just') {
+			var block = _v2.a;
+			return _Utils_update(
+				$jxxcarlson$xmarkdown_compiler$AST$Acc$init,
+				{
+					keyValueDict: A3($elm$core$Dict$insert, $jxxcarlson$xmarkdown_compiler$AST$TitleBlock$firstIdKey, block.meta.id, $jxxcarlson$xmarkdown_compiler$AST$Acc$init.keyValueDict)
+				});
+		} else {
+			return $jxxcarlson$xmarkdown_compiler$AST$Acc$init;
+		}
+	}();
 	return function (_v1) {
 		var acc_ = _v1.a;
 		var ast_ = _v1.b;
@@ -18069,7 +18118,7 @@ var $jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulate = function (fores
 						ast_,
 						A2($jxxcarlson$xmarkdown_compiler$AST$Acc$transformAccumulateTree, tree, acc_));
 				}),
-			_Utils_Tuple2($jxxcarlson$xmarkdown_compiler$AST$Acc$init, _List_Nil),
+			_Utils_Tuple2(init_, _List_Nil),
 			forest));
 };
 var $jxxcarlson$xmarkdown_compiler$HTML$Export$prepare = F2(
@@ -19306,6 +19355,159 @@ var $author$project$Ports$openFolder = _Platform_outgoingPort(
 		return $elm$json$Json$Encode$null;
 	});
 var $author$project$Main$pdfName = $author$project$Main$exportName('.pdf');
+var $author$project$Normalize$openAIClose = '\u005C\u005C]';
+var $author$project$Normalize$openAIOpen = '\u005C\u005C[';
+var $author$project$Normalize$unescapeMath = A2($elm$core$String$replace, '\u005C_', '_');
+var $author$project$Normalize$openMath = F4(
+	function (closer, rest, line, state) {
+		return _Utils_update(
+			state,
+			{
+				lines: A2(
+					$elm$core$List$cons,
+					$author$project$Normalize$unescapeMath(line),
+					state.lines),
+				mathCloser: A2($elm$core$String$endsWith, closer, rest) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(closer)
+			});
+	});
+var $author$project$Normalize$preprocessStep = F2(
+	function (line, state) {
+		var trimmed = $elm$core$String$trim(line);
+		var push = function (l) {
+			return _Utils_update(
+				state,
+				{
+					lines: A2($elm$core$List$cons, l, state.lines)
+				});
+		};
+		var indent = A2(
+			$elm$core$String$left,
+			$elm$core$String$length(line) - $elm$core$String$length(
+				$elm$core$String$trimLeft(line)),
+			line);
+		var emit = F2(
+			function (_new, acc) {
+				return A3(
+					$elm$core$List$foldl,
+					F2(
+						function (l, a) {
+							return ($elm$core$String$trim(l) === '') ? a : A2(
+								$elm$core$List$cons,
+								_Utils_ap(
+									indent,
+									$author$project$Normalize$unescapeMath(
+										$elm$core$String$trim(l))),
+								a);
+						}),
+					acc,
+					_new);
+			});
+		if (state.inFence) {
+			return _Utils_update(
+				state,
+				{
+					inFence: !$author$project$Normalize$isFence(trimmed),
+					lines: A2($elm$core$List$cons, line, state.lines)
+				});
+		} else {
+			var _v0 = state.mathCloser;
+			if (_v0.$ === 'Just') {
+				var closer = _v0.a;
+				return (!A2($elm$core$String$endsWith, closer, trimmed)) ? push(
+					$author$project$Normalize$unescapeMath(line)) : (_Utils_eq(closer, $author$project$Normalize$openAIClose) ? _Utils_update(
+					state,
+					{
+						lines: A2(
+							emit,
+							_List_fromArray(
+								[
+									A2($elm$core$String$dropRight, 3, trimmed),
+									'\u005C]'
+								]),
+							state.lines),
+						mathCloser: $elm$core$Maybe$Nothing
+					}) : _Utils_update(
+					state,
+					{
+						lines: A2(
+							$elm$core$List$cons,
+							$author$project$Normalize$unescapeMath(line),
+							state.lines),
+						mathCloser: $elm$core$Maybe$Nothing
+					}));
+			} else {
+				if (trimmed === '') {
+					return push('');
+				} else {
+					if ($author$project$Normalize$isFence(trimmed)) {
+						return _Utils_update(
+							state,
+							{
+								inFence: true,
+								lines: A2($elm$core$List$cons, line, state.lines)
+							});
+					} else {
+						if (A2($elm$core$String$startsWith, $author$project$Normalize$openAIOpen, trimmed)) {
+							var rest = A2($elm$core$String$dropLeft, 3, trimmed);
+							return A2($elm$core$String$endsWith, $author$project$Normalize$openAIClose, rest) ? _Utils_update(
+								state,
+								{
+									lines: A2(
+										emit,
+										_List_fromArray(
+											[
+												'\u005C[',
+												A2($elm$core$String$dropRight, 3, rest),
+												'\u005C]'
+											]),
+										state.lines)
+								}) : _Utils_update(
+								state,
+								{
+									lines: A2(
+										emit,
+										_List_fromArray(
+											['\u005C[', rest]),
+										state.lines),
+									mathCloser: $elm$core$Maybe$Just($author$project$Normalize$openAIClose)
+								});
+						} else {
+							if (A2($elm$core$String$startsWith, '\u005C[', trimmed)) {
+								return A4(
+									$author$project$Normalize$openMath,
+									'\u005C]',
+									A2($elm$core$String$dropLeft, 2, trimmed),
+									line,
+									state);
+							} else {
+								if (A2($elm$core$String$startsWith, '$$', trimmed)) {
+									return A4(
+										$author$project$Normalize$openMath,
+										'$$',
+										A2($elm$core$String$dropLeft, 2, trimmed),
+										line,
+										state);
+								} else {
+									return push(line);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	});
+var $author$project$Normalize$preprocess = function (source) {
+	return A2(
+		$elm$core$String$join,
+		'\u000A',
+		$elm$core$List$reverse(
+			A3(
+				$elm$core$List$foldl,
+				$author$project$Normalize$preprocessStep,
+				{inFence: false, lines: _List_Nil, mathCloser: $elm$core$Maybe$Nothing},
+				$elm$core$String$lines(source)).lines));
+};
 var $elm$file$File$Download$string = F3(
 	function (name, mime, content) {
 		return A2(
@@ -19894,7 +20096,8 @@ var $author$project$Main$update = F2(
 							$author$project$Main$saveFile(model));
 					}
 				case 'NormalizeRequested':
-					var normalized = $author$project$Normalize$normalize(model.sourceText);
+					var normalized = $author$project$Normalize$normalize(
+						$author$project$Normalize$preprocess(model.sourceText));
 					if (_Utils_eq(normalized, model.sourceText)) {
 						return _Utils_Tuple2(
 							_Utils_update(
@@ -21418,7 +21621,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$item = F6(
 						$elm$core$String$fromInt(settings.listSpacing) + 'px'),
 						A2(
 						$elm$html$Html$Attributes$style,
-						'width',
+						'max-width',
 						$elm$core$String$fromInt(settings.width - depth) + 'px'),
 						A2($elm$html$Html$Attributes$style, 'list-style', 'none'),
 						$elm$html$Html$Attributes$id(blockId),
@@ -21565,7 +21768,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$List$numbered = F6(
 						$elm$core$String$fromInt(settings.listSpacing) + 'px'),
 						A2(
 						$elm$html$Html$Attributes$style,
-						'width',
+						'max-width',
 						$elm$core$String$fromInt(settings.width - (6 + indentation)) + 'px'),
 						A2($elm$html$Html$Attributes$style, 'list-style', 'none'),
 						$elm$html$Html$Attributes$id(blockId),
@@ -22373,7 +22576,7 @@ var $jxxcarlson$xmarkdown_compiler$Render$Block$renderParagraphBody = F5(
 							$elm$core$List$cons,
 							A2(
 								$elm$html$Html$Attributes$style,
-								'width',
+								'max-width',
 								$elm$core$String$fromInt(settings.width) + 'px'),
 							A2(
 								$elm$core$List$cons,
